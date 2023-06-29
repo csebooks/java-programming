@@ -1,0 +1,6 @@
+.hugo/
+public/
+resources/
+themes/
+*.backup
+config.toml
