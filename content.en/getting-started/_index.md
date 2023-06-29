@@ -492,3 +492,66 @@ You should see the following on your screen:
 Congratulations! Your program works!
 
 If you encounter problems with the instructions in this step, consult the Common Problems (and Their Solutions).
+
+
+### "Hello World!" for Solaris OS, Linux, and Mac OS X
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## A Closer Look at "Hello World!"
+
+
+
+### Source Code Comments
+
+### The HelloWorldApp Class Definition
+
+### The main Method
+
+
+
+
+
+
+
+
+
+
+
+
+## Common Problems (and Their Solutions)
+
+
+
+
+
+
+
+
+
+
+
+### Compiler Problems
+
+### Runtime Problems
