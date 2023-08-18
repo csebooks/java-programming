@@ -3,18 +3,6 @@ title: 'Regular Expressions and Other Packages'
 weight: 11
 --- 
 
-
-
-## CHAPTER
-
-  
-
-## 30
-
-  
-
-****
-
 When Java was originally released, it included a set of eight packages, called the _core API_. Each subsequent release added to the API. Today, the Java API contains a very large number of packages. Many of the packages support areas of specialization that are beyond the scope of this book. However, several packages warrant an examination here. Four are **java.util.regex**, **java.lang.reflect**, **java.rmi**, and **java.text**. They support regular expression processing, reflection, Remote Method Invocation (RMI), and text formatting, respectively. The chapter ends by introducing the date and time API in **java.time** and its subpackages.
 
 The _regular expression_ package lets you perform sophisticated pattern matching operations. This chapter provides an introduction to this package along with extensive examples. Reflection is the ability of software to analyze itself. It is an essential part of the Java Beans technology that is covered in Chapter 37. _Remote Method Invocation (RMI)_ allows you to build Java applications that are distributed among several machines. This chapter provides a simple client/server example that uses RMI. The _text formatting_ capabilities of **java.text** have many uses. The one examined here formats date and time strings. The date and time API supplies an up-to-date approach to handling date and time.
