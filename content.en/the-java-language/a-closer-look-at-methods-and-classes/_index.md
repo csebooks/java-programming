@@ -468,7 +468,7 @@ public static void main(String args[]) {
     System.out.println("Factorial of 3 is " +f. fact (3));
     System.out.println("Factorial of 4 is " +f. fact (4));
     System.out.println("Factorial of 5 is " +f. fact (5));
-}
+    }
 }
 ```
 The output from this program is shown here:
@@ -492,7 +492,30 @@ The main advantage to recursive methods is that they can be used to create clear
 most easily implemented using recursive solutions. When writing recursive methods, you must have an **if** statement somewhere to force the method to return without the recursive call being executed. If you don’t do this, once you call the method, it will never return. This is a very common error in working with recursion. Use **println()** statements liberally during development so that you can watch what is going on and abort execution if you see that you have made a mistake.
 
 Here is one more example of recursion. The recursive method **printArray()** prints the first **i** elements in the array **values**.
-
+```
+// A simple example of recursion. 
+class Factorial 
+{
+    // this is a recursive method
+    int fact (int n) 
+    {
+        int result;
+        if (n=1) 
+            return 1;
+        result fact (n-1)* n;
+        return result;
+    }
+}
+class Recursion {
+    public static void main(String args[]) 
+    { 
+        Factorial f = new Factorial();
+        System.out.println("Factorial of 3 is " +f. fact (3));
+        System.out.println("Factorial of 4 is " +f. fact (4));
+        System.out.println("Factorial of 5 is " +f. fact (5));
+    }
+}
+```
 This program generates the following output:
 ```
 [0] 0
