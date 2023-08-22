@@ -551,15 +551,14 @@ How a member can be accessed is determined by the _access modifier_ attached to 
 
 Java’s access modifiers are **public**, **private**, and **protected**. Java also defines a default access level. **protected** applies only when inheritance is involved. The other access modifiers are described next.
 
-Let’s begin by defining **public** and **private**. When a member of a class is  
-
-modified by **public**, then that member can be accessed by any other code. When a member of a class is specified as **private**, then that member can only be accessed by other members of its class. Now you can understand why **main()** has always been preceded by the **public** modifier. It is called by code that is outside the program—that is, by the Java run-time system. When no access modifier is used, then by default the member of a class is public within its own package, but cannot be accessed outside of its package. (Packages are discussed in Chapter 9.)
+Let’s begin by defining **public** and **private**. When a member of a class is modified by **public**, then that member can be accessed by any other code. When a member of a class is specified as **private**, then that member can only be accessed by other members of its class. Now you can understand why **main()** has always been preceded by the **public** modifier. It is called by code that is outside the program—that is, by the Java run-time system. When no access modifier is used, then by default the member of a class is public within its own package, but cannot be accessed outside of its package. (Packages are discussed in Chapter 9.)
 
 In the classes developed so far, all members of a class have used the default access mode. However, this is not what you will typically want to be the case. Usually, you will want to restrict access to the data members of a class— allowing access only through methods. Also, there will be times when you will want to define methods that are private to a class.
 
 An access modifier precedes the rest of a member’s type specification. That is, it must begin a member’s declaration statement. Here is an example:
 
-*public int i;
+*
+public int i;
 
 private double j;
 
@@ -567,19 +566,118 @@ private int myMethod(int a, char b) { //...
 *
 
 To understand the effects of public and private access, consider the following program:  
-
+```
+/* This program demonstrates the difference between public and private. */
+class Test 
+{
+    int a; // default access 
+    public int b; // public access 
+    private int c; // private access
+    
+    // methods to access c 
+    void setc (int i) 
+    { 
+        // set c's value 
+        c = i;
+    }
+    int getc() 
+    { 
+        // get c's value 
+        return c;
+    }
+}
+class AccessTest 
+{
+    public static void main(String args[]) 
+    { 
+        Test ob = new Test();
+        // These are OK, a and b may be accessed directly 
+        ob.a = 10;
+        ob.b = 20;
+        // This is not OK and will cause an error 
+        //ob.c = 100; // Error!
+        // You must access c through its methods
+        ob.setc (100); // OK 
+        System.out.println("a, b, and c: " + ob.a +ob.b+ " " + ob.getc());
+    }
+}
+```
 As you can see, inside the **Test** class, **a** uses default access, which for this example is the same as specifying **public**. **b** is explicitly specified as **public**. Member **c** is given private access. This means that it cannot be accessed by code outside of its class. So, inside the **AccessTest** class, **c** cannot be used directly. It must be accessed through its public methods: **setc()** and **getc()**. If you were to remove the comment symbol from the beginning of the following line,
-
+*
 // ob.c = 100; // Error!
-
+*
 then you would not be able to compile this program because of the access violation.
 
 To see how access control can be applied to a more practical example, consider the following improved version of the **Stack** class shown at the end of Chapter 6.  
+```
+// This class defines an integer stack that can hold 10 values. 
+class Stack 
+{
+    /* Now, both stck and tos are private. This means that they cannot be accidentally or maliciously altered in a way that would be harmful to the stack.*/ 
+    private int stck[] = new int[10]; 
+    private int tos;
+    
+    // Initialize top-of-stack 
+    Stack() 
+    {
+        tos = -1;   
+    }
 
+    // Push an item onto the stack
+    void push (int item) 
+    {
+           if (tos==9)
+            System.out.println("Stack is full.");
+            else
+            stck [++tos] = item;
+    }
+
+    int pop()
+    { 
+        if (tos < 0) 
+        {
+          // Pop an item from the stack 
+          System.out.println("Stack underflow.");
+          return 0;
+        } 
+        else
+          return stck [tos--];
+    }
+}
+```
 As you can see, now both **stck**, which holds the stack, and **tos**, which is the index of the top of the stack, are specified as **private**. This means that they cannot be accessed or altered except through **push()** and **pop()**. Making **tos** private, for example, prevents other parts of your program from inadvertently setting it to a value that is beyond the end of the **stck** array.
 
 The following program demonstrates the improved **Stack** class. Try removing the commented-out lines to prove to yourself that the **stck** and **tos** members are, indeed, inaccessible.
-
+```
+class TestStack 
+{
+    public static void main(String args[]) 
+    {
+        Stack mystack1= new Stack();
+        Stack mystack2= new Stack();
+        
+        // push some numbers onto the stack 
+        for (int i=0; i<10; i++) 
+        mystack1.push(i); 
+        for (int i=10; i<20; i++) 
+        mystack2.push(i);
+        
+        // pop those numbers off the stack 
+        System.out.println("Stack in mystack1: "); 
+        for (int i=0; i<10; i++) 
+        System.out.println (mystack1.pop());
+        
+        System.out.println("Stack in mystack2: ");
+        
+        for (int i=0; i<10; i++)
+        System.out.println (mystack2.pop());
+        
+        // these statements are not legal
+        //mystack1.tos = -2;
+        //mystack2.stck [3]= 100;
+    }
+}
+```
 Although methods will usually provide access to the data defined by a class, this does not always have to be the case. It is perfectly proper to allow an instance variable to be public when there is good reason to do so. For example, most of the simple classes in this book were created with little concern about controlling access to instance variables for the sake of simplicity. However, in most real-world classes, you will need to allow operations on data only through methods. The next chapter will return to the topic of access control. As you will see, it is particularly important when inheritance is involved.
 
 ## Understanding static
@@ -594,7 +692,30 @@ Methods declared as **static** have several restrictions:
 - They cannot refer to **this** or **super** in any way. (The keyword **super** relates to inheritance and is described in the next chapter.)
 
 If you need to do computation in order to initialize your **static** variables, you can declare a **static** block that gets executed exactly once, when the class is first loaded. The following example shows a class that has a **static** method, some **static** variables, and a **static** initialization block:  
-
+```
+// Demonstrate static variables, methods, and blocks.
+class UseStatic 
+{ 
+    static int a = 3;
+    static int b;
+    
+    static void meth (int x) 
+    {
+        System.out.println("x + x);
+        System.out.println("a = + a);
+        System.out.println("b = + b);
+    }
+    static 
+    {
+        System.out.println("Static block initialized.");
+        b = a * 4;
+    }
+    public static void main(String args[]) 
+    { 
+        meth (42);
+    }
+}
+```
 As soon as the **UseStatic** class is loaded, all of the **static** statements are run. First, **a** is set to **3**, then the **static** block executes, which prints a message and then initializes **b** to **a*4** or **12**. Then **main()** is called, which calls **meth()**, passing **42** to **x**. The three **println()** statements refer to the two **static** variables **a** and **b**, as well as to the parameter **x**.
 
 Here is the output of the program:
@@ -615,7 +736,25 @@ classname.method()
 Here, classname is the name of the class in which the **static** method is declared. As you can see, this format is similar to that used to call non-**static** methods through object-reference variables. A **static** variable can be accessed in the same way—by use of the dot operator on the name of the class. This is how Java implements a controlled version of global methods and global variables.
 
 Here is an example. Inside **main()**, the **static** method **callme()** and the **static** variable **b** are accessed through their class name **StaticDemo**.
-
+```
+class StaticDemo 
+{
+    static int a = 42; 
+    static int b = 99;
+    static void callme() 
+    { 
+        System.out.println("a + a);
+    }
+}
+class StaticByName 
+{
+    public static void main(String args[]) 
+    { 
+        StaticDemo.callme();
+        System.out.println("b = " + StaticDemo.b);
+    }
+}
+```
 Here is the output of this program:
 ```
 a = 42
@@ -646,7 +785,22 @@ The keyword **final** can also be applied to methods, but its meaning is substan
 ## Arrays Revisited
 
  Arrays were introduced earlier in this book, before classes had been discussed. Now that you know about classes, an important point can be made about arrays: they are implemented as objects. Because of this, there is a special array attribute that you will want to take advantage of. Specifically, the size of an array—that is, the number of elements that an array can hold—is found in its **length** instance variable. All arrays have this variable, and it will always hold the size of the array. Here is a program that demonstrates this property:  
+```
+// This program demonstrates the length array member. 
+class Length 
+{
+    public static void main(String args[]) 
+    {
+        int al[] = new int[10];
+        int a2[] = {3, 5, 7, 1, 8, 99, 44, -10};
+        int a3 [] = {4, 3, 2, 1};
 
+        System.out.println("length of al is " + al.length); 
+        System.out.println("length of a2 is " + a2.length); 
+        System.out.println("length of a3 is " +a3.length);
+    }
+}
+```
 This program displays the following output:
 ```
 length of a1 is 10
@@ -659,7 +813,65 @@ length of a3 is 4
 As you can see, the size of each array is displayed. Keep in mind that the value of **length** has nothing to do with the number of elements that are actually in use. It only reflects the number of elements that the array is designed to hold.
 
 You can put the **length** member to good use in many situations. For example, here is an improved version of the **Stack** class. As you might recall, the earlier versions of this class always created a ten-element stack. The following version lets you create stacks of any size. The value of **stck.length** is used to prevent the stack from overflowing.  
+```
+// Improved Stack class that uses the length array member. 
+class Stack 
+{
+    private int atck []; 
+    private int tos:
 
+    // allocate and initialize stack 
+    Stack (int size) 
+    { 
+        stck= new int[size];
+        tos=-1;
+    }
+        
+    // Push an item onto the stack 
+    void push (int item)
+    {
+        if (tos==stck.length-1) // use length member 
+            System.out.println("Stack is full.");
+        else 
+            stok [++tos] = item;
+    }
+
+    // Pop an item from the stack
+    int pop() 
+    { 
+        if (tos 0) 
+        {
+           System.out.println("Stack underflow.")/2 
+            return 0;
+        }
+        else
+            return stck [tos--];
+    }
+}
+class TestStack2 
+{
+    public static void main(String args[]) 
+    { 
+        Stack mystack1= new Stack (5);
+        Stack mystack2= new Stack (8);
+
+        // push some numbers onto the stack 
+        for(int i=0; i<5; i++) 
+        mystacki.push(1); 
+        for (int i=0; i<8; i++) 
+        mystack2.push(i);
+
+        // pop those numbers off the stack 
+        System.out.println("Stack in mystackl: "); 
+        for (int i=0; i<5; 1++)
+        System.out.println(mystacki.pop());
+        
+        System.out.println("Stack in mystack2: ");
+        for (int i=0; i<8; i++)
+        System.out.println(mystack2.pop());
+    }
+}
+```
 Notice that the program creates two stacks: one five elements deep and the other eight elements deep. As you can see, the fact that arrays maintain their own length information makes it easy to create stacks of any size.
 
 ## Introducing Nested and Inner Classes
@@ -671,7 +883,35 @@ There are two types of nested classes: static and _non-static_. A static nested 
 The most important type of nested class is the inner class. An inner class is a non-static nested class. It has access to all of the variables and methods of its outer class and may refer to them directly in the same way that other non-static members of the outer class do.
 
 The following program illustrates how to define and use an inner class. The class named **Outer** has one instance variable named **outer_x**, one instance method named **test()**, and defines one inner class called **Inner**.  
-
+```
+// Demonstrate an inner class.
+class Outer 
+{ 
+    int outer_x = 100;
+    void test ()
+    {
+        Inner inner = new Inner(); 
+        inner.display();
+    }
+    
+    // this is an inner class 
+    class Inner 
+    { 
+        void display() 
+        { 
+            System.out.println("display: outer_x = 11 + outer_x) ;
+        }
+    }
+}
+class InnerClassDemo 
+{
+    public static void main(String args[]) 
+    { 
+        Outer outer = new Outer(); 
+        outer.test();
+    }
+}
+```
 Output from this application is shown here:
 *
 display: outer_x = 100
@@ -683,13 +923,78 @@ It is important to realize that an instance of **Inner** can be created only in 
 As explained, an inner class has access to all of the members of its enclosing  
 
 As explained, an inner class has access to all of the members of its enclosing class, but the reverse is not true. Members of the inner class are known only within the scope of the inner class and may not be used by the outer class. For example,
+```
+// This program will not compile. 
+class Outer 
+{ 
+    int outer_x = 100;
 
+    void test () 
+    {
+        Inner inner = new Inner(); 
+        inner.display();
+    }
+    
+    // this is an inner class 
+    class Inner 
+    { 
+        int y 10; // y is local to Inner
+        
+        void display() 
+        { 
+            System.out.println("display: outer_x = + outer_x);
+        }
+    }
+    void showy() 
+    { 
+        System.out.println(y); // error, y not known here!
+    }
+}
+class InnerClassDemo 
+{
+    public static void main(String args[]) 
+    { 
+        Outer outer = new Outer(); 
+        outer.test();
+    }
+}
+```
 Here, **y** is declared as an instance variable of **Inner**. Thus, it is not known outside of that class and it cannot be used by **showy()**.
 
 Although we have been focusing on inner classes declared as members within an outer class scope, it is possible to define inner classes within any block scope. For example, you can define a nested class within the block  
 
 defined by a method or even within the body of a **for** loop, as this next program shows:
-
+```
+// Define an inner class within a for loop.
+class Outer 
+{
+    int outer_x = 100; 
+    
+    void test () 
+    {
+        for (int i=0; i<10; i++) 
+        { 
+            class Inner 
+            { 
+                void display() 
+                {
+                    System.out.println("display: outer_x = + outer_x);
+                }
+            }
+        Inner inner = new Inner();
+        inner.display();
+        }
+    }
+}
+class InnerClassDemo 
+{
+    public static void main(String args[]) 
+    { 
+        Outer outer = new Outer();
+        outer.test();
+    }
+}
+```
 The output from this version of the program is shown here:
 ```
 display: outer_x = 100
@@ -745,7 +1050,21 @@ Java defines one operator for **String** objects: **+**. It is used to concatena
 String myString = "I" + " like " + "Java.";
 *
 results in **myString** containing "I like Java." The following program demonstrates the preceding concepts:
-
+```
+// Demonstrating Strings.
+class StringDemo 
+{
+    public static void main(String args[]) 
+    {
+        String strobl = "First String";
+        String strob2 = "Second String";
+        String str0b3 = strobl + " and " + str0b2;
+        System.out.println(strobl);
+        System.out.println(strob2);
+        System.out.println(str0b3);
+    }
+}
+```
 The output produced by this program is shown here:
 ```
 First String
@@ -759,9 +1078,30 @@ The **String** class contains several methods that you can use. Here are a few. 
 boolean equals(secondStr) int length() char charAt(index)
 
 Here is a program that demonstrates these methods:  
-
+```
+// Demonstrating some String methods. 
+class StringDemo2 
+{
+    public static void main(String args[]) 
+    {
+        String strobl = "First String";
+        String strob2 = "Second String";
+        String str0b3 = strobl;
+        System.out.println("Length of strobl: strobl.length());
+        System.out.println("Char at index 3 in strobl: " strobl.charAt (3));
+        if (strobl.equals (str0b2)) 
+            System.out.println("strobl == str0b2");
+        else
+            System.out.println("strobl != str0b2");
+        if (strobl.equals (str0b3))
+            System.out.println("strobl == str0b3"); 
+        else
+            System.out.println("strobl != str0b3");
+    }
+}
+```
 This program generates the following output:
-
+```
 Length of strOb1: 12
 
 Char at index 3 in strOb1: s
@@ -770,8 +1110,20 @@ strOb1 != strOb2
 
 strOb1 == strOb3
 
+```
 Of course, you can have arrays of strings, just like you can have arrays of any other type of object. For example:  
-
+```
+// Demonstrate String arrays.
+class String_Demo3 
+{ 
+    public static void main(String args[]) 
+    { 
+        String str[] = { "one", "two", "three" };
+        for (int i=0; i<str.length; i++)
+        System.out.println("str[" + i +"]: " + str[i]);
+    }
+}
+```
 Here is the output from this program:
 ```
 str[0]: one
@@ -787,7 +1139,16 @@ As you will see in the following section, string arrays play an important part i
 ## Using Command-Line Arguments
 
 Sometimes you will want to pass information into a program when you run it. This is accomplished by passing _command-line arguments_ to **main()**. A command-line argument is the information that directly follows the program’s name on the command line when it is executed. To access the command-line arguments inside a Java program is quite easy—they are stored as strings in a **String** array passed to the **args** parameter of **main()**. The first command-line argument is stored at **args[0]**, the second at **args[1]**, and so on. For example, the following program displays all of the command-line arguments that it is called with:  
-
+```
+//Display All Command - Line Arguments 
+class CommandLine 
+{
+    public static void main(String args[]){
+        for(int i=0;i<args.length;i++)
+            System.out.println("args [ "+i+" ] : "+args[i]);
+    }
+}
+```
 Try executing this program, as shown here:
 
 java CommandLine this is a test 100 -1
@@ -818,7 +1179,31 @@ Situations that require that a variable number of arguments be passed to a metho
 Prior to JDK 5, variable-length arguments could be handled two ways, neither of which was particularly pleasing. First, if the maximum number of arguments was small and known, then you could create overloaded versions of the method, one for each way the method could be called. Although this works and is suitable for some cases, it applies to only a narrow class of situations.
 
 In cases where the maximum number of potential arguments was larger, or unknowable, a second approach was used in which the arguments were put into an array, and then the array was passed to the method. This approach, which you may still find in older legacy code, is illustrated by the following program:  
-
+```
+// Use an array to pass a variable number of 
+// arguments to a method. This is the old-style
+// approach to variable-length arguments.
+class PassArray 
+{
+    static void vaTest (int v[]) 
+    {
+        System.out.print ("Number of args: + v.length + "Contents: ");
+        for (int x : v) 
+            System.out.print (x+" ");
+        System.out.println();
+    }
+public static void main(String args[])
+{
+// Notice how an array must be created to // hold the arguments.
+int ni[] = {10};
+int n2[] = {1, 2, 3 };
+int n3 []= { };
+vaTest (nl); // 1 arg
+vaTest (n2); // 3 args
+vaTest (n3); // no args
+}
+}
+```
 The output from the program is shown here:
 ```
 Number of args: 1 Contents: 10
@@ -828,7 +1213,7 @@ Number of args: 3 Contents: 1 2 3
 Number of args: 0 Contents:
 
 ```
-In the program, the method **vaTest()** is passed its arguments through the array **v**. This old-style approach to variable-length arguments does enable **vaTest()** to take an arbitrary number of arguments. However, it requires that these arguments be manually packaged into an array prior to calling **vaTest()**. Not only is it tedious to construct an array each time **vaTest()** is called, it is potentially error-prone. The varargs feature offers a simpler, better option.
+In the program, the method **vaTest()** is passed its arguments through the array * *v**. This old-style approach to variable-length arguments does enable **vaTest()** to take an arbitrary number of arguments. However, it requires that these arguments be manually packaged into an array prior to calling **vaTest()**. Not only is it tedious to construct an array each time **vaTest()** is called, it is potentially error-prone. The varargs feature offers a simpler, better option.
 
 A variable-length argument is specified by three periods (**…**). For example,  
 
@@ -837,7 +1222,28 @@ here is how **vaTest()** is written using a vararg:
 static void vaTest(int ... v) {
 
 This syntax tells the compiler that **vaTest()** can be called with zero or more arguments. As a result, **v** is implicitly declared as an array of type **int[ ]**. Thus, inside **vaTest()**, **v** is accessed using the normal array syntax. Here is the preceding program rewritten using a vararg:
-
+```
+// Demonstrate variable-length arguments.
+class VarArgs 
+{
+    // vaTest() now uses a vararg. 
+    static void vaTest (int ... v) 
+    { 
+        System.out.print ("Number of args: " + v.length + "Contents: ");
+        for (int x : v)
+        System.out.print (x + " ");
+        System.out.println();
+    }
+    public static void main(String args[]) 
+    {
+        // Notice how vaTest() can be called with a 
+        // variable number of arguments. 
+        vaTest (10); // 1 arg
+        vaTest (1, 2, 3); // 3 args
+        vaTest();  // no args
+    }
+}
+```
 The output from the program is the same as the original version. There are two important things to notice about this program. First, as explained, inside **vaTest()**, **v** is operated on as an array. This is because **v** is an array. The … syntax simply tells the compiler that a variable number of arguments will be used, and that these arguments will be stored in the array referred to by **v**. Second, in **main()**, **vaTest()** is called with different numbers of arguments, including no arguments at all. The arguments are automatically put in an array and passed to **v**. In the case of no arguments, the length of the array is zero.
 
 A method can have “normal” parameters along with a variable-length parameter. However, the variable-length parameter must be the last parameter declared by the method. For example, this method declaration is perfectly acceptable:
@@ -865,7 +1271,28 @@ morevals) { // Error!
 The attempt to declare the second varargs parameter is illegal. Here is a reworked version of the **vaTest()** method that takes a regular
 
 argument and a variable-length argument:  
+```
+// Use varargs with standard arguments. 
+class VarArgs2 
+{
 
+    // Here, msg is a normal parameter and v is a 
+    // varargs parameter.
+    static void vaTest (String msg, int ... v) 
+    { 
+        System.out.print (msg + v.length + "Contents: ");
+        for (int x : v) 
+            System.out.print (x+" ");
+        System.out.println();
+    }
+    public static void main(String args[]) 
+    {
+        vaTest("One vararg: ", 10);
+        vaTest("Three varargs: ", 1, 2, 3);
+        vaTest("No varargs: "); 
+    }
+}
+```
 The output from this program is shown here:
 ```
 One vararg: 1 Contents: 10
@@ -878,7 +1305,40 @@ No varargs: 0 Contents:
 ## Overloading Vararg Methods
 
  You can overload a method that takes a variable-length argument. For example, the following program overloads **vaTest()** three times:  
-
+```
+// Varargs and overloading. 
+class VarArgs 
+{
+    static void vaTest (int... v) 
+    {
+        System.out.print ("vaTest (int ...) : "Number of args : "+v.length+"Contents:");
+        for (int x : v)
+        System.out.print (x+" ");
+        
+        System.out.println();
+    }
+    static void vaTest (boolean ... v) 
+    { 
+        System.out.print ("vaTest (boolean ...)"+"Number of args: "+v.length+"Contents:);
+        for (boolean x : v) 
+            System.out.print (x+" ");
+        System.out.println();
+    }
+    static void vaTest (String msg, int... v) 
+    { 
+        System.out.print ("vaTest (String, int...): " + msg v.length +Contents: ");
+        for (int x : v)
+            System.out.print (x +" ");
+        System.out.println();
+    }
+    public static void main(String args[])
+    {
+        vaTest(1, 2, 3);
+        vaTest("Testing: ", 10, 20); 
+        vaTest(true, false, false);
+    }
+}
+```
 The output produced by this program is shown here:
 ```
 vaTest(int ...): Number of args: 3 Contents: 1 2 3
@@ -901,19 +1361,48 @@ The second way to overload a varargs method is to add one or more normal paramet
 ## Varargs and Ambiguity
 
  Somewhat unexpected errors can result when overloading a method that takes a variable-length argument. These errors involve ambiguity because it is possible to create an ambiguous call to an overloaded varargs method. For example, consider the following program:  
-
+```
+// Varargs, overloading, and ambiguity.
+// This program contains an error and will
+// not compile! 
+class VarArgs4 
+{
+    static void vaTest(int... v) 
+    {
+        System.out.print ("vaTest (int...): "+"Number of args: "+v.length+"Contents: ");
+        for (int x : V)
+            System.out.print (x+" ");
+        System.out.println();
+    }
+    static void vaTest (boolean ... v) 
+    { 
+        System.out.print ("vaTest (Boolean ...): "+"Number of args: "+v.length+"Contents: ");
+        for (boolean x : v)
+            System.out.print(x + " ");
+        
+        System.out.println();
+    }
+    public static void main(String args[])
+    {
+    vaTest(1, 2, 3); // OK
+    vaTest (true, false, false); // OK
+    vaTest(); // Error: Ambiguous!
+    }
+}
+```
 In this program, the overloading of **vaTest()** is perfectly correct. However, this program will not compile because of the following call:  
-
+```
 vaTest(); // Error: Ambiguous!
+```
 
 Because the vararg parameter can be empty, this call could be translated into a call to **vaTest(int …)** or **vaTest(boolean …)**. Both are equally valid. Thus, the call is inherently ambiguous.
 
 Here is another example of ambiguity. The following overloaded versions of **vaTest()** are inherently ambiguous even though one takes a normal parameter:
-
+*
 static void vaTest(int ... v) { // ...
 
 static void vaTest(int n, int ... v) { // ...
-
+*
 Although the parameter lists of **vaTest()** differ, there is no way for the compiler to resolve the following call:
 
 vaTest(1)
@@ -947,7 +1436,36 @@ var x = o.getNext();
 In this case, it may not be immediately clear to someone reading your code what the type of **x** is. In essence, local variable type inference is a feature that you should use wisely.
 
 As you would expect, you can also use local variable type inference with user-defined classes, as the following program illustrates. It creates a class called **MyClass** and then uses local variable type inference to declare and initialize an object of that class.  
-
+```
+// Local variable type inference with a user-defined class type. 
+class MyClass
+{ 
+    private int i;
+    MyClass (int k) 
+    { 
+        i = k; 
+    }
+    int geti() 
+    { 
+        return i; 
+    } 
+    void seti (int k) 
+    { 
+        if(k >= 0) 
+        i = k; 
+    }
+}
+class RefVarDemo 
+{
+    public static void main(String args[]) 
+    { 
+        var mc = new MyClass (10); // Notice the use of var here.
+        System.out.println("Value of i in mc is "+mc.geti ()); 
+        mc.seti (19); 
+        System.out.println("Value of i in mc is now "+mc.geti ());
+    }
+}
+```
 The output of the program is shown here:
 ```
 Value of i in mc is 10
