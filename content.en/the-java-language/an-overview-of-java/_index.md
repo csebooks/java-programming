@@ -55,7 +55,6 @@ Since mammals are simply more precisely specified animals, they inherit all of t
 Inheritance interacts with encapsulation as well. If a given class encapsulates some attributes, then any subclass will have the same attributes plus any that it adds as part of its specialization (see Figure 2-2). This is a key concept that lets object-oriented programs grow in complexity linearly rather than geometrically. A new subclass inherits all of the attributes of all of its ancestors. It does not have unpredictable interactions with the majority of the rest of the code in the system.  
 ![Alt text](fig2.2.png)
 ![Alt text](fig2.2.2.png)
-**Figure 2-2** Labrador inherits the encapsulation of all its superclasses.
 
 ## Polymorphism
 
@@ -111,15 +110,15 @@ As you can see by looking at the program, the name of the class defined by the p
 ## Compiling the Program
 
 To compile the **Example** program, execute the compiler, **javac**, specifying the name of the source file on the command line, as shown here:
-*
+
 C:\\>javac Example.java
-*
+
 The **javac** compiler creates a file called **Example.class** that contains the bytecode version of the program. As discussed earlier, the Java bytecode is the intermediate representation of your program that contains instructions the Java Virtual Machine will execute. Thus, the output of **javac** is not code that can be directly executed.
 
 To actually run the program, you must use the Java application launcher called **java**. To do so, pass the class name **Example** as a command-line argument, as shown here:
-*
+
 C:\\>java Example
-*
+
 When the program is run, the following output is displayed:
 
 This is a simple Java program.
@@ -145,9 +144,9 @@ This is a comment. Like most other programming languages, Java lets you enter a 
 Java supports three styles of comments. The one shown at the top of the program is called a _multiline comment_. This type of comment must begin with /* and end with */. Anything between these two comment symbols is ignored by the compiler. As the name suggests, a multiline comment may be several lines long.
 
 The next line of code in the program is shown here:
-*
+
 class Example {
-*
+
 This line uses the keyword **class** to declare that a new class is being defined. **Example** is an identifier that is the name of the class. The entire class definition, including all of its members, will be between the opening curly brace ({) and the closing curly brace (}). For the moment, don’t worry too much about the details of a class except to note that in Java, all program activity occurs within one. This is one reason why all Java programs are (at least a little bit) object-oriented.
 
 The next line in the program is the _single-line comment_, shown here:
@@ -170,9 +169,7 @@ As stated, **main()** is the method called when a Java application begins. Keep 
 
 Any information that you need to pass to a method is received by variables specified within the set of parentheses that follow the name of the method. These variables are called parameters. If there are no parameters required for a given method, you still need to include the empty parentheses. In **main()**, there is only one parameter, albeit a complicated one. **String args[ ]** declares a parameter named **args**, which is an array of instances of the class **String**. (Arrays are collections of similar objects.) Objects of type **String** store character strings. In this case, **args** receives any command-line arguments present when the program is executed. This program does not make use of this information, but other programs shown later in this book will.
 
-The last character on the line is the {. This signals the start of **main()**’s  
-
-body. All of the code that comprises a method will occur between the method’s opening curly brace and its closing curly brace.
+The last character on the line is the {. This signals the start of **main()**’s body. All of the code that comprises a method will occur between the method’s opening curly brace and its closing curly brace.
 
 One other point: **main()** is simply a starting place for your program. A complex program will have dozens of classes, only one of which will need to have a **main()** method to get things started. Furthermore, for some types of programs, you won’t need **main()** at all. However, for most of the programs shown in this book, **main()** is required.
 
@@ -219,27 +216,27 @@ This is num: 100
 The value of num * 2 is 200
 ```
 Let’s take a close look at why this output is generated. The first new line in the program is shown here:
-*
+
 int num; // this declares a variable called num
-*
+
 This line declares an integer variable called **num**. Java (like most other languages) requires that variables be declared before they are used.
 
 Following is the general form of a variable declaration:
-*
+
 _type var-name;_
-*
+
 Here, type specifies the type of variable being declared, and _var-name_ is the name of the variable. If you want to declare more than one variable of the specified type, you may use a comma-separated list of variable names. Java defines several data types, including integer, character, and floating-point. The keyword **int** specifies an integer type.
 
 In the program, the line
-*
+
 num = 100; // this assigns num the value 100
-*
+
 assigns to **num** the value 100. In Java, the assignment operator is a single equal sign.
 
 The next line of code outputs the value of **num** preceded by the string "This is num:".
-*
+
 System.out.println("This is num: " + num);
-*
+
 In this statement, the plus sign causes the value of **num** to be appended to the string that precedes it, and then the resulting string is output. (Actually, **num** is first converted from an integer into its string equivalent and then concatenated with the string that precedes it. This process is described in detail later in this book.) This approach can be generalized. Using the + operator, you can join together as many items as you want within a single **println()** statement.
 
 The next line of code assigns **num** the value of **num** times 2. Like most other languages, Java uses the * operator to indicate multiplication. After this line executes, **num** will contain the value 200.
@@ -364,17 +361,17 @@ This is x: 9
 In this example, **x** is the loop control variable. It is initialized to zero in the initialization portion of the **for**. At the start of each iteration (including the first one), the conditional test **x < 10** is performed. If the outcome of this test is true, the **println()** statement is executed, and then the iteration portion of the loop is executed, which increases **x** by 1. This process continues until the conditional test is false.
 
 As a point of interest, in professionally written Java programs you will almost never see the iteration portion of the loop written as shown in the preceding program. That is, you will seldom see statements like this:
-*
+
 x = x + 1;
-*
+
 The reason is that Java includes a special increment operator which performs this operation more efficiently. The increment operator is ++. (That is, two plus signs back to back.) The increment operator increases its operand by one. By use of the increment operator, the preceding statement can be written like this:
-*
+
 x++;
-*
+
 Thus, the **for** in the preceding program will usually be written like this:
-*
+
 for(x = 0; x<10; x++)
-*
+
 You might want to try this. As you will see, the loop still runs exactly the same as it did before.
 
 Java also provides a decrement operator, which is specified as – –. This operator decreases its operand by one.
@@ -477,8 +474,6 @@ Invalid identifier names include these:
 ## NOTE
 
  Beginning with JDK 9, the underscore cannot be used by itself as an identifier.
-## NOTE
-
 
 ## Literals
 
