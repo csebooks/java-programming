@@ -2,49 +2,34 @@
 title: 'Exploring IO'
 weight: 5
 --- 
-
-
-
-
-## CHAPTER
-
-  
-
-## 21
-
-  
-
-**Input/Output: Exploring java.io**
+#Input/Output: Exploring java.io
 
 This chapter explores **java.io**, which provides support for I/O operations. Chapter 13 presented an overview of Java’s I/O system, including basic techniques for reading and writing files, handling I/O exceptions, and closing a file. Here, we will examine the Java I/O system in greater detail.
 
 As all programmers learn early on, most programs cannot accomplish their goals without accessing external data. Data is retrieved from an input source. The results of a program are sent to an output destination. In Java, these sources or destinations are defined very broadly. For example, a network connection, memory buffer, or disk file can be manipulated by the Java I/O classes. Although physically different, these devices are all handled by the same abstraction: the stream. An I/O stream, as explained in Chapter 13, is a logical entity that either produces or consumes information. An I/O stream is linked to a physical device by the Java I/O system. All I/O streams behave in the same manner, even if the actual physical devices they are linked to differ.
 
-## NOTE
+**NOTE**
 
  The stream-based I/O system packaged in **java.io** and described in this chapter has been part of Java since its original release and is widely used. However, beginning with version 1.4, a second I/O system was added to Java. It is called NIO (which was originally an acronym for New I/O). NIO is packaged in **java.nio** and its subpackages. The NIO system is described in Chapter 22.
-## NOTE
 
-
-## NOTE
+**NOTE**
 
  It is important not to confuse the I/O streams used by the I/O system discussed here with the stream API added by JDK 8. Although conceptually related, they are two different things. Therefore, when the term stream is used in this chapter, it refers to an I/O stream.
 
-**The I/O Classes and Interfaces** The I/O classes defined by **java.io** are listed here:  
-
+#The I/O Classes and Interfaces
+The I/O classes defined by **java.io** are listed here:  
+![Alt text](image.png)
 The **java.io** package also contains two deprecated classes that are not shown in the preceding table: **LineNumberInputStream** and **StringBufferInputStream**. These classes should not be used for new code.
 
 The following interfaces are defined by **java.io**:
-
+![Alt text](image-1.png)
 As you can see, there are many classes and interfaces in the **java.io** package. These include byte and character streams, and object serialization (the storage and retrieval of objects). This chapter examines several commonly used I/O components. We begin our discussion with one of the most distinctive I/O classes: **File**.  
 
 ## File
 
  Although most of the classes defined by **java.io** operate on streams, the **File** class does not. It deals directly with files and the file system. That is, the **File** class does not specify how information is retrieved from or stored in files; it describes the properties of a file itself. A **File** object is used to obtain or manipulate the information associated with a disk file, such as the permissions, time, date, and directory path, and to navigate subdirectory hierarchies.
-## File
 
-
-## NOTE
+**NOTE**
 
  The **Path** interface and **Files** class, which are part of the NIO system, offer a powerful alternative to **File** in many cases. See Chapter 22 for details.
 
@@ -52,30 +37,39 @@ Files are a primary source and destination for data within many programs. Althou
 
 The following constructors can be used to create **File** objects:
 
-File(String directoryPath) File(String directoryPath, String filename) File(File dirObj, String filename) File(URI uriObj)
+File(String directoryPath) 
+File(String directoryPath, String filename) 
+File(File dirObj, String filename) 
+File(URI uriObj)
 
 Here, directoryPath is the path name of the file; filename is the name of the file or subdirectory; dirObj is a **File** object that specifies a directory; and uriObj is a **URI** object that describes a file.
 
 The following example creates three files: **f1**, **f2**, and **f3**. The first **File** object is constructed with a directory path as the only argument. The second includes two arguments—the path and the filename. The third includes the file path assigned to **f1** and a filename; **f3** refers to the same file as **f2**.
-
+```java
 File f1 = new File("/");
 
 File f2 = new File("/","autoexec.bat");
 
 File f3 = new File(f1,"autoexec.bat");
-
-## NOTE
+```
+**NOTE**
 
  Java does the right thing with path separators between UNIX and Windows conventions. If you use a forward slash (/) on a Windows version of Java, the path will still resolve correctly. Remember, if you are using the Windows convention of a backslash character (\\), you will need to use its escape sequence (\\\\) within a string.  
-## NOTE
 
-
-## File
-
- defines many methods that obtain the standard properties of a **File** object. For example, **getName()** returns the name of the file; **getParent()** returns the name of the parent directory; and **exists()** returns **true** if the file exists, **false** if it does not. The following example demonstrates several of the **File** methods. It assumes that a directory called **java** exists off the root directory and that it contains a file called **COPYRIGHT**.
-
+**File**defines many methods that obtain the standard properties of a **File** object. For example, **getName()** returns the name of the file; **getParent()** returns the name of the parent directory; and **exists()** returns **true** if the file exists, **false** if it does not. The following example demonstrates several of the **File** methods. It assumes that a directory called **java** exists off the root directory and that it contains a file called **COPYRIGHT**.
+```JAVA
+// Demonstrate File. import java.io.File;
+class FileDemo { static void p(String s) { System.out.println(s); }
+public static void main(String args[]) { File fl= new File("/java/COPYRIGHT");
+p("File Name : "+fl.getName()); p("Path: "+fl.getPath());
+p("Abs Path: " +fl.getAbsolutePath());
+p("Parent: +fl.getParent());
+p(fl.canWrite() ? "is writeable" : "is not writeable"); p(f1.canRead() ? "is readable" : "is not readable");
+p("is" (fl.isDirectory() ? : "not" + " a directory")); p(fl.isFile() ? "is normal file": "might be a named pipe");
+p(fl.exists() ? "exists": "does not exist"); p("File size: "+fl.length() + Bytes"); }
+p(fl.isAbsolute () ? "is absolute" : "is not absolute"); p("File last modified: " +fl.lastModified ());
 This program will produce output similar to this:
-
+```
 File Name: COPYRIGHT
 
 Path: \\java\\COPYRIGHT
@@ -102,9 +96,7 @@ File size: 695 Bytes
 
 Most of the **File** methods are self-explanatory. **isFile()** and **isAbsolute()** are not. **isFile()** returns **true** if called on a file and **false** if called on a directory. Also, **isFile()** returns **false** for some special files, such as device drivers and named pipes, so this method can be used to make sure the file will behave as a file. The **isAbsolute()** method returns **true** if the file has an absolute path and **false** if its path is relative.
 
-## File
-
- includes two useful utility methods of special interest. The first is **renameTo()**, shown here:
+**File**includes two useful utility methods of special interest. The first is **renameTo()**, shown here:
 
 boolean renameTo(File newName)
 
@@ -117,7 +109,7 @@ boolean delete()
 You can also use **delete()** to delete a directory if the directory is empty. **delete()** returns **true** if it deletes the file and **false** if the file cannot be removed.
 
 Here are some other **File** methods that you will find helpful:  
-
+![Alt text](image-2.png)
 Methods also exist to mark files as readable, writable, and executable. Because **File** implements the **Comparable** interface, the method **compareTo()** is also supported.
 
 A method of special interest is called **toPath()**, which is shown here:
@@ -135,7 +127,24 @@ String[ ] list()
 The list of files is returned in an array of **String** objects. The program shown here illustrates how to use **list()** to examine the  
 
 contents of a directory:
-
+```java
+// Using directories. import java.io.File;
+class DirList {
+public static void main(String args[]) { String dirname "/java"; = File fl= new File (dirname);
+if (fl.isDirectory()) {
+System.out.println("Directory of " String s[] fl.list(); = + dirname);
+for (int i=0; i < s.length; i++) { File = new File (dirname + "/" + s[i]);
+if (f.isDirectory()) {
+System.out.println(s[i] + " is a directory");
+} else {
+System.out.println(s[i] + is a file");
+}
+} } else {
+System.out.println (dirname + " is not a directory");
+}
+}
+}
+```
 Here is sample output from the program. (Of course, the output you see will be different, based on what is in the directory.)
 
 Directory of /java
@@ -168,21 +177,39 @@ String[ ] list(FilenameFilter FFObj)
 
 In this form, FFObj is an object of a class that implements the **FilenameFilter** interface.
 
-## FilenameFilter
-
- defines only a single method, **accept()**, which is called once for each file in a list. Its general form is given here:
+**FilenameFilter**defines only a single method, **accept()**, which is called once for each file in a list. Its general form is given here:
 
 boolean accept(File directory, String filename)
 
 The **accept()** method returns **true** for files in the directory specified by directory that should be included in the list (that is, those that match the filename argument) and returns **false** for those files that should be excluded.
 
 The **OnlyExt** class, shown next, implements **FilenameFilter**. It will be used to modify the preceding program to restrict the visibility of the filenames returned by **list()** to files with names that end in the file extension specified when the object is constructed.
+```java
+import java.io.*;
+public class OnlyExt implements FilenameFilter { String ext;
+public OnlyExt (String ext) { this.ext = "." + ext; }
+public boolean accept (File dir, String name) { return name.endsWith(ext); }
+}
+```
+The modified directory listing program is shown here. Now it will only display files that use the **.html** extension. 
+```java 
+// Directory of .HTML files. 
+import java.io.*;
+class DirListOnly { 
+public static void main(String args[]) {
+String dirname = "/java"; File fl= new File (dirname); FilenameFilter only new OnlyExt ("html"); = String s[] = fl.list (only);
+for (int i=0; i < s.length; i++) { 
+System.out.println(s [i]);
+}
+}
+}
+```
+#The listFiles() Alternative 
+There is a variation to the **list()** method, called **listFiles()**, which you might find useful. The signatures for **listFiles()** are shown here:
 
-The modified directory listing program is shown here. Now it will only display files that use the **.html** extension.  
-
-**The listFiles() Alternative** There is a variation to the **list()** method, called **listFiles()**, which you might find useful. The signatures for **listFiles()** are shown here:
-
-File[ ] listFiles() File[ ] listFiles(FilenameFilter FFObj) File[ ] listFiles(FileFilter FObj)
+File[ ] listFiles() 
+File[ ] listFiles(FilenameFilter FFObj) 
+File[ ] listFiles(FileFilter FObj)
 
 These methods return the file list as an array of **File** objects instead of strings. The first method returns all files, and the second returns those files that satisfy the specified **FilenameFilter**. Aside from returning an array of **File** objects, these two versions of **listFiles(** **)** work like their equivalent **list()** methods.
 
@@ -192,10 +219,7 @@ boolean accept(File path)
 
 The **accept()** method returns **true** for files that should be included in the list (that is, those that match the path argument) and **false** for those that should be excluded.
 
-## Creating Directories
-
-  
-
+#Creating Directories
 Another two useful **File** utility methods are **mkdir()** and **mkdirs()**. The **mkdir()** method creates a directory, returning **true** on success and **false** on failure. Failure can occur for various reasons, such as the path specified in the **File** object already exists, or the directory cannot be created because the entire path does not exist yet. To create a directory for which no path exists, use the **mkdirs()** method. It creates both a directory and all the parents of the directory.
 
 **The AutoCloseable, Closeable, and Flushable Interfaces** There are three interfaces that are quite important to the stream classes. Two are **Closeable** and **Flushable**. They are defined in **java.io**. The third, **AutoCloseable**, is packaged in **java.lang**.
@@ -218,7 +242,8 @@ Flushing a stream typically causes buffered output to be physically written to
 
 Flushing a stream typically causes buffered output to be physically written to the underlying device. This interface is implemented by all of the I/O classes that write to a stream.
 
-**I/O Exceptions** Two exceptions play an important role in I/O handling. The first is **IOException**. As it relates to most of the I/O classes described in this chapter, if an I/O error occurs, an **IOException** is thrown. In many cases, if a file cannot be opened, a **FileNotFoundException** is thrown. **FileNotFoundException** is a subclass of **IOException**, so both can be caught with a single **catch** that catches **IOException**. For brevity, this is the approach used by most of the sample code in this chapter. However, in your own applications, you might find it useful to **catch** each exception separately.
+##I/O Exceptions
+Two exceptions play an important role in I/O handling. The first is **IOException**. As it relates to most of the I/O classes described in this chapter, if an I/O error occurs, an **IOException** is thrown. In many cases, if a file cannot be opened, a **FileNotFoundException** is thrown. **FileNotFoundException** is a subclass of **IOException**, so both can be caught with a single **catch** that catches **IOException**. For brevity, this is the approach used by most of the sample code in this chapter. However, in your own applications, you might find it useful to **catch** each exception separately.
 
 Another exception class that is sometimes important when performing I/O is **SecurityException**. As explained in Chapter 13, in situations in which a security manager is present, several of the file classes will throw a **SecurityException** if a security violation occurs when attempting to open a file. By default, applications run via **java** do not use a security manager. For that reason, the I/O examples in this book do not need to watch for a possible **SecurityException**. However, other applications could generate a **SecurityException**. In such a case, you will need to handle this exception.
 
@@ -227,17 +252,17 @@ Another exception class that is sometimes important when performing I/O is **Sec
  In general, a stream must be closed when it is no longer needed. Failure to do so can lead to memory leaks and resource starvation. The techniques used to close a stream were described in Chapter 13, but because of their importance, they warrant a brief review here before the stream classes are examined.
 
 Beginning with JDK 7, there are two basic ways in which you can close a stream. The first is to explicitly call **close()** on the stream. This is the traditional approach that has been used since the original release of Java. With this approach, **close()** is typically called within a **finally** block. Thus, a simplified skeleton for the traditional approach is shown here:
-
+```java
 try { // open and access file } catch( _I/O-exception_) {  
 
 // ... } finally { // close the file }
-
+```
 This general technique (or variation thereof) is common in code that predates JDK 7.
 
 The second approach to closing a stream is to automate the process by using the **try**\-with-resources statement that was added by JDK 7. The **try**\-with- resources statement is an enhanced form of **try** that has the following form:
-
+```java
 try (_resource-specification_) { // use the resource }
-
+```
 Typically, _resource-specification_ is a statement or statements that declares and initializes a resource, such as a file or other stream-related resource. It consists of a variable declaration in which the variable is initialized with a reference to the object being managed. When the **try** block ends, the resource is automatically released. In the case of a file, this means that the file is automatically closed. Thus, there is no need to call **close()** explicitly. Beginning with JDK 9, it is also possible for the resource specification of the **try** to consist of a variable that has been declared and initialized earlier in the program. However, that variable must be effectively **final**, which means that it has not been assigned a new value after being given its initial value.
 
 Here are three key points about the **try**\-with-resources statement:
@@ -281,10 +306,10 @@ The byte stream classes provide a rich environment for handling byte-oriented I/
 ## InputStream InputStream
 
  is an abstract class that defines Java’s model of streaming byte input. It implements the **AutoCloseable** and **Closeable** interfaces. Most of the methods in this class will throw an **IOException** when an I/O error occurs. (The exceptions are **mark()** and **markSupported()**.) Table 21-1 shows the methods in **InputStream**.  
-
+![Alt text](image-3.png)
 **Table 21-1** The Methods Defined by **InputStream**
 
-## NOTE
+**NOTE**
 
  Most of the methods described in Table 21-1 are implemented by the subclasses of **InputStream**. The **mark()** and **reset()** methods are exceptions; notice their use, or lack  
 
@@ -293,7 +318,7 @@ thereof, by each subclass in the discussions that follow.
 ## OutputStream OutputStream
 
  is an abstract class that defines streaming byte output. It implements the **AutoCloseable**, **Closeable**, and **Flushable** interfaces. Most of the methods defined by this class return **void** and throw an **IOException** in the case of I/O errors. Table 21-2 shows the methods in **OutputStream**.
-
+![Alt text](image-4.png)
 **Table 21-2** The Methods Defined by **OutputStream**
 
 ## FileInputStream
@@ -305,39 +330,116 @@ FileInputStream(String filePath) FileInputStream(File fileObj)
 Either can throw a **FileNotFoundException**. Here, filePath is the full path name of a file, and fileObj is a **File** object that describes the file.
 
 The following example creates two **FileInputStream**s that use the same disk file and each of the two constructors:  
-
+```java
 FileInputStream f0 = new FileInputStream("/autoexec.bat")
 
 File f = new File("/autoexec.bat");
 
 FileInputStream f1 = new FileInputStream(f);
-
+```
 Although the first constructor is probably more commonly used, the second allows you to closely examine the file using the **File** methods, before attaching it to an input stream. When a **FileInputStream** is created, it is also opened for reading. **FileInputStream** overrides several of the methods in the abstract class **InputStream**. The **mark()** and **reset()** methods are not overridden, and any attempt to use **reset()** on a **FileInputStream** will generate an **IOException**.
 
 The next example shows how to read a single byte, an array of bytes, and a subrange of an array of bytes. It also illustrates how to use **available()** to determine the number of bytes remaining and how to use the **skip()** method to skip over unwanted bytes. The program reads its own source file, which must be in the current directory. Notice that it uses the **try**\-with-resources statement to automatically close the file when it is no longer needed.  
-
+```java
+import java.io.*;
+class FileInputStreamDemo { 
+    public static void main(String args[]) {
+int size;
+// Use try-with-resources to close the stream.
+try FileInputStream f = new FileInputStream ("FileInputStreamDemo.java") ) {
+System.out.println("Total Available Bytes: " +
+(size f.available())); =
+int n size/40;
+System.out.println("First " + n +
+"bytes of the file
+for (int i=0; i < n; i++) {
+System.out.print ((char) f.read());
+}
+System.out.println("\nStill Available: " +f.available());
+System.out.println("Reading the next " + n + "with one read (b[])");
+byte b[] = new byte[n]; if (f.read(b) != n) {
+System.err.println("couldn't read "+n+" bytes.");
+}
+System.out.println(new String (b, 0, n));
+System.out.println("\nStill Available: " + (size = f.available())); System.out.println("Skipping half of remaining bytes with skip()");
+f.skip (size/2);
+System.out.println("Still Available: " + f.available());
+System.out.println("Reading "+n/2 + "into the end of array");
+if (f.read(b, n/2, n/2) = n/2) { System.err.println("couldn't read " +n/2" bytes.");
+}
+System.out.println(new String (b, 0, b.length));
+System.out.println("\nStill Available: "+f.available()); } catch (IOException e) {
+}
+one read() at a time");
+System.out.println("I/0 Error: " + e);
+}
+}
+}
+```
 Here is the output produced by this program:
-
+```java
+Total Available Bytes: 1714 First 42 bytes of the file one read() at a time // Demonstrate FileInputStream.
+impor
+Still Available: 1672 Reading the next 42 with one read (b[]) t java.io.*;
+class FileInputStreamD
+Still Available: 1630 Reading 21 into the end of array t java.io.*;
+Skipping half of remaining bytes with skip () Still Available: 815
+c n) {
+Syst
+Still Available: 794
+```
 This somewhat contrived example demonstrates how to read three ways, to skip input, and to inspect the amount of data available on a stream.
 
-## NOTE
+**NOTE**
 
  The preceding example and the other examples in this chapter handle any I/O exceptions that might occur as described in Chapter 13. See Chapter 13 for details and alternatives.
 
 ## FileOutputStream FileOutputStream
 
  creates an **OutputStream** that you can use to write bytes to a file. It implements the **AutoCloseable**, **Closeable**, and **Flushable** interfaces. Four of its constructors are shown here:
-
-FileOutputStream(String filePath) FileOutputStream(File fileObj) FileOutputStream(String filePath, boolean append) FileOutputStream(File fileObj, boolean append)  
-
+```java
+FileOutputStream(String filePath) 
+FileOutputStream(File fileObj) 
+FileOutputStream(String filePath, boolean append) FileOutputStream(File fileObj, boolean append)  
+```java
 They can throw a **FileNotFoundException**. Here, filePath is the full path name of a file, and fileObj is a **File** object that describes the file. If append is **true**, the file is opened in append mode.
 
 Creation of a **FileOutputStream** is not dependent on the file already existing. **FileOutputStream** will create the file before opening it for output when you create the object. In the case where you attempt to open a read-only file, an exception will be thrown.
 
-The following example creates a sample buffer of bytes by first making a **String** and then using the **getBytes()** method to extract the byte array equivalent. It then creates three files. The first, **file1.txt**, will contain every other byte from the sample. The second, **file2.txt**, will contain the entire set of bytes. The third and last, **file3.txt**, will contain only the last quarter.  
-
+The following example creates a sample buffer of bytes by first making a **String** and then using the **getBytes()** method to extract the byte array equivalent. It then creates three files. The first, **file1.txt**, will contain every other byte from the sample. The second, **file2.txt**, will contain the entire set of bytes. The third and last, **file3.txt**, will contain only the last quarter. 
+```java 
+import java.io.*;
+class FileInputStreamDemo {
+public static void main(String args[]) { int size;
+// Use try-with-resources to close the stream. try FileInputStream f =
+new FileInputStream("FileInputStreamDemo.java") ) {
+System.out.println("Total Available Bytes: " + (size f.available()));
+int n = size/40;
+System.out.println("First " + n +
+"bytes of the file one read() at a time");
+for (int i=0; i < n; i++) { System.out.print ((char) f.read());
+}
+System.out.println("\nStill Available: "+f.available());
+System.out.println("Reading the next " + n +
+"with one read (b[])");
+byte b[] = new byte[n]; if (f.read(b) != n) {
+System.err.println("couldn't read "+n+" bytes.");
+}
+System.out.println(new String (b, 0, n));
+System.out.println("\nStill Available: " + (size = f.available())); System.out.println("Skipping half of remaining bytes with skip()");
+f.skip (size/2);
+System.out.println("Still Available: "+f.available());
+System.out.println("Reading "+n/2" into the end of array"); if (f.read(b, n/2, n/2) != n/2) { System.err.println("couldn't read " +n/2" bytes.");
+}
+System.out.println(new String (b, 0, b.length));
+System.out.println("\nStill Available: "+f.available());
+} catch (IOException e) { System.out.println("I/O Error: " + e);
+}
+}
+}
+}
 Here are the contents of each file after running this program. First, **file1.txt**:
-
+```java
 Nwi h iefralgo e
 
 t oet h i ftercuty n a hi u ae.
@@ -353,15 +455,33 @@ and pay their due taxes.
 Finally, **file3.txt**:
 
 nd pay their due taxes.
+```
+As the comment at the top of the program states, the preceding program shows an example that uses the traditional approach to closing a file when it is no longer needed. This approach is required by all versions of Java prior to JDK 7 and is widely used in legacy code. As you can see, quite a bit of rather awkward code is required to explicitly call **close()** because each call could generate an **IOException** if the close operation fails. This program can be substantially improved by using the **try**\-with-resources statement. For comparison, here is the revised version. Notice that it is much shorter and streamlined: 
+```java 
+// Demonstrate FileOutputStream.
+// This version uses try-with-resources.
+import java.io.*;
+class FileOutputStreamDemo {
+public static void main(String args[]) { String source = "Now is the time for all good men\n"
++" to come to the aid of their country\n" +" and pay their due taxes."; byte buf[] source.getBytes();
+// Use try-with-resources to close the files. try (FileOutputStream fo= new FileOutputStream("filel.txt"); FileOutputStream fl= new FileOutputStream("file2.txt"); FileOutputStream f2 = new FileOutputStream("file3.txt"))
+{
+// write to first file
+for (int i=0; i < buf.length; i+= 2) fo.write(buf[i]);
+// write to second file
+fl.write(buf);
+// write to third file
+f2.write(buf, buf.length-buf.length/4, buf.length/4); } catch (IOException e) { System.out.println("An I/O Error Occurred");
+}
+}
+}
+## ByteArrayInputStream 
 
-As the comment at the top of the program states, the preceding program shows an example that uses the traditional approach to closing a file when it is no longer needed. This approach is required by all versions of Java prior to JDK 7 and is widely used in legacy code. As you can see, quite a bit of rather awkward code is required to explicitly call **close()** because each call could generate an **IOException** if the close operation fails. This program can be substantially improved by using the **try**\-with-resources statement. For comparison, here is the revised version. Notice that it is much shorter and streamlined:  
-
-## ByteArrayInputStream ByteArrayInputStream
-
- is an implementation of an input stream that uses a byte array as the source. This class has two constructors, each of which requires a byte array to provide the data source:
-
-ByteArrayInputStream(byte array [ ]) ByteArrayInputStream(byte array [ ], int start, int numBytes)
-
+**ByteArrayInputStream**is an implementation of an input stream that uses a byte array as the source. This class has two constructors, each of which requires a byte array to provide the data source:
+```java
+ByteArrayInputStream(byte array [ ]) 
+ByteArrayInputStream(byte array [ ], int start, int numBytes)
+```
 Here, array is the input source. The second constructor creates an **InputStream** from a subset of the byte array that begins with the character at the index  
 
 specified by start and is numBytes long. The **close()** method has no effect on a **ByteArrayInputStream**. Therefore,
@@ -369,7 +489,15 @@ specified by start and is numBytes long. The **close()** method has no effect on
 it is not necessary to call **close()** on a **ByteArrayInputStream**, but doing so is not an error.
 
 The following example creates a pair of **ByteArrayInputStream**s, initializing them with the byte representation of the alphabet:
-
+```java
+// Demonstrate ByteArrayInputStream. import java.io.*;
+class ByteArrayInputStreamDemo { public static void main(String args[]) {
+String tmp = "abcdefghijklmnopqrstuvwxyz"; byte b[] = tmp.getBytes();
+ByteArrayInputStream input1 = new ByteArrayInputStream (b);
+ByteArrayInputStream input2 = new ByteArrayInputStream (b, 0,3);
+}
+}
+```
 The **input1** object contains the entire lowercase alphabet, whereas **input2** contains only the first three letters.
 
 A **ByteArrayInputStream** implements both **mark()** and **reset()**. However, if **mark()** has not been called, then **reset()** sets the stream pointer to the start of the stream—which, in this case, is the start of the byte array passed to the constructor. The next example shows how to use the **reset()** method to read the same input twice. In this case, the program reads and prints the letters "abc" once in lowercase and then again in uppercase.  
@@ -383,9 +511,10 @@ ABC
 ## ByteArrayOutputStream ByteArrayOutputStream
 
  is an implementation of an output stream that uses a byte array as the destination. **ByteArrayOutputStream** has two constructors, shown here:
-
-ByteArrayOutputStream() ByteArrayOutputStream(int numBytes)
-
+```java
+ByteArrayOutputStream() 
+ByteArrayOutputStream(int numBytes)
+```
 In the first form, a buffer of 32 bytes is created. In the second, a buffer is created with a size equal to that specified by numBytes. The buffer is held in the protected **buf** field of **ByteArrayOutputStream**. The buffer size will be  
 
 increased automatically, if needed. The number of bytes held by the buffer is contained in the protected **count** field of **ByteArrayOutputStream**.
@@ -393,7 +522,28 @@ increased automatically, if needed. The number of bytes held by the buffer is co
 The **close()** method has no effect on a **ByteArrayOutputStream**. Therefore, it is not necessary to call **close()** on a **ByteArrayOutputStream**, but doing so is not an error.
 
 The following example demonstrates **ByteArrayOutputStream**:  
-
+```java
+// Demonstrate ByteArrayOutputStream.
+import java.io.*;
+class ByteArrayOutputStreamDemo {
+public static void main(String args[]) { ByteArrayOutputStream f = new ByteArrayOutputStream(); String = "This should end up in the array"; byte buf[] = s.getBytes();
+try {
+f.write(buf);
+} catch (IOException e) { System.out.println("Error Writing to Buffer"); return;
+}
+System.out.println("Buffer as a string"); System.out.println(f.toString()); System.out.println("Into array"); byte b[]= f.toByteArray(); for (int i=0; i<b.length; i++) System.out.print ((char) b[i]);
+System.out.println("\nTo an OutputStream()");
+// Use try-with-resources to manage the file stream. try FileOutputStream f2 = new FileOutputStream("test.txt")) {
+f.writeTo(f2);
+} catch (IOException e) { System.out.println("I/O Error: " + e); return;
+}
+System.out.println("Doing a reset");
+f.reset();
+for (int i=0; i<3; i++) f.write('X');
+System.out.println(f.toString());
+}
+}
+```
 When you run the program, you will create the following output. Notice how after the call to **reset()**, the three X’s end up at the beginning.
 
 Buffer as a string
@@ -428,13 +578,8 @@ The methods provided in these classes are identical to those in **InputStream** 
 
 ## BufferedInputStream
 
- Buffering I/O is a very common performance optimization. Java’s **BufferedInputStream** class allows you to "wrap" any **InputStream** into a buffered stream to improve performance.
-## BufferedInputStream
-
-
-## BufferedInputStream
-
- has two constructors:
+ Buffering I/O is a very common performance optimization. Java’s **BufferedInputStream** class allows you to "wrap" any **InputStream** into a buffered stream to improve performance
+**BufferedInputStream**has two constructors:
 
 BufferedInputStream(InputStream inputStream) BufferedInputStream(InputStream inputStream, int bufSize)
 
@@ -443,7 +588,43 @@ The first form creates a buffered stream using a default buffer size. In the sec
 Buffering an input stream also provides the foundation required to support moving backward in the stream of the available buffer. Beyond the **read()** and **skip()** methods implemented in any **InputStream**, **BufferedInputStream** also supports the **mark()** and **reset()** methods. This support is reflected by **BufferedInputStream.markSupported()** returning **true**.
 
 The following example contrives a situation where we can use **mark()** to remember where we are in an input stream and later use **reset()** to get back there. This example is parsing a stream for the HTML entity reference for the copyright symbol. Such a reference begins with an ampersand (&) and ends with a semicolon (;) without any intervening whitespace. The sample input has two ampersands to show the case where the **reset()** happens and where it does not.  
-
+```java
+// Use buffered input.
+import java.io.*;
+class BufferedInputStreamDemo {
+public static void main(String args[]) { String = "This is a &copy; copyright symbol "but this is &copy not. \n"; byte buf[] = s.getBytes(); +
+ByteArrayInputStream in = new ByteArrayInputStream (buf); int c; boolean marked = false;
+// Use try-with-resources to manage the file. try BufferedInputStream f = new BufferedInputStream (in) )
+{ while ((cf.read()) != -1) {
+switch(c){
+case '&':
+if (!marked) {
+f.mark (32);
+marked = true;
+} else { marked = false;
+}
+break;
+case ';':
+if (marked) {
+marked = false; System.out.print (" (c)");
+} else
+System.out.print((char) c);
+break;
+case:
+if (marked) { marked = false;
+f.reset();
+System.out.print ("&");
+} else
+System.out.print((char) c);
+break;
+default:
+if (!marked)
+System.out.print((char) c);
+break;
+}
+}
+} catch (IOException e) { System.out.println("I/O Error: + e);
+```
 Notice that this example uses **mark(32)**, which preserves the mark for the next 32 bytes read (which is enough for all entity references). Here is the output produced by this program:
 
 This is a (c) copyright symbol but this is &copy not.
@@ -466,11 +647,8 @@ The first form creates a buffered stream using the default buffer size. In the s
 ## PushbackInputStream
 
 
-## PushbackInputStream
-
- has the following constructors:
-
-PushbackInputStream(InputStream inputStream) PushbackInputStream(InputStream inputStream, int numBytes)
+**PushbackInputStream** has the following constructors:
+ PushbackInputStream(InputStream inputStream) PushbackInputStream(InputStream inputStream, int numBytes)
 
 The first form creates a stream object that allows one byte to be returned to the input stream. The second form creates a stream that has a pushback buffer that is numBytes long. This allows multiple bytes to be returned to the input stream.
 
@@ -481,7 +659,31 @@ void unread(int b) void unread(byte buffer [ ]) void unread(byte buffer, int off
 The first form pushes back the low-order byte of b. This will be the next byte returned by a subsequent call to **read()**. The second form pushes back the bytes in buffer. The third form pushes back numBytes bytes beginning at offset from buffer. An **IOException** will be thrown if there is an attempt to push back a byte when the pushback buffer is full.
 
 Here is an example that shows how a programming language parser might use a **PushbackInputStream** and **unread()** to deal with the difference between the **\= =** operator for comparison and the **\=** operator for assignment:  
-
+```java
+// Demonstrate unread().
+import java.io.*;
+class Pushback InputStreamDemo {
+public static void main(String args[]) { String s = "if (a == 4) a = 0;\n"; byte buf[] = s.getBytes(); ByteArrayInputStream in = new ByteArrayInputStream (buf); int c;
+try (Pushback InputStream f = new Pushback InputStream (in) ) }
+while ((cf.read()) != -1) {
+switch(c){
+case '':
+if ((c = f.read()) == '=') System.out.print (".eq.");
+else {
+System.out.print ("<-");
+f. unread (c);
+}
+break;
+default: System.out.print ((char) c);
+break;
+}
+}
+catch (IOException e) {
+}
+System.out.println("I/O Error: " + e);
+}
+}
+```
 Here is the output for this example. Notice that == was replaced by **".eq."** and **\=** was replaced by **"<–"**.
 
 if (a .eq. 4) a <- 0;
@@ -489,14 +691,9 @@ if (a .eq. 4) a <- 0;
 ## CAUTION
 
  **PushbackInputStream** has the side effect of invalidating the **mark()** or **reset()** methods of the **InputStream** used to create it. Use **markSupported()** to check any stream on which you are going to use **mark()/reset()**.
-## CAUTION
-
 
 ## SequenceInputStream
 
-  
-
-## SequenceInputStream
 
  The **SequenceInputStream** class allows you to concatenate multiple **InputStream**s. The construction of a **SequenceInputStream** is different from any other **InputStream**. A **SequenceInputStream** constructor uses either a pair of **InputStream**s or an **Enumeration** of **InputStream**s as its argument:
 
@@ -505,7 +702,48 @@ SequenceInputStream(InputStream first, InputStream second) SequenceInputStream(E
 Operationally, the class fulfills read requests from the first **InputStream** until it runs out and then switches over to the second one. In the case of an **Enumeration**, it will continue through all of the **InputStream**s until the end of the last one is reached. When the end of each file is reached, its associated stream is closed. Closing the stream created by **SequenceInputStream** causes all unclosed streams to be closed.
 
 Here is a simple example that uses a **SequenceInputStream** to output the contents of two files. For demonstration purposes, this program uses the traditional technique used to close a file. As an exercise, you might want to try changing it to use the **try**\-with-resources statement.  
-
+```java
+// Demonstrate sequenced input.
+// This program uses the traditional approach to closing a file.
+import java.io.*;
+import java.util.*;
+class InputStreamEnumerator implements Enumeration<FileInputStream> { private Enumeration<String> files;
+public InputStreamEnumerator (Vector<String> files) { this.files files.elements();
+}
+public boolean hasMore Elements () {
+return files.hasMoreElements ();
+}
+public FileInputStream nextElement() {
+try {
+return new FileInputStream (files.nextElement().toString());
+} catch (IOException e) {
+return null;
+}
+}
+}
+class Sequence InputStreamDemo {
+public static void main(String args[]) {
+int c;
+Vector<String> files = new Vector<String>();
+files.addElement ("filel.txt");
+files.addElement ("file2.txt");
+files.addElement ("file3.txt");
+InputStreamEnumerator ise = new InputStreamEnumerator (files); InputStream input = new Sequence InputStream(ise);
+try {
+while ((c = input.read()) != -1) System.out.print ((char) c);
+} catch (NullPointerException e) {
+System.out.println("Error Opening File.");
+} catch (IOException e) {
+System.out.println("I/O Error: " + e);
+} finally {
+try {
+input.close();
+} catch (IOException e) {
+System.out.println("Error Closing Sequence InputStream");
+}
+}
+}
+```
 This example creates a **Vector** and then adds three filenames to it. It passes that vector of names to the **InputStreamEnumerator** class, which is designed to provide a wrapper on the vector where the elements returned are not the filenames but, rather, open **FileInputStream**s on those names. The **SequenceInputStream** opens each file in turn, and this example prints the contents of the files.
 
 Notice in **nextElement()** that if a file cannot be opened, **null** is returned. This results in a **NullPointerException**, which is caught in **main()**.
@@ -516,9 +754,7 @@ Notice in **nextElement()** that if a file cannot be opened, **null** is returne
 
 book. This makes **PrintStream** one of Java’s most often used classes. It implements the **Appendable**, **AutoCloseable**, **Closeable**, and **Flushable** interfaces.
 
-## PrintStream
-
- defines several constructors. The ones shown next have been specified from the start:
+**PrintStream** defines several constructors. The ones shown next have been specified from the start:
 
 PrintStream(OutputStream outputStream) PrintStream (OutputStream outputStream, boolean autoFlushingOn) PrintStream(OutputStream outputStream, boolean autoFlushingOn String
 
@@ -534,11 +770,7 @@ FileNotFoundException, UnsupportedEncodingException
 
 These allow a **PrintStream** to be created from a **File** object or by specifying the name of a file. In either case, the file is automatically created. Any preexisting file by the same name is destroyed. Once created, the **PrintStream** object directs all output to the specified file. You can specify a character encoding by passing its name in charSet. JDK 11 adds constructors that let you specify a **Charset** parameter.
 
-## NOTE
-
- If a security manager is present, some **PrintStream** constructors will throw a **SecurityException** if a security violation occurs.  
-## NOTE
-
+**NOTE**If a security manager is present, some **PrintStream** constructors will throw a **SecurityException** if a security violation occurs.  
 
 ## PrintStream
 
@@ -555,7 +787,25 @@ The first version writes args to standard output in the format specified by fmtS
 In general, **printf()** works in a manner similar to the **format()** method specified by **Formatter**. The fmtString consists of two types of items. The first type is composed of characters that are simply copied to the output buffer. The second type contains format specifiers that define the way the subsequent arguments, specified by args, are displayed. For complete information on formatting output, including a description of the format specifiers, see the **Formatter** class in Chapter 20.
 
 Because **System.out** is a **PrintStream**, you can call **printf()** on **System.out**. Thus, **printf()** can be used in place of **println()** when writing to the console whenever formatted output is desired. For example, the following program uses **printf()** to output numeric values in various formats. In the past, such formatting required a bit of work. With the addition of **printf()**, this is now an easy task.  
-
+```java
+// Demonstrate printf().
+class Print fDemo {
+public static void main(String args[]) { System.out.println("Here are some numeric values" +
+"in different formats.\n");
+System.out.printf ("Various integer formats: "); System.out.printf("%d % (d %+d %05d\n", 3, 3, 3, 3);
+System.out.println();
+System.out.printf ("Default floating-point format: %f\n",
+1234567.123);
+System.out.printf ("Floating-point with commas: %, f\n",
+1234567.123);
+System.out.printf("Negative floating-point default: %, f\n",
+-1234567.123);
+System.out.printf ("Negative floating-point option: %, (f\n", -1234567.123);
+System.out.println();
+System.out.printf ("Line up positive and negative values: \n"); System.out.printf("%.2f\n%, .2f\n", 1234567.123, -1234567.123);
+}
+}
+```
 The output is shown here:
 
 Here are some numeric values in different formats.
@@ -588,17 +838,13 @@ It works exactly like **printf()**.
 
  and **DataInputStream** enable you to write or read primitive data to or from a stream. They implement the **DataOutput** and **DataInput** interfaces, respectively. These interfaces define methods that convert primitive values to or from a sequence of bytes. These streams make it easy to store binary data, such as integers or floating-point values, in a file. Each is examined here.
 
-## DataOutputStream
-
- extends **FilterOutputStream**, which extends **OutputStream**. In addition to implementing **DataOutput**, **DataOutputStream** also implements **AutoCloseable**, **Closeable**, and **Flushable**. **DataOutputStream** defines the following constructor:
+**DataOutputStream**extends **FilterOutputStream**, which extends **OutputStream**. In addition to implementing **DataOutput**, **DataOutputStream** also implements **AutoCloseable**, **Closeable**, and **Flushable**. **DataOutputStream** defines the following constructor:
 
 DataOutputStream(OutputStream outputStream)
 
 Here, outputStream specifies the output stream to which data will be written. When a **DataOutputStream** is closed (by calling **close()**), the underlying stream specified by outputStream is also closed automatically.
 
-## DataOutputStream
-
- supports all of the methods defined by its superclasses. However, it is the methods defined by the **DataOutput** interface, which it implements, that make it interesting. **DataOutput** defines methods that convert values of a primitive type into a byte sequence and then writes it to the underlying stream. Here is a sampling of these methods:
+**DataOutputStream**supports all of the methods defined by its superclasses. However, it is the methods defined by the **DataOutput** interface, which it implements, that make it interesting. **DataOutput** defines methods that convert values of a primitive type into a byte sequence and then writes it to the underlying stream. Here is a sampling of these methods:
 
 final void writeDouble(double value) throws IOException final void writeBoolean(boolean value) throws IOException final void writeInt(int value) throws IOException
 
@@ -617,12 +863,39 @@ Like **DataOutputStream**, **DataInputStream** supports all of the methods of it
 final double readDouble() throws IOException final boolean readBoolean() throws IOException final int readInt() throws IOException
 
 The following program demonstrates the use of **DataOutputStream** and **DataInputStream**:  
-
+```java
+// Demonstrate DataInputStream and DataOutputStream.
+import java.io.*;
+class DataIODemo {
+public static void main(String args[]) throws IOException {
+// First, write the data.
+try DataOutputStream dout = new DataOutputStream (new FileOutputStream("Test.dat")) )
+{
+dout.writeDouble (98.6);
+dout.writeInt (1000);
+dout.writeBoolean (true);
+} catch (FileNotFoundException e) { System.out.println("Cannot Open Output File"); return;
+} catch (IOException e) { System.out.println("I/O Error: " + e);
+}
+// Now, read the data back. try DataInputStream din =
+new DataInputStream (new FileInputStream ("Test.dat")) )
+{
+double d = din. readDouble();
+int i din. readInt(); boolean b din. readBoolean(); =
+System.out.println("Here are the values: " +
+d+ " " + i + " " + b);
+} catch (FileNotFoundException e) {
+System.out.println("Cannot Open Input File"); return;
+} catch (IOException e) { System.out.println("I/O Error: + e);
+}
+}
+}
+```
 The output is shown here:  
 
 Here are the values: 98.6 1000 true
 
-## RandomAccessFile RandomAccessFile
+## RandomAccessFile 
 
  encapsulates a random-access file. It is not derived from **InputStream** or **OutputStream**. Instead, it implements the interfaces **DataInput** and **DataOutput**, which define the basic I/O methods. It also implements the **AutoCloseable** and **Closeable** interfaces. **RandomAccessFile** is special because it supports positioning requests—that is, you can position the file pointer within the file. It has these two constructors:
 
@@ -653,13 +926,13 @@ This method sets the length of the invoking file to that specified by len. This 
 ## Reader Reader
 
  is an abstract class that defines Java’s model of streaming character input. It implements the **AutoCloseable**, **Closeable**, and **Readable** interfaces. All of the methods in this class (except for **markSupported()**) will throw an **IOException** on error conditions. Table 21-3 provides a synopsis of the methods in **Reader**.  
-
+![Alt text](image-5.png)
 **Table 21-3** The Methods Defined by **Reader**
 
 ## Writer Writer
 
  is an abstract class that defines streaming character output. It implements the **AutoCloseable**, **Closeable**, **Flushable**, and **Appendable** interfaces. All of the methods in this class throw an **IOException** in the case of errors. Table 21-4 shows a synopsis of the methods in **Writer**.  
-
+![Alt text](image-6.png)
 **Table 21-4** The Methods Defined by **Writer**
 
 ## FileReader
@@ -671,7 +944,21 @@ FileReader(String filePath) FileReader(File fileObj)
 Either can throw a **FileNotFoundException**. Here, filePath is the full path name of a file, and fileObj is a **File** object that describes the file.  
 
 The following example shows how to read lines from a file and display them on the standard output device. It reads its own source file, which must be in the current directory.
-
+```java
+// Demonstrate FileReader.
+import java.io.*;
+class FileReaderDemo { public static void main(String args[]) {
+try (FileReader fr = new FileReader ("FileReaderDemo.java") ) }
+int c;
+// Read and display the file.
+while((cfr.read()) != -1) System.out.print((char) c);
+} catch (IOException e) {
+System.out.println("I/O Error:
+}
+"+e);
+}
+}
+```
 ## FileWriter FileWriter
 
  creates a **Writer** that you can use to write to a file. Four commonly used constructors are shown here:
@@ -685,21 +972,63 @@ Creation of a **FileWriter** is not dependent on the file already existing. **Fi
 The following example is a character stream version of an example shown  
 
 earlier when **FileOutputStream** was discussed. This version creates a sample buffer of characters by first making a **String** and then using the **getChars()** method to extract the character array equivalent. It then creates three files. The first, **file1.txt**, will contain every other character from the sample. The second, **file2.txt**, will contain the entire set of characters. Finally, the third, **file3.txt**, will contain only the last quarter.
-
-## CharArrayReader CharArrayReader
-
- is an implementation of an input stream that uses a  
+```java
+// Demonstrate FileWriter.
+import java.io.*;
+class FileWriterDemo {
+public static void main(String args[]) throws IOException { String source = "Now is the time for all good men\n" +" and pay their due taxes.";
++"to come to the aid of their country\n"
+char buffer[] = new char [source.length()];
+source.getChars (0, source.length(), buffer, 0);
+try FileWriter fo= new FileWriter ("file1.txt"); FileWriter fl= new FileWriter ("file2.txt");
+FileWriter f2 = new FileWriter ("file3.txt") )
+{
+}
+}
+// write to first file for (int i=0; i < buffer.length; i+= 2) { f0.write (buffer[i]); }
+// write to second file f1.write (buffer);
+// write to third file
+f2.write(buffer, buffer.length-buffer.length/4, buffer.length/4);
+} catch (IOException e) {
+}
+System.out.println("An I/0 Error Occurred");
+```
+## CharArrayReader 
+**CharArrayReader**is an implementation of an input stream that uses a  
 
 character array as the source. This class has two constructors, each of which requires a character array to provide the data source:
 
-CharArrayReader(char array [ ]) CharArrayReader(char array [ ], int start, int numChars)
+CharArrayReader(char array [ ]) 
+CharArrayReader(char array [ ], int start, int numChars)
 
 Here, array is the input source. The second constructor creates a **Reader** from a subset of your character array that begins with the character at the index specified by start and is numChars long.
 
 The **close()** method implemented by **CharArrayReader** does not throw any exceptions. This is because it cannot fail.
 
 The following example uses a pair of **CharArrayReader**s:  
-
+```java
+// Demonstrate CharArrayReader.
+import java.io.*;
+public class CharArrayReaderDemo {
+String tmp = "abcdefghijklmnopqrstuvwxyz";
+public static void main(String args[]) { int length = tmp.length(); char c[] = new char [length]; tmp.getChars (0, length, c, 0); int i;
+try (CharArrayReader input1 = new CharArrayReader (c) ) }
+System.out.println("input1 is: "); while ((i= input1.read()) != -1) {
+System.out.print ((char) i);
+}
+System.out.println();
+} catch (IOException e) { System.out.println("I/O Error: "
+}
+try (CharArrayReader input2 new CharArrayReader (c, 0, 5)) {
+System.out.println("input2 is: ");
+while ((i= input2.read()) != -1) { System.out.print((char) i);
+}
+System.out.println();
+} catch (IOException e) { System.out.println("I/O Error: " + e);
+}
+}
+}
+```
 The **input1** object is constructed using the entire lowercase alphabet, whereas **input2** contains only the first five letters. Here is the output:
 
 input1 is:
@@ -710,9 +1039,8 @@ input2 is:
 
 abcde  
 
-## CharArrayWriter CharArrayWriter
-
- is an implementation of an output stream that uses an array as the destination. **CharArrayWriter** has two constructors, shown here:
+## CharArrayWriter 
+**CharArrayWriter**is an implementation of an output stream that uses an array as the destination. **CharArrayWriter** has two constructors, shown here:
 
 CharArrayWriter() CharArrayWriter(int numChars)
 
@@ -721,10 +1049,34 @@ In the first form, a buffer with a default size is created. In the second, a buf
 The **close()** method has no effect on a **CharArrayWriter**. The following example demonstrates **CharArrayWriter** by reworking the
 
 sample program shown earlier for **ByteArrayOutputStream**. It produces the same output as the previous version.  
-
-## BufferedReader BufferedReader
-
- improves performance by buffering input. It has two constructors:
+```java
+// Demonstrate CharArrayWriter.
+import java.io.*;
+class CharArrayWriterDemo {
+public static void main(String args[]) throws IOException { CharArrayWriter f = new CharArrayWriter(); String = "This should end up in the array"; S char buf[] new char[s.length()];
+s.getChars (0, s.length(), buf, 0);
+try {
+f.write (buf);
+} catch (IOException e) { System.out.println("Error Writing to Buffer");
+return;
+}
+System.out.println("Buffer as a string");
+System.out.println(f.toString()); System.out.println("Into array");
+char cf. toCharArray ();
+for (int i=0; i<c.length; i++) { System.out.print (c[i]);
+}
+System.out.println("\nTo a FileWriter()");
+// Use try-with-resources to manage the file stream. try FileWriter f2= new FileWriter ("test.txt")) {
+f.writeTo(12);
+} catch (IOException e) {
+System.out.println("I/O Error: " +e); }
+System.out.println("Doing a reset"); f.reset();
+for (int i=0; i<3; i++) f.write('X');
+}
+System.out.println(f.toString());
+```
+## BufferedReader 
+**BufferedReader**improves performance by buffering input. It has two constructors:
 
 BufferedReader(Reader inputStream) BufferedReader(Reader inputStream, int bufSize)
 
@@ -735,7 +1087,34 @@ Closing a **BufferedReader** also causes the underlying stream specified by inpu
 As is the case with the byte-oriented stream, buffering an input character stream also provides the foundation required to support moving backward in the stream within the available buffer. To support this, **BufferedReader** implements the **mark()** and **reset()** methods, and **BufferedReader.markSupported()** returns **true**. A relatively recent addition to **BufferedReader** is called **lines()**. It returns a **Stream** reference to the sequence of lines read by the reader. (**Stream** is part of the stream API discussed in Chapter 29.)
 
 The following example reworks the **BufferedInputStream** example, shown earlier, so that it uses a **BufferedReader** character stream rather than a buffered byte stream. As before, it uses the **mark()** and **reset()** methods to parse a stream for the HTML entity reference for the copyright symbol. Such a reference begins with an ampersand (&) and ends with a semicolon (;) without any intervening whitespace. The sample input has two ampersands to show the case where the **reset()** happens and where it does not. Output is the same as that shown earlier.  
-
+```java
+// Use buffered input.
+import java.io.*;
+class BufferedReaderDemo { public static void main(String args[]) throws IOException String "This is a &copy; copyright symbol " "but this is &copy not. \n"; char buf[] = new char[s.length()]; s.getChars (0, s.length(), buf, 0); +
+CharArrayReader in new CharArrayReader (buf); int c; boolean marked false;
+try (BufferedReader f = new BufferedReader (in))
+while ((c = f.read()) != -1) {
+switch(c){ case '&':
+if (!marked) { f.mark (32);
+marked true; } else { marked = false;
+} break;
+case ';': System.out.print (" (c) ");
+if (marked) { marked false;
+} else
+System.out.print((char) c);
+break;
+case:
+if (marked) {
+marked- false;
+f.reset(); System.out.print ("&"); System.out.print((char) c);
+} else
+break; default:
+if (!marked)
+System.out.print((char) c);
+break;
+} catch (IOException e) {
+System.out.println("I/O Error: +e);
+```
 ## BufferedWriter
 
  A **BufferedWriter** is a **Writer** that buffers output. Using a **BufferedWriter** can improve performance by reducing the number of times data is actually physically written to the output device.
@@ -750,33 +1129,51 @@ The first form creates a buffered stream using a buffer with a default size. In 
 
  The **PushbackReader** class allows one or more characters to be returned to the input stream. This allows you to look ahead in the input stream. Here are its two constructors:
 
-PushbackReader(Reader inputStream) PushbackReader(Reader inputStream, int bufSize)
+PushbackReader(Reader inputStream) 
+PushbackReader(Reader inputStream, int bufSize)
 
 The first form creates a buffered stream that allows one character to be pushed back. In the second, the size of the pushback buffer is passed in bufSize.
 
 Closing a **PushbackReader** also closes the underlying stream specified by inputStream.
 
-## PushbackReader
+**PushbackReader**provides **unread()**, which returns one or more characters to the invoking input stream. It has the three forms shown here:
 
- provides **unread()**, which returns one or more characters to the invoking input stream. It has the three forms shown here:
-
-void unread(int ch) throws IOException void unread(char buffer [ ]) throws IOException void unread(char buffer [ ], int offset, int numChars) throws IOException
+void unread(int ch) throws IOException 
+void unread(char buffer [ ]) throws IOException 
+void unread(char buffer [ ], int offset, int numChars) throws IOException
 
 The first form pushes back the character passed in ch. This will be the next character returned by a subsequent call to **read()**. The second form returns the characters in buffer. The third form pushes back numChars characters beginning at offset from buffer. An **IOException** will be thrown if there is an attempt to return a character when the pushback buffer is full.
 
 The following program reworks the earlier **PushbackInputStream** example by replacing **PushbackInputStream** with **PushbackReader**. As before, it  
 
 shows how a programming language parser can use a pushback stream to deal with the difference between the **\==** operator for comparison and the **\=** operator for assignment.
-
+```java
+// Demonstrate unread().
+import java.io.*;
+class PushbackReaderDemo { public static void main(String args[]) { Strings "if (a== 4) a = 0;\n"; char buf[] = new char[s.length()]; s.getChars (0, s.length(), buf, 0); CharArrayReader in = new CharArrayReader (buf);
+int c;
+try PushbackReader f = new PushbackReader (in) ) }
+while ((cf.read()) != -1) { switch(c){
+case '=':
+if ((c = f.read())
+== '=')
+System.out.print (".eq.");
+else {
+System.out.print ("<-"); f. unread (c);
+} break;
+default:
+System.out.print ((char) c);
+break;
+}
+}
+} catch (IOException e) {
+System.out.println("I/O Error: "
+}
++ e);
+}
+```
 ## PrintWriter
-
-  
-## PrintWriter
-
-
-## PrintWriter
-
- is essentially a character-oriented version of **PrintStream**. It implements the **Appendable**, **AutoCloseable**, **Closeable**, and **Flushable** interfaces. **PrintWriter** has several constructors. The following have been supplied by **PrintWriter** from the start:
+**PrintWriter**is essentially a character-oriented version of **PrintStream**. It implements the **Appendable**, **AutoCloseable**, **Closeable**, and **Flushable** interfaces. **PrintWriter** has several constructors. The following have been supplied by **PrintWriter** from the start:
 
 PrintWriter(OutputStream outputStream) PrintWriter(OutputStream outputStream, boolean autoFlushingOn) PrintWriter(Writer outputStream) PrintWriter(Writer outputStream, boolean autoFlushingOn)
 
@@ -788,20 +1185,14 @@ PrintWriter(File outputFile) throws FileNotFoundException PrintWriter(File outpu
 
 These allow a **PrintWriter** to be created from a **File** object or by specifying the name of a file. In either case, the file is automatically created. Any preexisting file by the same name is destroyed. Once created, the **PrintWriter** object directs all output to the specified file. You can specify a character encoding by passing its name in charSet. JDK 11 adds constructors that let you specify a **Charset** parameter.
 
-## PrintWriter
+**PrintWriter**supports the **print()** and **println()** methods for all types, including **Object**. If an argument is not a primitive type, the **PrintWriter** methods will call the object’s **toString()** method and then output the result.
 
- supports the **print()** and **println()** methods for all types, including **Object**. If an argument is not a primitive type, the **PrintWriter** methods will call the object’s **toString()** method and then output the result.
-## PrintWriter
-
-
-## PrintWriter
-
- also supports the **printf()** method. It works the same way it does in the **PrintStream** class described earlier: It allows you to specify the precise format of the data. Here is how **printf()** is declared in **PrintWriter**:
-
+**PrintWriter**also supports the **printf()** method. It works the same way it does in the **PrintStream** class described earlier: It allows you to specify the precise format of the data. Here is how **printf()** is declared in **PrintWriter**:
+```java
 PrintWriter printf(String fmtString, Object … args)  
 
 PrintWriter printf(Locale loc, String fmtString, Object …args)
-
+```
 The first version writes args to standard output in the format specified by fmtString, using the default locale. The second lets you specify a locale. Both return the invoking **PrintWriter**.
 
 The **format()** method is also supported. It has these general forms:
@@ -814,24 +1205,28 @@ It works exactly like **printf()**.
 
  The **Console** class is used to read from and write to the console, if one exists. It implements the **Flushable** interface. **Console** is primarily a convenience class because most of its functionality is available through **System.in** and **System.out**. However, its use can simplify some types of console interactions, especially when reading strings from the console.
 
-## Console
-
- supplies no constructors. Instead, a **Console** object is obtained by calling **System.console()**, which is shown here:
+**Console**supplies no constructors. Instead, a **Console** object is obtained by calling **System.console()**, which is shown here:
 
 static Console console()
 
 If a console is available, then a reference to it is returned. Otherwise, **null** is returned. A console will not be available in all cases. Thus, if **null** is returned, no console I/O is possible.
 
-## Console
-
- defines the methods shown in Table 21-5. Notice that the input methods, such as **readLine()**, throw **IOError** if an input error occurs. **IOError** is a subclass of **Error**. It indicates an I/O failure that is beyond the control of your program. Thus, you will not normally catch an **IOError**. Frankly, if an **IOError** is thrown while accessing the console, it usually means there has been a catastrophic system failure.  
-
+**Console**defines the methods shown in Table 21-5. Notice that the input methods, such as **readLine()**, throw **IOError** if an input error occurs. **IOError** is a subclass of **Error**. It indicates an I/O failure that is beyond the control of your program. Thus, you will not normally catch an **IOError**. Frankly, if an **IOError** is thrown while accessing the console, it usually means there has been a catastrophic system failure.  
+![Alt text](image-7.png)
 **Table 21-5** The Methods Defined by **Console**
 
 Also notice the **readPassword()** methods. These methods let your application read a password without echoing what is typed. After reading passwords, you should "zero-out" both the array that holds the string entered by the user and the array that holds the password that the string is tested against. This reduces the chance that a malicious program will be able to obtain a password by scanning memory.
 
 Here is an example that demonstrates the **Console** class:  
-
+```java
+// Demonstrate Console. import java.io.*;
+class ConsoleDemo {
+public static void main(String args[]) { String str; Console con;
+// Obtain a reference to the console. con System.console();
+// If no console available, exit. if (con == null) return;
+// Read a string and then display it. str = con.readLine ("Enter a string: "); con.printf("Here is your string: %s\n", str); }
+}
+```
 Here is sample output:
 
 Enter a string: This is a test.
@@ -873,7 +1268,7 @@ In these methods, inStream is the byte stream from which the object is to be rea
   
 
 The **ObjectOutput** interface extends the **DataOutput** and **AutoCloseable** interfaces and supports object serialization. It defines the methods shown in Table 21-6. Note especially the **writeObject()** method. This is called to serialize an object. All of these methods will throw an **IOException** on error conditions.
-
+![Alt text](image-8.png)
 **Table 21-6** The Methods Defined by **ObjectOutput**
 
 ## ObjectOutputStream
@@ -885,13 +1280,13 @@ ObjectOutputStream(OutputStream outStream) throws IOException
 The argument outStream is the output stream to which serialized objects will be written. Closing an **ObjectOutputStream** automatically closes the underlying stream specified by outStream.
 
 Several commonly used methods in this class are shown in Table 21-7. They will throw an **IOException** on error conditions. There is also an inner class to **ObjectOuputStream** called **PutField**. It facilitates the writing of persistent fields, and its use is beyond the scope of this book.  
-
+![Alt text](image-10.png)
 **Table 21-7** A Sampling of Commonly Used Methods Defined by **ObjectOutputStream**
 
 ## ObjectInput
 
  The **ObjectInput** interface extends the **DataInput** and **AutoCloseable** interfaces and defines the methods shown in Table 21-8. It supports object serialization. Note especially the **readObject()** method. This is called to deserialize an object. All of these methods will throw an **IOException** on error conditions. The **readObject()** method can also throw **ClassNotFoundException**.  
-
+![Alt text](image-11.png)
 **Table 21-8** The Methods Defined by **ObjectInput**
 
 ## ObjectInputStream
@@ -903,7 +1298,7 @@ ObjectInputStream(InputStream inStream) throws IOException
 The argument inStream is the input stream from which serialized objects should be read. Closing an **ObjectInputStream** automatically closes the underlying stream specified by inStream.
 
 Several commonly used methods in this class are shown in Table 21-9. They will throw an **IOException** on error conditions. The **readObject()** method can also throw **ClassNotFoundException**. There is also an inner class to **ObjectInputStream** called **GetField**. It facilitates the reading of persistent fields, and its use is beyond the scope of this book.  
-
+![Alt text](image-12.png)
 **Table 21-9** Commonly Used Methods Defined by **ObjectInputStream**
 
 Beginning with JDK 9, **ObjectInputStream** includes the methods **getObjectInputFilter()** and **setObjectInputFilter()**. These support the filtering of object input streams through the use of **ObjectInputFilter**, **ObjectInputFilter.FilterInfo**, **ObjectInputFilter.Config**, and **ObjectInputFilter.Status**, which were all added by JDK 9. Filtering gives you control over deserialization.  
@@ -917,7 +1312,38 @@ A **FileOutputStream** is created that refers to a file named "serial", and an *
 A **FileInputStream** is then created that refers to the file named "serial", and an **ObjectInputStream** is created for that file stream. The **readObject()** method of **ObjectInputStream** is then used to deserialize our object. The object input stream is then closed.
 
 Note that **MyClass** is defined to implement the **Serializable** interface. If this is not done, a **NotSerializableException** is thrown. Try experimenting with this program by declaring some of the **MyClass** instance variables to be **transient**. That data is then not saved during serialization.  
-
+```java
+// A serialization demo.
+import java.io.*;
+public class SerializationDemo {
+public static void main(String args[]) {
+// Object serialization
+try(ObjectOutputStream objOStrm = new ObjectOutputStream (new FileOutputStream("serial")) )
+MyClass object1 = new MyClass ("Hello", -7, 2.7e10); System.out.println("object1: " + object1);
+objOStrm.writeObject(object1);
+}
+catch (IOException e) { System.out.println("Exception during serialization: + e);
+}
+// Object deserialization
+try ObjectInputStream objIStrm = new ObjectInputStream(new FileInputStream("serial")) )
+MyClass object2 = (MyClass) obj Istrm.readObject(); System.out.println("object2: + object2);
+}
+catch (Exception e) { System.out.println("Exception during deserialization: " + e);
+}
+}
+}class MyClass implements Serializable {
+String s;
+int i;
+double d;
+public MyClass (String s, int i, double d) {
+this.ss;
+this.ii;
+this.dd;
+}
+public String toString() { return "s=" + s + "; i=" + i + "; d=" + d;
+}
+}
+```
 This program demonstrates that the instance variables of **object1** and **object2** are identical. The output is shown here:
 
 object1: s=Hello; i=-7; d=2.7E10
