@@ -13,13 +13,17 @@ Support for modules is provided both by language elements, including several key
 ## Module Basics
 
  In its most fundamental sense, a module is a grouping of packages and resources that can be collectively referred to by the module’s name. A _module declaration_ specifies the name of a module and defines the relationship a module and its packages have to other modules. Module declarations are program statements in a Java source file and are supported by several module- related keywords. They are shown here:  
-
+![Alt text](modul.png)
 It is important to understand that these keywords are recognized _as keywords_ only in the context of a module declaration. Otherwise, they are interpreted as identifiers in other situations. Thus, the keyword **module** could, for example, also be used as a parameter name, although such a use is certainly not recommended. However, making the module-related keywords context- sensitive prevents problems with pre-existing code that may use one or more of them as identifiers. Because they are context-sensitive, the module-related keywords are formally called _restricted keywords_.
 
 A module declaration is contained in a file called **module-info.java**. Thus, a module is defined in a Java source file. This file is then compiled by **javac** into a class file and is known as its _module descriptor_. The **module-info.java** file must contain only a module definition. It cannot contain other types of declarations.
 
 A module declaration begins with the keyword **module**. Here is its general form:
-
+```
+module moduleName{
+    //module Definition
+}
+```
 The name of the module is specified by _moduleName,_ which must be a valid Java identifier or a sequence of identifiers separated by periods. The module definition is specified within the braces. Although a module definition may be empty (which results in a declaration that simply names the module), typically it specifies one or more clauses that define the characteristics of the module.
 
 ## A Simple Module Example
@@ -42,38 +46,96 @@ unique. At the time of this writing, the suggested way to achieve this is to use
 
 Let’s now begin. Start by creating the necessary source code directories by following these steps:
 
-1\. Create a directory called **mymodapp**. This is the top-level directory for the entire application.
+1. Create a directory called **mymodapp**. This is the top-level directory for the entire application.
 
-2\. Under **mymodapp**, create a subdirectory called **appsrc**. This is the top- level directory for the application’s source code.
+2. Under **mymodapp**, create a subdirectory called **appsrc**. This is the top- level directory for the application’s source code.
 
-3\. Under **appsrc**, create the subdirectory **appstart**. Under this directory, create a subdirectory also called **appstart**. Under this directory, create the directory **mymodappdemo**. Thus, beginning with **appsrc**, you will have created this tree: appsrc\\appstart\\appstart\\mymodappdemo
+3. Under **appsrc**, create the subdirectory **appstart**. Under this directory, create a subdirectory also called **appstart**. Under this directory, create the directory **mymodappdemo**. Thus, beginning with **appsrc**, you will have created this tree: appsrc\\appstart\\appstart\\mymodappdemo
 
-4\. Also under **appsrc**, create the subdirectory **appfuncs**. Under this directory, create a subdirectory also called **appfuncs**. Under this directory, create the directory called **simplefuncs**. Thus, beginning with **appsrc**, you will have created this tree: appsrc\\appfuncs\\appfuncs\\simplefuncs
+4. Also under **appsrc**, create the subdirectory **appfuncs**. Under this directory, create a subdirectory also called **appfuncs**. Under this directory, create the directory called **simplefuncs**. Thus, beginning with **appsrc**, you will have created this tree: appsrc\\appfuncs\\appfuncs\\simplefuncs
 
 Your directory tree should look like that shown here.  
-
+![Alt text](treemod.png)
 After you have set up these directories, you can create the application’s source files.
 
 This example will use four source files. Two are the source files that define the application. The first is **SimpleMathFuncs.java**, shown here. Notice that **SimpleMathFuncs** is packaged in **appfuncs.simplefuncs**.  
+```
+// Some simple math functions.
+package appfuncs.simplefuncs;
+public class SimpleMathFuncs 
+{
+    // Determine if a is a factor of b. 
+    public static boolean isFactor (int a, int b) 
+    { 
+        if((b%a) == 0) 
+            return true; 
+        return false;
+    }
+    // Return the smallest positive factor that a and b have in common.
+    public static int lef (int a, int b) 
+    { 
+        // Factor using positive values.
+        a = Math.abs (a);
+        b = Math.abs (b);
+        int min = a<b?a: b;
+        for (int i= 2; i <= min/2; i++) 
+        { 
+            if (isFactor (i, a) && isFactor (i, b))
+            return i;
+        }
+        return 1;
+    }
+    // Return the largest positive factor that a and b have in common. 
+    public static int gcf(int a, int b) 
+    {
+        // Factor using positive values.
+        a = Math.abs (a);
+        b = Math.abs (b); 
+        int min = a < b? a: b;
+        for (int i = min/2; i >= 2; i--) 
+        { 
+            if (isFactor (i, a) && isFactor (i, b)) 
+            return i;
+        }
+    return 1;
+    }
+}
+```
 
-## SimpleMathFuncs
-
- defines three simple **static** math functions. The first, **isFactor()**, returns true if **a** is a factor of **b**. The **lcf()** method returns the smallest factor common to both **a** and **b**. In other words, it returns the least common factor of **a** and **b**. The **gcf()** method returns the greatest common factor of **a** and **b**. In both cases, 1 is returned if no common factors are found. This file must be put in the following directory:
+**SimpleMathFuncs** defines three simple **static** math functions. The first, **isFactor()**, returns true if **a** is a factor of **b**. The **lcf()** method returns the smallest factor common to both **a** and **b**. In other words, it returns the least common factor of **a** and **b**. The **gcf()** method returns the greatest common factor of **a** and **b**. In both cases, 1 is returned if no common factors are found. This file must be put in the following directory:
 
 appsrc\\appfuncs\\appfuncs\\simplefuncs
 
-This is the **appfuncs.simplefuncs** package directory. The second source file is **MyModAppDemo.java**, shown next. It uses the
-
-methods in **SimpleMathFuncs**. Notice that it is packaged in **appstart.mymodappdemo**. Also note that it imports the **SimpleMathFuncs** class because it depends on **SimpleMathFuncs** for its operation.  
-
+This is the **appfuncs.simplefuncs** package directory. 
+    The second source file is **MyModAppDemo.java**, shown next. It uses the methods in **SimpleMathFuncs**. Notice that it is packaged in **appstart.mymodappdemo**. Also note that it imports the **SimpleMathFuncs** class because it depends on **SimpleMathFuncs** for its operation.  
+```
+// Demonstrate a simple module-based application. 
+package appstart.mymodappdemo;
+import appfuncs.simplefuncs.SimpleMathFuncs;
+public class MyModAppDemo 
+{ 
+    public static void main(String[] args)
+    {
+        if (SimpleMathFuncs.isFactor (2, 10)) 
+            System.out.println("2 is a factor of 10");
+        System.out.println("Smallest factor common to both 35 and 105 is " +SimpleMathFuncs.lef (35, 105));
+        System.out.println("Largest factor common to both 35 and 105 is " +SimpleMathFuncs.gcf (35, 105));
+    }
+}   
+```
 This file must be put in the following directory:
-
+```
 appsrc\\appstart\\appstart\\mymodappdemo
-
-This is the directory for the **appstart.mymodappdemo** package. Next, you will need to add **module-info.java** files for each module. These
-
-files contain the module definitions. First, add this one, which defines the **appfuncs** module:
-
+```
+This is the directory for the **appstart.mymodappdemo** package. Next, you will need to add **module-info.java** files for each module. These files contain the module definitions. First, add this one, which defines the **appfuncs** module:
+```
+//Module Definition for the functional module
+module appfuncs
+{
+    //Exports the package appfuncs.simplefuncs
+    exports appfuncs.simplefuncs;
+}
+```
 Notice that **appfuncs** exports the package **appfuncs.simplefuncs**, which makes it accessible to other modules. This file must be put into this directory:
 
 appsrc\\appfuncs
