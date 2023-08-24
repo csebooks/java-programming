@@ -10,7 +10,25 @@ This chapter examines Java’s exception-handling mechanism. An exception is an 
 Java exception handling is managed via five keywords: **try**, **catch**, **throw**, **throws**, and **finally**. Briefly, here is how they work. Program statements that you want to monitor for exceptions are contained within a **try** block. If an exception occurs within the **try** block, it is thrown. Your code can catch this exception (using **catch**) and handle it in some rational manner. System- generated exceptions are automatically thrown by the Java run-time system. To manually throw an exception, use the keyword **throw**. Any exception that is thrown out of a method must be specified as such by a **throws** clause. Any code that absolutely must be executed after a **try** block completes is put in a **finally** block.
 
 This is the general form of an exception-handling block:  
-
+```
+try 
+{
+    // block of code to monitor for errors
+}
+catch (ExceptionTypel exOb) 
+{ 
+    // exception handler for ExceptionTypel
+}
+catch (ExceptionType2 exOb) 
+{ 
+    // exception handler for ExceptionType2
+}
+// ...
+finally 
+{
+    // block of code to be executed after try block ends
+}
+```
 Here, ExceptionType is the type of exception that has occurred. The remainder of this chapter describes how to apply this framework.
 
 ## NOTE
@@ -21,28 +39,55 @@ Here, ExceptionType is the type of exception that has occurred. The remainder of
 
  All exception types are subclasses of the built-in class **Throwable**. Thus, **Throwable** is at the top of the exception class hierarchy. Immediately below **Throwable** are two subclasses that partition exceptions into two distinct branches. One branch is headed by **Exception**. This class is used for exceptional conditions that user programs should catch. This is also the class that you will subclass to create your own custom exception types. There is an important subclass of **Exception**, called **RuntimeException**. Exceptions of this type are automatically defined for the programs that you write and include things such as division by zero and invalid array indexing.
 
-The other branch is topped by **Error**, which defines exceptions that are not  
-
-expected to be caught under normal circumstances by your program. Exceptions of type **Error** are used by the Java run-time system to indicate errors having to do with the run-time environment, itself. Stack overflow is an example of such an error. This chapter will not be dealing with exceptions of type **Error**, because these are typically created in response to catastrophic failures that cannot usually be handled by your program.
+The other branch is topped by **Error**, which defines exceptions that are not expected to be caught under normal circumstances by your program. Exceptions of type **Error** are used by the Java run-time system to indicate errors having to do with the run-time environment, itself. Stack overflow is an example of such an error. This chapter will not be dealing with exceptions of type **Error**, because these are typically created in response to catastrophic failures that cannot usually be handled by your program.
 
 The top-level exception hierarchy is shown here:
-
+![Alt text](exception.png)
 ## Uncaught Exceptions
 
  Before you learn how to handle exceptions in your program, it is useful to see what happens when you don’t handle them. This small program includes an expression that intentionally causes a divide-by-zero error:
-
+```
+class Exc0
+{
+    public static void main(String args[])
+    {
+        int d = 0 ;
+        int a = 42 / d;
+    }
+}
+```
 When the Java run-time system detects the attempt to divide by zero, it constructs a new exception object and then throws this exception. This causes the execution of **Exc0** to stop, because once an exception has been thrown, it must be caught by an exception handler and dealt with immediately. In this  
 
 example, we haven’t supplied any exception handlers of our own, so the exception is caught by the default handler provided by the Java run-time system. Any exception that is not caught by your program will ultimately be processed by the default handler. The default handler displays a string describing the exception, prints a stack trace from the point at which the exception occurred, and terminates the program.
 
 Here is the exception generated when this example is executed:
-
+```
+java.lang.ArithmeticException: /by zero at Exc0.main(Exc0.java:4)
+```
 Notice how the class name, **Exc0**; the method name, **main**; the filename, **Exc0.java**; and the line number, **4**, are all included in the simple stack trace. Also, notice that the type of exception thrown is a subclass of **Exception** called **ArithmeticException**, which more specifically describes what type of error happened. As discussed later in this chapter, Java supplies several built-in exception types that match the various sorts of run-time errors that can be generated. One other point: The exact output you see when running this and other example programs in this chapter that use Java’s built-in exceptions may vary slightly from what is shown because of differences between JDKs.
 
 The stack trace will always show the sequence of method invocations that led up to the error. For example, here is another version of the preceding program that introduces the same error but in a method separate from **main()**:
-
+```
+class Exc1
+{
+    static void subrouting()
+    {
+        int d = 0;
+        int a = 10/d; 
+    }
+    public static void main(String args[])
+    {
+        Exc1.subrouting();
+    }
+}
+```
 The resulting stack trace from the default exception handler shows how the entire call stack is displayed:  
+```
+java.lang.ArithmeticException: /by zero 
+    at Exc1.subroutine(Exc1.java:4)
+    at Exc1.main(Exc1.java:7)
 
+```
 As you can see, the bottom of the stack is **main**’s line 7, which is the call to **subroutine()**, which caused the exception at line 4. The call stack is quite useful for debugging, because it pinpoints the precise sequence of steps that led to the error.
 
 ## Using try and catch
@@ -50,13 +95,15 @@ As you can see, the bottom of the stack is **main**’s line 7, which is the cal
  Although the default exception handler provided by the Java run-time system is useful for debugging, you will usually want to handle an exception yourself. Doing so provides two benefits. First, it allows you to fix the error. Second, it prevents the program from automatically terminating. Most users would be confused (to say the least) if your program stopped running and printed a stack trace whenever an error occurred! Fortunately, it is quite easy to prevent this.
 
 To guard against and handle a run-time error, simply enclose the code that you want to monitor inside a **try** block. Immediately following the **try** block, include a **catch** clause that specifies the exception type that you wish to catch. To illustrate how easily this can be done, the following program includes a **try** block and a **catch** clause that processes the **ArithmeticException** generated by the division-by-zero error:
-
+```
+    
+```
 This program generates the following output:
-
+```
 Division by zero.
 
 After catch statement.  
-
+```
 Notice that the call to **println()** inside the **try** block is never executed. Once an exception is thrown, program control transfers out of the **try** block into the **catch** block. Put differently, **catch** is not “called,” so execution never “returns” to the **try** block from a **catch**. Thus, the line "This will not be printed." is not displayed. Once the **catch** statement has executed, program control continues with the next line in the program following the entire **try / catch** mechanism.
 
 A **try** and its **catch** statement form a unit. The scope of the **catch** clause is restricted to those statements specified by the immediately preceding **try** statement. A **catch** statement cannot catch an exception thrown by another **try** statement (except in the case of nested **try** statements, described shortly). The statements that are protected by **try** must be surrounded by curly braces. (That is, they must be within a block.) You cannot use **try** on a single statement.
