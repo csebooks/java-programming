@@ -25,7 +25,39 @@ Generics added the type safety that was lacking. They also streamlined the proce
 ## A Simple Generics Example
 
  Let’s begin with a simple example of a generic class. The following program defines two classes. The first is the generic class **Gen**, and the second is **GenDemo**, which uses **Gen**.  
+```java
+// A simple generic class.
+// Here, T is a type parameter that // will be replaced by a real type
+// when an object of type Gen is created. class Gen<T> {
+Tob; // declare an object of type T
+// Pass the constructor a reference to // an object of type T.
+Gen (To) {
+ob = 0;
+}
+// Return ob.
+T getob() { return ob;
+}
+// Show type of T.
+```
+```java
+void showType() { System.out.println("Type of Tis". ob.getClass().getName());
 
+    }
+// Demonstrate the generic class.
+class GenDemo {
+public static void main(String args[]) { // Create a Gen reference for Integers. Gen<Integer> 10b;
+// Create a Gen<Integer> object and assign its // reference to iob. Notice the use of autoboxing // to encapsulate the value 88 within an Integer object. 10b new Gen<Integer> (88);
+// Show the type of data used by iob. iob.showType();
+// Get the value in iob. Notice that // no cast is needed. int vi0b.getob(); System.out.println("value: "
+System.out.println();
+// Create a Gen object for Strings. Gen<String> strob= new Gen<String> ("Generics Test");
+// Show the type of data used by strob. strob.showType();
+// that no cast is needed.
+// Get the value of strob. Again, notice String str strob.getob(); System.out.println("value: str);
+}
+
+}
+```
 The output produced by the program is shown here:
 
 Type of T is java.lang.Integer
@@ -37,20 +69,26 @@ Type of T is java.lang.String
 value: Generics Test
 
 Let’s examine this program carefully. First, notice how **Gen** is declared by the following line:
-
+```
 class Gen<T> {
-
+```
 Here, **T** is the name of a _type parameter_. This name is used as a placeholder for the actual type that will be passed to **Gen** when an object is created. Thus, **T** is used within **Gen** whenever the type parameter is needed. Notice that **T** is contained within **< >**. This syntax can be generalized. Whenever a type parameter is being declared, it is specified within angle brackets. Because **Gen** uses a type parameter, **Gen** is a generic class, which is also called a _parameterized type_.
 
 In the declaration of **Gen**, there is no special significance to the name **T**. Any valid identifier could have been used, but **T** is traditional. Furthermore, it is recommended that type parameter names be single-character capital letters. Other commonly used type parameter names are **V** and **E**. One other point about type parameter names: Beginning with JDK 10, you cannot use **var** as the name of a type parameter.
 
 Next, **T** is used to declare an object called **ob**, as shown here:
-
+```
 T ob; // declare an object of type T
-
+```
 As explained, **T** is a placeholder for the actual type that will be specified when a **Gen** object is created. Thus, **ob** will be an object of the type passed to **T**. For example, if type **String** is passed to **T**, then in that instance, **ob** will be of type **String**.
 
 Now consider **Gen**’s constructor:
+
+```
+Gen (T o) {
+   ob = o;
+}
+```
 
 Notice that its parameter, **o**, is of type **T**. This means that the actual type of **o** is  
 
@@ -58,26 +96,32 @@ determined by the type passed to **T** when a **Gen** object is created. Also, b
 
 The type parameter **T** can also be used to specify the return type of a method, as is the case with the **getob()** method, shown here:
 
+```
+T getch()
+     return ob;
+}
+```
+
 Because **ob** is also of type **T**, its type is compatible with the return type specified by **getob()**.
 
 The **showType()** method displays the type of **T** by calling **getName()** on the **Class** object returned by the call to **getClass()** on **ob**. The **getClass()** method is defined by **Object** and is thus a member of all class types. It returns a **Class** object that corresponds to the type of the class of the object on which it is called. **Class** defines the **getName()** method, which returns a string representation of the class name.
 
 The **GenDemo** class demonstrates the generic **Gen** class. It first creates a version of **Gen** for integers, as shown here:
-
+```
 Gen<Integer> iOb;
-
+```
 Look closely at this declaration. First, notice that the type **Integer** is specified within the angle brackets after **Gen**. In this case, **Integer** is a _type argument_ that is passed to **Gen**’s type parameter, **T**. This effectively creates a version of **Gen** in which all references to **T** are translated into references to **Integer**. Thus, for this declaration, **ob** is of type **Integer**, and the return type of **getob()** is of type **Integer**.
 
 Before moving on, it’s necessary to state that the Java compiler does not actually create different versions of **Gen**, or of any other generic class. Although it’s helpful to think in these terms, it is not what actually happens. Instead, the compiler removes all generic type information, substituting the necessary casts, to make your code _behave as if_ a specific version of **Gen** were created. Thus, there is really only one version of **Gen** that actually exists in your program. The process of removing generic type information is called erasure, and we will return to this topic later in this chapter.
 
 The next line assigns to **iOb** a reference to an instance of an **Integer** version of the **Gen** class:  
-
+```
 iOb = new Gen<Integer>(88);
-
+```
 Notice that when the **Gen** constructor is called, the type argument **Integer** is also specified. This is because the type of the object (in this case **iOb**) to which the reference is being assigned is of type **Gen<Integer>**. Thus, the reference returned by **new** must also be of type **Gen<Integer>**. If it isn’t, a compile-time error will result. For example, the following assignment will cause a compile- time error:
-
+```
 iOb = new Gen<Double>(88.0); // Error!
-
+```
 Because **iOb** is of type **Gen<Integer>**, it can’t be used to refer to an object of **Gen<Double>**. This type checking is one of the main benefits of generics because it ensures type safety.
 
 ## NOTE
@@ -85,37 +129,37 @@ Because **iOb** is of type **Gen<Integer>**, it can’t be used to refer to an o
  As you will see later in this chapter, it is possible to shorten the syntax used to create an instance of a generic class. In the interest of clarity, we will use the full syntax at this time.
 
 As the comments in the program state, the assignment
-
+```
 iOb = new Gen<Integer>(88);
-
+```
 makes use of autoboxing to encapsulate the value 88, which is an **int**, into an **Integer**. This works because **Gen<Integer>** creates a constructor that takes an **Integer** argument. Because an **Integer** is expected, Java will automatically box 88 inside one. Of course, the assignment could also have been written explicitly, like this:
-
+```
 iOb = new Gen<Integer>(Integer.valueOf(88));
-
+```
 However, there would be no benefit to using this version. The program then displays the type of **ob** within **iOb**, which is **Integer**.
 
 Next, the program obtains the value of **ob** by use of the following line:
-
+```
 int v = iOb.getob();
-
+```
 Because the return type of **getob()** is **T**, which was replaced by **Integer** when **iOb** was declared, the return type of **getob()** is also **Integer**, which unboxes into **int** when assigned to **v** (which is an **int**). Thus, there is no need to cast the return type of **getob()** to **Integer**. Of course, it’s not necessary to use the auto-  
 
 unboxing feature. The preceding line could have been written like this, too:
-
+```
 int v = iOb.getob().intValue();
-
+```
 However, the auto-unboxing feature makes the code more compact. Next, **GenDemo** declares an object of type **Gen<String>**:
-
+```
 Gen<String> strOb = new Gen<String>("Generics Test");
-
+```
 Because the type argument is **String**, **String** is substituted for **T** inside **Gen**. This creates (conceptually) a **String** version of **Gen**, as the remaining lines in the program demonstrate.
 
 ## Generics Work Only with Reference Types
 
  When declaring an instance of a generic type, the type argument passed to the type parameter must be a reference type. You cannot use a primitive type, such as **int** or **char**. For example, with **Gen**, it is possible to pass any class type to **T**, but you cannot pass a primitive type to a type parameter. Therefore, the following declaration is illegal:
-
+```
 Gen<int> intOb = new Gen<int>(53); // Error, can't use primitive
-
+```
 type
 
 Of course, not being able to specify a primitive type is not a serious restriction because you can use the type wrappers (as the preceding example did) to encapsulate a primitive type. Further, Java’s autoboxing and auto-unboxing mechanism makes the use of the type wrapper transparent.
@@ -123,33 +167,73 @@ Of course, not being able to specify a primitive type is not a serious restricti
 ## Generic Types Differ Based on Their Type Arguments
 
  A key point to understand about generic types is that a reference of one specific version of a generic type is not type compatible with another version of the same generic type. For example, assuming the program just shown, the following line of code is in error and will not compile:
-
+```
 iOb = strOb; // Wrong!
-
+```
 Even though both **iOb** and **strOb** are of type **Gen<T>**, they are references to different types because their type arguments differ. This is part of the way that generics add type safety and prevent errors.  
 
 ## How Generics Improve Type Safety
 
  At this point, you might be asking yourself the following question: Given that the same functionality found in the generic **Gen** class can be achieved without generics, by simply specifying **Object** as the data type and employing the proper casts, what is the benefit of making **Gen** generic? The answer is that generics automatically ensure the type safety of all operations involving **Gen**. In the process, they eliminate the need for you to enter casts and to type-check code by hand.
 
-To understand the benefits of generics, first consider the following program that creates a non-generic equivalent of **Gen**:  
+To understand the benefits of generics, first consider the following program that creates a non-generic equivalent of **Gen**:
+
+```java
+NonGen 18 functionally equivalent to Gen // but does not use generics.
+class NonGen {
+Object ob; // ob is now of type Object
+Pass the constructor a reference to 
+// an object of type Object NonGen (Object o) {
+ob = 0;
+}
+// Return type Object.
+Object getob() {
+return ob;
+}
+// Show type of ob. 
+void showType() {
+     System.out.println("Type of ob is " +
+ob.getClass().getName());
+}
+}
+// Demonstrate the non-generic class.
+class NonGenDemo ( public static void main(String args[]) {
+NonGen iob;
+// Create NonGen Object and store
+// an Integer in it. Autoboxing still occurs. 10b = new NonGen (88);
+// Show the type of data used by iob.
+iob.showType();
+// Get the value of iob.
+// This time, a cast is necessary. int (Integer) 10b.getob(); System.out.println("value: "v);
+System.out.println();
+// Create another NonGen object and // store a String in it. NonGen strob= new NonGen ("Non-Generics Test");
+// Show the type of data used by strob. strob.showType();
+// Get the value of strob.
+// Again, notice that a cast is necessary.
+String str(String) strob.getob(); System.out.println("value: " + str);
+// This compiles, but is conceptually wrong! iob strob;
+v = (Integer) iob.getob(); // run-time error!
+}
+}
+
+```
 
 There are several things of interest in this version. First, notice that **NonGen** replaces all uses of **T** with **Object**. This makes **NonGen** able to store any type of object, as can the generic version. However, it also prevents the Java compiler from having any real knowledge about the type of data actually stored in **NonGen**, which is bad for two reasons. First, explicit casts must be employed to retrieve the stored data. Second, many kinds of type mismatch errors cannot be found until run time. Let’s look closely at each problem.
 
 Notice this line:
-
+```
 int v = (Integer) iOb.getob();
-
+```
 Because the return type of **getob()** is **Object**, the cast to **Integer** is necessary to enable that value to be auto-unboxed and stored in **v**. If you remove the cast, the program will not compile. With the generic version, this cast was implicit. In the non-generic version, the cast must be explicit. This is not only an inconvenience, but also a potential source of error.
 
 Now, consider the following sequence from near the end of the program:
 
 // This compiles, but is conceptually wrong!
-
+```
 iOb = strOb;
 
 v = (Integer) iOb.getob(); // run-time error!
-
+```
 Here, **strOb** is assigned to **iOb**. However, **strOb** refers to an object that contains a string, not an integer. This assignment is syntactically valid because all **NonGen** references are the same, and any **NonGen** reference can refer to any other **NonGen** object. However, the statement is semantically wrong, as the next line shows. Here, the return type of **getob()** is cast to **Integer**, and then an attempt is made to assign this value to **v**. The trouble is that **iOb** now refers to an object that stores a **String**, not an **Integer**. Unfortunately, without the use of  
 
 generics, the Java compiler has no way to know this. Instead, a run-time exception occurs when the cast to **Integer** is attempted. As you know, it is extremely bad to have run-time exceptions occur in your code!
@@ -158,7 +242,42 @@ The preceding sequence can’t occur when generics are used. If this sequence we
 
 ## A Generic Class with Two Type Parameters
 
- You can declare more than one type parameter in a generic type. To specify two or more type parameters, simply use a comma-separated list. For example, the following **TwoGen** class is a variation of the **Gen** class that has two type parameters:  
+ You can declare more than one type parameter in a generic type. To specify two or more type parameters, simply use a comma-separated list. For example, the following **TwoGen** class is a variation of the **Gen** class that has two type parameters: 
+ ```java
+// A simple generic class with two type 
+// parameters: T and V.
+class TwoGen<T, V> {
+T obl;
+V ob2;
+// Pass the constructor a reference to 
+// an object of type T and an object of type V. 
+TwoGen (T 01, V 02) {
+ob1 = o1;
+ob2 = o2;
+}
+// Show types of T and V.
+void showTypes() { 
+    System.out.println("Type of T is " + obl.getClass().getName());
+    System.out.println("Type of V is " + ob2.getClass().getName());
+}
+T getobl() {
+return obl;
+}
+V getob2 () {
+return ob2;
+}
+}
+// Demonstrate TwoGen.
+class SimpGen public static void main(String args[]) {
+TwoGen<Integer, String> tgobj = new TwoGen<Integer, String> (88, "Generics");
+// Show the types. tgobj.showTypes ();
+// Obtain and show values.
+int vtgobj.getobl(); System.out.println("value: " + v):
+String str tgobj.getob2(); System.out.println("value: " + str);
+}
+}
+
+ ``` 
 
 The output from this program is shown here:
 
@@ -171,43 +290,66 @@ value: 88
 value: Generics
 
 Notice how **TwoGen** is declared:
-
+```
 class TwoGen<T, V> {
-
+```
 It specifies two type parameters: **T** and **V**, separated by a comma. Because it has two type parameters, two type arguments must be passed to **TwoGen** when an object is created, as shown next:
+
+```java
+TwoGen<Integer, String> tgobj new TwoGen<Integer, String> (88, "Generics");
+```
 
 In this case, **Integer** is substituted for **T**, and **String** is substituted for **V**. Although the two type arguments differ in this example, it is possible for
 
 both types to be the same. For example, the following line of code is valid:
-
+```
 TwoGen<String, String> x = new TwoGen<String, String> ("A",
-
 "B");
-
+```
 In this case, both **T** and **V** would be of type **String**. Of course, if the type arguments were always the same, then two type parameters would be unnecessary.
 
 ## The General Form of a Generic Class
 
  The generics syntax shown in the preceding examples can be generalized. Here is the syntax for declaring a generic class:
-
-class _class-name_<_type-param-list_ > { // …
-
+```
+class class-name<type-param-list > { // …
+```
 Here is the full syntax for declaring a reference to a generic class and instance creation:
+```
+class-name<type-arg-list > var-name =  
 
-_class-name_<_type-arg-list_ > _var-name_ =  
-
-new _class-name_<_type-arg-list_ >(_cons-arg-list_);
-
+new class-name<type-arg-list >(cons-arg-list);
+```
 ## Bounded Types
 
- In the preceding examples, the type parameters could be replaced by any class type. This is fine for many purposes, but sometimes it is useful to limit the types that can be passed to a type parameter. For example, assume that you want to create a generic class that contains a method that returns the average of an array of numbers. Furthermore, you want to use the class to obtain the average of an array of any type of number, including integers, **float**s, and **double**s. Thus, you want to specify the type of the numbers generically, using a type parameter. To create such a class, you might try something like this:  
+ In the preceding examples, the type parameters could be replaced by any class type. This is fine for many purposes, but sometimes it is useful to limit the types that can be passed to a type parameter. For example, assume that you want to create a generic class that contains a method that returns the average of an array of numbers. Furthermore, you want to use the class to obtain the average of an array of any type of number, including integers, **float**s, and **double**s. Thus, you want to specify the type of the numbers generically, using a type parameter. To create such a class, you might try something like this:
+
+
+ ```java
+// Stats attempts (unsuccessfully) to
+// create a generic class that can compute
+// the average of an array of numbers of 
+// any given type.
+//
+// The class contains an error! class Stats<T> {
+T[] nums; // nums is an array of type T
+// Pass the constructor a reference to // an array of type T.
+Stats (To) {
+nums = 0;
+}
+// Return type double in all cases. double average () { double sum = 0.0;
+for (int i=0; i < nums.length; i++) sum += nums[i].doubleValue(); // Error!!!
+return sum nums.length;
+}
+}
+ ```  
 
 In **Stats**, the **average()** method attempts to obtain the **double** version of each number in the **nums** array by calling **doubleValue()**. Because all numeric classes, such as **Integer** and **Double**, are subclasses of **Number**, and **Number** defines the **doubleValue()** method, this method is available to all numeric wrapper classes. The trouble is that the compiler has no way to know that you are intending to create **Stats** objects using only numeric types. Thus, when you try to compile **Stats**, an error is reported that indicates that the **doubleValue()** method is unknown. To solve this problem, you need some way to tell the compiler that you intend to pass only numeric types to **T**. Furthermore, you need some way to ensure that only numeric types are actually passed.
 
 To handle such situations, Java provides _bounded types_. When specifying a type parameter, you can create an upper bound that declares the superclass from which all type arguments must be derived. This is accomplished through the use of an **extends** clause when specifying the type parameter, as shown here:
-
+```
 <T extends superclass\>
-
+```
 This specifies that T can only be replaced by superclass, or subclasses of superclass. Thus, superclass defines an inclusive, upper limit.
 
 You can use an upper bound to fix the **Stats** class shown earlier by specifying **Number** as an upper bound, as shown here:  
