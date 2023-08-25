@@ -155,70 +155,72 @@ Before examining the **requires**, **exports**, and **module** statements more c
  Beginning with JDK 9, **javac** has been updated to support modules. Thus, like all other Java programs, module-based programs are compiled using **javac**. The process is easy, with the primary difference being that you will usually explicitly specify a _module path_. A module path tells the compiler where the compiled files will be located. When following along with this example, be sure that you execute the **javac** commands from the **mymodapp** directory in order for the paths to be correct. Recall that **mymodapp** is the top-level directory for the entire module application.
 
 To begin, compile **SimpleMathFuncs.java** using this command:
-
+```
+javac -d appmodules\appfuncs 
+appsrc\appfuncs\appfuncs\simple funcs\SimpleMathFuncs.java
+```
 Remember, this command _must be_ executed from the **mymodapp** directory. Notice the use of the **\-d** option. This tells **javac** where to put the output **.class** file. For the examples in this chapter, the top of the directory tree for compiled code is **appmodules**. This command will create the output package directories for **appfuncs.simplefuncs** under **appmodules\\appfuncs** as needed.
 
 Next, here is the **javac** command that compiles the **module-info.java** file for the **appfuncs** module:
 
 javac -d appmodules\\appfuncs appsrc\\appfuncs\\module-info.java
 
-This puts the **module-info.class** file into the **appmodules\\appfuncs** directory. Although the preceding two-step process works, it was shown primarily for  
-
-the sake of discussion. It is usually easier to compile a module’s **module- info.java** file and its source files in one command line. Here, the preceding two **javac** commands are combined into one:
-
+This puts the **module-info.class** file into the **appmodules\\appfuncs** directory. Although the preceding two-step process works, it was shown primarily for the sake of discussion. It is usually easier to compile a module’s **module- info.java** file and its source files in one command line. Here, the preceding two **javac** commands are combined into one:
+```
+javac -d appmodules\appfuncs appsrc\appfuncs\appfuncs\module-info.java
+appsrc\appfuncs\appfuncs\simplefuncs\simpleMathFuncs.java
+```
 In this case, each compiled file is put in its proper module or package directory.
 
 Now, compile **module-info.java** and **MyModAppDemo.java** for the **appstart** module, using this command:
-
+```
+javac --module-path appmodules -d appmodules\appstart 
+appsrc\appstart\module-info.java 
+appsrc\appstart\appstart\mymodappdemo\MyModAppDemo.java
+```
 Notice the **\--module-path** option. It specifies the module path, which is the path on which the compiler will look for the user-defined modules required by the **module-info.java** file. In this case, it will look for the **appfuncs** module because it is needed by the **appstart** module. Also, notice that it specifies the output directory as **appmodules\\appstart**. This means that the **module- info.class** file will be in the **appmodules\\appstart** module directory and **MyModAppDemo.class** will be in the **appmodules\\appstart\\appstart\\mymodappdemo** package directory.
 
 Once you have completed the compilation, you can run the application with this **java**command:
-
+```
 java --module-path appmodules -m
-
 appstart/appstart.mymodappdemo.MyModAppDemo
-
+```
 Here, the --**module-path** option specifies the path to the application’s modules. As mentioned, **appmodules** is the directory at the top of the compiled modules tree. The **\-m** option specifies the class that contains the entry point of the application and, in this case, the name of the class that contains the **main()** method. When you run the program, you will see the following output:
-
+```
 2 is a factor of 10
 
 Smallest factor common to both 35 and 105 is 5
 
 Largest factor common to both 35 and 105 is 7
-
+```
 ## A Closer Look at requires and exports
 
- The preceding module-based example relies on the two foundational features of  
-
-the module system: the ability to specify a dependence and the ability to satisfy that dependence. These capabilities are specified through the use of the **requires** and **exports** statements within a **module** declaration. Each merits a closer examination at this time.
+ The preceding module-based example relies on the two foundational features of the module system: the ability to specify a dependence and the ability to satisfy that dependence. These capabilities are specified through the use of the **requires** and **exports** statements within a **module** declaration. Each merits a closer examination at this time.
 
 Here is the form of the **requires** statement used in the example:
 
-requires moduleName;
+requires _moduleName;_
 
-Here, moduleName specifies the name of a module that is required by the module in which the **requires** statement occurs. This means that the required module must be present in order for the current module to compile. In the language of modules, the current module is said to read the module specified in the **requires** statement. When more than one module is required, it must be specified in its own **requires** statement. Thus, a module declaration may include several different **requires** statements. In general, the **requires** statement gives you a way to ensure that your program has access to the modules that it needs.
+Here, _moduleName_ specifies the name of a module that is required by the module in which the **requires** statement occurs. This means that the required module must be present in order for the current module to compile. In the language of modules, the current module is said to read the module specified in the **requires** statement. When more than one module is required, it must be specified in its own **requires** statement. Thus, a module declaration may include several different **requires** statements. In general, the **requires** statement gives you a way to ensure that your program has access to the modules that it needs.
 
 Here is the general form of the **exports** statement used in the example:
-
+```
 exports packageName;
-
+```
 Here, packageName specifies the name of the package that is exported by the module inwhich this statement occurs. A module can export as many packages as needed, with eachone specified in a separate **exports** statement. Thus, a module may have several **exports** statements.
 
 When a module exports a package, it makes all of the public and protected types in the package accessible to other modules. Furthermore, the public and protected members of those types are also accessible. However, if a package within a module is not exported, then it is private to that module, including all of its public types. For example, even though a class is declared as **public** within a package, if that package is not explicitly exported by an **exports** statement, then that class is not accessible to other modules. It is important to understand that the public and protected types of a package, whether exported or not, are always accessible within that package’s module. The **exports** statement simply makes them accessible to outside modules. Thus, any nonexported package is only for the internal use of its module.
 
-The key to understanding **requires** and **exports** is that they work together. If one module depends on another, then it must specify that dependence with **requires**. The module on which another depends must explicitly export (i.e., make accessible) the packages that the dependent module needs. If either side  
-
-of this dependence relationship is missing, the dependent module will not compile. As it relates to the foregoing example, **MyModAppDemo** uses the functions in **SimpleMathFuncs**. As a result, the **appstart** module declaration contains a **requires** statement that names the **appfuncs** module. The **appfuncs** module declaration exports the **appfuncs.simplefuncs** package, thus making the public types in the **SimpleMathFuncs** class available. Since both sides of the dependence relationship have been fulfilled, the application can compile and run. If either is missing, the compilation will fail.
+The key to understanding **requires** and **exports** is that they work together. If one module depends on another, then it must specify that dependence with **requires**. The module on which another depends must explicitly export (i.e., make accessible) the packages that the dependent module needs. If either side of this dependence relationship is missing, the dependent module will not compile. As it relates to the foregoing example, **MyModAppDemo** uses the functions in **SimpleMathFuncs**. As a result, the **appstart** module declaration contains a **requires** statement that names the **appfuncs** module. The **appfuncs** module declaration exports the **appfuncs.simplefuncs** package, thus making the public types in the **SimpleMathFuncs** class available. Since both sides of the dependence relationship have been fulfilled, the application can compile and run. If either is missing, the compilation will fail.
 
 It is important to emphasize that **requires** and **exports** statements must occur only within a **module** statement. Furthermore, a **module** statement must occur by itself in a file called **module-info.java**.
 
-**java.base and the Platform Modules** As mentioned at the start of this chapter, beginning with JDK 9 the Java API packages have been incorporated into modules. In fact, the modularization of the API is one of the primary benefits realized by the addition of the modules. Because of their special role, the API modules are referred to as _platform modules,_ and their names all begin with the prefix **java**. Here are some examples: **java.base**, **java.desktop**, and **java.xml**. By modularizing the API, it becomes possible to deploy an application with only the packages that it requires, rather than the entire Java Runtime Environment (JRE). Because of the size of the full JRE, this is a very important improvement.
+**java.base and the Platform Modules** 
+As mentioned at the start of this chapter, beginning with JDK 9 the Java API packages have been incorporated into modules. In fact, the modularization of the API is one of the primary benefits realized by the addition of the modules. Because of their special role, the API modules are referred to as _platform modules,_ and their names all begin with the prefix **java**. Here are some examples: **java.base**, **java.desktop**, and **java.xml**. By modularizing the API, it becomes possible to deploy an application with only the packages that it requires, rather than the entire Java Runtime Environment (JRE). Because of the size of the full JRE, this is a very important improvement.
 
 The fact that all of the Java API library packages are now in modules gives rise to the following question: How can the **main()** method in **MyModAppDemo** in the preceding example use **System.out.println()** without specifying a **requires** statement for the module that contains the **System** class? Obviously, the program will not compile and run unless **System** is present. The same question also applies to the use of the **Math** class in **SimpleMathFuncs**. The answer to this question is found in **java.base**.
 
-Of the platform modules, the most important is **java.base**. It includes and exports those packages fundamental to Java, such as **java.lang**, **java.io**, and **java.util**, among many others. Because of its importance, **java.base** is _automatically accessible_ to all modules. Furthermore, all other modules automatically require **java.base**. There is no need to include a **requires java.base** statement in a module declaration. (As a point of interest, it is not wrong to explicitly specify **java.base**, it’s just not necessary.) Thus, in much the same way that **java.lang** is automatically available to all programs without  
-
-the use of an **import** statement, the **java.base** module is automatically accessible to all module-based programs without explicitly requesting it.
+Of the platform modules, the most important is **java.base**. It includes and exports those packages fundamental to Java, such as **java.lang**, **java.io**, and **java.util**, among many others. Because of its importance, **java.base** is _automatically accessible_ to all modules. Furthermore, all other modules automatically require **java.base**. There is no need to include a **requires java.base** statement in a module declaration. (As a point of interest, it is not wrong to explicitly specify **java.base**, it’s just not necessary.) Thus, in much the same way that **java.lang** is automatically available to all programs without the use of an **import** statement, the **java.base** module is automatically accessible to all module-based programs without explicitly requesting it.
 
 Because **java.base** contains the **java.lang** package, and **java.lang** contains the **System** class, **MyModAppDemo** in the preceding example can automatically use **System.out.println()** without an explicit **requires** statement. The same applies to the use of the **Math** class in **SimpleMathFuncs**, because the **Math** class is also in **java.lang**. As you will see when you begin to create your own module-based applications, many of the API classes you will commonly need are in the packages included in **java.base**. Thus, the automatic inclusion of **java.base** simplifies the creation of module- based code because Java’s core packages are automatically accessible.
 
@@ -230,8 +232,6 @@ One last point: Beginning with JDK 9, the documentation for the Java API now tel
 
 Support for legacy code is provided by two key features. The first is the _unnamed module_. When you use code that is not part of a named module, it automatically becomes part of theunnamed module. The unnamed module has two important attributes. First, all of the packages in the unnamed module are automatically exported. Second, the unnamed module can access any and all other modules. Thus, when a program does not use modules, all API modules in the Java platform are automatically accessible through the unnamed module.
 
-The second key feature that supports legacy code is the automatic use of the  
-
 The second key feature that supports legacy code is the automatic use of the class path, rather than the module path. When you compile a program that does not use modules, the class path mechanism is employed, just as it has been since Java’s original release. As a result, the program is compiled and run in the same way it was prior to the advent of modules.
 
 Because of the unnamed module and the automatic use of the class path, there was no need to declare any modules for the sample programs shown elsewhere in this book. They run properly whether you compile them with a modern compiler or an earlier one, such as JDK8. Thus, even though modules are a feature that has significant impact on Java, compatibility with legacy code is maintained. This approach also provides a smooth, nonintrusive, nondisruptive transition path to modules. Thus, it enables you to move a legacy application to modules at your own pace. Furthermore, it allows you to avoid the use of modules when they are not needed.
@@ -242,9 +242,7 @@ Before moving on, an important point needs to be made. For the types of example 
 
  The basic form of the **exports** statement makes a package accessible to any and all other modules. This is often exactly what you want. However, in some specialized development situations, it can be desirable to make a package accessible to only a _specific set_ of modules, not all other modules. For example, a library developer might want to export a support package to certain other modules within the library, but not make it available for general use. Adding a **to** clause to the **exports** statement provides a means by which this can be accomplished.
 
-In an **exports** statement, the **to** clause specifies a list of one or more modules that have access to the exported package. Furthermore, only those  
-
-modules named in the **to** clause will have access. In the language of modules, the **to** clause creates what is known as a _qualified export_.
+In an **exports** statement, the **to** clause specifies a list of one or more modules that have access to the exported package. Furthermore, only those modules named in the **to** clause will have access. In the language of modules, the **to** clause creates what is known as a _qualified export_.
 
 The form of **exports** that includes **to** is shown here:
 
@@ -253,16 +251,23 @@ exports packageName to moduleNames;
 Here, moduleNames is a comma-separated list of modules to which the exporting module grants access.
 
 You can try the **to** clause by changing the **module-info.java** file for the **appfuncs** module, as shown here:
-
+```
+// Module definition that uses a to clause. 
+module appfuncs 
+{ 
+    // Exports the package appfuncs.simplefuncs to appstart. 
+    exports appfuncs.simple funcs to appstart; 
+}
+```
 Now, **simplefuncs** is exported only to **appstart** and to no other modules. After making this change, you can recompile the application by using this **javac** command:
-
+```
+javac -d appmodules --module-source-path appsrc appsrc\appstart\appstart\mymodappdemo\MyModAppDemo.java
+```
 After compiling, you can run the application as shown earlier. This example also uses another module-related feature. Look closely at the
 
 preceding **javac** command. First, notice that it specifies the **\--module-source- path** option. The module source path specifies the top of the module source tree. The --**module-source-path** option automatically compiles the files in the tree under the specified directory, which is **appsrc** in this example. The -- **module-source-path** option must be used with the **\-d** option to ensure that the compiled modules are stored in their proper directories under **appmodules**. This form of **javac** is called _multi-module mode_ because it enables more than one module to be compiled at a time. The multi-module compilation mode is especially helpful here because the **to** clause refers to a specific module, and the requiring module must have access to the exported package. Thus, in this case, both **appstart** and **appfuncs** are needed to avoid warnings and/or errors during compilation. Multi-module mode avoids this problem because both modules are being compiled at the same time.
 
-The multi-module mode of **javac** has another advantage. It automatically finds and compiles all source files for the application, creating the necessary  
-
-output directories. Because of the advantages that multi-module compilation mode offers, it will be used for the subsequent examples.
+The multi-module mode of **javac** has another advantage. It automatically finds and compiles all source files for the application, creating the necessary output directories. Because of the advantages that multi-module compilation mode offers, it will be used for the subsequent examples.
 
 ## NOTE
 
@@ -276,59 +281,166 @@ output directories. Because of the advantages that multi-module compilation mode
 - B requires C.
 
 Given this situation, it is clear that since A depends on B and B depends on C, A has an indirect dependence on C. As long as A does not directly use any of the contents of C, then you can simply have A require B in its module-info file, and have B export the packages required by A in its module-info file, as shown here:
+```
+// A's module-info file: 
+module A 
+{ 
+    requires B; 
+}
 
+// B's module-info file. 
+module B 
+{ 
+    exports somepack; 
+    requires C;
+}
+```
 Here, somepack is a placeholder for the package exported by B and used by A. Although this works as long as A does not need to use anything defined in C, a problem occurs if A does want to access a type in C. In this case, there are two solutions.  
 
 The first solution is to simply add a **requires C** statement to A’s file, as shown here:
-
+```
+// A's module-info file updated to explicitly require C: 
+module A 
+{ 
+    requires B; 
+    requires C; // also require C
+}
+```
 This solution certainly works, but if B will be used by many modules, you must add **requiresC** to all module definitions that require B. This is not only tedious, it is also error prone. Fortunately, there is a better solution. You can create an _implied dependence_ on C. Implied dependence is also referred to as _implied readability_.
 
 To create an implied dependence, add the **transitive** keyword after **requires** in the clause that requires the module upon which an implied readability is needed. In the case of this example, you would change B’s module-info file as shown here:
-
+```
+// B's module-info file. 
+module B 
+{ 
+    exports somepack; 
+    requires transitive C; 
+}
+```
 Here, C is now required as transitive. After making this change, any module that depends on B will also, automatically, depend on C. Thus, A would automatically have access to C.
 
 You can experiment with **requires transitive** by reworking the preceding modular application example so that the **isFactor()** method is removed from the **SimpleMathFuncs** class in the **appfuncs.simplefuncs** package and put into a new class, module, and package. The new class will be called **SupportFuncs**, the module will be called **appsupport**, and the package will be called **appsupport.supportfuncs**. The **appfuncs** module will then add a dependence on the **appsupport** module by use of **requires transitive**. This will enable both the **appfuncs** and **appstart** modules to access it without **appstart** having to provide its own **requires** statement. This works because **appstart** receives access to it through an **appfuncs requires transitive** statement. The following describes the process in detail.
 
-To begin, create the source directories that support the new **appsupport**  
-
-module. First, create **appsupport** under the **appsrc** directory. This is the module directory for the support functions. Under **appsupport**, create the package directory by adding the **appsupport** subdirectory followed by the **supportfuncs** subdirectory. Thus, the directory tree for **appsupport** should now look like this:
+To begin, create the source directories that support the new **appsupport** module. First, create **appsupport** under the **appsrc** directory. This is the module directory for the support functions. Under **appsupport**, create the package directory by adding the **appsupport** subdirectory followed by the **supportfuncs** subdirectory. Thus, the directory tree for **appsupport** should now look like this:
 
 appsrc\\appsupport\\appsupport\\supportfuncs
 
 Once the directories have been established, create the **SupportFuncs** class. Notice that **SupportFuncs** is part of the **appsupport.supportfuncs** package. Therefore, you must put it in the **appsupport.supportfuncs** package directory.
-
+```
+// Support functions.
+package appsupport.supportfuncs;
+public class SupportFuncs 
+{
+    // Determine if a is a factor of b. 
+    public static boolean isFactor (int a, int b) 
+    { 
+        if ((b%a) == 0) 
+            return true; 
+        return false; 
+    }
+}
+```
 Notice that **isFactor()** is now part of **SupportFuncs**, rather than **SimpleMathFuncs**.
 
 Next, create the **module-info.java** file for the **appsupport** module and put it in **appsrc\\appsupport** directory.
+```
+// Module definition for appsupport. 
+module appsupport 
+{ 
+    exports appsupport.support funcs; 
+}
+```
+As you can see, it exports the **appsupport.supportfuncs** package. Because **isFactor()** is now part of **Supportfuncs**, remove it from **SimpleMathFuncs**. Thus,**SimpleMathFuncs.java** will now look like this:  
+```
+// Some simple math functions, with isFactor() removed.
+package appfuncs.simplefuncs;
+import appsupport.support funcs. Support Funcs; 
+public class SimpleMathFuncs 
+{
+    // Return the smallest positive factor that a and b have in common.
+    public static int lef (int a, int b) 
+    { 
+        // Factor using positive values.
+        a = Math.abs (a);
+        b = Math.abs (b);
+        int min = a<b? a: b;
+        for (int i= 2; i <= min/2; i++) 
+        {
+            if (SupportFuncs. isFactor (i, a) && SupportFuncs.isFactor (i, b))
+            return i;
+        }
+        return 1;
+    }
 
-As you can see, it exports the **appsupport.supportfuncs** package. Because **isFactor()** is now part of **Supportfuncs**, remove it from
-
-## SimpleMathFuncs
-
-. Thus, **SimpleMathFuncs.java** will now look like this:  
-
+    // Return the largest positive factor that a and b have in common.
+    public static int gef(int a, int b) 
+    { 
+        // Factor using positive values.
+        a = Math.abs (a);
+        b = Math.abs (b);
+        int min = a < b? a: b;
+        for (int i = min/2; i >= 2; i--) 
+        {       
+            if (Support Funcs.isFactor (i, a) && Support Funcs.isFactor (i, b))
+            return i;
+        }
+        return 1;
+    }
+}
+```
 Notice that now the **SupportFuncs** class is imported and calls to **isFactor()** are referred to through the class name **SupportFuncs**.
 
-Next, change the **module-info.java** file for **appfuncs** so that in its **requires**  
+Next, change the **module-info.java** file for **appfuncs** so that in its **requires**  statement, **appsupport** is specified as **transitive**, as shown here:
+```
+// Module definition for appfuncs. 
+module appfuncs 
+{
+    // Exports the package app funcs.simplefuncs. 
+    exports appfuncs.simplefuncs;
 
-statement, **appsupport** is specified as **transitive**, as shown here:
-
+    // Requires appsupport and makes it transitive. 
+    requires transitive appsupport;
+}
+```
 Because **appfuncs** requires **appsupport** as **transitive**, there is no need for the **module-info.java** file for **appstart** to also require it. Its dependence on **appsupport** is implied. Thus, no changes to the **module-info.java** file for **appstart** are needed.
 
 Finally, update **MyModAppDemo.java** to reflect these changes. Specifically, it must now import the **SupportFuncs** class and specify it when invoking **isFactor()**, as shown here:
-
+```
+// Updated to use SupportFuncs. 
+package appstart.mymodappdemo;
+import appfuncs.simplefuncs.SimpleMathFuncs; 
+import appsupport.support funcs. Support Funcs;
+public class MyModAppDemo 
+{ 
+    public static void main(String[] args) 
+    {
+        // Now, isFactor() is referred to via Support Funcs, 
+        // not SimpleMathFuncs. 
+        if (SupportFuncs.isFactor(2, 10))
+            System.out.println("2 is a factor of 10");
+        System.out.println("Smallest factor common to both 35 and 105 is
+        +SimpleMathFuncs.lcf (35, 105));
+        System.out.println("Largest factor common to both 35 and 105 is " +
+        SimpleMathFuncs.gcf (35, 105));
+    }
+}
+```
 Once you have completed all of the preceding steps, you can recompile the entire program using this multi-module compilation command:  
 
 entire program using this multi-module compilation command:
+```
+javac -d appmodules --module-source-path appsrc 
 
+appsrc\appstart\appstart\mymodappdemo\MyModAppDemo.java
+```
 As explained earlier, the multi-module compilation will automatically create the parallel module subdirectories, under the **appmodules** directory.
 
 You can run the program using this command:
-
+```
 java --module-path appmodules -m
 
 appstart/appstart.mymodappdemo.MyModAppDemo
-
+```
 It will produce the same output as the previous version. However, this time three different modules are required.
 
 To prove that the **transitive** modifier is actually required by the application, remove it from the **module-info.java** file for **appfuncs**. Then, try to compile the program. As you will see, an error will result because **appsupport** is no longer accessible by **appstart**.
@@ -343,11 +455,9 @@ One final point, because of a special exception in the Java language syntax, in 
 
 ## Use Services
 
- In programming, it is often useful to separate what must be done from how it is done. As you learned in Chapter 9, one way this is accomplished in Java is through the use of interfaces. The interface specifies the _what,_ and the implementing class specifies the how. This concept can be expanded so that the implementing class is provided by code that is outside your program, through  
-
-the use of a _plug-in_. Using such an approach, the capabilities of an application can be enhanced, upgraded, or altered by simply changing the plug-in. The core of the application itself remains unchanged. One way that Java supports a pluggable application architecture is through the use of services and _service providers_. Because of their importance, especially in large, commercial applications, Java’s module system provides support for them.
-
-Before we begin, it is necessary to state that applications that use services and service providers are typically fairly sophisticated. Therefore, you may find that you do not often need the service-based module features. However, because support for services constitutes a rather significant part of the module system, it is important that you have a general understanding of how these features work. Also, a simple example is presented that illustrates the core techniques needed to use them.
+ In programming, it is often useful to separate what must be done from how it is done. As you learned in Chapter 9, one way this is accomplished in Java is through the use of interfaces. The interface specifies the _what,_ and the implementing class specifies the how. This concept can be expanded so that the implementing class is provided by code that is outside your program, through the use of a _plug-in_. Using such an approach, the capabilities of an application can be enhanced, upgraded, or altered by simply changing the plug-in. The core of the application itself remains unchanged. One way that Java supports a pluggable application architecture is through the use of services and _service providers_. Because of their importance, especially in large, commercial applications, Java’s module system provides support for them.
+ 
+ Before we begin, it is necessary to state that applications that use services and service providers are typically fairly sophisticated. Therefore, you may find that you do not often need the service-based module features. However, because support for services constitutes a rather significant part of the module system, it is important that you have a general understanding of how these features work. Also, a simple example is presented that illustrates the core techniques needed to use them.
 
 ## Service and Service Provider Basics
 
@@ -364,7 +474,6 @@ Here, **S** specifies the service type. Service providers are loaded by the **lo
 public static <S> ServiceLoader<S> load(Class <S> serviceType)
 
 Here, serviceType specifies the **Class** object for the desired service type. Recall  
-
 that **Class** is a class that encapsulates information about a class. There are a variety of ways to obtain a **Class** instance. The way we will use here involves a class literal. Recall that a class literal has this general form:
 
 className.class
@@ -387,9 +496,7 @@ uses serviceType;
 
 Here, serviceType specifies the type of the service required.
 
-**A Module-Based Service Example** To demonstrate the use of services we will add a service to the modular application example that we have been evolving. For simplicity, we will begin  
-
-with the first version of the application shown at the start of this chapter. To it we will add two new modules. The first is called **userfuncs**. It will define interfaces that support functions that perform binary operations in which each argument is an **int** and the result is an **int**. The second module is called **userfuncsimp**, and it contains concrete implementations of the interfaces.
+**A Module-Based Service Example** To demonstrate the use of services we will add a service to the modular application example that we have been evolving. For simplicity, we will begin with the first version of the application shown at the start of this chapter. To it we will add two new modules. The first is called **userfuncs**. It will define interfaces that support functions that perform binary operations in which each argument is an **int** and the result is an **int**. The second module is called **userfuncsimp**, and it contains concrete implementations of the interfaces.
 
 Begin by creating the necessary source directories.
 
@@ -398,39 +505,96 @@ Begin by creating the necessary source directories.
 2\. Under **userfuncs**, add the subdirectory also called **userfuncs**. Under that directory, add the subdirectory **binaryfuncs**. Thus, beginning with **appsrc**, you will have created this tree: appsrc\\userfuncs\\userfuncs\\binaryfuncs
 
 3\. Under **userfuncsimp**, add the subdirectory also called **userfuncsimp**. Under that directory, add the subdirectory **binaryfuncsimp**. Thus, beginning with **appsrc**, you will have created this tree:
-
+```
 appsrc\\userfuncsimp\\userfuncsimp\\binaryfuncsimp
-
+```
 This example expands the original version of the application by providing support for functions beyond those built into the application. Recall that the **SimpleMathFuncs** class supplies three built-in functions: **isFactor()**, **lcf()**, and **gcf()**. Although it would be possible to add more functions to this class, doing so requires modifying and recompiling the application. By implementing services, it becomes possible to “plug in” new functions at run time, without modifying the application, and that is what this example will do. In this case, the service supplies functions that take two **int** arguments and return an **int** result. Of course, other types of functions can be supported if additional interfaces are provided, but support for binary integer functions is sufficient for our purposes and keeps the source code size of the example manageable.
 
 ## The Service Interfaces
 
  Two service-related interfaces are needed. One specifies the form of an action, and the other specifies the form of the provider of that action. Both go in the **binaryfuncs** directory, and both are in the **userfuncs.binaryfuncs** package. The first, called **BinaryFunc**, declares the form of a binary function. It is shown here:  
-
-## BinaryFunc
-
- declares the form of an object that can implement a binary integer function. This is specified by the **func()** method. The name of the function is obtainable from **getName()**. The name will be used to determine what type of function is implemented. This interface is implemented by a class that supplies a binary function.
+```
+// This interface defines a function that takes two int
+// arguments and returns an int result. Thus, it can 
+// describe any binary operation on two ints that
+// returns an int.
+package userfuncs.binaryfuncs;
+public interface BinaryFunc 
+{ 
+    // Obtain the name of the function. 
+    public String getName();
+    // This is the function to perform. It will be 
+    // provided by specific implementations. 
+    public int func (int a, int b);
+}
+```
+ **BinaryFunc** declares the form of an object that can implement a binary integer function. This is specified by the **func()** method. The name of the function is obtainable from **getName()**. The name will be used to determine what type of function is implemented. This interface is implemented by a class that supplies a binary function.
 
 The second interface declares the form of the service provider. It is called **BinFuncProvider** and is shown here:
-
-## BinFuncProvider
-
- declares only one method, **get()**, which is used to obtain an instance of **BinaryFunc**. This interface must be implemented by a class that wants to provide instances of **BinaryFunc**.
+```
+// This interface defines a function that takes two int
+// arguments and returns an int result. Thus, it can 
+// describe any binary operation on two ints that
+// returns an int.
+package userfuncs.binaryfuncs;
+public interface BinaryFunc 
+{ 
+    // Obtain the name of the function. 
+    public String getName();
+    // This is the function to perform. It will be 
+    // provided by specific implementations. 
+    public int func (int a, int b);
+}
+```
+**BinFuncProvider** declares only one method, **get()**, which is used to obtain an instance of **BinaryFunc**. This interface must be implemented by a class that wants to provide instances of **BinaryFunc**.
 
 ## The Implementation Classes
-
-  
 
 In this example, two concrete implementations of **BinaryFunc** are supported. The first is **AbsPlus**, which returns the sum of the absolute values of its arguments. The second is **AbsMinus**, which returns the result of subtracting the absolute value of the second argument from the absolute value of the first argument. These are provided by the classes **AbsPlusProvider** and **AbsMinusProvider**. The source code for these classes must be stored in the **binaryfuncsimp** directory, and they are all part of the **userfuncsimp.binaryfuncsimp** package.
 
 The code for **AbsPlus** is shown here:
-
-## AbsPlus
-
- implements **func()** such that it returns the result of adding the absolute values of **a** and **b**. Notice that **getName()** returns the "absPlus" string. It identifies this function.
+```
+// AbsPlus provides a concrete implementation of 
+// BinaryFunc. It returns the result of abs (a) + abs (b). 
+package userfuncsimp.binaryfuncsimp;
+import userfuncs.binaryfuncs. BinaryFunc;
+public class AbsPlus implements BinaryFunc 
+{
+    // Return name of this function. 
+    public String getName() 
+    { 
+        return "absPlus";
+    }
+    
+    // Implement the AbsPlus function.
+    public int func (int a, int b) 
+    { 
+        return Math.abs (a)+ Math.abs (b); 
+    }
+}
+```
+**AbsPlus** implements **func()** such that it returns the result of adding the absolute values of **a** and **b**. Notice that **getName()** returns the "absPlus" string. It identifies this function.
 
 The **AbsMinus** class is shown next:  
-
+```
+// AbsMinus provides a concrete implementation of
+// BinaryFunc. It returns the result of abs (a) - abs (b).
+package userfuncsimp.binary funcsimp;
+import userfuncs.binaryfuncs. BinaryFunc;
+public class AbsMinus implements BinaryFunc 
+{
+    // Return name of this function. 
+    public String getName() 
+    {
+        return "absMinus";
+    }
+    // Implement the AbsMinus function.
+    public int func (int a, int b) 
+    { 
+        return Math.abs (a) - Math.abs (b); 
+    }
+}
+```
 Here, **func()** is implemented to return the difference between the absolute values of **a** and **b**, and the string "absMinus" is returned by **getName()**.
 
 To obtain an instance of **AbsPlus**, the **AbsPlusProvider** is used. It implements **BinFuncProvider** and is shown here:
