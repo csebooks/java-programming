@@ -602,25 +602,51 @@ To obtain an instance of **AbsPlus**, the **AbsPlusProvider** is used. It implem
 The **get()** method simply returns a new **AbsPlus()** object. Although this provider is very simple, it is important to point out that some service providers will be much more complex.
 
 The provider for **AbsMinus** is called **AbsMinusProvider** and is shown next:  
-
+```
+// This is a provider for the AbsMinus function.
+package userfuncsimp.binaryfuncsimp;
+import userfuncs.binaryfuncs.*;
+public class AbsMinus Provider implements BinFuncProvider
+{
+    // Provide an AbsMinus object. 
+    public BinaryFunc get() 
+    {
+         return new AbsMinus(); 
+    } 
+}
+```
 Its **get()** method returns an object of **AbsMinus**.
 
 ## The Module Definition Files
 
  Next, two module definition files are needed. The first is for the **userfuncs** module. It is shown here:
-
+```
+modules userfuncs
+{
+    exports userfuncs.binaryfuncs;
+}
+```
 This code must be contained in a **module-info.java** file that is in the **userfuncs** module directory. Notice that it exports the **userfuncs.binaryfuncs** package. This is the package that defines the **BinaryFunc** and **BinFuncProvider** interfaces.
 
 The second **module-info.java** file is shown next. It defines the module that contains the implementations. It goes in the **userfuncsimp** module directory.
+```
+module userfuncsimp 
+{
+    requires userfuncs;
 
-This module requires **userfuncs** because that is where **BinaryFunc** and **BinFuncProvider** are contained, and those interfaces are needed by the implementations. The module provides **BinFuncProvider** implementations  
-
-with the classes **AbsPlusProvider** and **AbsMinusProvider**.
+    provides user funcs.binary funcs. BinFuncProvider with 
+    userfuncsimp.binaryfuncsimp. Abs Plus Provider, 
+    userfuncsimp.binaryfuncsimp. AbsMinus Provider; 
+}
+```
+This module requires **userfuncs** because that is where **BinaryFunc** and **BinFuncProvider** are contained, and those interfaces are needed by the implementations. The module provides **BinFuncProvider** implementations with the classes **AbsPlusProvider** and **AbsMinusProvider**.
 
 ## Demonstrate the Service Providers in MyModAppDemo
 
  To demonstrate the use of the services, the **main()** method of **MyModAppDemo** is expanded to use **AbsPlus** and **AbsMinus**. It does so by loading them at run time by use of **ServiceLoader.load()**. Here is the updated code:  
+```
 
+```
 Let’s take a close look at how a service is loaded and executed by the preceding code. First, a service loader for services of type **BinFuncProvider** is created with this statement:
 
 Notice that the type parameter to **ServiceLoader** is **BinFuncProvider**. This is also the type used in the call to **load()**. This means that providers that implement this interface will be found. Thus, after this statement executes, **BinFuncProvider** classes in the module will be available through **ldr**. In this case, both **AbsPlusProvider** and **AbsMinusProvider** will be available.
