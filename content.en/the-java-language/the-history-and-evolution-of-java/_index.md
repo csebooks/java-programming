@@ -142,8 +142,6 @@ Each six-month release, now called a _feature release,_ will include those featu
 
 Currently, feature releases are scheduled for March and September of each year. As a result, JDK 10 was released in March 2018, which was six months after the release of JDK 9. The next release (JDK 11) was in September 2018. Again, it is anticipated that every six months a new feature release will take place. You will want to consult the Java documentation for the latest release schedule information.
 
-At the time of this writing, there are a number of new Java features on the  
-
 At the time of this writing, there are a number of new Java features on the horizon. Because of the faster release schedule, it is very likely that several of them will be added to Java over the next few years. You will want to review the information and release notes provided by each six-month release in detail. It is truly an exciting time to be a Java programmer!
 
 ## Servlets: Java on the Server Side
@@ -163,7 +161,6 @@ No discussion of Java’s history is complete without a look at the Java buzzwor
 - Portable
 - Object-oriented
 - Robust  
-
 - Multithreaded
 - Architecture-neutral
 - Interpreted
@@ -194,8 +191,6 @@ To better understand how Java is robust, consider two of the main reasons for pr
 Java was designed to meet the real-world requirement of creating interactive, networked programs. To accomplish this, Java supports multithreaded programming, which allows you to write programs that do many things simultaneously. The Java run-time system comes with an elegant yet sophisticated solution for multiprocess synchronization that enables you to construct smoothly running interactive systems. Java’s easy-to-use approach to multithreading allows you to think about the specific behavior of your program, not the multitasking subsystem.
 
 ### Architecture-Neutral
-
-
 
 A central issue for the Java designers was that of code longevity and portability. At the time of Java’s creation, one of the main problems facing programmers was that no guarantee existed that if you wrote a program today, it would run tomorrow—even on the same machine. Operating system  
 
