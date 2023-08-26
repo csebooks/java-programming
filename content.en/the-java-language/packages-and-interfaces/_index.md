@@ -9,9 +9,7 @@ In previous chapters, you have seen how methods define the interface to the data
 
 ## Packages
 
- In the preceding chapters, the name of each example class was taken from the same name space. This means that a unique name had to be used for each class to avoid name collisions. After a while, without some way to manage the name space, you could run out of convenient, descriptive names for individual classes. You also need some way to be assured that the name you choose for a class will be reasonably unique and not collide with class names chosen by other programmers. (Imagine a small group of programmers fighting over who gets to use the name “Foobar” as a class name. Or, imagine the entire Internet community arguing over who first named a class “Espresso.”) Thankfully, Java provides a mechanism for partitioning the class name space into more manageable chunks. This mechanism is the package. The package is both a naming and a visibility control mechanism. You can define classes inside a package that are not accessible by code outside that package. You can also define class members that are exposed only to other members of the same  
-
-define class members that are exposed only to other members of the same package. This allows your classes to have intimate knowledge of each other, but not expose that knowledge to the rest of the world.
+ In the preceding chapters, the name of each example class was taken from the same name space. This means that a unique name had to be used for each class to avoid name collisions. After a while, without some way to manage the name space, you could run out of convenient, descriptive names for individual classes. You also need some way to be assured that the name you choose for a class will be reasonably unique and not collide with class names chosen by other programmers. (Imagine a small group of programmers fighting over who gets to use the name “Foobar” as a class name. Or, imagine the entire Internet community arguing over who first named a class “Espresso.”) Thankfully, Java provides a mechanism for partitioning the class name space into more manageable chunks. This mechanism is the package. The package is both a naming and a visibility control mechanism. You can define classes inside a package that are not accessible by code outside that package. You can also define class members that are exposed only to other members of the same define class members that are exposed only to other members of the same package. This allows your classes to have intimate knowledge of each other, but not expose that knowledge to the rest of the world.
 
 ## Defining a Package
 
@@ -19,24 +17,25 @@ define class members that are exposed only to other members of the same package.
 
 This is the general form of the **package** statement:
 
-package pkg;
+_package pkg;_
 
 Here, pkg is the name of the package. For example, the following statement creates a package called **mypackage**:
 
-package mypackage;
+_package mypackage;_
 
 Typically, Java uses file system directories to store packages, and that is the approach assumed by the examples in this book. For example, the **.class** files for any classes you declare to be part of **mypackage** must be stored in a directory called **mypackage**. Remember that case is significant, and the directory name must match the package name exactly.
 
 More than one file can include the same **package** statement. The **package** statement simply specifies to which package the classes defined in a file belong. It does not exclude other classes in other files from being part of that same package. Most real-world packages are spread across many files.
 
 You can create a hierarchy of packages. To do so, simply separate each package name from the one above it by use of a period. The general form of a multileveled package statement is shown here:
-
-package _pkg1_[._pkg2_[._pkg3_]];
+```
+package pkg1[.pkg2[.pkg3]];
+```
 
 A package hierarchy must be reflected in the file system of your Java development system. For example, a package declared as  
-
+```
 package a.b.c;
-
+```
 needs to be stored in **a\\b\\c** in a Windows environment. Be sure to choose your package names carefully. You cannot rename a package without renaming the directory in which the classes are stored.
 
 ## Finding Packages and CLASSPATH
@@ -45,43 +44,67 @@ needs to be stored in **a\\b\\c** in a Windows environment. Be sure to choose yo
 
 For example, consider the following package specification:
 
-package mypack;
+_package_ _mypack;_
 
 In order for a program to find **mypack**, the program can be executed from a directory immediately above **mypack**, or the **CLASSPATH** must be set to include the path to **mypack**, or the **\-classpath** option must specify the path to **mypack** when the program is run via **java**.
 
 When the second two options are used, the class path _must not_ include **mypack**, itself. It must simply specify the _path to_ **mypack**. For example, in a Windows environment, if the path to **mypack** is
 
-C:\\MyPrograms\\Java\\mypack
+_C:\\MyPrograms\\Java\\mypack_
 
 then the class path to **mypack** is
 
-C:\\MyPrograms\\Java
+_C:\\MyPrograms\\Java_
 
-The easiest way to try the examples shown in this book is to simply create the package directories below your current development directory, put the  
-
-**.class** files into the appropriate directories, and then execute the programs from the development directory. This is the approach used in the following example.
+The easiest way to try the examples shown in this book is to simply create the package directories below your current development directory, put the **.class** files into the appropriate directories, and then execute the programs from the development directory. This is the approach used in the following example.
 
 ## A Short Package Example
 
  Keeping the preceding discussion in mind, you can try this simple package:
-
+```
+// A simple package package mypack;
+class Balance 
+{
+    String name;
+    double bal;
+    Balance (String n, double b) 
+    {
+        name = n;
+        bal = b;
+    }
+    void show () 
+    {
+        if (bal<0)
+        System.out.print ("-->");
+        System.out.println(name + ': $" + bal);
+    }
+}
+class AccountBalance 
+{
+    public static void main(String args[]) 
+    { 
+        Balance current [] = new Balance [3];
+        current [0]= new Balance ("K. J. Fielding", 123.23);
+        current [1]= new Balance ("Will Tell", 157.02);
+        current [2]= new Balance ("Tom Jackson", -12.33);
+        for (int i=0; i<3; i++) 
+            current [i].show();
+    }
+}
+```
 Call this file **AccountBalance.java** and put it in a directory called **mypack**. Next, compile the file. Make sure that the resulting **.class** file is also in the  
-
-## mypack
-
- directory. Then, try executing the **AccountBalance** class, using the following command line:
-
+**mypack** directory. Then, try executing the **AccountBalance** class, using the following command line:
+```
 java mypack.AccountBalance
+```
 
 Remember, you will need to be in the directory above **mypack** when you execute this command. (Alternatively, you can use one of the other two options described in the preceding section to specify the path **mypack**.)
 
 As explained, **AccountBalance** is now part of the package **mypack**. This means that it cannot be executed by itself. That is, you cannot use this command line:
-
+```
 java AccountBalance
-
-## AccountBalance
-
- must be qualified with its package name.
+```
+**AccountBalance** must be qualified with its package name.
 
 ## Packages and Member Access
 
@@ -95,14 +118,14 @@ Classes and packages are both means of encapsulating and containing the name spa
 - Classes that are neither in the same package nor subclasses
 
 The three access modifiers, **private**, **public**, and **protected**, provide a variety of ways to produce the many levels of access required by these categories. Table 9-1 sums up the interactions.  
-
+![Alt text](table3.1.png)
 **Table 9-1** Class Member Access
 
 While Java’s access control mechanism may seem complicated, we can simplify it as follows. Anything declared **public** can be accessed from different classes and different packages. Anything declared **private** cannot be seen outside of its class. When a member does not have an explicit access specification, it is visible to subclasses as well as to other classes in the same package. This is the default access. If you want to allow an element to be seen outside your current package, but only to classes that subclass your class directly, then declare that element **protected**.
 
 Table 9-1 applies only to members of classes. A non-nested class has only two possible access levels: default and public. When a class is declared as **public**, it is accessible outside its package. If a class has default access, then it can only be accessed by other code within its same package. When a class is public, it must be the only public class declared in the file, and the file must have the same name as the class.
 
-## NOTE
+**NOTE**
 
  The modules feature can also affect accessibility. Modules are described in Chapter 16.
 
@@ -112,70 +135,216 @@ Table 9-1 applies only to members of classes. A non-nested class has only two po
 
 The source for the first package defines three classes: **Protection**, **Derived**, and **SamePackage**. The first class defines four **int** variables in each of the legal protection modes. The variable **n** is declared with the default protection, **n_pri** is **private**, **n_pro** is **protected**, and **n_pub** is **public**.
 
-Each subsequent class in this example will try to access the variables in an instance of this class. The lines that will not compile due to access restrictions  
-
-instance of this class. The lines that will not compile due to access restrictions are commented out. Before each of these lines is a comment listing the places from which this level of protection would allow access.
+Each subsequent class in this example will try to access the variables in an instance of this class. The lines that will not compile due to access restrictions instance of this class. The lines that will not compile due to access restrictions are commented out. Before each of these lines is a comment listing the places from which this level of protection would allow access.
 
 The second class, **Derived**, is a subclass of **Protection** in the same package, **p1**. This grants **Derived** access to every variable in **Protection** except for **n_pri**, the **private** one. The third class, **SamePackage**, is not a subclass of **Protection**, but is in the same package and also has access to all but **n_pri**.
 
 This is file **Protection.java**:
-
+```
+package pl;
+public class Protection 
+{ 
+    int n = 1; 
+    private int n_pri = 2; 
+    protected int n_pro = 3; 
+    public int n_pub = 4;
+    public Protection () 
+    {
+        System.out.println("base constructor");
+        System.out.println("n=" + n);
+        System.out.println("n_pri= " + n_pri);
+        System.out.println("n_pro= " + n_pro);
+        System.out.println("n_pub= "+n_pub);
+    }
+}
+```
 This is file **Derived.java**:  
+```
+package pl;
+class Derived extends Protection 
+{ 
+    Derived() 
+    {
+        System.out.println("derived constructor"); 
+        System.out.println("n=" + n);
 
+        // class only
+        // System.out.println("n_pri = "4+n_pri);
+        
+        System.out.println("n_pro = "+n_pro);
+        System.out.println("n_pub = "+n_pub); 
+    }
+}
+```
 This is file **SamePackage.java**:
-
-Following is the source code for the other package, **p2**. The two classes defined in **p2** cover the other two conditions that are affected by access control. The first class, **Protection2**, is a subclass of **p1.Protection**. This grants access to all of **p1.Protection**’s variables except for **n_pri** (because it is **private**) and **n**, the variable declared with the default protection. Remember, the default only allows access from within the class or the package, not extra-package  
-
-subclasses. Finally, the class **OtherPackage** has access to only one variable, **n_pub**, which was declared **public**.
+```
+package pl;
+class SamePackage 
+{
+    SamePackage() 
+    {
+        Protection p = new Protection(); 
+        System.out.println("same package constructor"); 
+        System.out.println("n "+p.n);
+        
+        // class only
+        // System.out.println("n_pri + p.n_pri);
+        
+        System.out.println("n_pro = "+ p.n_pro);
+        System.out.println("n_pub = "+ p.n_pub);
+    }
+}
+```
+Following is the source code for the other package, **p2**. The two classes defined in **p2** cover the other two conditions that are affected by access control. The first class, **Protection2**, is a subclass of **p1.Protection**. This grants access to all of **p1.Protection**’s variables except for **n_pri** (because it is **private**) and **n**, the variable declared with the default protection. Remember, the default only allows access from within the class or the package, not extra-package subclasses. Finally, the class **OtherPackage** has access to only one variable, **n_pub**, which was declared **public**.
 
 This is file **Protection2.java**:
-
+```
+package p2;
+class Protection2 extends pl.Protection 
+{ 
+    Protection2() 
+    {
+        System.out.println("derived other package constructor");
+        
+        // class or package only
+        //System.out.println("n=" + n);
+        
+        // class only
+        // System.out.println("n_pri = + n_pri);
+        
+        System.out.println("n_pro = "+n_pub);
+        System.out.println("n_pub = "+n_pro);  
+    }
+}
+```
 This is file **OtherPackage.java**:  
+```
+package p2;
+class OtherPackage 
+{
+    OtherPackage() 
+    { 
+        pl.Protection p = new pl. Protection(); 
+        System.out.println("other package constructor");
+        // class or package only
+        // System.out.println("n = "+ p.n);
 
+        // class only
+        // System.out.println("n_pri = "+ p.n_pri);
+        
+        // class, subclass or package only 
+        // System.out.println("n_pro = " + p.n_pro);
+        
+        System.out.println("n_pub = "+ p.n_pub);
+    }
+}
+```
 If you want to try these two packages, here are two test files you can use. The one for package **p1** is shown here:
+```
+//Demo Package p1
+package p1;
 
+// Instantiate the various classes in pl. 
+public class Demo 
+{
+    public static void main(String args[])
+    {
+        Protection obl = new Protection(); 
+        Derived ob2 = new Derived();
+        SamePackage ob3 = new SamePackage(); 
+    } 
+}
+```
 The test file for **p2** is shown next:  
+```
+// Demo package p2. 
+package p2;
 
+// Instantiate the various classes in p2. 
+public class Demo 
+{
+    public static void main(String args[]) 
+    { 
+        Protection2 obl = new Protection2(); 
+        OtherPackage ob2 = new OtherPackage(); 
+    }
+}
+```
 ## Importing Packages
 
  Given that packages exist and are a good mechanism for compartmentalizing diverse classes from each other, it is easy to see why all of the built-in Java classes are stored in packages. There are no core Java classes in the unnamed default package; all of the standard classes are stored in some named package. Since classes within packages must be fully qualified with their package name or names, it could become tedious to type in the long dot-separated package path name for every class you want to use. For this reason, Java includes the **import** statement to bring certain classes, or entire packages, into visibility. Once imported, a class can be referred to directly, using only its name. The **import** statement is a convenience to the programmer and is not technically needed to write a complete Java program. If you are going to refer to a few dozen classes in your application, however, the **import** statement will save a lot of typing.
 
 In a Java source file, **import** statements occur immediately following the **package** statement (if it exists) and before any class definitions. This is the general form of the **import** statement:
-
+```
 import _pkg1_ [._pkg2_].(classname | *);
-
+```
 Here, _pkg1_ is the name of a top-level package, and _pkg2_ is the name of a subordinate package inside the outer package separated by a dot (**.**). There is no practical limit on the depth of a package hierarchy, except that imposed by the file system. Finally, you specify either an explicit classname or a star (*), which indicates that the Java compiler should import the entire package. This code fragment shows both forms in use:  
-
+```
 import java.util.Date;
 
 import java.io.*;
-
+```
 All of the standard Java SE classes included with Java begin with the name **java**. The basic language functions are stored in a package called **java.lang**. Normally, you have to import every package or class that you want to use, but since Java is useless without much of the functionality in **java.lang**, it is implicitly imported by the compiler for all programs. This is equivalent to the following line being at the top of all of your programs:
-
+```
 import java.lang.*;
-
+```
 If a class with the same name exists in two different packages that you import using the star form, the compiler will remain silent, unless you try to use one of the classes. In that case, you will get a compile-time error and have to explicitly name the class specifying its package.
 
 It must be emphasized that the **import** statement is optional. Any place you use a class name, you can use its _fully qualified name_, which includes its full package hierarchy. For example, this fragment uses an import statement:
-
+```
 import java.util.*;
 
 class MyDate extends Date {
 
 }
-
+```
 The same example without the **import** statement looks like this:
-
+```
 class MyDate extends java.util.Date {
 
 }
+```
+In this version, **Date** is fully-qualified. 
+    As shown in Table 9-1, when a package is imported, only those items within the package declared as **public** will be available to non-subclasses in the importing code. For example, if you want the **Balance** class of the package **mypack** shown earlier to be available as a stand-alone class for general use outside of **mypack**, then you will need to declare it as **public** and put it into its own file, as shown here:  
+```
+package mypack;
 
-In this version, **Date** is fully-qualified. As shown in Table 9-1, when a package is imported, only those items within
-
-the package declared as **public** will be available to non-subclasses in the importing code. For example, if you want the **Balance** class of the package **mypack** shown earlier to be available as a stand-alone class for general use outside of **mypack**, then you will need to declare it as **public** and put it into its own file, as shown here:  
-
+/* Now, the Balance class, its constructor,and its show() method are public. 
+This means that they can be used by non-subclass code outside their package.
+*/
+public class Balance 
+{
+    String name;
+    double bal;
+    public Balance (String n, double b) 
+    { 
+        name = n;
+        bal = b;
+    }
+    public void show() 
+    { 
+        if (bal<0)
+            System.out.print ("-->"); 
+        System.out.println(name+": "+bal);
+    }
+}
+```
 As you can see, the **Balance** class is now **public**. Also, its constructor and its **show()** method are **public**, too. This means that they can be accessed by any type of code outside the **mypack** package. For example, here **TestBalance** imports **mypack** and is then able to make use of the **Balance** class:  
-
+```
+import mypack.*;
+class TestBalance 
+{ 
+    public static void main(String args[]) 
+    {
+        /* 
+        Because Balance is public, 
+        you may use Balance class and call its constructor. 
+        */
+        Balance test = new Balance ("J. J. Jaspers", 99.88);
+        test.show(); // you may also call show()
+    }
+}
+```
 As an experiment, remove the **public** specifier from the **Balance** class and then try compiling **TestBalance**. As explained, errors will result.
 
 ## Interfaces
@@ -189,65 +358,144 @@ Interfaces are designed to support dynamic method resolution at run time. Normal
 ## Defining an Interface
 
  An interface is defined much like a class. This is a simplified general form of an interface:  
-
+```
+access interface name 
+{ 
+    return-type method-name 1(parameter-list); 
+    return-type method-name2(parameter-list);
+    type final-varnamel= value; 
+    type final-varname2 = value; 
+    //...
+    return-type method-nameN(parameter-list); 
+    type final-varnameN = value;
+}
+```
 When no access modifier is included, then default access results, and the interface is only available to other members of the package in which it is declared. When it is declared as **public**, the interface can be used by code outside its package. In this case, the interface must be the only public interface declared in the file, and the file must have the same name as the interface. name is the name of the interface, and can be any valid identifier. Notice that the methods that are declared have no bodies. They end with a semicolon after the parameter list. They are, essentially, abstract methods. Each class that includes such an interface must implement all of the methods.
 
 Before continuing an important point needs to be made. JDK 8 added a feature to **interface** that made a significant change to its capabilities. Prior to JDK 8, an interface could not define any implementation whatsoever. This is the type of interface that the preceding simplified form shows, in which no method declaration supplies a body. Thus, prior to JDK 8, an interface could define only “what,” but not “how.” JDK 8 changed this. Beginning with JDK 8, it is possible to add a _default implementation_ to an interface method. Furthermore, JDK 8 also added static interface methods, and beginning with JDK 9, an interface can include private methods. Thus, it is now possible for **interface** to specify some behavior. However, such methods constitute what are, in essence, special-use features, and the original intent behind **interface** still remains. Therefore, as a general rule, you will still often create and use interfaces in which no use is made of these new features. For this reason, we will begin by discussing the interface in its traditional form. The new interface features are described at the end of this chapter.
 
-As the general form shows, variables can be declared inside interface declarations. They are implicitly **final** and **static**, meaning they cannot be  
-
-changed by the implementing class. They must also be initialized. All methods and variables are implicitly **public**.
+As the general form shows, variables can be declared inside interface declarations. They are implicitly **final** and **static**, meaning they cannot be changed by the implementing class. They must also be initialized. All methods and variables are implicitly **public**.
 
 Here is an example of an interface definition. It declares a simple interface that contains one method called **callback()** that takes a single integer parameter.
-
+```
+interface callback
+{
+    void callback(int param);
+}
+```
 ## Implementing Interfaces
 
  Once an **interface** has been defined, one or more classes can implement that interface. To implement an interface, include the **implements** clause in a class definition, and then create the methods required by the interface. The general form of a class that includes the **implements** clause looks like this:
-
+```
+class classname [extends superclass][implements interface [.interface...]]{
+    //class-body
+}
+```
 If a class implements more than one interface, the interfaces are separated with a comma. If a class implements two interfaces that declare the same method, then the same method will be used by clients of either interface. The methods that implement an interface must be declared **public**. Also, the type signature of the implementing method must match exactly the type signature specified in the **interface** definition.
 
 Here is a small example class that implements the **Callback** interface shown earlier:
-
+```
+class Client implements Callback 
+{ 
+    // Implement Callback's interface 
+    public void callback (int p) 
+    {
+        System.out.println("callback called with " + p);
+    }
+}
+```
 Notice that **callback()** is declared using the **public** access modifier.  
 
-## REMEMBER
+**REMEMBER**
 
  When you implement an interface method, it must be declared as **public**.
 
 It is both permissible and common for classes that implement interfaces to define additional members of their own. For example, the following version of **Client** implements **callback()** and adds the method **nonIfaceMeth()**:
-
+```
+class Client implements Callback 
+{ 
+    // Implement Callback's interface 
+    public void callback (int p) 
+    {
+        System.out.println("callback called with + p);
+    }
+    void nonIfaceMeth() 
+    {
+        System.out.println("Classes that implement interfaces "+ "may also define other members, too.");
+    }
+}
+```
 ## Accessing Implementations Through Interface References
 
  You can declare variables as object references that use an interface rather than a class type. Any instance of any class that implements the declared interface can be referred to by such a variable. When you call a method through one of these references, the correct version will be called based on the actual instance of the interface being referred to. This is one of the key features of interfaces. The method to be executed is looked up dynamically at run time, allowing classes to be created later than the code which calls methods on them. The calling code can dispatch through an interface without having to know anything about the “callee.” This process is similar to using a superclass reference to access a subclass object, as described in Chapter 8.
 
 The following example calls the **callback()** method via an interface reference variable:
-
+```
+class TestIFace
+{
+    public static void main(String args[]){
+        Callback c = new Client();
+        c.callback(42);
+    }
+}
+```
 The output of this program is shown here:  
-
-The output of this program is shown here:
-
+```
 callback called with 42
-
+```
 Notice that variable **c** is declared to be of the interface type **Callback**, yet it was assigned an instance of **Client**. Although **c** can be used to access the **callback()** method, it cannot access any other members of the **Client** class. An interface reference variable has knowledge only of the methods declared by its **interface** declaration. Thus, **c** could not be used to access **nonIfaceMeth()** since it is defined by **Client** but not **Callback**.
 
 While the preceding example shows, mechanically, how an interface reference variable can access an implementation object, it does not demonstrate the polymorphic power of such a reference. To sample this usage, first create the second implementation of **Callback**, shown here:
-
+```
+// Another implementation of Callback. 
+class AnotherClient implements Callback 
+{ 
+    // Implement Callback's interface 
+    public void callback (int p) 
+    { 
+        System.out.println("Another version of callback"); 
+        System.out.println("p squared is " + (p*p));
+    } 
+}
+```
 Now, try the following class:
-
+```
+class TestIface2 
+{
+    public static void main(String args[]) 
+    { 
+        Callback c = new Client(); 
+        AnotherClient ob = new AnotherClient();
+        c.callback (42);
+        C ob; // c now refers to AnotherClient object 
+        c.callback (42);
+    } 
+}
+```
 The output from this program is shown here:  
-
+```
 callback called with 42
 
 Another version of callback
 
 p squared is 1764
-
+```
 As you can see, the version of **callback()** that is called is determined by the type of object that **c** refers to at run time. While this is a very simple example, you will see another, more practical one shortly.
 
 ## Partial Implementations
 
  If a class includes an interface but does not fully implement the methods required by that interface, then that class must be declared as **abstract**. For example:
-
+```
+abstract class Incomplete implements Callback 
+{ 
+    int a, b;
+    void show() 
+    {
+        System.out.println(a + " " + b);
+    }
+    //...
+}
+```
 Here, the class **Incomplete** does not implement **callback()** and must be declared as **abstract**. Any class that inherits **Incomplete** must implement **callback()** or be declared **abstract** itself.
 
 ## Nested Interfaces
@@ -255,25 +503,108 @@ Here, the class **Incomplete** does not implement **callback()** and must be dec
  An interface can be declared a member of a class or another interface. Such an interface is called a _member interface_ or a _nested interface_. A nested interface can be declared as **public**, **private**, or **protected**. This differs from a top-level interface, which must either be declared as **public** or use the default access level, as previously described. When a nested interface is used outside of its enclosing scope, it must be qualified by the name of the class or interface of which it is a member. Thus, outside of the class or interface in which a nested interface is declared, its name must be fully qualified.
 
 Here is an example that demonstrates a nested interface:  
+```
+// A nested interface example.
+// This class contains a member interface. 
+class A 
+{
+    // this is a nested interface 
+    public interface NestedIF 
+    { 
+        boolean isNotNegative(int x);
+    }
+}
 
+// B implements the nested interface. 
+class B implements A.NestedIF 
+{ 
+    public boolean isNotNegative (int x) 
+    { 
+        return x < 0 ? false: true;
+    } 
+}
+class NestedIFDemo 
+{ 
+    public static void main(String args[]) 
+    {
+        // use a nested interface reference 
+        A.NestedIF nif = new B();
+        
+        if (nif.isNotNegative(10))
+        System.out.println("10 is not negative");
+        if (nif.isNotNegative (-12))
+        System.out.println("this won't be displayed");
+    }
+}
+```
 Notice that **A** defines a member interface called **NestedIF** and that it is declared **public**. Next, **B** implements the nested interface by specifying
-
+```
 implements A.NestedIF
+```
 
 Notice that the name is fully qualified by the enclosing class’ name. Inside the **main()** method, an **A.NestedIF** reference called **nif** is created, and it is assigned a reference to a **B** object. Because **B** implements **A.NestedIF**, this is legal.
-
-## Applying Interfaces
-
-  
-
+ 
 ## Applying Interfaces
 
  To understand the power of interfaces, let’s look at a more practical example. In earlier chapters, you developed a class called **Stack** that implemented a simple fixed-size stack. However, there are many ways to implement a stack. For example, the stack can be of a fixed size or it can be “growable.” The stack can also be held in an array, a linked list, a binary tree, and so on. No matter how the stack is implemented, the interface to the stack remains the same. That is, the methods **push()** and **pop()** define the interface to the stack independently of the details of the implementation. Because the interface to a stack is separate from its implementation, it is easy to define a stack interface, leaving it to each implementation to define the specifics. Let’s look at two examples.
 
 First, here is the interface that defines an integer stack. Put this in a file called **IntStack.java**. This interface will be used by both stack implementations.
-
+```
+//Define An Integer Stack Interface 
+interface IntStack
+{
+    void push(int item);    //store an item
+    int pop();  //retrieve an item
+}
+```
 The following program creates a class called **FixedStack** that implements a fixed-length version of an integer stack:  
+```
+// An implementation of IntStack that uses fixed storage.
 
+class FixedStack implements IntStack 
+{ 
+    private int stek[]; 
+    private int tos;
+    // allocate and initialize stack
+    FixedStack (int size) 
+    { 
+        stck new int[size];
+    }
+    tos = -1;
+    // Push an item onto the stack 
+    public void push (int item) 
+    {
+        if (tos--stck.length-1) // use length member 
+            System.out.println("Stack is full.");
+        else 
+            stck [++tos] = item;
+    }
+    // Pop an item from the stack public 
+    int pop() 
+    {
+        if (tos < 0) 
+        {
+            System.out.println("Stack underflow.");
+            return 0;
+        }
+        else
+        return stck [tos--];
+    }
+}
+class IFTest 
+{
+    public static void main(String args[]) 
+    { 
+        FixedStack mystack1= new FixedStack (5);
+        FixedStack mystack2= new FixedStack (8);
+// push some numbers onto the stack for (int i=0; i<5; i++) mystack1.push(i);
+for (int i=0; i<8; i++) mystack2.push(i);
+// pop those numbers off the stack System.out.println("Stack in mystack1:"); for (int i=0; i<5; i++) System.out.println(mystack1.pop());
+System.out.println("Stack in mystack2: ");
+for (int i=0; i<8; i++) System.out.println(mystack2.pop());
+}
+}
+```
 Following is another implementation of **IntStack** that creates a dynamic stack by use of the same **interface** definition. In this implementation, each stack is constructed with an initial length. If this initial length is exceeded, then the stack is increased in size. Each time more room is needed, the size of the stack is doubled.  
 
 The following class uses both the **FixedStack** and **DynStack** implementations. It does so through an interface reference. This means that calls to **push()** and **pop()** are resolved at run time rather than at compile time.
