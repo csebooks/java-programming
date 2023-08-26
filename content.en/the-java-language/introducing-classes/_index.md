@@ -100,11 +100,7 @@ System.out.println("Volume is " + vol);
 }
 ```
 
-You should call the file that contains this program **BoxDemo.java**, because the **main()** method is in the class called **BoxDemo**, not the class called **Box**. When you compile this program, you will find that two **.class** files have been created, one for **Box** and one for **BoxDemo**. The Java compiler automatically puts each class into its own **.class** file. It is not necessary for both the **Box** and the  
-
-## BoxDemo
-
- class to actually be in the same source file. You could put each class in its own file, called **Box.java** and **BoxDemo.java**, respectively.
+You should call the file that contains this program **BoxDemo.java**, because the **main()** method is in the class called **BoxDemo**, not the class called **Box**. When you compile this program, you will find that two **.class** files have been created, one for **Box** and one for **BoxDemo**. The Java compiler automatically puts each class into its own **.class** file. It is not necessary for both the **Box** and the **BoxDemo** class to actually be in the same source file. You could put each class in its own file, called **Box.java** and **BoxDemo.java**, respectively.
 
 To run this program, you must execute **BoxDemo.class**. When you do, you will see the following output:
 ```
@@ -168,17 +164,13 @@ The first line declares **mybox** as a reference to an object of type **Box**. A
 
 **Figure 6-1** Declaring an object of type **Box**
 
-## A Closer Look at new
-
- As just explained, the **new** operator dynamically allocates memory for an object. In the context of an assignment, it has this general form:
+## A Closer Look at new As just explained, the **new** operator dynamically allocates memory for an object. In the context of an assignment, it has this general form:
 ```
 class-var = new classname ();
 ```
 Here, _class-var_ is a variable of the class type being created. The classname is the name of the class that is being instantiated. The class name followed by parentheses specifies the constructor for the class. A constructor defines what occurs when an object of a class is created. Constructors are an important part of all classes and have many significant attributes. Most real-world classes explicitly define their own constructors within their class definition. However, if no explicit constructor is specified, then Java will automatically supply a default constructor. This is the case with **Box**. For now, we will use the default constructor. Soon, you will see how to define your own constructors.
 
-At this point, you might be wondering why you do not need to use **new** for such things as integers or characters. The answer is that Java’s primitive types are not implemented as objects. Rather, they are implemented as “normal” variables. This is done in the interest of efficiency. As you will see, objects have many features and attributes that require Java to treat them differently than it treats the primitive types. By not applying the same overhead to the primitive types that applies to objects, Java can implement the primitive types  
-
-more efficiently. Later, you will see object versions of the primitive types that are available for your use in those situations in which complete objects of these types are needed.
+At this point, you might be wondering why you do not need to use **new** for such things as integers or characters. The answer is that Java’s primitive types are not implemented as objects. Rather, they are implemented as “normal” variables. This is done in the interest of efficiency. As you will see, objects have many features and attributes that require Java to treat them differently than it treats the primitive types. By not applying the same overhead to the primitive types that applies to objects, Java can implement the primitive types more efficiently. Later, you will see object versions of the primitive types that are available for your use in those situations in which complete objects of these types are needed.
 
 It is important to understand that **new** allocates memory for an object during run time. The advantage of this approach is that your program can create as many or as few objects as it needs during the execution of your program. However, since memory is finite, it is possible that **new** will not be able to allocate memory for an object because insufficient memory exists. If this happens, a run-time exception will occur. (You will learn how to handle exceptions in Chapter 10.) For the sample programs in this book, you won’t need to worry about running out of memory, but you will need to consider this possibility in real-world programs that you write.
 
@@ -198,7 +190,6 @@ This situation is depicted here:
 
 ![](2.png)
 
-
 Although **b1** and **b2** both refer to the same object, they are not linked in any other way. For example, a subsequent assignment to **b1** will simply unhook **b1** from the original object without affecting the object or affecting **b2**. For example:
 ```
 Box b1 = new Box();
@@ -213,7 +204,7 @@ Here, **b1** has been set to **null**, but **b2** still points to the original o
 
 ## REMEMBER
 
- When you assign one object reference variable to another object reference variable, you are not creating a copy of the object, you are only making a copy of the reference.
+When you assign one object reference variable to another object reference variable, you are not creating a copy of the object, you are only making a copy of the reference.
 
 ## Introducing Methods
 
@@ -231,9 +222,7 @@ Methods that have a return type other than **void** return a value to the callin
 ```
 return value;
 ```
-Here, value is the value returned. In the next few sections, you will see how to create various types of
-
-methods, including those that take parameters and those that return values.
+Here, value is the value returned. In the next few sections, you will see how to create various types of methods, including those that take parameters and those that return values.
 
 ## Adding a Method to the Box Class
 
@@ -269,9 +258,7 @@ mybox2.depth = 9;
 }
 ```
 
-This program generates the following output, which is the same as the previous  
-
-version.
+This program generates the following output, which is the same as the previous version.
 ```
 Volume is 3000.0
 
@@ -292,8 +279,6 @@ There is something very important to notice inside the **volume()** method: the 
 Let’s review: When an instance variable is accessed by code that is not part of the class in which that instance variable is defined, it must be done through an object, by use of the dot operator. However, when an instance variable is accessed by code that is part of the same class as the instance variable, that variable can be referred to directly. The same thing applies to methods.
 
 ## Returning a Value
-
-  
 
 While the implementation of **volume()** does move the computation of a box’s volume inside the **Box** class where it belongs, it is not the best way to do it. For example, what if another part of your program wanted to know the volume of a box, but not display its value? A better way to implement **volume()** is to have it compute the volume of the box and return the result to the caller. The following example, an improved version of the preceding program, does just that:  
 
@@ -351,9 +336,7 @@ int square()
 }
  ```
 
-While this method does, indeed, return the value of 10 squared, its use is very limited. However, if you modify the method so that it takes a parameter,  
-
-as shown next, then you can make **square()** much more useful.
+While this method does, indeed, return the value of 10 squared, its use is very limited. However, if you modify the method so that it takes a parameter, as shown next, then you can make **square()** much more useful.
 
 ```java
 int square(int i)
@@ -388,9 +371,7 @@ mybox1.depth = 15;
 ```
 While this code works, it is troubling for two reasons. First, it is clumsy and error prone. For example, it would be easy to forget to set a dimension. Second, in well-designed Java programs, instance variables should be accessed only through methods defined by their class. In the future, you can change the behavior of a method, but you can’t change the behavior of an exposed instance variable.  
 
-variable. Thus, a better approach to setting the dimensions of a box is to create a
-
-method that takes the dimensions of a box in its parameters and sets each instance variable appropriately. This concept is implemented by the following program:
+variable. Thus, a better approach to setting the dimensions of a box is to create a method that takes the dimensions of a box in its parameters and sets each instance variable appropriately. This concept is implemented by the following program:
 
 ```java
 // This program uses a parameterized method.
@@ -422,7 +403,6 @@ second box vol- mybox2. volume(); System.out.println("Volume is " + vol);
 }
 }
 ```
-
 As you can see, the **setDim()** method is used to set the dimensions of each box. For example, when
 ```
 mybox1.setDim(10, 20, 15);
@@ -494,9 +474,7 @@ Box mybox1 = new Box();
 
 ## Parameterized Constructors
 
- While the **Box()** constructor in the preceding example does initialize a **Box** object, it is not very useful—all boxes have the same dimensions. What is needed is a way to construct **Box** objects of various dimensions. The easy solution is to add parameters to the constructor. As you can probably guess, this makes it much more useful. For example, the following version of **Box** defines  
-
-a parameterized constructor that sets the dimensions of a box as specified by those parameters. Pay special attention to how **Box** objects are created. 
+ While the **Box()** constructor in the preceding example does initialize a **Box** object, it is not very useful—all boxes have the same dimensions. What is needed is a way to construct **Box** objects of various dimensions. The easy solution is to add parameters to the constructor. As you can probably guess, this makes it much more useful. For example, the following version of **Box** defines a parameterized constructor that sets the dimensions of a box as specified by those parameters. Pay special attention to how **Box** objects are created. 
 
 ```java
 /* Here, Box uses a parameterized constructor to initialize the dimensions of a box.
@@ -560,9 +538,7 @@ This version of **Box()** operates exactly like the earlier version. The use of 
 
 ## Instance Variable Hiding
 
- As you know, it is illegal in Java to declare two local variables with the same name inside the same or enclosing scopes. Interestingly, you can have local  
-
-variables, including formal parameters to methods, which overlap with the names of the class’ instance variables. However, when a local variable has the same name as an instance variable, the local variable hides the instance variable. This is why **width**, **height**, and **depth** were not used as the names of the parameters to the **Box()** constructor inside the **Box** class. If they had been, then **width,** for example, would have referred to the formal parameter, hiding the instance variable **width**. While it is usually easier to simply use different names, there is another way around this situation. Because **this** lets you refer directly to the object, you can use it to resolve any namespace collisions that might occur between instance variables and local variables. For example, here is another version of **Box()**, which uses **width**, **height**, and **depth** for parameter names and then uses **this** to access the instance variables by the same name:
+ As you know, it is illegal in Java to declare two local variables with the same name inside the same or enclosing scopes. Interestingly, you can have local variables, including formal parameters to methods, which overlap with the names of the class’ instance variables. However, when a local variable has the same name as an instance variable, the local variable hides the instance variable. This is why **width**, **height**, and **depth** were not used as the names of the parameters to the **Box()** constructor inside the **Box** class. If they had been, then **width,** for example, would have referred to the formal parameter, hiding the instance variable **width**. While it is usually easier to simply use different names, there is another way around this situation. Because **this** lets you refer directly to the object, you can use it to resolve any namespace collisions that might occur between instance variables and local variables. For example, here is another version of **Box()**, which uses **width**, **height**, and **depth** for parameter names and then uses **this** to access the instance variables by the same name:
 
 ```java
 // use this to resolve name-space collisions.
@@ -639,8 +615,6 @@ System.out.println (mystack2.pop());
 }
 }
 ```
-
-
 This program generates the following output:
 ```
 Stack in mystack1:
@@ -669,6 +643,4 @@ Stack in mystack2:
 11
 10
 ```
-As you can see, the contents of each stack are separate. One last point about the **Stack** class. As it is currently implemented, it is
-
-possible for the array that holds the stack, **stck**, to be altered by code outside of the **Stack** class. This leaves **Stack** open to misuse or mischief. In the next chapter, you will see how to remedy this situation.  
+As you can see, the contents of each stack are separate. One last point about the **Stack** class. As it is currently implemented, it is possible for the array that holds the stack, **stck**, to be altered by code outside of the **Stack** class. This leaves **Stack** open to misuse or mischief. In the next chapter, you will see how to remedy this situation.  
