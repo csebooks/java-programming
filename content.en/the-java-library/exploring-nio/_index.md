@@ -1,19 +1,11 @@
 ---
 title: 'Exploring NIO'
 weight: 6
---- 
-
-
-
-## CHAPTER
+---
 
   
-
-## 22
-
-  
-
-****
+#Exploring NIO
+*******
 
 Beginning with version 1.4, Java has provided a second I/O system called NIO _(_which is short for _New I/O_). It supports a buffer-oriented, channel-based approach to I/O operations. With the release of JDK 7, the NIO system was greatly expanded, providing enhanced support for file-handling and file system features. In fact, so significant were the changes that the term _NIO.2_ is often used. Because of the capabilities supported by the NIO file classes, NIO is expected to become an increasingly important approach to file handling. This chapter explores several of the key features of the NIO system.
 
@@ -23,7 +15,7 @@ Beginning with version 1.4, Java has provided a second I/O system called NIO _(_
 
 Before we begin, it is important to emphasize that the NIO subsystem does not replace the stream-based I/O classes found in **java.io**, which are discussed in Chapter 21, and good working knowledge of the stream-based I/O in **java.io** is helpful to understanding NIO.  
 
-## NOTE
+**NOTE**
 
  This chapter assumes that you have read the overview of I/O given in Chapter 13 and the discussion of stream-based I/O supplied in Chapter 21.
 
