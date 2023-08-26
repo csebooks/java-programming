@@ -597,30 +597,194 @@ class IFTest
     { 
         FixedStack mystack1= new FixedStack (5);
         FixedStack mystack2= new FixedStack (8);
-// push some numbers onto the stack for (int i=0; i<5; i++) mystack1.push(i);
-for (int i=0; i<8; i++) mystack2.push(i);
-// pop those numbers off the stack System.out.println("Stack in mystack1:"); for (int i=0; i<5; i++) System.out.println(mystack1.pop());
-System.out.println("Stack in mystack2: ");
-for (int i=0; i<8; i++) System.out.println(mystack2.pop());
-}
+        
+        // push some numbers onto the stack 
+        for (int i=0; i<5; i++) 
+            mystack1.push(i);
+        for (int i=0; i<8; i++) 
+            mystack2.push(i);
+            
+        // pop those numbers off the stack 
+        System.out.println("Stack in mystack1:"); 
+        for (int i=0; i<5; i++) 
+            System.out.println(mystack1.pop());
+
+        System.out.println("Stack in mystack2: ");
+        for (int i=0; i<8; i++) 
+            System.out.println(mystack2.pop());
+    }
 }
 ```
 Following is another implementation of **IntStack** that creates a dynamic stack by use of the same **interface** definition. In this implementation, each stack is constructed with an initial length. If this initial length is exceeded, then the stack is increased in size. Each time more room is needed, the size of the stack is doubled.  
-
+```
+// Implement a "growable" stack. 
+class DynStack implements IntStack 
+{ 
+    private int stek[];
+    private int tos;
+    
+    // allocate and initialize stack 
+    DynStack(int size) 
+    { 
+        stck= new int[size];
+        tos = -1;
+    }
+    
+    // Push an item onto the stack 
+    public void push (int item) 
+    {
+        // if stack is full, allocate a larger stack 
+        if (tos==stck.length-1) 
+        {
+            int temp[] = new int[stck.length 2]; // double size 
+            for (int i=0; i<stck.length; i++) 
+                temp[i] = stck[i];
+            stck= temp;
+            stck [++tos] = item;
+        } 
+        else
+            stck [++tos] = item;
+    }
+    
+    // Pop an item from the stack
+    public int pop() 
+    { 
+        if (tos < 0) 
+        {
+            System.out.println("Stack underflow.");
+            return 0;
+        }
+        else
+            return stck [tos--];
+    }
+}
+class IFTest2 
+{
+    public static void main(String args[]) 
+    { 
+        DynStack mystack1 = new DynStack (5); 
+        DynStack mystack2 = new DynStack (8);
+        
+        // these loops cause each stack to grow 
+        for (int i=0; i<12; i++) 
+            mystack1.push(i); 
+        for(int i=0; i<20; i++) 
+            mystack2.push(i);
+        System.out.println("Stack in mystack1;");
+        for (int i=0; i<12; i++)
+            System.out.println (mystack1.pop());
+        System.out.println("Stack in mystack2:"); 
+        for (int i=0; i<20; i++) 
+            System.out.println(mystack2.pop());
+    }
+}
+```
 The following class uses both the **FixedStack** and **DynStack** implementations. It does so through an interface reference. This means that calls to **push()** and **pop()** are resolved at run time rather than at compile time.
+```
+/* Create an interface variable and access stacks through it. */
+class IFTest3 
+{
+    public static void main(String args[]) 
+    { 
+        IntStack mystack; // create an interface reference variable
+        DynStack ds = new DynStack (5);
+        FixedStack fs = new FixedStack (8);
 
-In this program, **mystack** is a reference to the **IntStack** interface. Thus, when it  
-
-refers to **ds**, it uses the versions of **push()** and **pop()** defined by the **DynStack** implementation. When it refers to **fs**, it uses the versions of **push()** and **pop()** defined by **FixedStack**. As explained, these determinations are made at run time. Accessing multiple implementations of an interface through an interface reference variable is the most powerful way that Java achieves run-time polymorphism.
+        mystack = ds; // load dynamic stack 
+        // push some numbers onto the stack 
+        for (int i=0; i<12; i++) 
+            mystack.push(i);
+            
+        mystack= fs; // load fixed stack 
+        for (int i=0; i<8; i++) 
+            mystack.push(i);
+            
+        mystack = ds;
+        System.out.println("Values in dynamic stack: "); 
+        for (int i=0; i<12; i++)
+        System.out.println(mystack.pop());
+        
+        mystack= fs;
+        System.out.println("Values in fixed stack: "); 
+        for (int i=0; i<8; i++) 
+            System.out.println(mystack.pop());
+    }
+}
+```
+In this program, **mystack** is a reference to the **IntStack** interface. Thus, when it refers to **ds**, it uses the versions of **push()** and **pop()** defined by the **DynStack** implementation. When it refers to **fs**, it uses the versions of **push()** and **pop()** defined by **FixedStack**. As explained, these determinations are made at run time. Accessing multiple implementations of an interface through an interface reference variable is the most powerful way that Java achieves run-time polymorphism.
 
 ## Variables in Interfaces
 
  You can use interfaces to import shared constants into multiple classes by simply declaring an interface that contains variables that are initialized to the desired values. When you include that interface in a class (that is, when you “implement” the interface), all of those variable names will be in scope as constants. If an interface contains no methods, then any class that includes such an interface doesn’t actually implement anything. It is as if that class were importing the constant fields into the class name space as **final** variables. The next example uses this technique to implement an automated “decision maker”:  
-
+```
+import java.util.Random;
+interface SharedConstants 
+{
+    int NO = 0; 
+    int YES = 1;
+    int MAYBE 2;
+    int LATER = 3; 
+    int SOON = 4;
+    int NEVER - 5:
+}
+class Question implements SharedConstants 
+{ 
+    Random rand new Random();
+    int ask() 
+    {
+        int prob= (int) (100 * rand.nextDouble());
+        if (probe < 30)
+            return NO:  // 30%
+        else if (prob < 60)
+            return YES; // 30%
+        else if (prob < 75) 
+            return LATER;  // 15%
+        else if (prob < 98) 
+            return SOON;    // 13%
+        else
+            return NEVER;   // 2%
+    }
+}
+class AskMe implements SharedConstants 
+{ 
+    static void answer (int result) 
+    { 
+        switch(result) 
+        {
+            case NO:
+                System.out.println("No");
+                break; 
+            case YES:
+                System.out.println("Yes"); 
+                break;
+            case MAYBE:
+                System.out.println("Maybe");
+                break;
+            case LATER: 
+                System.out.println("Later");
+                break;
+            case SOON:
+                System.out.println("Soon");
+                break; 
+            case NEVER:
+                System.out.println("Never"); 
+                break;
+        }
+    }
+    public static void main(String args[]) 
+    { 
+        Question q = new Question();
+        answer (q.ask());
+        answer (q.ask());
+        answer (q.ask());
+        answer (q.ask());
+    }
+}
+```
 Notice that this program makes use of one of Java’s standard classes: **Random**. This class provides pseudorandom numbers. It contains several methods that allow you to obtain random numbers in the form required by your program. In this example, the method **nextDouble()** is used. It returns random numbers in the range 0.0 to 1.0.
 
 In this sample program, the two classes, **Question** and **AskMe**, both implement the **SharedConstants** interface where **NO**, **YES**, **MAYBE**, **SOON**, **LATER**, and **NEVER** are defined. Inside each class, the code refers to these constants as if each class had defined or inherited them directly. Here is the output of a sample run of this program. Note that the results are different each time it is run.
-
+**
 Later
 
 Soon
@@ -628,6 +792,7 @@ Soon
 No
 
 Yes
+**
 
 ## NOTE
 
@@ -636,7 +801,48 @@ Yes
 ## Interfaces Can Be Extended
 
  One interface can inherit another by use of the keyword **extends**. The syntax is the same as for inheriting classes. When a class implements an interface that inherits another interface, it must provide implementations for all methods required by the interface inheritance chain. Following is an example:  
+```
+// One interface can extend another. 
+interface A 
+{
+    void meth1();
+    void meth2();
+}
 
+// B now includes meth1 () and meth2() 
+interface B extends A 
+{ 
+    //it adds meth3 ().
+    void meth3();
+}
+
+// This class must implement all of A and B 
+class MyClass implements B
+{
+    public void meth1 () 
+    { 
+        System.out.println("Implement meth1().");
+    }
+    public void meth2() 
+    {
+        System.out.println("Implement meth2().");
+    }
+    public void meth3() 
+    {
+        System.out.println("Implement meth3().");
+    }
+}
+class IFExtend 
+{
+    public static void main(String arg[]) 
+    { 
+        MyClass ob = new MyClass();
+        ob.methi();
+        ob.meth2();
+        ob.meth3();
+    }
+}
+```
 As an experiment, you might want to try removing the implementation for **meth1()** in **MyClass**. This will cause a compile-time error. As stated earlier, any class that implements an interface must implement all methods required by  
 
 that interface, including any that are inherited from other interfaces.
@@ -656,28 +862,67 @@ One last point: As a general rule, default methods constitute a special- purpose
 ## Default Method Fundamentals
 
  An interface default method is defined similar to the way a method is defined by a **class**. The primary difference is that the declaration is preceded by the keyword **default**. For example, consider this simple interface:
+```
+public interface MyIF 
+{
+    // This is a "normal" interface method declaration.
+    // It does NOT define a default implementation. 
+    int getNumber();
 
-## MyIF
-
- declares two methods. The first, **getNumber()**, is a standard interface method declaration. It defines no implementation whatsoever. The second method is **getString()**, and it does include a default implementation. In this case, it simply returns the string "Default String". Pay special attention to the way **getString()** is declared. Its declaration is preceded by the **default** modifier. This syntax can be generalized. To define a default method, precede its declaration with **default**.  
+    // This is a default method. Notice that it provides 
+    // a default implementation. 
+    default String getString() 
+    { 
+        return "Default String";
+    }
+}
+```
+**MyIF** declares two methods. The first, **getNumber()**, is a standard interface method declaration. It defines no implementation whatsoever. The second method is **getString()**, and it does include a default implementation. In this case, it simply returns the string "Default String". Pay special attention to the way **getString()** is declared. Its declaration is preceded by the **default** modifier. This syntax can be generalized. To define a default method, precede its declaration with **default**.  
 
 Because **getString()** includes a default implementation, it is not necessary for an implementing class to override it. In other words, if an implementing class does not provide its own implementation, the default is used. For example, the **MyIFImp** class shown next is perfectly valid:
-
+```
+// Implement MyIF.
+class MyIFImp implements MyIF 
+{
+    // Only getNumber() defined by MyIF needs to be implemented. 
+    // getString() can be allowed to default. 
+    public int getNumber() 
+    {
+        return 100;
+    }
+}
+```
 The following code creates an instance of **MyIFImp** and uses it to call both **getNumber()** and **getString()**.
-
+```
+// Use the default method. 
+class DefaultMethodDemo 
+{
+    public static void main(String args[]) 
+    {
+        MyIFImp obj = new MyIFImp();
+        // Can call get Number (), because it is explicitly
+        // implemented by MyIFImp:
+        
+        System.out.println(obj.getNumber());
+        // Can also call getString(), because of default
+        // implementation:
+        System.out.println(obj.getString());
+    }
+}
+```
 The output is shown here:
-
+```
 100
 
 Default String
-
+```
 As you can see, the default implementation of **getString()** was automatically  
 
 used. It was not necessary for **MyIFImp** to define it. Thus, for **getString()**, implementation by a class is optional. (Of course, its implementation by a class will be required if the class uses **getString()** for some purpose beyond that supported by its default.)
 
 It is both possible and common for an implementing class to define its own implementation of a default method. For example, **MyIFImp2** overrides **getString()**:
 
-Now, when **getString()** is called, a different string is returned.
+Now, whe **getString()** is called, a different string is returned.
 
 ## A More Practical Example
 
@@ -716,34 +961,82 @@ Alpha.super.reset();
 
 ## Use static Methods in an Interface
 
- Another capability added to **interface** by JDK 8 is the ability to define one or more **static** methods. Like **static** methods in a class, a **static** method defined by  
+ Another capability added to **interface** by JDK 8 is the ability to define one or more **static** methods. Like **static** methods in a class, a **static** method defined by an interface can be called independently of any object. Thus, no implementation of the interface is necessary, and no instance of the interface is required, in order to call a **static** method. Instead, a **static** method is called by specifying the interface name, followed by a period, followed by the method name. Here is the general form:
 
-an interface can be called independently of any object. Thus, no implementation of the interface is necessary, and no instance of the interface is required, in order to call a **static** method. Instead, a **static** method is called by specifying the interface name, followed by a period, followed by the method name. Here is the general form:
+_InterfaceName.staticMethodName_
 
-InterfaceName.staticMethodName
+Notice that this is similar to the way that a **static** method in a class is called. The following shows an example of a **static** method in an interface by adding one to **MyIF**, shown in the previous section. The **static** method is **getDefaultNumber()**. It returns zero.
+```
+public interface MyIF 
+{
+    // This is a "normal" interface method declaration. 
+    // It does NOT define a default implementation. 
+    int getNumber();
 
-Notice that this is similar to the way that a **static** method in a class is called. The following shows an example of a **static** method in an interface by
+    // This is a default method. Notice that it provides 
+    // a default implementation. 
+    default String getString() 
+    { 
+        return "Default String";
+    }
 
-adding one to **MyIF**, shown in the previous section. The **static** method is **getDefaultNumber()**. It returns zero.
-
+    // This is a static interface method. 
+    static int getDefaultNumber() 
+    { 
+        return 0;
+    }
+}
+```
 The **getDefaultNumber()** method can be called, as shown here:
-
+```
 int defNum = MyIF.getDefaultNumber();
-
+```
 As mentioned, no implementation or instance of **MyIF** is required to call **getDefaultNumber()** because it is **static**.
 
 One last point: **static** interface methods are not inherited by either an implementing class or a subinterface.
 
 ## Private Interface Methods
 
-  
-
-## Private Interface Methods
-
  Beginning with JDK 9, an interface can include a private method. A private interface method can be called only by a default method or another private method defined by the same interface. Because a private interface method is specified **private**, it cannot be used by code outside the interface in which it is defined. This restriction includes subinterfaces because a private interface method is not inherited by a subinterface.
 
 The key benefit of a private interface method is that it lets two or more default methods use a common piece of code, thus avoiding code duplication. For example, here is another version of the **IntStack** interface that has two default methods called **popNElements()** and **skipAndPopNElements()**. The first returns an array that contains the top N elements on the stack. The second skips a specified number of elements and then returns an array that contains the next N elements. Both use a private method called **getElements()** to obtain an array of the specified number of elements from the stack.  
-
+```
+// Another version of IntStack that has a private interface 
+// method that is used by two default methods. 
+interface IntStack 
+{ 
+    void push (int item); // store an item 
+    int pop(); // retrieve an item
+    
+    // A default method that returns an array that contains 
+    // the top n elements on the stack. 
+    default int[] popNElements (int n) 
+    { 
+        // Return the requested elements. 
+        return getElements (n);
+    }
+    
+    // A default method that returns an array that contains 
+    // the next n elements on the stack after skipping elements. 
+    default int[] skipAndPopNElements (int skip, int n) 
+    {
+        // Skip the specified number of elements. 
+        getElements (skip);
+        // Return the requested elements. 
+        return getElements (n);
+        // A private method that returns an array containing 
+        // the top n elements on the stack 
+    }
+    
+    private int getElements (int n) 
+    {
+        int[] elements = new int[n];
+        for (int i=0; i < n; i++) 
+            elements[i] = pop();
+        return elements;
+    }
+}
+```
 Notice that both **popNElements()** and **skipAndPopNElements()** use the private **getElements()** method to obtain the array to return. This prevents both methods from having to duplicate the same code sequence. Keep in mind that because **getElements()** is private, it cannot be called by code outside **IntStack**. Thus, its use is limited to the default methods inside **IntStack**. Also, because **getElements()** uses the **pop()** method to obtain stack elements, it will automatically call the implementation of **pop()** provided by the **IntStack** is implementation. Thus, **getElements()** will work for any stack class that implements **IntStack**.
 
 Although the private interface method is a feature that you will seldom need, in those cases in which you do need it, you will find it quite useful.  
