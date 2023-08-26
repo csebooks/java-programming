@@ -2,6 +2,7 @@
 title: 'Enumerations, Autoboxing, and Annotations'
 weight: 12
 --- 
+# Enumerations, Autoboxing, and Annotations
 
 This chapter examines three features that were not originally part of Java, but over time each has become a near indispensable aspect of Java programming: enumerations, autoboxing, and annotations. Originally added by JDK 5, each is a feature upon which Java programmers have come to rely because each offers a streamlined approach to handling common programming tasks. This chapter also discusses Java’s type wrappers and introduces reflection.
 
@@ -11,7 +12,7 @@ This chapter examines three features that were not originally part of Java, but 
 
 Although Java enumerations might, at first glance, appear similar to enumerations in other languages, this similarity may be only skin deep because, in Java, an enumeration defines a class type. By making enumerations into classes, the capabilities of the enumeration are greatly expanded. For example, in Java, an enumeration can have constructors, methods, and instance variables. Because of their power and flexibility, enumerations are widely used throughout the Java API library.
 
-## Enumeration Fundamentals
+### Enumeration Fundamentals
 
 An enumeration is created using the **enum** keyword. For example, here is a simple enumeration that lists various apple varieties:
 ```
@@ -56,7 +57,7 @@ _System.out.println(Apple.Winesap);_
 
 the name **Winesap** is displayed. The following program puts together all of the pieces and demonstrates the
 
-## Apple
+### Apple
 
  enumeration:  
 ```
@@ -172,7 +173,7 @@ ap = Apple.valueOf("Winesap");
 
 As explained, **valueOf()** returns the enumeration value associated with the name of the constant represented as a string.
 
-## Java Enumerations Are Class Types
+### Java Enumerations Are Class Types
 
  As mentioned, a Java enumeration is a class type. Although you don’t instantiate an **enum** using **new**, it otherwise has much the same capabilities as other classes. The fact that **enum** defines a class gives the Java enumeration extraordinary power. For example, you can give them constructors, add instance variables and methods, and even implement interfaces.
 
@@ -264,7 +265,7 @@ Notice that in this version, **RedDel** is not given an argument. This means tha
 
 Here are two restrictions that apply to enumerations. First, an enumeration can’t inherit another class. Second, an **enum** cannot be a superclass. This means that an **enum** can’t be extended. Otherwise, **enum** acts much like any other class type. The key is to remember that each of the enumeration constants is an object of the class in which it is defined.
 
-## Enumerations Inherit Enum
+### Enumerations Inherit Enum
 
  Although you can’t inherit a superclass when declaring an **enum**, all enumerations automatically inherit one: **java.lang.Enum**. This class defines several methods that are available for use by all enumerations. The **Enum** class  
 
@@ -347,7 +348,7 @@ RedDel equals RedDel
 
 RedDel == RedDel
 ```
-## Another Enumeration Example
+### Another Enumeration Example
 
  Before moving on, we will look at a different example that uses an **enum**. In Chapter 9, an automated “decision maker” program was created. In that version, variables called **NO**, **YES**, **MAYBE**, **LATER**, **SOON**, and **NEVER** were declared within an interface and used to represent the possible answers. While there is nothing technically wrong with that approach, the enumeration is a better choice. Here is an improved version of that program that uses an **enum** called **Answers** to define the answers. You should compare this version to the original in Chapter 9.  
 ```
@@ -428,7 +429,7 @@ Despite the performance benefit offered by the primitive types, there are times 
 
 The type wrappers are **Double**, **Float**, **Long**, **Integer**, **Short**, **Byte**, **Character**, and **Boolean**. These classes offer a wide array of methods that allow you to fully integrate the primitive types into Java’s object hierarchy. Each is briefly examined next.
 
-## Character Character
+### Character Character
 
  is a wrapper around a **char**. The constructor for **Character** is
 
@@ -448,7 +449,7 @@ char charValue()
 
 It returns the encapsulated character.
 
-## Boolean Boolean
+### Boolean Boolean
 
  is a wrapper around **boolean** values. It defines these constructors:
 ```
@@ -470,7 +471,7 @@ boolean booleanValue()
 
 It returns the **boolean** equivalent of the invoking object.
 
-## The Numeric Type Wrappers
+### The Numeric Type Wrappers
 
  By far, the most commonly used type wrappers are those that represent numeric values. These are **Byte**, **Short**, **Integer**, **Long**, **Float**, and **Double**. All of the numeric type wrappers inherit the abstract class **Number**. **Number** declares methods that return the value of an object in each of the different number formats. These methods are shown here:
 ```
@@ -559,7 +560,7 @@ class AutoBox
     }
 }
 ```
-## Autoboxing and Methods
+### Autoboxing and Methods
 
  In addition to the simple case of assignments, autoboxing automatically occurs whenever a primitive type must be converted into an object; auto-unboxing takes place whenever an object must be converted into a primitive type. Thus, autoboxing/unboxing might occur when an argument is passed to a method, or when a value is returned by a method. For example, consider this:
 ```
@@ -594,7 +595,7 @@ This program displays the following result:
 ```
 In the program, notice that **m()** specifies an **Integer** parameter and returns an **int** result. Inside **main()**, **m()** is passed the value 100. Because **m()** is expecting an **Integer**, this value is automatically boxed. Then, **m()** returns the **int** equivalent of its argument. This causes **v** to be auto-unboxed. Next, this **int** value is assigned to **iOb** in **main()**, which causes the **int** return value to be autoboxed.
 
-**Autoboxing/Unboxing Occurs in Expressions**  
+### Autoboxing/Unboxing Occurs in Expressions  
 
 **Autoboxing/Unboxing Occurs in Expressions** In general, autoboxing and unboxing take place whenever a conversion into an object or from an object is required. This applies to expressions. Within an expression, a numeric object is automatically unboxed. The outcome of the expression is reboxed, if necessary. For example, consider the following program:
 ```
@@ -681,6 +682,8 @@ When the **switch** expression is evaluated, **iOb** is unboxed and its **int** 
 
 As the examples in the programs show, because of autoboxing/unboxing, using numeric objects in an expression is both intuitive and easy. In the past, such code would have involved casts and calls to methods such as **intValue()**.
 
+### Autoboxing/Unboxing Boolean and Character Values
+
 **Autoboxing/Unboxing Boolean and Character Values** As described earlier, Java also supplies wrappers for **boolean** and **char**. These are **Boolean** and **Character**. Autoboxing/unboxing applies to these wrappers, too. For example, consider the following program:  
 ```
 //AutoBoxing And Unboxing a boolean and Character 
@@ -719,6 +722,8 @@ Boolean b;
 
 while(b) { // ...
 
+### Autoboxing/Unboxing Helps Prevent Errors
+
 **Autoboxing/Unboxing Helps Prevent Errors** In addition to the convenience that it offers, autoboxing/unboxing can also help prevent errors. For example, consider the following program:  
 ```
 // An error produced by manual unboxing. 
@@ -736,7 +741,7 @@ This program displays not the expected value of 1000, but –24! The reason is t
 
 In general, because autoboxing always creates the proper object, and auto- unboxing always produces the proper value, there is no way for the process to produce the wrong type of object or value. In the rare instances where you want a type different than that produced by the automated process, you can still manually box and unbox values. Of course, the benefits of autoboxing/unboxing are lost. In general, you should employ autoboxing/unboxing. It is the way that modern Java code is written.
 
-## A Word of Warning
+### A Word of Warning
 
  Because of autoboxing and auto-unboxing, some might be tempted to use objects such as **Integer** or **Double** exclusively, abandoning primitives altogether. For example, with autoboxing/unboxing it is possible to write code like this:
 ```
@@ -760,7 +765,7 @@ In general, you should restrict your use of the type wrappers to only those case
 
  Java provides a feature that enables you to embed supplemental information into a source file. This information, called an annotation, does not change the actions of a program. Thus, an annotation leaves the semantics of a program unchanged. However, this information can be used by various tools during both development and deployment. For example, an annotation might be processed by a source-code generator. The term metadata is also used to refer to this feature, but the term annotation is the most descriptive and more commonly used.
 
-## Annotation Basics
+### Annotation Basics
 
  An annotation is created through a mechanism based on the **interface**. Let’s begin with an example. Here is the declaration for an annotation called **MyAnno**:
 ```
@@ -787,7 +792,7 @@ public static void myMeth() { // ...
 ```
 This annotation is linked with the method **myMeth()**. Look closely at the annotation syntax. The name of the annotation, preceded by an @, is followed by a parenthesized list of member initializations. To give a member a value, that member’s name is assigned a value. Therefore, in the example, the string "Annotation Example" is assigned to the **str** member of **MyAnno**. Notice that no parentheses follow **str** in this assignment. When an annotation member is given a value, only its name is used. Thus, annotation members look like fields in this context.
 
-## Specifying a Retention Policy
+### Specifying a Retention Policy
 
  Before exploring annotations further, it is necessary to discuss _annotation retention policies_. A retention policy determines at what point an annotation is discarded. Java defines three such policies, which are encapsulated within the  
 
@@ -799,7 +804,7 @@ An annotation with a retention policy of **CLASS** is stored in the **.class** f
 
 An annotation with a retention policy of **RUNTIME** is stored in the **.class** file during compilation and is available through the JVM during run time. Thus, **RUNTIME** retention offers the greatest annotation persistence.
 
-## NOTE
+**NOTE**
 
  An annotation on a local variable declaration is not retained in the **.class** file.
 
@@ -818,7 +823,7 @@ The following version of **MyAnno** uses **@Retention** to specify the **RUNTIME
     int val();
 }
 ```
-## Obtaining Annotations at Run Time by Use of Reflection
+### Obtaining Annotations at Run Time by Use of Reflection
 
  Although annotations are designed mostly for use by other development or deployment tools, if they specify a retention policy of **RUNTIME**, then they can be queried at run time by any Java program through the use of reflection. Reflection is the feature that enables information about a class to be obtained at run time. The reflection API is contained in the **java.lang.reflect** package. There are a number of ways to use reflection, and we won’t examine them all here. We will, however, walk through a few examples that apply to annotations.  
 
@@ -828,7 +833,7 @@ final Class<?> getClass()
 
 It returns the **Class** object that represents the invoking object.
 
-## NOTE
+**NOTE**
 
  Notice the **<?>** that follows **Class** in the declaration of **getClass()** just shown. This is related to Java’s generics feature. **getClass()** and several other reflection-related methods discussed in this chapter make use of generics. Generics are described in Chapter 14. However, an understanding of generics is not needed to grasp the fundamental principles of reflection.
 
@@ -1063,7 +1068,7 @@ default boolean isAnnotationPresent(Class<? extends Annotation> annoType)
 
 It returns **true** if the annotation specified by annoType is associated with the invoking object. It returns **false** otherwise. To these, JDK 8 added **getDeclaredAnnotation()**, **getAnnotationsByType()**, and **getDeclaredAnnotationsByType()**. Of these, the last two automatically work with a repeated annotation.(Repeated annotations are discussed at the end of this chapter.)
 
-## Using Default Values
+### Using Default Values
 
  You can give annotation members default values that will be used if no value is specified when the annotation is applied. A default value is specified by adding a **default** clause to a member’s declaration. It has this general form:
 
@@ -1136,7 +1141,7 @@ The output is shown here:
 ```
 Testing 9000
 ```
-## Marker Annotations
+### Marker Annotations
 
  A marker annotation is a special kind of annotation that contains no members. Its sole purpose is to mark an item. Thus, its presence as an annotation is sufficient. The best way to determine if a marker annotation is present is to use the method **isAnnotationPresent()**, which is defined by the **AnnotatedElement** interface.
 
@@ -1251,7 +1256,7 @@ Remember, whenever you are using a single-member annotation, the name of that me
 
 **The Built-In Annotations** Java defines many built-in annotations. Most are specialized, but nine are general purpose. Of these, four are imported from **java.lang.annotation**: **@Retention**, **@Documented**, **@Target**, and **@Inherited**. Five—**@Override**, **@Deprecated**, **@FunctionalInterface**, **@SafeVarargs**, and **@SuppressWarnings**—are included in **java.lang**. Each is described here.
 
-## NOTE
+**NOTE**
 
  **java.lang.annotation** also includes the annotations **Repeatable** and **Native**. **Repeatable** supports repeatable annotations, as described later in this chapter. **Native** annotates a field that can be accessed by native code.
 
@@ -1281,7 +1286,7 @@ specify the target or targets so as to clearly indicate the intended uses of an 
 
 **@SuppressWarnings @SuppressWarnings** specifies that one or more warnings that might be issued by the compiler are to be suppressed. The warnings to suppress are specified by name, in string form.
 
-## Type Annotations
+### Type Annotations
 
  Beginning with JDK 8, the places in which annotations can be used has been expanded. As mentioned earlier, annotations were originally allowed only on declarations. However, now, annotations can also be specified in most cases in which a type is used. This expanded aspect of annotations is called _type annotation_. For example, you can annotate the return type of a method, the type of **this** within a method, a cast, array levels, an inherited class, and a **throws** clause. You can also annotate generic types, including generic type parameter bounds and generic type arguments. (See Chapter 14 for a discussion of generics.)
 
@@ -1293,9 +1298,7 @@ void myMeth() throws @TypeAnno NullPointerException { // ...
 ```
 Here, @**TypeAnno** annotates **NullPointerException** in the **throws** clause. You can also annotate the type of **this** (called the receiver). As you know,
 
-## this
-
- is an implicit argument to all instance methods and it refers to the invoking object. To annotate its type requires the use of another recently added feature. Beginning with JDK 8, you can explicitly declare **this** as the first parameter to a method. In this declaration, the type of **this** must be the type of its class; for example:
+**this** is an implicit argument to all instance methods and it refers to the invoking object. To annotate its type requires the use of another recently added feature. Beginning with JDK 8, you can explicitly declare **this** as the first parameter to a method. In this declaration, the type of **this** must be the type of its class; for example:
 ```
 class someClass
 {
@@ -1456,7 +1459,7 @@ In this declaration, **@MaxLen** annotates the type of the first level and **@No
 
 the element type **Integer** is annotated.
 
-## Repeating Annotations
+### Repeating Annotations
 
  Beginning with JDK 8, an annotation can be repeated on the same element. This is called _repeating annotations_. For an annotation to be repeatable, it must be annotated with the **@Repeatable** annotation, defined in **java.lang.annotation**. Its **value** field specifies the container type for the repeatable annotation. The container is specified as an annotation for which the **value** field is an array of the repeatable annotation type. Thus, to create a repeatable annotation, you must create a container annotation and then specify that annotation type as an argument to the **@Repeatable** annotation.
 

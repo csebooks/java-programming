@@ -3,6 +3,7 @@ title: 'Modules'
 weight: 16
 --- 
 
+# Modules
 
 JDK 9 introduced a new and important feature called modules. Modules give you a way to describe the relationships and dependencies of the code that comprises an application. Modules also let you control which parts of a module are accessible to other modules and which are not. Through the use of modules you can create more reliable, scalable programs.
 
@@ -26,7 +27,7 @@ module moduleName{
 ```
 The name of the module is specified by _moduleName,_ which must be a valid Java identifier or a sequence of identifiers separated by periods. The module definition is specified within the braces. Although a module definition may be empty (which results in a declaration that simply names the module), typically it specifies one or more clauses that define the characteristics of the module.
 
-## A Simple Module Example
+### A Simple Module Example
 
  At the foundation of a module’s capabilities are two key features. The first is a module’s ability to specify that it requires another module. In other words, one module can specify that it depends on another. A dependence relationship is specified by use of a **requires** statement. By default, the presence of the required module is checked at both compile time and at run time. The second key feature is a module’s ability to control which, if any, of its packages are  
 
@@ -34,7 +35,7 @@ accessible by another module. This is accomplished by use of the **exports** key
 
 The following example creates a modular application that demonstrates some simple mathematical functions. Although this application is purposely very small, it illustrates the core concepts and procedures required to create, compile, and run module-based code. Furthermore, the general approach shown here also applies to larger, real-world applications. It is strongly recommended that you work through the example on your computer, carefully following each step.
 
-## NOTE
+**NOTE**
 
  This chapter shows the process of creating, compiling, and running module-based code by use of the command-line tools. This approach has two advantages. First, it works for all Java programmers because no IDE is required. Second, it very clearly shows the fundamentals of the module system, including how it utilizes directories. To follow along, you will need to manually create a number of directories and ensure that each file is placed in its proper directory. As you might expect, when creating real- world, module-based applications you will likely find a module-aware IDE easier to use because, typically, it will automate much of the process. However, learning the fundamentals of modules using the command-line tools ensures that you have a solid understanding of the topic.
 
@@ -150,7 +151,7 @@ appsrc\\appstart
 
 Before examining the **requires**, **exports**, and **module** statements more closely, let’s first compile and run this example. Be sure that you have correctly created the directories and entered each file into its proper directory, as just explained.
 
-## Compile and Run the First Module Example
+### Compile and Run the First Module Example
 
  Beginning with JDK 9, **javac** has been updated to support modules. Thus, like all other Java programs, module-based programs are compiled using **javac**. The process is easy, with the primary difference being that you will usually explicitly specify a _module path_. A module path tells the compiler where the compiled files will be located. When following along with this example, be sure that you execute the **javac** commands from the **mymodapp** directory in order for the paths to be correct. Recall that **mymodapp** is the top-level directory for the entire module application.
 
@@ -193,7 +194,7 @@ Smallest factor common to both 35 and 105 is 5
 
 Largest factor common to both 35 and 105 is 7
 ```
-## A Closer Look at requires and exports
+### A Closer Look at requires and exports
 
  The preceding module-based example relies on the two foundational features of the module system: the ability to specify a dependence and the ability to satisfy that dependence. These capabilities are specified through the use of the **requires** and **exports** statements within a **module** declaration. Each merits a closer examination at this time.
 
@@ -269,7 +270,7 @@ preceding **javac** command. First, notice that it specifies the **\--module-sou
 
 The multi-module mode of **javac** has another advantage. It automatically finds and compiles all source files for the application, creating the necessary output directories. Because of the advantages that multi-module compilation mode offers, it will be used for the subsequent examples.
 
-## NOTE
+**NOTE**
 
  As a general rule, qualified export is a special case feature. Most often, your modules will either provide unqualified export of a package or not export the package at all, keeping it inaccessible. As such, qualified export is discussed here primarily for the sake of completeness. Also, qualified export by itself does not prevent the exported package from being misused by malicious code in a module that masquerades as the targeted module. The security techniques required to prevent this from happening are beyond the scope of this book. Consult the Oracle documentation for details on security in this regard, and Java security details in general.
 
@@ -459,7 +460,7 @@ One final point, because of a special exception in the Java language syntax, in 
  
  Before we begin, it is necessary to state that applications that use services and service providers are typically fairly sophisticated. Therefore, you may find that you do not often need the service-based module features. However, because support for services constitutes a rather significant part of the module system, it is important that you have a general understanding of how these features work. Also, a simple example is presented that illustrates the core techniques needed to use them.
 
-## Service and Service Provider Basics
+### Service and Service Provider Basics
 
  In Java, a service is a program unit whose functionality is defined by an interface or abstract class. Thus, a service specifies in a general way some form of program activity. A concrete implementation of a service is supplied by a _service provider_. In other words, a service defines the form of some action, and the service provider supplies that action.
 
@@ -510,7 +511,7 @@ appsrc\\userfuncsimp\\userfuncsimp\\binaryfuncsimp
 ```
 This example expands the original version of the application by providing support for functions beyond those built into the application. Recall that the **SimpleMathFuncs** class supplies three built-in functions: **isFactor()**, **lcf()**, and **gcf()**. Although it would be possible to add more functions to this class, doing so requires modifying and recompiling the application. By implementing services, it becomes possible to “plug in” new functions at run time, without modifying the application, and that is what this example will do. In this case, the service supplies functions that take two **int** arguments and return an **int** result. Of course, other types of functions can be supported if additional interfaces are provided, but support for binary integer functions is sufficient for our purposes and keeps the source code size of the example manageable.
 
-## The Service Interfaces
+### The Service Interfaces
 
  Two service-related interfaces are needed. One specifies the form of an action, and the other specifies the form of the provider of that action. Both go in the **binaryfuncs** directory, and both are in the **userfuncs.binaryfuncs** package. The first, called **BinaryFunc**, declares the form of a binary function. It is shown here:  
 ```
@@ -782,7 +783,7 @@ In Java, the arrows point from the dependent module to the required module. Thus
 
 additional module-related features that can be quite useful in certain circumstances. These are the **open** module, the **opens** statement, and the use of **requires static**. Each of these features is designed to handle a specialized situation, and each constitutes a fairly advanced aspect of the module system. That said, it is important for all Java programmers to have a general understanding of their purpose.
 
-## Open Modules
+### Open Modules
 
  As you learned earlier in this chapter, by default, the types in a module’s packages are accessible only if they are explicitly exported via an **exports** statement. While this is usually what you will want, there can be circumstances in which it is useful to enable run-time access to all packages in the module, whether a package is exported or not. To allow this, you can create an _open module_. An open module is declared by preceding the **module** keyword with the **open** modifier, as shown here:
 ```
@@ -793,7 +794,7 @@ open module moduleName
 ```
 In an open module, types in all its packages are accessible at run time. Understand, however, that only those packages that are explicitly exported are available at compile time. Thus, the **open** modifier affects only run-time accessibility. The primary reason for an open module is to enable the packages in the module to be accessed through reflection. As explained in Chapter 12, reflection is the feature that lets a program analyze code at run time.
 
-## The opens Statement
+### The opens Statement
 
  It is possible for a module to open a specific package for run-time access by other modules and for reflective access rather than opening an entire module. To do so, use the **opens** statement, shown here:
 ```
@@ -803,7 +804,7 @@ Here, packageName specifies the package to open. It is also possible to include 
 
 It is important to understand **opens** does not grant compile-time access. It is used only to open a package for run-time and reflective access. However, you can both export and open a module. One other point: an **opens** statement cannot be used in an open module. Remember, all packages in an open module are already open.
 
-## requires static
+### requires static
 
  As you know, **requires** specifies a dependence that, by default, is enforced both during compilation and at run time. However, it is possible to relax this requirement in such a way that a module is not required at run time. This is accomplished by use of the **static** modifier in a **requires** statement. For example, this specifies that **mymod** is required for compilation, but not at run time:
 ```
@@ -815,7 +816,7 @@ In this case, the addition of **static** makes **mymod** optional at run time. T
 
  As the preceding discussions have shown, modules represent a substantial enhancement to the Java language. The module system also supports enhancements at run time. One of the most important is the ability to create a run-time image that is specifically tailored to your application. To accomplish this, JDK 9 added a new tool called **jlink**. It combines a group of modules into an optimized run-time image. You can use **jlink** to link modular JAR files, the new JMOD files, or even modules in their unarchived, “exploded directory” form.
 
-## Linking Files in an Exploded Directory
+### Linking Files in an Exploded Directory
 
  Let’s look first at using **jlink** to create a run-time image from unarchived modules. That is, the files are contained in their raw form in a fully expanded (i.e., exploded) directory. Assuming a Windows environment, the following command links the modules for the first example in this chapter. It must be executed from a directory _directly above_ **mymodapp**.  
 ```
@@ -827,7 +828,7 @@ Let’s look closely at this command. First, the option **\--launcher** tells **
 
 After you run the preceding command, a directory called **mylinkedmodapp** will have been created that contains the run-time image. In its **bin** directory, you will find a launcher file called **MyModApp** that you can use to run the application. For example, in Windows, this will be a batch file that executes the program.
 
-## Linking Modular JAR Files
+### Linking Modular JAR Files
 
  Although linking modules from their exploded directory is convenient, when working on real-world code you will often be using JAR files. (Recall that JAR stands for Java ARchive. It is a file format typically used for application deployment.) In the case of modular code, you will be using _modular JAR files_. A modular JAR file is one that contains a **module-info.class** file. Beginning with JDK 9, the **jar** tool has the ability to create modular JAR files. For example, it can now recognize a module path. Once you have created modular JAR files, you can use **jlink** to link them into a run-time image. To understand the process, let’s work through an example. Again assuming the first example in this chapter, here are the **jar** commands that create modular JAR files for the **MyModAppDemo** program. Each must be executed from a directory directly above **mymodapp**. Also, you will need to create a directory called **applib** under **mymodapp**.  
 ```
@@ -849,7 +850,7 @@ java -p mymodapp\applib -m appstart
 ```
 Here, **\-p** specifies the module path and **\-m** specifies the module that contains the program’s entry point.
 
-## JMOD Files
+### JMOD Files
 
  The **jlink** tool can also link files that use the new JMOD format introduced by JDK 9. JMOD files can include things that are not applicable to a JAR file. They are created by the new **jmod** tool. Although most applications will still use module JAR files, JMOD files will be of value in specialized situations. As a point of interest, beginning with JDK 9 the platform modules are contained in JMOD files.
 

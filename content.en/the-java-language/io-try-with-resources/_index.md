@@ -2,25 +2,25 @@
 title: 'I/O, Try-with-Resources, and Other Topics'
 weight: 13
 --- 
-
+# I/O, Try-with-Resources
 
 This chapter introduces one of Java’s most important packages, **java.io**, which supports Java’s basic I/O (input/output) system, including file I/O. Support for I/O comes from Java’s core API libraries, not from language keywords. For this reason, an in-depth discussion of this topic is found in Part II of this book, which examines several of Java’s API packages. Here, the foundation of this important subsystem is introduced so that you can see how it fits into the larger context of the Java programming and execution environment. This chapter also examines the **try**\-with-resources statement and several more Java keywords: **transient**, **volatile**, **instanceof**, **native**, **strictfp**, and **assert**. It concludes by discussing static import and describing another use for the **this** keyword.
 
-**I/O Basics** As you may have noticed while reading the preceding 12 chapters, not much use has been made of I/O in the example programs. In fact, aside from **print()** and **println()**, none of the I/O methods have been used significantly. The reason is simple: most real applications of Java are not text-based, console programs. Rather, they are either graphically oriented programs that rely on one of Java’s graphical user interface (GUI) frameworks, such as Swing, the AWT, or JavaFX, for user interaction, or they are Web applications. Although text-based, console programs are excellent as teaching examples, they do not, as a general rule, constitute an important use for Java in the real world. Also, Java’s support for console I/O is limited and somewhat awkward to use—even in simple example programs. Text-based console I/O is just not that useful in real-world Java programming.
+## I/O Basics
+
+As you may have noticed while reading the preceding 12 chapters, not much use has been made of I/O in the example programs. In fact, aside from **print()** and **println()**, none of the I/O methods have been used significantly. The reason is simple: most real applications of Java are not text-based, console programs. Rather, they are either graphically oriented programs that rely on one of Java’s graphical user interface (GUI) frameworks, such as Swing, the AWT, or JavaFX, for user interaction, or they are Web applications. Although text-based, console programs are excellent as teaching examples, they do not, as a general rule, constitute an important use for Java in the real world. Also, Java’s support for console I/O is limited and somewhat awkward to use—even in simple example programs. Text-based console I/O is just not that useful in real-world Java programming.
 
 The preceding paragraph notwithstanding, Java does provide strong, flexible support for I/O as it relates to files and networks. Java’s I/O system is cohesive and consistent. In fact, once you understand its fundamentals, the rest of the I/O system is easy to master. A general overview of I/O is presented here. A detailed description is found in Chapters 21 and 22.  
 
-## Streams
+### Streams
 
  Java programs perform I/O through streams. A stream is an abstraction that either produces or consumes information. A stream is linked to a physical device by the Java I/O system. All streams behave in the same manner, even if the actual physical devices to which they are linked differ. Thus, the same I/O classes and methods can be applied to different types of devices. This means that an input stream can abstract many different kinds of input: from a disk file, a keyboard, or a network socket. Likewise, an output stream may refer to the console, a disk file, or a network connection. Streams are a clean way to deal with input/output without having every part of your code understand the difference between a keyboard and a network, for example. Java implements streams within class hierarchies defined in the **java.io** package.
-## Streams
 
-
-## NOTE
+**NOTE**
 
  In addition to the stream-based I/O defined in **java.io**, Java also provides buffer- and channel-based I/O, which is defined in **java.nio** and its subpackages. They are described in Chapter 22.
 
-## Byte Streams and Character Streams
+### Byte Streams and Character Streams
 
  Java defines two types of streams: byte and character. _Byte streams_ provide a convenient means for handling input and output of bytes. Byte streams are used, for example, when reading or writing binary data. _Character streams_ provide a convenient means for handling input and output of characters. They use Unicode and, therefore, can be internationalized. Also, in some cases, character streams are more efficient than byte streams.
 
@@ -30,9 +30,7 @@ One other point: at the lowest level, all I/O is still byte-oriented. The charac
 
 An overview of both byte-oriented streams and character-oriented streams is presented in the following sections.
 
-## The Byte Stream Classes
-
-  
+### The Byte Stream Classes
 
 Byte streams are defined by using two class hierarchies. At the top are two abstract classes: **InputStream** and **OutputStream**. Each of these abstract classes has several concrete subclasses that handle the differences among various devices, such as disk files, network connections, and even memory buffers. The byte stream classes in **java.io** are shown in Table 13-1. A few of these classes are discussed later in this section. Others are described in Part II of this book. Remember, to use the stream classes, you must import **java.io**.
 
@@ -42,7 +40,7 @@ The abstract classes **InputStream** and **OutputStream** define several key
 
 methods that the other stream classes implement. Two of the most important are **read()** and **write()**, which, respectively, read and write bytes of data. Each has a form that is abstract and must be overridden by derived stream classes.
 
-## The Character Stream Classes
+### The Character Stream Classes
 
  Character streams are defined by using two class hierarchies. At the top are two abstract classes: **Reader** and **Writer**. These abstract classes handle Unicode character streams. Java has several concrete subclasses of each of these. The character stream classes in **java.io** are shown in Table 13-2.
 
@@ -52,7 +50,7 @@ The abstract classes **Reader** and **Writer** define several key methods that t
 
 other stream classes implement. Two of the most important methods are **read()** and **write()**, which read and write characters of data, respectively. Each has a form that is abstract and must be overridden by derived stream classes.
 
-## The Predefined Streams
+### The Predefined Streams
 
  As you know, all Java programs automatically import the **java.lang** package. This package defines a class called **System**, which encapsulates several aspects of the run-time environment. For example, using some of its methods, you can obtain the current time and the settings of various properties associated with the system. **System** also contains three predefined stream variables: **in**, **out**, and **err**. These fields are declared as **public**, **static**, and **final** within **System**. This means that they can be used by any other part of your program and without reference to a specific **System** object.
 
@@ -78,7 +76,7 @@ Because **System.in** refers to an object of type **InputStream**, it can be use
 
 After this statement executes, **br** is a character-based stream that is linked to the console through **System.in**.
 
-## Reading Characters
+### Reading Characters
 
  To read a character from a **BufferedReader**, use **read()**. The version of **read()** that we will be using is
 
@@ -110,7 +108,7 @@ q
 
 This output may look a little different from what you expected because **System.in** is line buffered, by default. This means that no input is actually passed to the program until you press enter. As you can guess, this does not make **read()** particularly valuable for interactive console input.
 
-## Reading Strings
+### Reading Strings
 
  To read a string from the keyboard, use the version of **readLine()** that is a member of the **BufferedReader** class. Its general form is shown here:
 
@@ -150,10 +148,6 @@ Just create String objects.
 
 ## Writing Console Output
 
-  
-
-## Writing Console Output
-
  Console output is most easily accomplished with **print()** and **println()**, described earlier, which are used in most of the examples in this book. These methods are defined by the class **PrintStream** (which is the type of object referenced by **System.out**). Even though **System .out** is a byte stream, using it for simple program output is still acceptable. However, a character-based alternative is described in the next section.
 
 Because **PrintStream** is an output stream derived from **OutputStream**, it also implements the low-level method **write()**. Thus, **write()** can be used to write to the console. The simplest form of **write()** defined by **PrintStream** is shown here:
@@ -170,17 +164,13 @@ You will not often use **write()** to perform console output (although doing so 
 
 writing to the console when using Java is through a **PrintWriter** stream. **PrintWriter** is one of the character-based classes. Using a character-based class for console output makes internationalizing your program easier.
 
-## PrintWriter
-
- defines several constructors. The one we will use is shown here:
+**PrintWriter** defines several constructors. The one we will use is shown here:
 
 PrintWriter(OutputStream outputStream, boolean flushingOn)
 
 Here, outputStream is an object of type **OutputStream**, and flushingOn controls whether Java flushes the output stream every time a **println()** method (among others) is called. If flushingOn is **true**, flushing automatically takes place. If **false**, flushing is not automatic.
 
-## PrintWriter
-
- supports the **print()** and **println()** methods. Thus, you can use these methods in the same way as you used them with **System.out**. If an argument is not a simple type, the **PrintWriter** methods call the object’s **toString()** method and then display the result.
+**PrintWriter** supports the **print()** and **println()** methods. Thus, you can use these methods in the same way as you used them with **System.out**. If an argument is not a simple type, the **PrintWriter** methods call the object’s **toString()** method and then display the result.
 
 To write to the console by using a **PrintWriter**, specify **System.out** for the output stream and automatic flushing. For example, this line of code creates a **PrintWriter** that is connected to console output:
 
@@ -210,7 +200,7 @@ FileInputStream(String fileName) throws FileNotFoundException FileOutputStream(S
 
 Here, fileName specifies the name of the file that you want to open. When you create an input stream, if the file does not exist, then **FileNotFoundException** is thrown. For output streams, if the file cannot be opened or created, then **FileNotFoundException** is thrown. **FileNotFoundException** is a subclass of **IOException**. When an output file is opened, any preexisting file by the same name is destroyed.
 
-## NOTE
+**NOTE**
 
  In situations in which a security manager is present, several of the file classes, including **FileInputStream** and **FileOutputStream**, will throw a **SecurityException** if a security violation occurs when attempting to open a file. By default, applications run  
 
@@ -222,7 +212,7 @@ void close() throws IOException
 
 Closing a file releases the system resources allocated to the file, allowing them to be used by another file. Failure to close a file can result in “memory leaks” because of unused resources remaining allocated.
 
-## NOTE
+**NOTE**
 
  The **close()** method is specified by the **AutoCloseable** interface in **java.lang**. **AutoCloseable** is inherited by the **Closeable** interface in **java.io**. Both interfaces are implemented by the stream classes, including **FileInputStream** and **FileOutputStream**.
 
@@ -272,7 +262,7 @@ Automatic resource management is based on an expanded form of the **try** statem
 
 Typically, _resource-specification_ is a statement that declares and initializes a resource, such as a file stream. It consists of a variable declaration in which the variable is initialized with a reference to the object being managed. When the **try** block ends, the resource is automatically released. In the case of a file, this means that the file is automatically closed. (Thus, there is no need to call **close()** explicitly.) Of course, this form of **try** can also include **catch** and **finally** clauses. This form of **try** is called the **try**_\-with-resources_ statement.
 
-## NOTE
+**NOTE**
 
  Beginning with JDK 9, it is also possible for the resource specification of the **try** to consist of a variable that has been declared and initialized earlier in the program. However, that variable must be _effectively final_, which means that it has not been assigned a new value after being given its initial value.
 
@@ -304,13 +294,9 @@ There is one other aspect to **try**\-with-resources that needs to be mentioned.
 
 Because of the benefits that the **try**\-with-resources statement offers, it will be used by many, but not all, of the example programs in this edition of this book. Some of the examples will still use the traditional approach to closing a resource. There are several reasons for this. First, you may encounter legacy code that still relies on the traditional approach. It is important that all Java programmers be fully versed in, and comfortable with, the traditional approach when maintaining this older code. Second, it is possible that some programmers will continue to work in a pre-JDK 7 environment for a period of time. In such situations, the expanded form of **try** is not available. Finally, there may be cases in which explicitly closing a resource is more appropriate than the automated approach. For these reasons, some of the examples in this book will continue to use the traditional approach, explicitly calling **close()**. In addition to illustrating the traditional technique, these examples can also be compiled and run by all readers in all environments.
 
-## REMEMBER
+**REMEMBER**
 
  A few examples in this book use the traditional approach to closing files as a means of illustrating this technique, which is widely used in legacy code. However, for new code, you will usually want to use the automated approach supported by the **try**\- with-resources statement just described.
-
-## The transient and volatile Modifiers
-
-  
 
 ## The transient and volatile Modifiers
 
@@ -434,7 +420,7 @@ With **assert**, you need only one line of code. Furthermore, you don’t have t
 
 remove the **assert** statements from your released code.
 
-## Assertion Enabling and Disabling Options
+### Assertion Enabling and Disabling Options
 
  When executing code, you can disable all assertions by using the **\-da** option. You can enable or disable a specific package (and all of its subpackages) by specifying its name followed by three periods after the **\-ea** or **\-da** option. For example, to enable assertions in a package called **MyPack**, use
 

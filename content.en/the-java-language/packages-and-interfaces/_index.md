@@ -2,6 +2,7 @@
 title: 'Packages and Interfaces'
 weight: 9
 --- 
+# Package And Interface 
 
 This chapter examines two of Java’s most innovative features: packages and interfaces. Packages are containers for classes. They are used to keep the class name space compartmentalized. For example, a package allows you to create a class named **List**, which you can store in your own package without concern that it will collide with some other class named **List** stored elsewhere. Packages are stored in a hierarchical manner and are explicitly imported into new class definitions. As you will see in Chapter 16, packages also play an important role with modules.
 
@@ -11,7 +12,7 @@ In previous chapters, you have seen how methods define the interface to the data
 
  In the preceding chapters, the name of each example class was taken from the same name space. This means that a unique name had to be used for each class to avoid name collisions. After a while, without some way to manage the name space, you could run out of convenient, descriptive names for individual classes. You also need some way to be assured that the name you choose for a class will be reasonably unique and not collide with class names chosen by other programmers. (Imagine a small group of programmers fighting over who gets to use the name “Foobar” as a class name. Or, imagine the entire Internet community arguing over who first named a class “Espresso.”) Thankfully, Java provides a mechanism for partitioning the class name space into more manageable chunks. This mechanism is the package. The package is both a naming and a visibility control mechanism. You can define classes inside a package that are not accessible by code outside that package. You can also define class members that are exposed only to other members of the same define class members that are exposed only to other members of the same package. This allows your classes to have intimate knowledge of each other, but not expose that knowledge to the rest of the world.
 
-## Defining a Package
+### Defining a Package
 
  To create a package is quite easy: simply include a **package** command as the first statement in a Java source file. Any classes declared within that file will belong to the specified package. The **package** statement defines a name space in which classes are stored. If you omit the **package** statement, the class names are put into the default package, which has no name. (This is why you haven’t had to worry about packages before now.) While the default package is fine for short, sample programs, it is inadequate for real applications. Most of the time, you will define a package for your code.
 
@@ -38,7 +39,7 @@ package a.b.c;
 ```
 needs to be stored in **a\\b\\c** in a Windows environment. Be sure to choose your package names carefully. You cannot rename a package without renaming the directory in which the classes are stored.
 
-## Finding Packages and CLASSPATH
+### Finding Packages and CLASSPATH
 
  As just explained, packages are typically mirrored by directories. This raises an important question: How does the Java run-time system know where to look for packages that you create? As it relates to the examples in this chapter, the answer has three parts. First, by default, the Java run-time system uses the current working directory as its starting point. Thus, if your package is in a subdirectory of the current directory, it will be found. Second, you can specify a directory path or paths by setting the **CLASSPATH** environmental variable. Third, you can use the **\-classpath** option with **java** and **javac** to specify the path to your classes. It is useful to point out that, beginning with JDK 9, a package can be part of a module, and thus found on the module path. However, a discussion of modules and module paths is deferred until Chapter 16. For now, we will use only class paths.
 
@@ -58,7 +59,7 @@ _C:\\MyPrograms\\Java_
 
 The easiest way to try the examples shown in this book is to simply create the package directories below your current development directory, put the **.class** files into the appropriate directories, and then execute the programs from the development directory. This is the approach used in the following example.
 
-## A Short Package Example
+### A Short Package Example
 
  Keeping the preceding discussion in mind, you can try this simple package:
 ```
@@ -129,7 +130,7 @@ Table 9-1 applies only to members of classes. A non-nested class has only two po
 
  The modules feature can also affect accessibility. Modules are described in Chapter 16.
 
-## An Access Example
+### An Package Access Example
 
  The following example shows all combinations of the access control modifiers. This example has two packages and five classes. Remember that the classes for the two different packages need to be stored in directories named after their respective packages—in this case, **p1** and **p2**.
 
@@ -355,7 +356,7 @@ To implement an interface, a class must provide the complete set of methods requ
 
 Interfaces are designed to support dynamic method resolution at run time. Normally, in order for a method to be called from one class to another, both classes need to be present at compile time so the Java compiler can check to ensure that the method signatures are compatible. This requirement by itself makes for a static and nonextensible classing environment. Inevitably in a system like this, functionality gets pushed up higher and higher in the class hierarchy so that the mechanisms will be available to more and more subclasses. Interfaces are designed to avoid this problem. They disconnect the definition of a method or set of methods from the inheritance hierarchy. Since interfaces are in a different hierarchy from classes, it is possible for classes that are unrelated in terms of the class hierarchy to implement the same interface. This is where the real power of interfaces is realized.
 
-## Defining an Interface
+### Defining an Interface
 
  An interface is defined much like a class. This is a simplified general form of an interface:  
 ```
@@ -425,7 +426,7 @@ class Client implements Callback
     }
 }
 ```
-## Accessing Implementations Through Interface References
+### Accessing Implementations Through Interface References
 
  You can declare variables as object references that use an interface rather than a class type. Any instance of any class that implements the declared interface can be referred to by such a variable. When you call a method through one of these references, the correct version will be called based on the actual instance of the interface being referred to. This is one of the key features of interfaces. The method to be executed is looked up dynamically at run time, allowing classes to be created later than the code which calls methods on them. The calling code can dispatch through an interface without having to know anything about the “callee.” This process is similar to using a superclass reference to access a subclass object, as described in Chapter 8.
 
@@ -482,7 +483,7 @@ p squared is 1764
 ```
 As you can see, the version of **callback()** that is called is determined by the type of object that **c** refers to at run time. While this is a very simple example, you will see another, more practical one shortly.
 
-## Partial Implementations
+### Partial Implementations
 
  If a class includes an interface but does not fully implement the methods required by that interface, then that class must be declared as **abstract**. For example:
 ```
@@ -498,7 +499,7 @@ abstract class Incomplete implements Callback
 ```
 Here, the class **Incomplete** does not implement **callback()** and must be declared as **abstract**. Any class that inherits **Incomplete** must implement **callback()** or be declared **abstract** itself.
 
-## Nested Interfaces
+### Nested Interfaces
 
  An interface can be declared a member of a class or another interface. Such an interface is called a _member interface_ or a _nested interface_. A nested interface can be declared as **public**, **private**, or **protected**. This differs from a top-level interface, which must either be declared as **public** or use the default access level, as previously described. When a nested interface is used outside of its enclosing scope, it must be qualified by the name of the class or interface of which it is a member. Thus, outside of the class or interface in which a nested interface is declared, its name must be fully qualified.
 
@@ -544,7 +545,7 @@ implements A.NestedIF
 
 Notice that the name is fully qualified by the enclosing class’ name. Inside the **main()** method, an **A.NestedIF** reference called **nif** is created, and it is assigned a reference to a **B** object. Because **B** implements **A.NestedIF**, this is legal.
  
-## Applying Interfaces
+### Applying Interfaces
 
  To understand the power of interfaces, let’s look at a more practical example. In earlier chapters, you developed a class called **Stack** that implemented a simple fixed-size stack. However, there are many ways to implement a stack. For example, the stack can be of a fixed size or it can be “growable.” The stack can also be held in an array, a linked list, a binary tree, and so on. No matter how the stack is implemented, the interface to the stack remains the same. That is, the methods **push()** and **pop()** define the interface to the stack independently of the details of the implementation. Because the interface to a stack is separate from its implementation, it is easy to define a stack interface, leaving it to each implementation to define the specifics. Let’s look at two examples.
 
@@ -859,7 +860,7 @@ It is important to point out that the addition of default methods does not chang
 
 One last point: As a general rule, default methods constitute a special- purpose feature. Interfaces that you create will still be used primarily to specify what and not how. However, the inclusion of the default method gives you added flexibility.
 
-## Default Method Fundamentals
+### Default Method Fundamentals
 
  An interface default method is defined similar to the way a method is defined by a **class**. The primary difference is that the declaration is preceded by the keyword **default**. For example, consider this simple interface:
 ```
@@ -972,7 +973,7 @@ For example, if **Beta** wants to refer to **Alpha**’s default for **reset()**
 
 Alpha.super.reset();
 
-## Use static Methods in an Interface
+### Use static Methods in an Interface
 
  Another capability added to **interface** by JDK 8 is the ability to define one or more **static** methods. Like **static** methods in a class, a **static** method defined by an interface can be called independently of any object. Thus, no implementation of the interface is necessary, and no instance of the interface is required, in order to call a **static** method. Instead, a **static** method is called by specifying the interface name, followed by a period, followed by the method name. Here is the general form:
 

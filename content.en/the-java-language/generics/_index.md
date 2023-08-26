@@ -3,6 +3,7 @@ title: 'Generics'
 weight: 14
 --- 
 
+# Generics
 
 Since the original 1.0 release in 1995, many new features have been added to Java. One that has had a profound and long-lasting impact is generics. Introduced by JDK 5, generics changed Java in two important ways. First, it added a new syntactical element to the language. Second, it caused changes to many of the classes and methods in the core API. Today, generics are an integral part of Java programming, and a solid understanding of this important feature is required. It is examined here in detail.
 
@@ -12,13 +13,15 @@ Perhaps the one feature of Java that has been most significantly affected by gen
 
 This chapter describes the syntax, theory, and use of generics. It also shows how generics provide type safety for some previously difficult cases. Once you have completed this chapter, you will want to examine Chapter 19, which covers the Collections Framework. There you will find many examples of generics at work.  
 
-**What Are Generics?** At its core, the term generics means _parameterized types_. Parameterized types are important because they enable you to create classes, interfaces, and methods in which the type of data upon which they operate is specified as a parameter. Using generics, it is possible to create a single class, for example, that automatically works with different types of data. A class, interface, or method that operates on a parameterized type is called generic, as in _generic class_ or _generic method_.
+## What Are Generics?
+
+ At its core, the term generics means _parameterized types_. Parameterized types are important because they enable you to create classes, interfaces, and methods in which the type of data upon which they operate is specified as a parameter. Using generics, it is possible to create a single class, for example, that automatically works with different types of data. A class, interface, or method that operates on a parameterized type is called generic, as in _generic class_ or _generic method_.
 
 It is important to understand that Java has always given you the ability to create generalized classes, interfaces, and methods by operating through references of type **Object**. Because **Object** is the superclass of all other classes, an **Object** reference can refer to any type object. Thus, in pre-generics code, generalized classes, interfaces, and methods used **Object** references to operate on various types of objects. The problem was that they could not do so with type safety.
 
 Generics added the type safety that was lacking. They also streamlined the process, because it is no longer necessary to explicitly employ casts to translate between **Object** and the type of data that is actually being operated upon. With generics, all casts are automatic and implicit. Thus, generics expanded your ability to reuse code and let you do so safely and easily.
 
-## CAUTION
+**CAUTION**
 
  _A Warning to C++ Programmers:_ Although generics are similar to templates in C++, they are not the same. There are some fundamental differences between the two approaches to generic types. If you have a background in C++, it is important not to jump to conclusions about how generics work in Java.
 
@@ -80,7 +83,7 @@ iOb = new Gen<Double>(88.0); // Error!
 
 Because **iOb** is of type **Gen<Integer>**, it can’t be used to refer to an object of **Gen<Double>**. This type checking is one of the main benefits of generics because it ensures type safety.
 
-## NOTE
+**NOTE**
 
  As you will see later in this chapter, it is possible to shorten the syntax used to create an instance of a generic class. In the interest of clarity, we will use the full syntax at this time.
 
@@ -110,7 +113,7 @@ Gen<String> strOb = new Gen<String>("Generics Test");
 
 Because the type argument is **String**, **String** is substituted for **T** inside **Gen**. This creates (conceptually) a **String** version of **Gen**, as the remaining lines in the program demonstrate.
 
-## Generics Work Only with Reference Types
+### Generics Work Only with Reference Types
 
  When declaring an instance of a generic type, the type argument passed to the type parameter must be a reference type. You cannot use a primitive type, such as **int** or **char**. For example, with **Gen**, it is possible to pass any class type to **T**, but you cannot pass a primitive type to a type parameter. Therefore, the following declaration is illegal:
 
@@ -120,7 +123,7 @@ type
 
 Of course, not being able to specify a primitive type is not a serious restriction because you can use the type wrappers (as the preceding example did) to encapsulate a primitive type. Further, Java’s autoboxing and auto-unboxing mechanism makes the use of the type wrapper transparent.
 
-## Generic Types Differ Based on Their Type Arguments
+### Generic Types Differ Based on Their Type Arguments
 
  A key point to understand about generic types is that a reference of one specific version of a generic type is not type compatible with another version of the same generic type. For example, assuming the program just shown, the following line of code is in error and will not compile:
 
@@ -128,7 +131,7 @@ iOb = strOb; // Wrong!
 
 Even though both **iOb** and **strOb** are of type **Gen<T>**, they are references to different types because their type arguments differ. This is part of the way that generics add type safety and prevent errors.  
 
-## How Generics Improve Type Safety
+### How Generics Improve Type Safety
 
  At this point, you might be asking yourself the following question: Given that the same functionality found in the generic **Gen** class can be achieved without generics, by simply specifying **Object** as the data type and employing the proper casts, what is the benefit of making **Gen** generic? The answer is that generics automatically ensure the type safety of all operations involving **Gen**. In the process, they eliminate the need for you to enter casts and to type-check code by hand.
 
@@ -262,7 +265,7 @@ Averages of iob and fob are the same.
 
 One last point: It is important to understand that the wildcard does not affect what type of **Stats** objects can be created. This is governed by the **extends** clause in the **Stats** declaration. The wildcard simply matches any valid **Stats** object.
 
-## Bounded Wildcards
+### Bounded Wildcards
 
  Wildcard arguments can be bounded in much the same way that a type parameter can be bounded. A bounded wildcard is especially important when you are creating a generic type that will operate on a class hierarchy. To understand why, let’s work through an example. Consider the following hierarchy of classes that encapsulate coordinates:  
 
@@ -400,7 +403,7 @@ The syntax used to create **isIn()** can be generalized. Here is the syntax for 
 
 In all cases, _type-param-list_ is a comma-separated list of type parameters. Notice that for a generic method, the type parameter list precedes the return type.
 
-## Generic Constructors
+### Generic Constructors
 
  It is possible for constructors to be generic, even if their class is not. For example, consider the following short program:  
 
@@ -516,7 +519,7 @@ One final point: You should limit the use of raw types to those cases in which y
 
  Generic classes can be part of a class hierarchy in just the same way as a non- generic class. Thus, a generic class can act as a superclass or be a subclass. The key difference between generic and non-generic hierarchies is that in a generic hierarchy, any type arguments needed by a generic superclass must be passed up the hierarchy by all subclasses. This is similar to the way that constructor arguments must be passed up a hierarchy.
 
-## Using a Generic Superclass
+### Using a Generic Superclass
 
  Here is a simple example of a hierarchy that uses a generic superclass:  
 
@@ -544,7 +547,7 @@ Here, **T** is the type passed to **Gen**, and **V** is the type that is specifi
 
 Value is: 99
 
-## A Generic Subclass
+### A Generic Subclass
 
  It is perfectly acceptable for a non-generic class to be the superclass of a generic subclass. For example, consider this program:  
 
@@ -586,7 +589,7 @@ succeeds because **iOb** is some type of **Gen** object. Now, look closely at th
 
 As the comments indicate, these lines can’t be compiled because they attempt to compare **iOb2** with a specific type of **Gen2**, in this case, **Gen2<Integer>**. Remember, there is no generic type information available at run time. Therefore, there is no way for **instanceof** to know if **iOb2** is an instance of **Gen2<Integer>** or not.
 
-## Casting
+### Casting
 
  You can cast one instance of a generic class into another only if the two are otherwise compatible and their type arguments are the same. For example, assuming the foregoing program, this cast is legal:
 
@@ -598,7 +601,7 @@ because **iOb2** includes an instance of **Gen<Integer>**. But, this cast:
 
 is not legal because **iOb2** is not an instance of **Gen<Long>**.
 
-## Overriding Methods in a Generic Class
+### Overriding Methods in a Generic Class
 
  A method in a generic class can be overridden just like any other method. For example, consider this program in which the method **getob()** is overridden:  
 
@@ -646,10 +649,6 @@ Most of the examples in this book will continue to use the full syntax when decl
 
 ## Local Variable Type Inference and Generics
 
-  
-
-## Local Variable Type Inference and Generics
-
  As just explained, type inference is already supported for generics through the use of the diamond operator. However, you can also use the new local variable type inference feature added by JDK 10 with a generic class. For example, assuming **MyClass** used in the preceding section, this declaration:
 
 can be rewritten like this using local variable type inference:
@@ -668,7 +667,7 @@ In general, here is how erasure works. When your Java code is compiled, all gene
 
 specified, and then applying the appropriate casts (as determined by the type arguments) to maintain type compatibility with the types specified by the type arguments. The compiler also enforces this type compatibility. This approach to generics means that no type parameters exist at run time. They are simply a source-code mechanism.
 
-## Bridge Methods
+### Bridge Methods
 
  Occasionally, the compiler will need to add a _bridge method_ to a class to handle situations in which the type erasure of an overriding method in a subclass does not produce the same erasure as the method in the superclass. In this case, a method is generated that uses the type erasure of the superclass, and this method calls the method that has the type erasure specified by the subclass. Of course, bridge methods only occur at the bytecode level, are not seen by you, and are not available for your use.
 
@@ -736,13 +735,13 @@ Frankly, in the preceding example, it would be much better to use two separate m
 
 Here, it is illegal to attempt to create an instance of **T**. The reason should be easy to understand: the compiler does not know what type of object to create. **T** is simply a placeholder.
 
-## Restrictions on Static Members
+### Restrictions on Static Members
 
  No **static** member can use a type parameter declared by the enclosing class. For example, both of the **static** members of this class are illegal:
 
 Although you can’t declare **static** members that use a type parameter declared by the enclosing class, you can declare **static** generic methods, which define their own type parameters, as was done earlier in this chapter.
 
-## Generic Array Restrictions
+### Generic Array Restrictions
 
  There are two important generics restrictions that apply to arrays. First, you cannot instantiate an array whose element type is a type parameter. Second, you cannot create an array of type-specific generic references. The following short program shows both situations:  
 
@@ -774,6 +773,6 @@ Gen<?> gens[] = new Gen<?>[10]; // OK
 
 This approach is better than using an array of raw types, because at least some type checking will still be enforced.
 
-## Generic Exception Restriction
+### Generic Exception Restriction
 
  A generic class cannot extend **Throwable**. This means that you cannot create generic exception classes.  

@@ -2,6 +2,7 @@
 title: 'Introducing Classes'
 weight: 6
 --- 
+# Introducing Classes
 
 The class is at the core of Java. It is the logical construct upon which the entire Java language is built because it defines the shape and nature of an object. As such, the class forms the basis for object-oriented programming in Java. Any concept you wish to implement in a Java program must be encapsulated within a class.
 
@@ -13,7 +14,7 @@ Because the class is so fundamental to Java, this and the next few chapters will
 
 Perhaps the most important thing to understand about a class is that it defines a new data type. Once defined, this new type can be used to create objects of that type. Thus, a class is a template for an object, and an object is an instance of a class. Because an object is an instance of a class, you will often see the two words object and instance used interchangeably.
 
-## The General Form of a Class
+### The General Form of a Class
 
  When you define a class, you declare its exact form and nature. You do this by specifying the data that it contains and the code that operates on that data. While very simple classes may contain only code or only data, most real-world classes contain both. As you will see, a class’ code defines the interface to its data.
 
@@ -29,7 +30,7 @@ All methods have the same general form as **main()**, which we have been using t
 
 classes do not need to have a **main()**method. You only specify one if that class is the starting point for your program. Further, some kinds of Java applications don’t require a **main()** method at all.
 
-## A Simple Class
+### A Simple Class
 
  Let’s begin our study of the class with a simple example. Here is a class called **Box** that defines three instance variables: **width**, **height**, and **depth**. Currently, **Box** does not contain any methods (but some will be added soon).
 
@@ -51,11 +52,7 @@ to access both the instance variables and the methods within an object. One othe
 
 Here is a complete program that uses the **Box** class:
 
-You should call the file that contains this program **BoxDemo.java**, because the **main()** method is in the class called **BoxDemo**, not the class called **Box**. When you compile this program, you will find that two **.class** files have been created, one for **Box** and one for **BoxDemo**. The Java compiler automatically puts each class into its own **.class** file. It is not necessary for both the **Box** and the  
-
-## BoxDemo
-
- class to actually be in the same source file. You could put each class in its own file, called **Box.java** and **BoxDemo.java**, respectively.
+You should call the file that contains this program **BoxDemo.java**, because the **main()** method is in the class called **BoxDemo**, not the class called **Box**. When you compile this program, you will find that two **.class** files have been created, one for **Box** and one for **BoxDemo**. The Java compiler automatically puts each class into its own **.class** file. It is not necessary for both the **Box** and the  **BoxDemo** class to actually be in the same source file. You could put each class in its own file, called **Box.java** and **BoxDemo.java**, respectively.
 
 To run this program, you must execute **BoxDemo.class**. When you do, you will see the following output:
 
@@ -89,7 +86,7 @@ The first line declares **mybox** as a reference to an object of type **Box**. A
 
 **Figure 6-1** Declaring an object of type **Box**
 
-## A Closer Look at new
+### A Closer Look at new
 
  As just explained, the **new** operator dynamically allocates memory for an object. In the context of an assignment, it has this general form:
 
@@ -129,7 +126,7 @@ b1 = null;
 
 Here, **b1** has been set to **null**, but **b2** still points to the original object.
 
-## REMEMBER
+**REMEMBER**
 
  When you assign one object reference variable to another object reference variable, you are not creating a copy of the object, you are only making a copy of the reference.
 
@@ -153,7 +150,7 @@ Here, value is the value returned. In the next few sections, you will see how to
 
 methods, including those that take parameters and those that return values.
 
-## Adding a Method to the Box Class
+### Adding a Method to the Box Class
 
  Although it is perfectly fine to create a class that contains only data, it rarely happens. Most of the time, you will use methods to access the instance variables defined by the class. In fact, methods define the interface to most classes. This allows the class implementor to hide the specific layout of internal data structures behind cleaner method abstractions. In addition to defining methods that provide access to data, you can also define methods that are used internally by the class itself.
 
@@ -181,9 +178,7 @@ There is something very important to notice inside the **volume()** method: the 
 
 Let’s review: When an instance variable is accessed by code that is not part of the class in which that instance variable is defined, it must be done through an object, by use of the dot operator. However, when an instance variable is accessed by code that is part of the same class as the instance variable, that variable can be referred to directly. The same thing applies to methods.
 
-## Returning a Value
-
-  
+### Returning a Value
 
 While the implementation of **volume()** does move the computation of a box’s volume inside the **Box** class where it belongs, it is not the best way to do it. For example, what if another part of your program wanted to know the volume of a box, but not display its value? A better way to implement **volume()** is to have it compute the volume of the box and return the result to the caller. The following example, an improved version of the preceding program, does just that:  
 
@@ -205,7 +200,7 @@ System.out.println("Volume is" + mybox1.volume());
 
 In this case, when **println()** is executed, **mybox1.volume()** will be called automatically and its value will be passed to **println()**.
 
-## Adding a Method That Takes Parameters
+### Adding a Method That Takes Parameters
 
  While some methods don’t need parameters, most do. Parameters allow a method to be generalized. That is, a parameterized method can operate on a variety of data and/or be used in a number of slightly different situations. To illustrate this point, let’s use a very simple example. Here is a method that returns the square of the number 10:
 
@@ -283,7 +278,7 @@ Box mybox1 = new Box();
 
 **new Box()** is calling the **Box()** constructor. When you do not explicitly define a constructor for a class, then Java creates a default constructor for the class. This is why the preceding line of code worked in earlier versions of **Box** that did not define a constructor. When using the default constructor, all non- initialized instance variables will have their default values, which are zero, **null**, and **false**, for numeric types, reference types, and **boolean**, respectively. The default constructor is often sufficient for simple classes, but it usually won’t do for more sophisticated ones. Once you define your own constructor, the default constructor is no longer used.
 
-## Parameterized Constructors
+### Parameterized Constructors
 
  While the **Box()** constructor in the preceding example does initialize a **Box** object, it is not very useful—all boxes have the same dimensions. What is needed is a way to construct **Box** objects of various dimensions. The easy solution is to add parameters to the constructor. As you can probably guess, this makes it much more useful. For example, the following version of **Box** defines  
 
@@ -309,7 +304,7 @@ To better understand what **this** refers to, consider the following version of 
 
 This version of **Box()** operates exactly like the earlier version. The use of **this** is redundant, but perfectly correct. Inside **Box()**, **this** will always refer to the invoking object. While it is redundant in this case, **this** is useful in other contexts, one of which is explained in the next section.
 
-## Instance Variable Hiding
+### Instance Variable Hiding
 
  As you know, it is illegal in Java to declare two local variables with the same name inside the same or enclosing scopes. Interestingly, you can have local  
 
