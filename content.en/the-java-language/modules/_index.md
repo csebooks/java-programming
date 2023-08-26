@@ -602,43 +602,156 @@ To obtain an instance of **AbsPlus**, the **AbsPlusProvider** is used. It implem
 The **get()** method simply returns a new **AbsPlus()** object. Although this provider is very simple, it is important to point out that some service providers will be much more complex.
 
 The provider for **AbsMinus** is called **AbsMinusProvider** and is shown next:  
-
+```
+// This is a provider for the AbsMinus function.
+package userfuncsimp.binaryfuncsimp;
+import userfuncs.binaryfuncs.*;
+public class AbsMinus Provider implements BinFuncProvider
+{
+    // Provide an AbsMinus object. 
+    public BinaryFunc get() 
+    {
+         return new AbsMinus(); 
+    } 
+}
+```
 Its **get()** method returns an object of **AbsMinus**.
 
 ## The Module Definition Files
 
  Next, two module definition files are needed. The first is for the **userfuncs** module. It is shown here:
-
+```
+modules userfuncs
+{
+    exports userfuncs.binaryfuncs;
+}
+```
 This code must be contained in a **module-info.java** file that is in the **userfuncs** module directory. Notice that it exports the **userfuncs.binaryfuncs** package. This is the package that defines the **BinaryFunc** and **BinFuncProvider** interfaces.
 
 The second **module-info.java** file is shown next. It defines the module that contains the implementations. It goes in the **userfuncsimp** module directory.
-
-This module requires **userfuncs** because that is where **BinaryFunc** and **BinFuncProvider** are contained, and those interfaces are needed by the implementations. The module provides **BinFuncProvider** implementations  
-
-with the classes **AbsPlusProvider** and **AbsMinusProvider**.
+```
+module userfuncsimp 
+{
+    requires userfuncs;
+/
+    provides user funcs.binary funcs. BinFuncProvider with 
+    userfuncsimp.binaryfuncsimp. Abs Plus Provider, 
+    userfuncsimp.binaryfuncsimp. AbsMinus Provider; 
+}
+```
+This module requires **userfuncs** because that is where **BinaryFunc** and **BinFuncProvider** are contained, and those interfaces are needed by the implementations. The module provides **BinFuncProvider** implementations with the classes **AbsPlusProvider** and **AbsMinusProvider**.
 
 ## Demonstrate the Service Providers in MyModAppDemo
 
  To demonstrate the use of the services, the **main()** method of **MyModAppDemo** is expanded to use **AbsPlus** and **AbsMinus**. It does so by loading them at run time by use of **ServiceLoader.load()**. Here is the updated code:  
+```
+// A module-based application that demonstrates services 
+// and service providers.
 
+package appstart.mymodappdemo;
+import java.util.ServiceLoader;
+import appfuncs.simplefuncs.SimpleMathFuncs; 
+import userfuncs.binaryfuncs.*;
+public class MyModAppDemo 
+{ 
+    public static void main(String[] args) 
+    {
+        // First, use built-in functions as before.
+        if (SimpleMathFuncs.isFactor (2, 10)) 
+            System.out.println("2 is a factor of 10");
+
+        System.out.println("Smallest factor common to both 35 and 105 is "+ SimpleMathFuncs.lcf (35, 105));
+
+        System.out.println("Largest factor common to both 35 and 105 is "+ SimpleMathFuncs.gcf(35, 105));
+
+        // Now, use service-based, user-defined operations.
+
+        // Get a service loader for binary functions. 
+        ServiceLoader<BinFuncProvider> ldr = ServiceLoader.load(BinFuncProvider.class);BinaryFunc binop = null;
+
+        // Find the provider for absPlus and obtain the function. 
+        for (BinFuncProvider bfp : ldr) 
+        { 
+            if (bfp.get().getName().equals("absPlus")) 
+            { 
+                binop = bfp.get();
+                break;
+            } 
+        }
+        if (binop != null)
+            System.out.println("Result of absPlus function: "+binop. func (12,-4));
+        else
+            System.out.println("absPlus function not found");
+        binop = null;
+
+    // Now, find the provider for absMinus and obtain the function. 
+    for (BinFuncProvider bfp: ldr) 
+    {
+        if (bfp.get().getName().equals("absMinus")) 
+        { 
+            binop = bfp.get();
+            break;
+        }
+
+        if (binop != null)
+            System.out.println("Result of absMinus function: binop. func (12,-4));
+        else
+            System.out.println("absMinus function not found");
+    }
+    }
+}
+```
 Let’s take a close look at how a service is loaded and executed by the preceding code. First, a service loader for services of type **BinFuncProvider** is created with this statement:
-
+```
+ServiceLoader<BinFuncsProvider> idr = ServiceLoader.load(BinFuncProvider.class);
+```
 Notice that the type parameter to **ServiceLoader** is **BinFuncProvider**. This is also the type used in the call to **load()**. This means that providers that implement this interface will be found. Thus, after this statement executes, **BinFuncProvider** classes in the module will be available through **ldr**. In this case, both **AbsPlusProvider** and **AbsMinusProvider** will be available.
 
 Next, a reference of type **BinaryFunc** called **binOp** is declared and initialized to **null**. It will be used to refer to an implementation that supplies a specific type of binary function. Next, the following loop searches **ldr** for one that has the "absPlus" name.
-
+```
+// Find the provider for absPlus and obtain the function. 
+for (BinFuncProvider bfp: ldr) 
+{ 
+    if (bfp.get().getName().equals("absPlus")) 
+    { 
+        binop = bfp.get(); 
+        break; 
+    }
+}
+```
 Here, a for-each loop iterates through **ldr**. Inside the loop, the name of the function supplied by the provider is checked. If it matches "absPlus", that function is assigned to **binOp** by calling the provider’s **get()** method.
 
 Finally, if the function is found, as it will be in this example, it is executed by this statement:
-
+```
+if(binop != null)
+System.out.println("Result of absplus function : "+binOp.func(12,-4));
+```
 In this case, because **binOp** refers to an instance of **AbsPlus**, the call to **func()** performs an absolute value addition. A similar sequence is used to find and execute **AbsMinus**.
 
 Because **MyModAppDemo** now uses **BinFuncProvider**, its module definition file must include a **uses** statement that specifies this fact. Recall that **MyModAppDemo** is in the **appstart** module. Therefore, you must change the **module-info.java** file for **appstart** as shown here:  
-
+```
+// Module definition for the main application module.
+// It now uses BinFuncProvider. 
+module appstart 
+{
+    // Requires the modules appfuncs and userfuncs. 
+    requires appfuncs; 
+    requires userfuncs;
+    
+    //appstart now uses BinFunc Provider. 
+    uses userfuncs.binaryfuncs. BinFunc Provider;
+}
+```
 **Compile and Run the Module-Based Service Example** Once you have performed all of the preceding steps, you can compile and run the example by executing the following commands:
+```
+javac -d appmodules --module-source-path appsrc 
+    appsrc\userfuncsimp\module-info.java 
+    appsrc\appstart\appstart\mymodappdemo \MyModAppDemo.java
 
+java --module-path appmodules -m appstart/appstart.mymodappdemo. MyModAppDemo
+```
 Here is the output:
-
+```
 2 is a factor of 10
 
 Smallest factor common to both 35 and 105 is 5
@@ -648,7 +761,7 @@ Largest factor common to both 35 and 105 is 7
 Result of absPlus function: 16
 
 Result of absMinus function: 8
-
+```
 As the output shows, the binary functions were located and executed. It is important to emphasize that if either the **provides** statement in the **userfuncsimp** module or the **uses** statement in the **appstart** module were missing, the application would fail.
 
 One last point: The preceding example was kept very simple in order to clearly illustrate module support for services, but much more sophisticated uses are possible. For example, you might use a service to provide a **sort()** method that sorts a file. Various sorting algorithms could be supported and made available through the service. The specific sort could then be chosen based on the desired run-time characteristics, the nature and/or size of the data, and whether random access to the data is supported. You might want to try implementing such a service as a way to further experiment with services in  
@@ -660,7 +773,7 @@ modules.
  A term you are likely to encounter when working with modules is _module graph_. During compilation, the compiler resolves the dependence relationships between modules by creating a module graph that represents the dependences. The process ensures that _all dependences_ are resolved, including those that occur indirectly. For example, if module A requires module B, and B requires module C, then the module graph will contain module C even if A does not use it directly.
 
 Module graphs can be depicted visually in a drawing to illustrate the relationship between modules. Here is a simple example. Assume six modules called **A**, **B**, **C**, **D**, **E**, and **F**. Further assume that **A** requires **B** and **C**, **B** requires **D** and **E**, and **C** requires **F**. The following visually depicts this relationship. (Because **java.base** is automatically included, it is not shown in the diagram.)
-
+![Alt text](graph.png)
 In Java, the arrows point from the dependent module to the required module. Thus, a drawing of a module graph depicts what modules have access to what other modules. Frankly, only the smallest applications can have their module graphs visually represented because of the complexity typically involved in many commercial applications.
 
 ## Three Specialized Module Features
@@ -672,27 +785,30 @@ additional module-related features that can be quite useful in certain circumsta
 ## Open Modules
 
  As you learned earlier in this chapter, by default, the types in a module’s packages are accessible only if they are explicitly exported via an **exports** statement. While this is usually what you will want, there can be circumstances in which it is useful to enable run-time access to all packages in the module, whether a package is exported or not. To allow this, you can create an _open module_. An open module is declared by preceding the **module** keyword with the **open** modifier, as shown here:
-
+```
+open module moduleName
+{
+    //module definition 
+}
+```
 In an open module, types in all its packages are accessible at run time. Understand, however, that only those packages that are explicitly exported are available at compile time. Thus, the **open** modifier affects only run-time accessibility. The primary reason for an open module is to enable the packages in the module to be accessed through reflection. As explained in Chapter 12, reflection is the feature that lets a program analyze code at run time.
 
 ## The opens Statement
 
  It is possible for a module to open a specific package for run-time access by other modules and for reflective access rather than opening an entire module. To do so, use the **opens** statement, shown here:
-
+```
 opens packageName;
-
+```
 Here, packageName specifies the package to open. It is also possible to include a **to** clause, which names those modules for which the package is opened.
 
-It is important to understand **opens** does not grant compile-time access. It is used only to open a package for run-time and reflective access. However, you  
-
-can both export and open a module. One other point: an **opens** statement cannot be used in an open module. Remember, all packages in an open module are already open.
+It is important to understand **opens** does not grant compile-time access. It is used only to open a package for run-time and reflective access. However, you can both export and open a module. One other point: an **opens** statement cannot be used in an open module. Remember, all packages in an open module are already open.
 
 ## requires static
 
  As you know, **requires** specifies a dependence that, by default, is enforced both during compilation and at run time. However, it is possible to relax this requirement in such a way that a module is not required at run time. This is accomplished by use of the **static** modifier in a **requires** statement. For example, this specifies that **mymod** is required for compilation, but not at run time:
-
+```
 requires static mymod;
-
+```
 In this case, the addition of **static** makes **mymod** optional at run time. This can be helpful in a situation in which a program can utilize functionality if it is present, but not require it.
 
 ## Introducing jlink and Module JAR Files
@@ -702,7 +818,11 @@ In this case, the addition of **static** makes **mymod** optional at run time. T
 ## Linking Files in an Exploded Directory
 
  Let’s look first at using **jlink** to create a run-time image from unarchived modules. That is, the files are contained in their raw form in a fully expanded (i.e., exploded) directory. Assuming a Windows environment, the following command links the modules for the first example in this chapter. It must be executed from a directory _directly above_ **mymodapp**.  
-
+```
+jlink -- launcher MyModApp-appstart/appstart.mymodappdemo.MyModAppDemo 
+--module-path "%JAVA_HOME%"\jmods; mymodapp\appmodules 
+--add-modules appstart --output mylinkedmodapp
+```
 Let’s look closely at this command. First, the option **\--launcher** tells **jlink** to create a command that starts the application. It specifies the name of the application and the path to the main class. In this case, the main class is **MyModAppDemo**. The **\--module-path** option specifies the path to the required modules. The first is the path to the platform modules; the second is the path to the application modules. Notice the use of the environmental variable **JAVA_HOME**. It represents the path to the standard JDK directory. For example, in a standard Windows installation, the path will typically be something similar to **"C:\\program files"\\java\\jdk-11\\jmods**, but the use of **JAVA_HOME** is both shorter and able to work no matter in what directory the JDK was installed. The **\--add-modules** option specifies the module or modules to add. Notice that only **appstart** is specified. This is because **jlink** automatically resolves all dependencies and includes all required modules. Finally, **\--output** specifies the output directory.
 
 After you run the preceding command, a directory called **mylinkedmodapp** will have been created that contains the run-time image. In its **bin** directory, you will find a launcher file called **MyModApp** that you can use to run the application. For example, in Windows, this will be a batch file that executes the program.
@@ -710,7 +830,13 @@ After you run the preceding command, a directory called **mylinkedmodapp** will 
 ## Linking Modular JAR Files
 
  Although linking modules from their exploded directory is convenient, when working on real-world code you will often be using JAR files. (Recall that JAR stands for Java ARchive. It is a file format typically used for application deployment.) In the case of modular code, you will be using _modular JAR files_. A modular JAR file is one that contains a **module-info.class** file. Beginning with JDK 9, the **jar** tool has the ability to create modular JAR files. For example, it can now recognize a module path. Once you have created modular JAR files, you can use **jlink** to link them into a run-time image. To understand the process, let’s work through an example. Again assuming the first example in this chapter, here are the **jar** commands that create modular JAR files for the **MyModAppDemo** program. Each must be executed from a directory directly above **mymodapp**. Also, you will need to create a directory called **applib** under **mymodapp**.  
-
+```
+jar create --file-mymodapp\applib\appfuncs.jar
+    -C mymodapp\appmodules\appfuncs
+jar --create --file-mymodapp\applib\appstart.jar 
+    --main-class-appstart.mymodappdemo. MyModAppDemo 
+    -C mymodapp\appmodules\appstart.
+```
 Here, **\--create** tells **jar** to create a new JAR file. The **\--file** option specifies the name of the JAR file. The files to include are specified by the **\-C** option. The class that contains **main()** is specified by the **\--main-class** option. After running these commands, the JAR files for the application will be in the **applib** directory under **mymodapp**.
 
 Given the modular JAR files just created, here is the command that links them:
@@ -718,18 +844,16 @@ Given the modular JAR files just created, here is the command that links them:
 Here, the module path to the JAR files is specified, not the path to the exploded directories. Otherwise, the **jlink** command is the same as before.
 
 As a point of interest, you can use the following command to run the application directly from the JAR files. It must be executed from a directory directly above **mymodapp**.
-
+```
+java -p mymodapp\applib -m appstart
+```
 Here, **\-p** specifies the module path and **\-m** specifies the module that contains the program’s entry point.
 
 ## JMOD Files
 
  The **jlink** tool can also link files that use the new JMOD format introduced by JDK 9. JMOD files can include things that are not applicable to a JAR file. They are created by the new **jmod** tool. Although most applications will still use module JAR files, JMOD files will be of value in specialized situations. As a point of interest, beginning with JDK 9 the platform modules are contained in JMOD files.
 
-## A Brief Word About Layers and Automatic
-
-  
-
-## Modules
+## A Brief Word About Layers and Automatic Modules
 
  When learning about modules you are likely to encounter reference to two additional module-related features. These are layers and _automatic modules_. Both are designed for specialized, advanced work with modules or when migrating preexisting applications. Although it is likely that most programmers will not need to make use of these features, a brief description of each is given here in the interest of completeness.
 
