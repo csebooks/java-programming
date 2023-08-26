@@ -1429,17 +1429,63 @@ specified, and then applying the appropriate casts (as determined by the type ar
 
 Although bridge methods are not something that you will normally need to be concerned with, it is still instructive to see a situation in which one is generated. Consider the following program:  
 
+```java
+// A situation that creates a bridge method. 
+class Gen<T> {}
+Tob; // declare an object of type T
+// Pass the constructor a reference to 
+// an object of type T.
+ Gen (To) {
+// Return 
+ob = o;
+ }   
+T getob(){ 
+    return ob;
+}
+}
+// A subclass of
+ Gen. class Gen2 extends Gen<String> {
+Gen2 (String of super (0) {
+// A String-specific override of
+ getob().
+String getob System.out.print ("You called String getob(); "} 
+return ob;
+ }
+ }
+// Demonstrate a situation that requires a bridge method.
+ class BridgeDeno 
+ public static void main(String argall) (
+// Create a Gen2 object for Strings.
+ Gen2 strob2 new Gen2 ("Generics Test");
+System.out.println(str0b2.getob());
+ }
+ }
+```
+
 In the program, the subclass **Gen2** extends **Gen**, but does so using a **String**\- specific version of **Gen**, as its declaration shows:
 
 class Gen2 extends Gen<String> {
 
 Furthermore, inside **Gen2**, **getob()** is overridden with **String** specified as the return type:
 
+```java
+// A String-specific override of 
+getob(). String getob() {
+     System.out.print("You called String getobi): "); 
+     return obi
+}
+```
+
 All of this is perfectly acceptable. The only trouble is that because of type erasure, the expected form of **getob()** will be
-
+```
 Object getob() { // ...  
-
+```
 To handle this problem, the compiler generates a bridge method with the preceding signature that calls the **String** version. Thus, if you examine the class file for **Gen2** by using **javap**, you will see the following methods:
+
+```java
+class Gen2 extends Gen java.lang.String> [ Gen2 (java.lang.String) java.lang.String getob(): Java.lang.Object getob(); // bridge method
+}
+```
 
 As you can see, the bridge method has been included. (The comment was added by the author and not by **javap**, and the precise output you see may vary based on the version of Java that you are using.)
 
@@ -1447,38 +1493,56 @@ There is one last point to make about this example. Notice that the only differe
 
 ## Ambiguity Errors
 
- The inclusion of generics gives rise to another type of error that you must guard against: ambiguity. Ambiguity errors occur when erasure causes two seemingly distinct generic declarations to resolve to the same erased type, causing a conflict. Here is an example that involves method overloading:  
+ The inclusion of generics gives rise to another type of error that you must guard against: ambiguity. Ambiguity errors occur when erasure causes two seemingly distinct generic declarations to resolve to the same erased type, causing a conflict. Here is an example that involves method overloading:
+
+ ```java
+// Ambiguity caused by erasure on 
+// overloaded methods.
+class MyGenClass<T, V> {
+Tobl;
+V ob2;
+// ...
+// These two overloaded methods are ambiguous 
+// and will not compile. 
+void set (To) {
+ob1 = 0;
+}
+void set (Vo) {
+ob2 = 0;
+}
+}
+ ```  
 
 Notice that **MyGenClass** declares two generic types: **T** and **V**. Inside **MyGenClass**, an attempt is made to overload **set()** based on parameters of type **T** and **V**. This looks reasonable because **T** and **V** appear to be different types. However, there are two ambiguity problems here.
 
 First, as **MyGenClass** is written, there is no requirement that **T** and **V** actually be different types. For example, it is perfectly correct (in principle) to construct a **MyGenClass** object as shown here:
-
+```
 MyGenClass<String, String> obj = new MyGenClass<String, String>
 
 ()
-
+```
 In this case, both **T** and **V** will be replaced by **String**. This makes both versions of **set()** identical, which is, of course, an error.
 
 The second and more fundamental problem is that the type erasure of **set()** reduces both versions to the following:
-
+```
 void set(Object o) { // ...
-
+```
 Thus, the overloading of **set()** as attempted in **MyGenClass** is inherently ambiguous.
 
 Ambiguity errors can be tricky to fix. For example, if you know that **V** will  
 
 always be some type of **Number**, you might try to fix **MyGenClass** by rewriting its declaration as shown here:
-
+```
 class MyGenClass<T, V extends Number> { // almost OK!
-
+```
 This change causes **MyGenClass** to compile, and you can even instantiate objects like the one shown here:
-
+```
 MyGenClass<String, Number> x = new MyGenClass<String, Number>();
-
+```
 This works because Java can accurately determine which method to call. However, ambiguity returns when you try this line:
-
+```
 MyGenClass<Number, Number> x = new MyGenClass<Number, Number>();
-
+```
 In this case, since both **T** and **V** are **Number**, which version of **set()** is to be called? The call to **set()** is now ambiguous.
 
 Frankly, in the preceding example, it would be much better to use two separate method names, rather than trying to overload **set()**. Often, the solution to ambiguity involves the restructuring of the code, because ambiguity frequently means that you have a conceptual error in your design.
@@ -1487,7 +1551,17 @@ Frankly, in the preceding example, it would be much better to use two separate m
 
  There are a few restrictions that you need to keep in mind when using generics. They involve creating objects of a type parameter, static members, exceptions, and arrays. Each is examined here.
 
-**Type Parameters Can’t Be Instantiated** It is not possible to create an instance of a type parameter. For example, consider this class:  
+**Type Parameters Can’t Be Instantiated** It is not possible to create an instance of a type parameter. For example, consider this class: 
+
+```java
+// Can't create an instance of T. 
+class Gen<T> { 
+    T ob;
+Gen () { 
+    ob = new T(); // Illegal!!! 
+}
+}
+```
 
 Here, it is illegal to attempt to create an instance of **T**. The reason should be easy to understand: the compiler does not know what type of object to create. **T** is simply a placeholder.
 
@@ -1495,38 +1569,74 @@ Here, it is illegal to attempt to create an instance of **T**. The reason should
 
  No **static** member can use a type parameter declared by the enclosing class. For example, both of the **static** members of this class are illegal:
 
+ ```java
+class Wrong<T> {
+// Wrong, no static variables of type T.
+ static T ob;
+// Wrong, no static method can use T. 
+static T getob() {
+     return ob;
+}
+}
+ ```
+
 Although you can’t declare **static** members that use a type parameter declared by the enclosing class, you can declare **static** generic methods, which define their own type parameters, as was done earlier in this chapter.
 
 ## Generic Array Restrictions
 
  There are two important generics restrictions that apply to arrays. First, you cannot instantiate an array whose element type is a type parameter. Second, you cannot create an array of type-specific generic references. The following short program shows both situations:  
 
+ ```java
+// Generics and arrays.
+class Gen<T extends Number> {
+T ob;
+Tvals[]; // OK
+Gen(To, T[] nums) {
+ob = 0;
+// This statement is illegal.
+// vals = new T[10]; 
+// can't create an array of T
+// But, this statement is OK.
+vals = nums; // OK to assign reference to existent array
+}
+}
+class GenArrays (
+public static void main(String args[]) { Integer n[] = {1, 2, 3, 4, 5);
+Gen<Integer> iob= new Gen<Integer> (50, n);
+// Can't create an array of type-specific generic references. 
+// Gen<Integer> gens []= new Gen<Integer> [10]; // Wrong!
+// This is OK.
+Gen<?> gens [] = new Gen<?> [10]; // OK
+}
+}
+ ```
+
 As the program shows, it’s valid to declare a reference to an array of type **T**, as this line does:
-
+```
 T vals[]; // OK
-
+```
 But, you cannot instantiate an array of **T**, as this commented-out line attempts:
-
+```
 // vals = new T[10]; // can't create an array of T  
-
+```
 The reason you can’t create an array of **T** is that there is no way for the compiler to know what type of array to actually create.
 
 However, you can pass a reference to a type-compatible array to **Gen()** when an object is created and assign that reference to **vals**, as the program does in this line:
-
+```
 vals = nums; // OK to assign reference to existent array
-
+```
 This works because the array passed to **Gen** has a known type, which will be the same type as **T** at the time of object creation.
 
 Inside **main()**, notice that you can’t declare an array of references to a specific generic type. That is, this line
-
+```
 // Gen<Integer> gens[] = new Gen<Integer>[10]; // Wrong!
-
+```
 won’t compile. You can create an array of references to a generic type if you use a wildcard,
 
 however, as shown here:
-
+```
 Gen<?> gens[] = new Gen<?>[10]; // OK
-
+```
 This approach is better than using an array of raw types, because at least some type checking will still be enforced.
 
 ## Generic Exception Restriction
