@@ -434,7 +434,17 @@ different status codes that can be assigned to an HTTP response. For example, **
 
  The **HttpSession** interface enables a servlet to read and write the state information that is associated with an HTTP session. Several of its methods are summarized in Table 35-7. All of these methods throw an **IllegalStateException** if the session has already been invalidated.  
 
-
+|Method|Description|
+|------|----------|
+|Object getAttribute(String attr)|Returns the value associated with the name passed in attr. Returns null if attr is not found.|
+|Enumeration<String> getAttributeNames()|Returns an enumeration of the attribute names associated with the session.|
+|long getCreationTime()|Returns the creation time (in milliseconds since midnight, January 1, 1970, GMT) of the invoking session.|
+|String getId()|Returns the session ID.|
+|long getLastAccessedTime()|Returns the time (in milliseconds since midnight, January 1, 1970, GMT) when the client last made a request on the invoking session.|
+|void invalidate()|Invalidates this session and removes it from the context.|
+|boolean isNew()|Returns true if the server created the session and it has not yet been accessed by the client.|
+|void removeAttribute(String attr)|Removes the attribute specified by attr from the session.|
+|void setAttribute(String attr, Object val)|Associates the value passed in val with the attribute name passed in attr.|
 
 **Table 35-7** Various Methods Defined by **HttpSession**
 
@@ -463,7 +473,29 @@ Cookie(String name, String value)
 
 Here, the name and value of the cookie are supplied as arguments to the constructor. The methods of the **Cookie** class are summarized in Table 35-8.
 
+|Method|Description|
+|-------|--------|
+|Object clone()|Returns a copy of this object.|
+|String getComment()|Returns the comment.|
+|String getDomain()|Returns the domain.|
+|int getMaxAge()|Returns the maximum age (in seconds).|
+|String getName()|Returns the name.|
+|String getPath()|Returns the path.|
+|boolean getSecure()|Returns true if the cookie is secure. Otherwise, returns false.|
+|String getValue()|Returns the value.|
+|int getVersion()|Returns the version.|
+|boolean isHttpOnly()|Returns true if the cookie has the HttpOnly attribute.|
+|void setComment(String c)|Sets the comment to c.|
+|void setDomain(String d)|Sets the domain to d.|
+|void setHttpOnly(boolean httpOnly)|If httpOnly is true, then the HttpOnly attribute is added to the cookie. If httpOnly is false, the HttpOnly attribute is removed|
+|void setMaxAge(int secs)|  Sets the maximum age of the cookie to secs. This is the number of seconds after which the cookie is deleted.|
+|void setPath(String p)|Sets the path to p.|
+|void setSecure(boolean secure)|Sets the security flag to secure.|
+|void setValue(String v)|Sets the value to v.|
+|void setVersion(int v)|Sets the version to v.|
+
 **Table 35-8** The Methods Defined by **Cookie**
+
 
 ## The HttpServlet Class
 
@@ -472,6 +504,18 @@ Here, the name and value of the cookie are supplied as arguments to the construc
 ## The HttpServlet Class
 
  The **HttpServlet** class extends **GenericServlet**. It is commonly used when developing servlets that receive and process HTTP requests. The methods defined by the **HttpServlet** class are summarized in Table 35-9.
+
+|Method|Description|
+|------|-------|
+|void doDelete(HttpServletRequest req,      HttpServletResponse res) throws IOException,   ServletException|Handles an HTTP DELETE request.|
+|void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException|Handles an HTTP GET request.|
+|void doHead(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException|Handles an HTTP HEAD request.|
+|void doOptions(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException|Handles an HTTP OPTIONS request.|
+|void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException|Handles an HTTP POST request.|
+|void doPut(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException|Handles an HTTP PUT request.|
+|void doTrace(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException|Handles an HTTP TRACE request.|
+|long getLastModified(HttpServletRequest req)|Returns the time (in milliseconds since midnight, January 1, 1970, GMT) when the requested resource was last modified.|
+|void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException|Called by the server when an HTTP request arrives for this servlet. The arguments provide access to the HTTP request and response, respectively.|
 
 **Table 35-9** The Methods Defined by **HttpServlet**
 
@@ -484,9 +528,35 @@ types of HTTP requests. A servlet developer typically overrides one of these met
 ## Handling HTTP GET Requests
 
  Here we will develop a servlet that handles an HTTP GET request. The servlet is invoked when a form on a web page is submitted. The example contains two files. A web page is defined in **ColorGet.html**, and a servlet is defined in **ColorGetServlet.java**. The HTML source code for **ColorGet.html** is shown in the following listing. It defines a form that contains a select element and a submit button. Notice that the action parameter of the form tag specifies a URL. The URL identifies a servlet to process the HTTP GET request.
-
+```js
+<html>
+<body>
+<center>
+<form name="Form1"
+action="http://localhost:8080/examples/servlets/servlet/ColorGetServlet">
+<B>Color: </B>
+<select name="color" size="1">
+<option value="Red">Red</option>
+<option value="Green">Green</option>
+<option value="Blue" >Blue</option>
+</select>
+<br><br>
+<input type=submit value="Submit">
+</form>
+</body>
+</html>
+```
 The source code for **ColorGetServlet.java** is shown in the following listing. The **doGet()** method is overridden to process any HTTP GET requests that are sent to this servlet. It uses the **getParameter()** method of **HttpServletRequest** to obtain the selection that was made by the user. A response is then formulated.  
-
+```js
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class ColorGetServlet extends HttpServlet {
+public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+String color = request.getParameter("color"); response.setContentType("text/html"); PrintWriter pw = response.getWriter(); pw.println("<B>The selected color is: "); pw.close(); }
+pw.println(color);
+}
+```
 Compile the servlet. Next, copy it to the appropriate directory, and update the **web.xml** file, as previously described. Then, perform these steps to test this example:
 
 1\. Start Tomcat, if it is not already running. 2. Display the web page in a browser. 3. Select a color. 4. Submit the web page.
@@ -506,9 +576,36 @@ The characters to the right of the question mark are known as the _query string.
  Here we will develop a servlet that handles an HTTP POST request. The servlet is invoked when a form on a web page is submitted. The example contains two files. A web page is defined in **ColorPost.html**, and a servlet is defined in **ColorPostServlet.java**.
 
 The HTML source code for **ColorPost.html** is shown in the following listing. It is identical to **ColorGet.html** except that the method parameter for the form tag explicitly specifies that the POST method should be used, and the action parameter for the form tag specifies a different servlet.
-
+```js
+<html>
+<body>
+<center>
+<form name="Form1"
+method="post"
+action="http://localhost:8080/examples/servlets/servlet/ColorPostServlet">
+<B>Color:</B>
+<select name="color" size="1">
+<option value="Red">Red</option>
+<option value="Green">Green</option
+<option value="Blue" >Blue</option>
+</select>
+<br><br>
+<input type=submit value="Submit">
+</form>
+</body>
+</html>
+>
+```
 The source code for **ColorPostServlet.java** is shown in the following listing. The **doPost()** method is overridden to process any HTTP POST requests that are sent to this servlet. It uses the **getParameter()** method of **HttpServletRequest** to obtain the selection that was made by the user. A response is then formulated.  
-
+```js
+import java.io.*; import javax.servlet.*;
+import javax.servlet.http.*;
+public class Color Post Servlet extends HttpServlet {
+public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+String color = request.getParameter ("color"); response.setContentType ("text/html"); PrintWriter pw = response.getWriter(); pw.println("<B>The selected color is: "); pw.println(color); }
+pw.close();
+}
+```
 Compile the servlet and perform the same steps as described in the previous section to test it.
 
 ## NOTE
@@ -519,14 +616,61 @@ Compile the servlet and perform the same steps as described in the previous sect
 
  Now, let’s develop a servlet that illustrates how to use cookies. The servlet is invoked when a form on a web page is submitted. The example contains three files as summarized here:
 
+|File|Description|
+|----|---------|
+|AddCookie.html|Allows a user to specify a value for the cookie named MyCookie.|
+|AddCookieServlet.java|Processes the submission of AddCookie.html.|
+|GetCookiesServlet.java|Displays cookie values.|
+
+
 The HTML source code for **AddCookie.html** is shown in the following  
 
 listing. This page contains a text field in which a value can be entered. There is also a submit button on the page. When this button is pressed, the value in the text field is sent to **AddCookieServlet** via an HTTP POST request.
-
+```js
+<html>
+<body>
+<center>
+<form name="Form1"
+method="post"
+action="http://localhost:8080/examples/servlets/servlet/AddCookieServlet">
+<B>Enter a value for MyCookie: </B>
+<input type=textbox name="data" size=25 value="">
+<input type=submit value="Submit">
+</form>
+</body>
+</html>
+```
 The source code for **AddCookieServlet.java** is shown in the following listing. It gets the value of the parameter named "data". It then creates a **Cookie** object that has the name "MyCookie" and contains the value of the "data" parameter. The cookie is then added to the header of the HTTP response via the **addCookie()** method. A feedback message is then written to the browser.  
-
+```js
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class AddCookieServlet extends HttpServlet {
+public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+   // Get parameter from HTTP request. String data = request.getParameter ("data");
+// Create cookie.
+Cookie cookie = new Cookie ("MyCookie", data);
+// Add cookie to HTTP response. response.addCookie (cookie);
+// Write output to browser. response.setContentType ("text/html"); PrintWriter pw = response.getWriter(); pw.println("<B>MyCookie has been set to"); pw.println(data); pw.close();
+}
+}
+```
 The source code for **GetCookiesServlet.java** is shown in the following listing. It invokes the **getCookies()** method to read any cookies that are included in the HTTP GET request. The names and values of these cookies are then written to the HTTP response. Observe that the **getName()** and **getValue()** methods are called to obtain this information.  
-
+```js
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class GetCookiesServlet extends HttpServlet {
+public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+// Get cookies from header of HTTP request. Cookie[] cookies = request.getCookies ();
+// Display these cookies. response.setContentType ("text/html"); PrintWriter pw = response.getWriter(); pw.println("<B>");
+for (int i = 0; i < cookies.length; i++) { String name = cookies [i].getName(); String value = cookies [i].getValue(); pw.println("name = " + name +
+"; value = " + value);
+}
+pw.close();
+}
+}
+```
 Compile the servlets. Next, copy them to the appropriate directory, and update the **web.xml** file, as previously described. Then, perform these steps to test this example:
 
 1\. Start Tomcat, if it is not already running. 2. Display **AddCookie.html** in a browser. 3. Enter a value for **MyCookie**. 4. Submit the web page.
@@ -548,5 +692,22 @@ via the **setMaxAge()** method of **Cookie**. Therefore, the cookie expires when
 A session can be created via the **getSession()** method of **HttpServletRequest**. An **HttpSession** object is returned. This object can store a set of bindings that associate names with objects. The **setAttribute()**, **getAttribute()**, **getAttributeNames()**, and **removeAttribute()** methods of **HttpSession** manage these bindings. Session state is shared by all servlets that are associated with a client.
 
 The following servlet illustrates how to use session state. The **getSession()** method gets the current session. A new session is created if one does not already exist. The **getAttribute()** method is called to obtain the object that is bound to the name "date". That object is a **Date** object that encapsulates the date and time when this page was last accessed. (Of course, there is no such binding when the page is first accessed.) A **Date** object encapsulating the current date and time is then created. The **setAttribute()** method is called to bind the name "date" to this object.  
-
+```js
+import java.io.*; import java.util.*;
+import javax.servlet.;
+import javax.servlet.http.*;
+public class DateServlet extends HttpServlet {
+public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+// Get the HttpSession object. HttpSession hs = request.getSession (true);
+// Get writer.
+response.setContentType ("text/html"); PrintWriter pw response.getWriter(); pw.print ("<B>");
+// Display date/time of last access. Date date (Date) hs.getAttribute("date"); if (date = null) {
+pw.print ("Last access:+ date + "<br>");
+}
+// Display current date/time.
+date new Date(); hs.setAttribute("date", date); pw.println("Current date: " + date);
+}
+}
+```
 When you first request this servlet, the browser displays one line with the current date and time information. On subsequent invocations, two lines are displayed. The first line shows the date and time when the servlet was last accessed. The second line shows the current date and time.
+
