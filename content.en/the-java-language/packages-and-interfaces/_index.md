@@ -784,7 +784,7 @@ class AskMe implements SharedConstants
 Notice that this program makes use of one of Java’s standard classes: **Random**. This class provides pseudorandom numbers. It contains several methods that allow you to obtain random numbers in the form required by your program. In this example, the method **nextDouble()** is used. It returns random numbers in the range 0.0 to 1.0.
 
 In this sample program, the two classes, **Question** and **AskMe**, both implement the **SharedConstants** interface where **NO**, **YES**, **MAYBE**, **SOON**, **LATER**, and **NEVER** are defined. Inside each class, the code refers to these constants as if each class had defined or inherited them directly. Here is the output of a sample run of this program. Note that the results are different each time it is run.
-**
+```
 Later
 
 Soon
@@ -792,7 +792,7 @@ Soon
 No
 
 Yes
-**
+```
 
 ## NOTE
 
@@ -921,9 +921,22 @@ As you can see, the default implementation of **getString()** was automatically
 used. It was not necessary for **MyIFImp** to define it. Thus, for **getString()**, implementation by a class is optional. (Of course, its implementation by a class will be required if the class uses **getString()** for some purpose beyond that supported by its default.)
 
 It is both possible and common for an implementing class to define its own implementation of a default method. For example, **MyIFImp2** overrides **getString()**:
+```
+class MyIFImp2 implements MyIP 
+{
+    // Here, implementations for both getNumber() and getString() are provided. 
+    public int getNumber() 
+    {
+        return 100,
+    }
+    public String getString() 
+    { 
+        return "This is a different string.";
+    }
+}
+```
 
 Now, whe **getString()** is called, a different string is returned.
-
 ## A More Practical Example
 
  Although the preceding shows the mechanics of using default methods, it doesn’t illustrate their usefulness in a more practical setting. To do this, let’s once again return to the **IntStack** interface shown earlier in this chapter. For the sake of discussion, assume that **IntStack** is widely used and many programs rely on it. Further assume that we now want to add a method to **IntStack** that clears the stack, enabling the stack to be re-used. Thus, we want to evolve the **IntStack** interface so that it defines new functionality, but we don’t want to break any preexisting code. In the past, this would be impossible, but with the inclusion of default methods, it is now easy to do. For example, the **IntStack** interface can be enhanced like this:  
