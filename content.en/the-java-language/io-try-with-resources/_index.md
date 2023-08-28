@@ -11,13 +11,13 @@ This chapter introduces one of Java’s most important packages, **java.io**, wh
 
 The preceding paragraph notwithstanding, Java does provide strong, flexible support for I/O as it relates to files and networks. Java’s I/O system is cohesive and consistent. In fact, once you understand its fundamentals, the rest of the I/O system is easy to master. A general overview of I/O is presented here. A detailed description is found in Chapters 21 and 22.  
 
-## Streams
+### Streams
 
  Java programs perform I/O through streams. A stream is an abstraction that either produces or consumes information. A stream is linked to a physical device by the Java I/O system. All streams behave in the same manner, even if the actual physical devices to which they are linked differ. Thus, the same I/O classes and methods can be applied to different types of devices. This means that an input stream can abstract many different kinds of input: from a disk file, a keyboard, or a network socket. Likewise, an output stream may refer to the console, a disk file, or a network connection. Streams are a clean way to deal with input/output without having every part of your code understand the difference between a keyboard and a network, for example. Java implements streams within class hierarchies defined in the **java.io** package.
 
 **NOTE** In addition to the stream-based I/O defined in **java.io**, Java also provides buffer- and channel-based I/O, which is defined in **java.nio** and its subpackages. They are described in Chapter 22.
 
-## Byte Streams and Character Streams
+### Byte Streams and Character Streams
 
  Java defines two types of streams: byte and character. _Byte streams_ provide a convenient means for handling input and output of bytes. Byte streams are used, for example, when reading or writing binary data. _Character streams_ provide a convenient means for handling input and output of characters. They use Unicode and, therefore, can be internationalized. Also, in some cases, character streams are more efficient than byte streams.
 
@@ -27,11 +27,7 @@ One other point: at the lowest level, all I/O is still byte-oriented. The charac
 
 An overview of both byte-oriented streams and character-oriented streams is presented in the following sections.
 
-## The Byte Stream Classes
-
-  
-
-Byte streams are defined by using two class hierarchies. At the top are two abstract classes: **InputStream** and **OutputStream**. Each of these abstract classes has several concrete subclasses that handle the differences among various devices, such as disk files, network connections, and even memory buffers. The byte stream classes in **java.io** are shown in Table 13-1. A few of these classes are discussed later in this section. Others are described in Part II of this book. Remember, to use the stream classes, you must import **java.io**.
+**The Byte Stream Classes** Byte streams are defined by using two class hierarchies. At the top are two abstract classes: **InputStream** and **OutputStream**. Each of these abstract classes has several concrete subclasses that handle the differences among various devices, such as disk files, network connections, and even memory buffers. The byte stream classes in **java.io** are shown in Table 13-1. A few of these classes are discussed later in this section. Others are described in Part II of this book. Remember, to use the stream classes, you must import **java.io**.
 
 |Stream Class|Meaning|
 |---------|---------|
@@ -61,9 +57,7 @@ The abstract classes **InputStream** and **OutputStream** define several key
 
 methods that the other stream classes implement. Two of the most important are **read()** and **write()**, which, respectively, read and write bytes of data. Each has a form that is abstract and must be overridden by derived stream classes.
 
-## The Character Stream Classes
-
- Character streams are defined by using two class hierarchies. At the top are two abstract classes: **Reader** and **Writer**. These abstract classes handle Unicode character streams. Java has several concrete subclasses of each of these. The character stream classes in **java.io** are shown in Table 13-2.
+**The Character Stream Classes** Character streams are defined by using two class hierarchies. At the top are two abstract classes: **Reader** and **Writer**. These abstract classes handle Unicode character streams. Java has several concrete subclasses of each of these. The character stream classes in **java.io** are shown in Table 13-2.
 
 |Stream Class|Meaning|
 |----------|-----------|
@@ -93,7 +87,7 @@ The abstract classes **Reader** and **Writer** define several key methods that t
 
 other stream classes implement. Two of the most important methods are **read()** and **write()**, which read and write characters of data, respectively. Each has a form that is abstract and must be overridden by derived stream classes.
 
-## The Predefined Streams
+### The Predefined Streams
 
  As you know, all Java programs automatically import the **java.lang** package. This package defines a class called **System**, which encapsulates several aspects of the run-time environment. For example, using some of its methods, you can obtain the current time and the settings of various properties associated with the system. **System** also contains three predefined stream variables: **in**, **out**, and **err**. These fields are declared as **public**, **static**, and **final** within **System**. This means that they can be used by any other part of your program and without reference to a specific **System** object.
 
@@ -122,7 +116,7 @@ BufferedReader br = new BufferedReader(new
 
 After this statement executes, **br** is a character-based stream that is linked to the console through **System.in**.
 
-## Reading Characters
+### Reading Characters
 
  To read a character from a **BufferedReader**, use **read()**. The version of **read()** that we will be using is
 
@@ -165,7 +159,7 @@ q
 
 This output may look a little different from what you expected because **System.in** is line buffered, by default. This means that no input is actually passed to the program until you press enter. As you can guess, this does not make **read()** particularly valuable for interactive console input.
 
-## Reading Strings
+### Reading Strings
 
  To read a string from the keyboard, use the version of **readLine()** that is a member of the **BufferedReader** class. Its general form is shown here:
 
@@ -223,7 +217,7 @@ class TinyEdit {
 }
 ```
 **Here is a sample run:**
-
+```
 Enter lines of text.
 Enter 'stop' to quit.
 This is line one.
@@ -236,7 +230,7 @@ This is line one.
 This is line two.
 Java makes working with strings easy.
 Just create String objects.
-
+```
 ## Writing Console Output
 
  Console output is most easily accomplished with **print()** and **println()**, described earlier, which are used in most of the examples in this book. These methods are defined by the class **PrintStream** (which is the type of object referenced by **System.out**). Even though **System .out** is a byte stream, using it for simple program output is still acceptable. However, a character-based alternative is described in the next section.
@@ -296,13 +290,13 @@ public class PrintWriterDemo {
 }
 ```
 The output from this program is shown here:
-
+```
 This is a string
 
-\-7
+-7
 
 4.5E-7
-
+```
 Remember, there is nothing wrong with using **System.out** to write simple text output to the console when you are learning Java or debugging your programs. However, using a **PrintWriter** makes your real-world applications easier to internationalize. Because no advantage is gained by using a **PrintWriter** in the sample programs shown in this book, we will continue to use **System.out** to write to the console.
 
 ## Reading and Writing Files
@@ -651,19 +645,20 @@ class CopyFile {
 }
 ```
 In this program, notice how the input and output files are opened within the **try** block:  
-
+```
 try (FileinputStream fin = new FileInputStrem(args[0]);
 FileoutputStream fout = new FileInputStream(args))
 {
     // ...
-
+```
 After this **try** block ends, both **fin** and **fout** will have been closed. If you compare this version of the program to the previous version, you will see that it is much shorter. The ability to streamline source code is a side-benefit of automatic resource management.
 
 There is one other aspect to **try**\-with-resources that needs to be mentioned. In general, when a **try** block executes, it is possible that an exception inside the **try** block will lead to another exception that occurs when the resource is closed in a **finally** clause. In the case of a “normal” **try** statement, the original exception is lost, being preempted by the second exception. However, when using **try**\-with-resources, the second exception is suppressed. It is not, however, lost. Instead, it is added to the list of suppressed exceptions associated with the first exception. The list of suppressed exceptions can be obtained by using the **getSuppressed()** method defined by **Throwable**.
 
 Because of the benefits that the **try**\-with-resources statement offers, it will be used by many, but not all, of the example programs in this edition of this book. Some of the examples will still use the traditional approach to closing a resource. There are several reasons for this. First, you may encounter legacy code that still relies on the traditional approach. It is important that all Java programmers be fully versed in, and comfortable with, the traditional approach when maintaining this older code. Second, it is possible that some programmers will continue to work in a pre-JDK 7 environment for a period of time. In such situations, the expanded form of **try** is not available. Finally, there may be cases in which explicitly closing a resource is more appropriate than the automated approach. For these reasons, some of the examples in this book will continue to use the traditional approach, explicitly calling **close()**. In addition to illustrating the traditional technique, these examples can also be compiled and run by all readers in all environments.
 
-**REMEMBER** A few examples in this book use the traditional approach to closing files as a means of illustrating this technique, which is widely used in legacy code. However, for new code, you will usually want to use the automated approach supported by the **try**\- with-resources statement just described.
+**REMEMBER** 
+A few examples in this book use the traditional approach to closing files as a means of illustrating this technique, which is widely used in legacy code. However, for new code, you will usually want to use the automated approach supported by the **try**\- with-resources statement just described.
 
 
 ## The transient and volatile Modifiers
@@ -671,12 +666,12 @@ Because of the benefits that the **try**\-with-resources statement offers, it wi
  Java defines two interesting type modifiers: **transient** and **volatile**. These modifiers are used to handle somewhat specialized situations.
 
 When an instance variable is declared as **transient**, its value need not persist when an object is stored. For example:
-
+```
 class T {
     transient int a; // will not perist
     int b; // will persist
 }
-
+```
 Here, if an object of type **T** is written to a persistent storage area, the contents of **a** would not be saved, but the contents of **b** would.
 
 The **volatile** modifier tells the compiler that the variable modified by **volatile** can be changed unexpectedly by other parts of your program. One of these situations involves multithreaded programs. In a multithreaded program, sometimes two or more threads share the same variable. For efficiency considerations, each thread can keep its own, private copy of such a shared variable. The real (or master) copy of the variable is updated at various times, such as when a **synchronized** method is entered. While this approach works fine, it may be inefficient at times. In some cases, all that really matters is that the master copy of a variable always reflects its current state. To ensure this, simply specify the variable as **volatile**, which tells the compiler that it must always use the master copy of a **volatile** variable (or, at least, always keep any private copies up-to-date with the master copy, and vice versa). Also, accesses to the shared variable must be executed in the precise order indicated by the program.
@@ -687,9 +682,7 @@ The **volatile** modifier tells the compiler that the variable modified by **vol
 
 called B and C. Thus, casting a B object into type A or casting a C object into type A is legal, but casting a B object into type C (or vice versa) isn’t legal. Because an object of type A can refer to objects of either B or C, how can you know, at run time, what type of object is actually being referred to before attempting the cast to type C? It could be an object of type A, B, or C. If it is an object of type B, a run-time exception will be thrown. Java provides the run- time operator **instanceof** to answer this question.
 
-The **instanceof** operator has this general form: objref instanceof type
-
-Here, objref is a reference to an instance of a class, and type is a class type. If objref is of the specified type or can be cast into the specified type, then the **instanceof** operator evaluates to **true**. Otherwise, its result is **false**. Thus, **instanceof** is the means by which your program can obtain run-time type information about an object.
+The **instanceof** operator has this general form: objref instanceof type Here, objref is a reference to an instance of a class, and type is a class type. If objref is of the specified type or can be cast into the specified type, then the **instanceof** operator evaluates to **true**. Otherwise, its result is **false**. Thus, **instanceof** is the means by which your program can obtain run-time type information about an object.
 
 The following program demonstrates **instanceof**:  
 ```js
@@ -790,9 +783,9 @@ very useful when you’re writing generalized routines that operate on objects o
  With the creation of Java 2 several years ago, the floating-point computation model was relaxed slightly. Specifically, the new model does not require the truncation of certain intermediate values that occur during a computation. This prevents overflow or underflow in some cases. By modifying a class, a method, or interface with **strictfp**, you ensure that floating-point calculations (and thus all truncations) take place precisely as they did in earlier versions of Java. When a class is modified by **strictfp**, all the methods in the class are also modified by **strictfp** automatically.
 
 For example, the following fragment tells Java to use the original floating- point model for calculations in all methods defined within **MyClass**:
-
+```
 strictfp class MyClass { //...
-
+```
 Frankly, most programmers never need to use **strictfp**, because it affects only a very small class of problems.
 
 ## Native Methods
@@ -802,9 +795,9 @@ Frankly, most programmers never need to use **strictfp**, because it affects onl
 To declare a native method, precede the method with the **native** modifier,  
 
 but do not define any body for the method. For example:
-
+```
 public native int meth() ;
-
+```
 After you declare a native method, you must write the native method and follow a rather complex series of steps to link it with your Java code. Consult the Java documentation for current details.
 
 ## Using assert
@@ -818,9 +811,9 @@ assert condition;
 Here, condition is an expression that must evaluate to a Boolean result. If the result is true, then the assertion is true and no other action takes place. If the condition is false, then the assertion fails and a default **AssertionError** object is thrown.
 
 The second form of **assert** is shown here:
-
+```
 assert _condition: expr_ ;
-
+```
 In this version, expr is a value that is passed to the **AssertionError** constructor. This value is converted to its string format and displayed if an assertion fails. Typically, you will specify a string for expr, but any non-**void** expression is allowed as long as it defines a reasonable string conversion.
 
 Here is an example that uses **assert**. It verifies that the return value of **getnum()** is positive.  
@@ -852,10 +845,11 @@ To enable assertion checking at run time, you must specify the **\-ea** option. 
 java -ea AssertDemo
 
 After compiling and running as just described, the program creates the following output:
-
+```
 n is 3
 n is 2
 n is 1
+```
 Exception in thread "main" Java.lang.AssertionError
 at AssertDemo.main(AssertDemo.java:17)
 
@@ -870,10 +864,11 @@ As explained, you can specify the message displayed when an assertion fails. For
 assert n > 0 : "n is not positive!";
 
 for the assertion in the preceding program, then the following output will be generated:
-
+```
 n is 3
 n is 2
 n is 1
+```
 Exception in thread "main" java.lang.AssertionError: n is not positive!
         at Assert Demo.main (Assert Demo.java:17)
 
@@ -905,17 +900,17 @@ class Assert Demo {
 In this version of the program, the call to **getnum()** is moved inside the **assert** statement. Although this works fine if assertions are enabled, it will cause a malfunction when assertions are disabled, because the call to **getnum()** will never be executed! In fact, **n** must now be initialized, because the compiler will recognize that it might not be assigned a value by the **assert** statement.
 
 Assertions can be quite useful because they streamline the type of error checking that is common during development. For example, prior to **assert**, if you wanted to verify that **n** was positive in the preceding program, you had to use a sequence of code similar to this:
-
+```
 if (n < 0) { 
     System.out.println("n is negative!"); 
     return; // or throw an exception 
 }
-
+```
 With **assert**, you need only one line of code. Furthermore, you don’t have to  
 
 remove the **assert** statements from your released code.
 
-## Assertion Enabling and Disabling Options
+### Assertion Enabling and Disabling Options
 
  When executing code, you can disable all assertions by using the **\-da** option. You can enable or disable a specific package (and all of its subpackages) by specifying its name followed by three periods after the **\-ea** or **\-da** option. For example, to enable assertions in a package called **MyPack**, use
 
@@ -934,7 +929,7 @@ You can also specify a class with the **\-ea** or **\-da** option. For example, 
  Java includes a feature called _static import_ that expands the capabilities of the **import** keyword. By following **import** with the keyword **static**, an **import** statement can be used to import the static members of a class or interface. When using static import, it is possible to refer to static members directly by their names, without having to qualify them with the name of their class. This simplifies and shortens the syntax required to use a static member.
 
 To understand the usefulness of static import, let’s begin with an example that does not use it. The following program computes the hypotenuse of a right triangle. It uses two static methods from Java’s built-in math class **Math**, which is part of **java.lang**. The first is **Math.pow()**, which returns a value raised to a specified power. The second is **Math.sqrt()**, which returns the square root of its argument.  
-
+```
 // Compute the hypotenuse of a right triangle.
 class Hypot{
     public static void main(String args[]) {
@@ -954,20 +949,19 @@ class Hypot{
                             hypot);
     }
 }
-
+```
 Because **pow()** and **sqrt()** are static methods, they must be called through the use of their class’ name, **Math**. This results in a somewhat unwieldy hypotenuse calculation:
-
+```
 hypot = Math.sqrt (Math.pow(sidel, 2) + 
                    Math.pow(side2, 2));
-
+```
 As this simple example illustrates, having to specify the class name each time **pow()** or **sqrt()** (or any of Java’s other math methods, such as **sin()**, **cos()**, and **tan()**) is used can grow tedious.
 
 You can eliminate the tedium of specifying the class name through the use of static import, as shown in the following version of the preceding program:  
-
+```js
 // Use static import to bring sqrt() and pow() into view. ;
 import static java.lang. Math.sqrt;
 import static java.lang. Math.pow;
-```js
 // Compute the hypotenuse of a right triangle. 
 class Hypot {
     public static void main(String args[]) { 
@@ -989,9 +983,10 @@ class Hypot {
 }
 ```
 In this version, the names **sqrt** and **pow** are brought into view by these static import statements:
-
+```
 import static java.lang.Math.sqrt;
 import static java.lang.Math.pow;
+```
 
 After these statements, it is no longer necessary to qualify **sqrt()** or **pow()** with their class name. Therefore, the hypotenuse calculation can more conveniently be specified, as shown here:
 
@@ -1066,7 +1061,7 @@ class MyClass {
 This class contains three constructors, each of which initializes the values of **a** and **b**. The first is passed individual values for **a** and **b**. The second is passed just one value, which is assigned to both **a** and **b**. The third gives **a** and **b** default values of zero.
 
 By using **this()**, it is possible to rewrite **MyClass** as shown here:  
-
+```js
 class MyClass {
     int a;
     int b;
@@ -1086,7 +1081,7 @@ class MyClass {
         this (0); // invokes MyClass (0)
     }
 }
-
+```
 In this version of **MyClass**, the only constructor that actually assigns values to the **a** and **b** fields is **MyClass(int, int)**. The other two constructors simply invoke that constructor (either directly or indirectly) through **this()**. For example, consider what happens when this statement executes:
 
 MyClass mc = new MyClass(8);
