@@ -122,7 +122,7 @@ char chars[] = { 'a', 'b', 'c' }; String s = new String (chars); System.out.prin
 
  Because strings are a common and important part of programming, Java has added special support for several string operations within the syntax of the language. These operations include the automatic creation of new **String** instances from string literals, concatenation of multiple **String** objects by use of the **+** operator, and the conversion of other data types to a string representation. There are explicit methods available to perform all of these functions, but Java does them automatically as a convenience for the programmer and to add clarity.
 
-## String Literals
+### String Literals
 
  The earlier examples showed how to explicitly create a **String** instance from an array of characters by using the **new** operator. However, there is an easier way to do this using a string literal. For each string literal in your program, Java automatically constructs a **String** object. Thus, you can use a string literal to initialize a **String** object. For example, the following code fragment creates two equivalent strings:  
 ```java
@@ -135,7 +135,7 @@ Because a **String** object is created for every string literal, you can use a s
 ```java
 System.out.println("abc".length());
 ```
-## String Concatenation
+### String Concatenation
 
  In general, Java does not allow operators to be applied to **String** objects. The one exception to this rule is the **+** operator, which concatenates two strings, producing a **String** object as the result. This allows you to chain together a series of **+** operations. For example, the following fragment concatenates three strings:
 ```java
@@ -152,7 +152,7 @@ String longStr = "This could have been "
 System.out.println (longStr);
 }
 ```
-## String Concatenation with Other Data Types
+### String Concatenation with Other Data Types
 
  You can concatenate strings with other types of data. For example, consider this slightly different version of the earlier example:
 ```java
@@ -179,7 +179,7 @@ String s = "four:"" + (2 + 2);
 ```
 Now **s** contains the string "four: 4".
 
-##String Conversion and toString() 
+### String Conversion and toString() 
 One way to convert data into its string representation is by calling one of the overloaded versions of the string conversion method **valueOf()** defined by **String**. **valueOf()** is overloaded for all the primitive types and for type **Object**. For the primitive types, **valueOf()** returns a string that contains the human-readable equivalent of the value with which it is called. For objects,  
 
 **valueOf()** calls the **toString()** method on the object. We will look more closely at **valueOf()** later in this chapter. Here, let’s examine the **toString()** method, because it is the means by which you can determine the string representation for objects of classes that you create.
@@ -226,11 +226,13 @@ As you can see, **Box**’s **toString()** method is automatically invoked when 
 
  The **String** class provides a number of ways in which characters can be extracted from a **String** object. Several are examined here. Although the characters that comprise a string within a **String** object cannot be indexed as if they were a character array, many of the **String** methods employ an index (or offset) into the string for their operation. Like arrays, the string indexes begin at zero.
 
-**charAt()** To extract a single character from a **String**, you can refer directly to an individual character via the **charAt()** method. It has this general form:
+### charAt()
+
+To extract a single character from a **String**, you can refer directly to an individual character via the **charAt()** method. It has this general form:
 
 char charAt(int where)
 
-Here, where is the index of the character that you want to obtain. The value of where must be nonnegative and specify a location within the string. **charAt()**  
+Here, where is the index of the character that you want to obtain. The value of where must be nonnegative and specify a location within the string.**charAt()**  
 
 returns the character at the specified location. For example,
 ```java
@@ -240,7 +242,7 @@ ch = "abc".charAt(1);
 
 assigns the value **b** to **ch**.
 ```
-##getChars()
+### getChars()
 If you need to extract more than one character at a time, you can use the **getChars()** method. It has this general form:
 
 void getChars(int sourceStart, int sourceEnd, char target[ ], int targetStart)
@@ -785,7 +787,7 @@ buffer after = Hi
 
 charAt(1) after = i
 
-##getChars() 
+### getChars()
 To copy a substring of a **StringBuffer** into an array, use the **getChars()** method. It has this general form:
 
 void getChars(int sourceStart, int sourceEnd, char target[ ], int targetStart)
