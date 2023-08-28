@@ -2,7 +2,7 @@
 title: 'Java Beans'
 weight: 1
 ---
-##Java Beans
+#Java Beans
 
 This chapter provides an overview of creating Java Beans. Beans are important because they allow you to build complex systems from software components. These components may be provided by you or supplied by one or more different vendors. Java Beans use an architecture called JavaBeans that specifies how these building blocks can operate together.
 
@@ -36,11 +36,11 @@ on a user’s workstation or to work in cooperation with a set of other distribu
 
 There are two ways in which the developer of a Bean can indicate which of its properties, events, and methods should be exposed. With the first method, simple naming conventions are used. These allow the introspection mechanisms to infer information about a Bean. In the second way, an additional class that extends the **BeanInfo** interface is provided that explicitly supplies this information. Both approaches are examined here.  
 
-## Design Patterns for Properties
+### Design Patterns for Properties
 
  A property is a subset of a Bean’s state. The values assigned to the properties determine the behavior and appearance of that component. A property is set through a setter method. A property is obtained by a getter method. There are two types of properties: simple and indexed.
 
-## Simple Properties
+**Simple Properties**
 
  A simple property has a single value. It can be identified by the following design patterns, where **N** is the name of the property and **T** is its type:
 
@@ -52,20 +52,29 @@ A read/write property has both of these methods to access its values. A read- on
 Here are three read/write simple properties along with their getter and setter methods:  
 ```
 private double depth, height, width;
-public double get Depth() { return depth;
-} public void setDepth (double d) { depth = d; }
-public double getHeight() { return height;
-} public void setHeight (double h) { height = h;
+
+public double get Depth() { 
+    return depth;
+} 
+public void setDepth (double d) {
+    depth = d; 
 }
-public double getWidth() { return width;
-} public void setWidth (double w) { width = W;
+public double getHeight() {
+    return height;
+} 
+public void setHeight (double h) { 
+    height = h;
+}
+public double getWidth() { 
+    return width;
+} 
+public void setWidth (double w) { 
+    width = W;
 }
 ```
-## NOTE
+**NOTE** For a **boolean** property, a method of the form **is**PropertyName() can also be used as an accessor.
 
- For a **boolean** property, a method of the form **is**PropertyName() can also be used as an accessor.
-
-## Indexed Properties
+**Indexed Properties**
 
  An indexed property consists of multiple values. It can be identified by the following design patterns, where **N** is the name of the property and **T** is its type:
 
@@ -74,14 +83,22 @@ public T getN(int index); public void setN(int index, T value); public T[ ] getN
 Here is an indexed property called **data** along with its getter and setter methods:  
 ```
 private double data[ ];
-public double get Data (int index) { return data [index];
-} public void setData (int index, double value) { data [index] value; =
-} public double[] getData() {
-return data;
-} public void setData (double[] values) { data = new double [values.length]; System.arraycopy (values, 0, data, 0, values.length); 
+
+public double get Data (int index) { 
+    return data [index];
+} 
+public void setData (int index, double value) { 
+    data [index] = value; 
+} 
+public double[] getData() {
+    return data;
+} 
+public void setData (double[] values) { 
+    data = new double [values.length]; 
+    System.arraycopy (values, 0, data, 0, values.length); 
 }
 ```
-## Design Patterns for Events
+### Design Patterns for Events
 
  Beans use the delegation event model that was discussed earlier in this book. Beans can generate events and send them to other objects. These can be identified by the following design patterns, where **T** is the type of the event:
 
@@ -99,11 +116,11 @@ public void removeTemperatureListener(TemperatureListener tl) {
 
 }
 
-## Methods and Design Patterns
+### Methods and Design Patterns
 
  Design patterns are not used for naming nonproperty methods. The introspection mechanism finds all of the public methods of a Bean. Protected and private methods are not presented.
 
-## Using the BeanInfo Interface
+### Using the BeanInfo Interface
 
  As the preceding discussion shows, design patterns implicitly determine what information is available to the user of a Bean. The **BeanInfo** interface enables you to explicitly control what information is available. The **BeanInfo** interface defines several methods, including these:
 
@@ -114,10 +131,6 @@ They return arrays of objects that provide information about the properties, eve
 When creating a class that implements **BeanInfo**, you must call that class bnameBeanInfo, where bname is the name of the Bean. For example, if the Bean is called **MyBean**, then the information class must be called **MyBeanBeanInfo**.
 
 To simplify the use of **BeanInfo**, JavaBeans supplies the **SimpleBeanInfo** class. It provides default implementations of the **BeanInfo** interface, including the three methods just shown. You can extend this class and override one or more of the methods to explicitly control what aspects of a Bean are exposed. If you don’t override a method, then design-pattern introspection will be used. For example, if you don’t override **getPropertyDescriptors()**, then design patterns are used to discover a Bean’s properties. You will see **SimpleBeanInfo** in action later in this chapter.
-
-## Bound and Constrained Properties
-
-  
 
 ## Bound and Constrained Properties
 
@@ -193,10 +206,9 @@ A Bean developer can provide a customizer that helps another developer configure
 
 Although it is beyond the scope of this chapter to discuss all of the classes, four are of particular interest: **Introspector**, **PropertyDescriptor**,  
 
-## EventSetDescriptor
 **EventSetDescriptor**, and **MethodDescriptor**. Each is briefly examined here.
 
-## Introspector
+### Introspector
 
  The **Introspector** class provides several static methods that support introspection. Of most interest is **getBeanInfo()**. This method returns a **BeanInfo** object that can be used to obtain information about the Bean. The **getBeanInfo()** method has several forms, including the one shown here:
 
@@ -204,15 +216,15 @@ static BeanInfo getBeanInfo(Class<?> bean) throws IntrospectionException
 
 The returned object contains information about the Bean specified by _bean._
 
-## PropertyDescriptor
+### PropertyDescriptor
 
  The **PropertyDescriptor** class describes the characteristics of a Bean property. It supports several methods that manage and describe properties. For example, you can determine if a property is bound by calling **isBound()**. To determine if a property is constrained, call **isConstrained()**. You can obtain the name of a property by calling **getName()**.
 
-## EventSetDescriptor
+### EventSetDescriptor
 
  The **EventSetDescriptor** class represents a set of Bean events. It supports several methods that obtain the methods that a Bean uses to add or remove event listeners, and to otherwise manage events. For example, to obtain the method used to add listeners, call **getAddListenerMethod()**. To obtain the method used to remove listeners, call **getRemoveListenerMethod()**. To obtain the type of a listener, call **getListenerType()**. You can obtain the name of an event set by calling **getName()**.
 
-## MethodDescriptor
+### MethodDescriptor
 
  The **MethodDescriptor** class represents a Bean method. To obtain the name of the method, call **getName()**. You can obtain information about the method by calling **getMethod()**, shown here:
 
@@ -220,7 +232,7 @@ Method getMethod()
 
 An object of type **Method** that describes the method is returned.  
 
-## A Bean Example
+### A Bean Example
 
  This chapter concludes with an example that illustrates various aspects of Bean programming, including introspection and using a **BeanInfo** class. It also makes use of the **Introspector**, **PropertyDescriptor**, and **EventSetDescriptor** classes. The example uses three classes. The first is a Bean called **Colors**, shown here:  
 ```js
@@ -228,33 +240,49 @@ An object of type **Method** that describes the method is returned.
 import java.awt.*;
 import java.awt.event.*;
 import java.io.Serializable;
-public class Colors extends Canvas implements Serializable { transient private Color color; // not persistent private boolean rectangular; // is persistent
+
+public class Colors extends Canvas implements Serializable { 
+    transient private Color color; // not persistent 
+    private boolean rectangular; // is persistent
 public Colors () {
-addMouseListener(new MouseAdapter() { public void mouse Pressed (MouseEvent me) { change ();
-} });
-rectangular = false; setSize (200, 100);
+  addMouseListener(new MouseAdapter() { 
+    public void mouse Pressed (MouseEvent me) { 
+        change ();
+    } 
+  });
+  rectangular = false; 
+  setSize (200, 100);
+  change();
 }
-change();
-public boolean getRectangular () { return rectangular; }
-public void setRectangular (boolean flag) { this.rectangular flag;
+public boolean getRectangular () { 
+    return rectangular; 
 }
-repaint ();
-public void change() { color = randomColor();
-repaint();
+public void setRectangular (boolean flag) { 
+    this.rectangular flag;
+    repaint ();
+}
+public void change() { 
+    color = randomColor();
+    repaint();
 }
 private Color randomColor() {
-int r = (int) (255* Math.random()); int g = (int) (255* Math.random());
-int b = (int) (255*Math.random()); return new Color (r, g, b);
+  int r = (int) (255* Math.random()); 
+  int g = (int) (255* Math.random());
+  int b = (int) (255*Math.random()); 
+  return new Color (r, g, b);
 }
 public void paint (Graphics g) {
-int hd.height; int w =d.width;
-Dimension d = getSize(); if (rectangular) { }
-g.setColor (color);
-g.fillRect(0, 0, w-1, h-1);
-else {
-g.fillOval (0, 0, w-1, h-1);
-}
-}
+  Dimension d = getSize();
+  int h = d.height;
+  int w = d.width;
+  g.setcolor(color);
+  if(rectangular)  {
+    g.fillRect(0, 0, w-1, h-1);
+  }
+  else {
+    g.fillOval(0, 0, w-1, h-1);
+  }
+ }
 }
 ```
 
@@ -267,53 +295,74 @@ PropertyDescriptor(String property, Class<?> beanCls) throws IntrospectionExcept
 Here, the first argument is the name of the property, and the second argument is the class of the Bean.  
 
 ```js
-// A Bean information class. import java.beans.*;
-public class Colors BeanInfo extends SimpleBeanInfo { public PropertyDescriptor [] get PropertyDescriptors () { try {
-PropertyDescriptor rectangular = new PropertyDescriptor ("rectangular", Colors.class); PropertyDescriptor pd[] = { rectangular}; return pd;
-} catch (Exception e) { System.out.println("Exception caught. " + e);
-}
-return null;
-}
+// A Bean information class. 
+import java.beans.*;
+public class Colors BeanInfo extendsSimpleBeanInfo { 
+  public PropertyDescriptor [] get  PropertyDescriptors () { 
+    try {
+      PropertyDescriptor rectangular = new 
+         PropertyDescriptor ("rectangular", Colors.class); 
+      PropertyDescriptor pd[] = { rectangular}; 
+      return pd; 
+    } 
+    catch (Exception e) { 
+      System.out.println("Exception caught. " + e);
+    }
+    return null;
+  }
 }
 ```
 
 The final class is called **IntrospectorDemo**. It uses introspection to display the properties and events that are available within the **Colors** Bean.  
 
 ```js
-// Show properties and events. import java.awt.*;
+// Show properties and events.
+import java.awt.*;
 import java.beans.*;
-public class IntrospectorDemo { public static void main(String args[]) {
-try {
-Class<?> c = Class.forName("Colors"); BeanInfo beanInfo Introspector.getBeanInfo (c);
-System.out.println("Properties: ");
-PropertyDescriptor propertyDescriptor[]
-bean Info.getPropertyDescriptors(); for (int i = 0; i < propertyDescriptor.length; i++) { System.out.println("\t" + propertyDescriptor [i].getName());
+
+public class IntrospectorDemo {
+    public static void main(string args[]) {
+        try {
+            class<?> c = Class.forName("Coloer");
+            BeanInfo beanInfo = Introspector.getBeanInfo (c);
+
+            system.out.println("Properties:");
+            propertyDescriptor propertyDescriptor[] =
+              beanInfo.getPropertyDescriptor();
+            for(int i = 0; i < PropertyDescriptor.length; i++) {
+                system.out.println("\t" + propertyDesriptor[i].getName());
+        }
+        system.out.println("Event:");
+        EventSetDescriptor eventsetDescriptor[] =
+          beanInfo.getEventsetDescriptors();
+        for(int i = 0; i < eventsetDescriptor.length;
+        i++) {
+            system.out.println("\t" + eventsetDescriptor[i].getName());
+        }
+    }
+    catch(Exception e) {
+        system.out.println("Exception caught. " + e);
+    }
 }
-System.out.println("Events: ");
-beanInfo.getEvent Set Descriptors();
-Event Set Descriptor event Set Descriptor[] = for (int i = 0; i < event Set Descriptor.length; i++) { System.out.println("\t" + event Set Descriptor [i].getName()); }
 }
-catch (Exception e) { System.out.println("Exception caught." + e);
-}
-}
-}
+
 ```
 
 The output from this program is the following:
 ```js
 Properties:
-rectangular
+        rectangular
 Events:
-mouseWheel
-mouse
-mouseMotion
-component
-hierarchyBounds
-focus
-hierarchy
-propertyChange
-inputMethod
-key
+        mouseWheel
+        mouse
+        mouseMotion
+        component
+        hierarchyBounds
+        focus
+        hierarchy
+        propertyChange
+        inputMethod
+        key
 ```
 
 Notice two things in the output. First, because **ColorsBeanInfo** overrides **getPropertyDescriptors()** such that the only property returned is **rectangular**, only the **rectangular** property is displayed. However, because **getEventSetDescriptors()** is not overridden by **ColorsBeanInfo**, design- pattern introspection is used, and all events are found, including those in **Colors**’ superclass, **Canvas**. Remember, if you don’t override one of the “get” methods defined by **SimpleBeanInfo**, then the default, design-pattern introspection is used. To observe the difference that **ColorsBeanInfo** makes, erase its class file and then run **IntrospectorDemo** again. This time it will report more properties.  

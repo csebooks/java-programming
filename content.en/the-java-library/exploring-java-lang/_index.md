@@ -841,7 +841,7 @@ For example, you can obtain the name of a module by calling **getName()**. If ca
 **getDeclaredAnnotations()**, **getLayer()**, **getClassLoader()**, and **getResourceAsStream()**. The **toString()** method is also overridden for **Module**.
 
 Assuming the modules defined by the examples in Chapter 16, you can easily experiment with the **Module** class. For example, try adding the following lines to the **MyModAppDemo** class:
-
+```java
 Module myMod = MyModAppDemo.class.getModule();
 
 System.out.println("Module is " + myMod.getName());
@@ -851,41 +851,34 @@ System.out.print("Packages: ");
 for(String pkg : myMod.getPackages()) System.out.println(pkg + "
 
 ");
-
+```
 Here, the methods **getName()** and **getPackages()** are used. Notice that a **Module** instance is obtained by calling **getModule()** on the **Class** instance for **MyModAppDemo**. When run, these lines produce the following output:
 
 Module is appstart
 
 Packages: appstart.mymodappdemo
 
-## ModuleLayer ModuleLayer
+## ModuleLayer 
+**ModuleLayer**, added by JDK 9, encapsulates a module layer. The nested class **ModuleLayer.Controller**, also added by JDK 9, is the controller for a module layer. In general, these classes are for specialized applications.
 
-, added by JDK 9, encapsulates a module layer. The nested class **ModuleLayer.Controller**, also added by JDK 9, is the controller for a module layer. In general, these classes are for specialized applications.
-
-## RuntimePermission RuntimePermission
-
- relates to Java’s security mechanism.
+## RuntimePermission 
+**RuntimePermission**relates to Java’s security mechanism.
 
 ## Throwable
 
  The **Throwable** class supports Java’s exception-handling system and is the class from which all exception classes are derived. It is discussed in Chapter 10.
-## Throwable
 
 
-## SecurityManager
 
-  
-
-## SecurityManager SecurityManager
-
- supports Java’s security system. A reference to the current security manager can be obtained by calling **getSecurityManager()** defined by the **System** class.
+## SecurityManager 
+**SecurityManager**supports Java’s security system. A reference to the current security manager can be obtained by calling **getSecurityManager()** defined by the **System** class.
 
 ## StackTraceElement
 
  The **StackTraceElement** class describes a single _stack frame_, which is an individual element of a stack trace when an exception occurs. Each stack frame represents an _execution point_, which includes such things as the name of the class, the name of the method, the name of the file, and the source-code line number. Beginning with JDK 9, module information is also included. **StackTraceElement** defines two constructors, but typically you won’t need to use them because an array of **StackTraceElement**s is returned by various methods, such as the **getStackTrace()** method of the **Throwable** and **Thread** classes.
 
 The methods supported by **StackTraceElement** are shown in Table 18-21. These methods give you programmatic access to a stack trace.  
-
+![Alt text](image-48.png)
 **Table 18-21** The Methods Defined by **StackTraceElement**
 
 **StackWalker and StackWalker.StackFrame** Added by JDK 9, the **StackWalker** class and the **StackWalker.StackFrame** interface support stack walking operations. A **StackWalker** instance is obtained by use of the static **getInstance()** method defined by **StackWalker**. Stack walking is initiated by calling the **walk()** method of **StackWalker**. Each stack frame is encapsulated as a **StackWalker.StackFrame** object.  
@@ -899,7 +892,7 @@ class Enum<E extends Enum<E>>
 Here, **E** stands for the enumeration type. **Enum** has no public constructors. **Enum** defines several methods that are available for use by all
 
 enumerations, which are shown in Table 18-22.
-
+![Alt text](image-49.png)
 **Table 18-22** The Methods Defined by **Enum**  
 
 ## ClassValue ClassValue
@@ -913,7 +906,7 @@ It is designed for highly specialized uses, not for normal programming.
 ## The CharSequence Interface
 
  The **CharSequence** interface defines methods that grant read-only access to a sequence of characters. These methods are shown in Table 18-23. This interface is implemented by **String**, **StringBuffer**, and **StringBuilder**, among others.
-
+![Alt text](image-50.png)
 **Table 18-23** The Methods Defined by **CharSequence**
 
 ## The Comparable Interface
@@ -964,7 +957,7 @@ default Spliterator<T> spliterator()
 
 It returns a **Spliterator** to the sequence being iterated. (See Chapters 19 and 29 for details on spliterators.)
 
-## NOTE
+**NOTE**
 
  Iterators are described in detail in Chapter 19.
 
