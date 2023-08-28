@@ -29,7 +29,7 @@ Just as the numbers of an IP address describe a network hierarchy, the name of a
 
 with domain names, but the Internet operates on IP addresses.
 
-**The java.net Networking Classes and Interfaces**
+### The java.net-Networking Classes and Interfaces
 
 The **java.net** package contains Java’s original networking features, which have been available since version 1.0. It supports TCP/IP both by extending the already established stream I/O interface introduced in Chapter 21 and by adding the features required to build I/O objects across the network. Java supports both the TCP and UDP protocol families. TCP is used for reliable stream-based I/O across the network. UDP supports a simpler, hence faster, point-to-point datagram-oriented model. The classes contained in the **java.net** package are shown here:
 ![Alt text](image.png)
@@ -41,7 +41,7 @@ Beginning with JDK 9, **java.net** is part of the **java.base** module. In the s
 
  The **InetAddress** class is used to encapsulate both the numerical IP address and the domain name for that address. You interact with this class by using the name of an IP host, which is more convenient and understandable than its IP address. The **InetAddress** class hides the number inside. **InetAddress** can handle both IPv4 and IPv6 addresses.
 
-## Factory Methods
+###Factory Methods
 
  The **InetAddress** class has no visible constructors. To create an **InetAddress** object, you have to use one of the available factory methods. As explained earlier in this book, _factory methods_ are merely a convention whereby static methods in a class return an instance of that class. This is done in lieu of overloading a constructor with various parameter lists when having unique method names makes the results much clearer. Three commonly used **InetAddress** factory methods are shown here:
 
@@ -57,9 +57,7 @@ name, they throw an **UnknownHostException**. On the Internet, it is common for 
 
 several machines. In the world of web servers, this is one way to provide some degree of scaling. The **getAllByName()** factory method returns an array of **InetAddress**es that represent all of the addresses that a particular name resolves to. It will also throw an **UnknownHostException** if it can’t resolve the name to at least one address.
 
-## InetAddress
-
- also includes the factory method **getByAddress(),** which takes an IP address and returns an **InetAddress** object. Either an IPv4 or an IPv6 address can be used.
+**InetAddress** also includes the factory method **getByAddress(),** which takes an IP address and returns an **InetAddress** object. Either an IPv4 or an IPv6 address can be used.
 
 The following example prints the addresses and names of the local machine and two Internet web sites:
 ```java
@@ -83,9 +81,7 @@ www.nba.com/2600:1403:1:58d:0:0:0:2e1
 
 www.nba.com/2600:1403:1:593:0:0:0:2e1
 
-## Instance Methods
-
-  
+### Instance Methods
 
 The **InetAddress** class has several other methods, which can be used on the objects returned by the methods just discussed. Here is a sampling:
 ![Alt text](image-2.png)
@@ -345,11 +341,9 @@ somewhat like a hard throw from a well-trained but blindfolded catcher to the th
 
 Java implements datagrams on top of the UDP protocol by using two classes: the **DatagramPacket** object is the data container, while the  
 
-## DatagramSocket
+**DatagramSocket** is the mechanism used to send or receive the **DatagramPacket**s. Each is examined here.
 
- is the mechanism used to send or receive the **DatagramPacket**s. Each is examined here.
-
-## DatagramSocket 
+### DatagramSocket 
 **DatagramSocket**defines four public constructors. They are shown here:
 
 DatagramSocket() throws SocketException
@@ -374,18 +368,18 @@ The **send()** method sends a packet to the port specified by packet. The **rece
 
 Other methods give you access to various attributes associated with a **DatagramSocket**. Here is a sampling:  
 ![Alt text](image-10.png)
-## DatagramPacket 
+
 **DatagramPacket**defines several constructors. Four are shown here:
 
 DatagramPacket(byte data [ ], int size) DatagramPacket(byte data [ ], int _offset,_ int size) DatagramPacket(byte data [ ], int _size,_ InetAddress _ipAddress,_ int port) DatagramPacket(byte data [ ], int _offset,_ int _size,_ InetAddress _ipAddress,_ int port)
 
 The first constructor specifies a buffer that will receive data and the size of a packet. It is used for receiving data over a **DatagramSocket.** The second form allows you to specify an offset into the buffer at which data will be stored. The third form specifies a target address and port, which are used by a **DatagramSocket** to determine where the data in the packet will be sent. The fourth form transmits packets beginning at the specified offset into the data. Think of the first two forms as building an "in box," and the second two forms as stuffing and addressing an envelope.
 
-## DatagramPacket
+### DatagramPacket
 
  defines several methods, including those shown here, that give access to the address and port number of a packet, as well as the raw data and its length:  
 ![Alt text](image-11.png)
-## A Datagram Example
+### A Datagram Example
 
  The following example implements a very simple networked communications client and server. Messages are typed into the window at the server and written across the network to the client side, where they are displayed.  
 ```java
@@ -447,13 +441,12 @@ For many types of HTTP networking, the capabilities defined by the API in **java
 
 The following discussion explores several key features of the HTTP Client API. Be aware that it contains much more than described here. If you will be writing sophisticated network-based code, then it is a package that you will want to examine in detail. Our purpose here is to introduce some of the fundamentals associated with this important new module.  
 
-## Three Key Elements
+### Three Key Elements
 
  The focus of the following discussion is centered on three core HTTP Client API elements:
 ![Alt text](image-12.png)
 These work together to support the request/response features of HTTP. Here is the general procedure. First, create an instance of **HttpClient**. Then, construct an **HttpRequest** and send it by calling **send()** on the **HttpClient**. The response is returned by **send()**. From the response, you can obtain the headers and response body. Before working through an example, we will begin with an overview of these fundamental aspects of the API.
 
-## HttpClient 
 **HttpClient**encapsulates the HTTP request/response mechanism. It supports both synchronous and asynchronous communication. Here, we will be using only synchronous communication, but you might want to experiment with asynchronous communication on your own. Once you have an **HttpClient** object, you can use it to send requests and obtain responses. Thus, it is at the foundation of the HTTP Client API.
 
 **HttpClient**is an abstract class, and instances are not created via a public constructor. Rather, you will use a factory method to build one. **HttpClient** supports builders with the **HttpClient.Builder** interface, which provides several methods that let you configure the **HttpClient**. To obtain an **HttpClient** builder, use the **newBuilder()** static method. It returns a builder that lets you configure the **HttpClient** that it will create. Next, call **build()** on the builder. It creates and returns the **HttpClient** instance. For example, this creates an **HttpClient** that uses the default settings:
@@ -486,7 +479,7 @@ Once you have an **HttpClient** instance, you can send a synchronous request by 
 
 Here, req encapsulates the request and handler specifies how the response body is handled. As you will shortly see, often, you can use one of the predefined body handlers provided by the **HttpResponse.BodyHandlers** class. An **HttpResponse** object is returned. Thus, **send()** provides the basic mechanism for HTTP communication.
 
-## HttpRequest
+
 
   
 
@@ -506,9 +499,7 @@ HttpRequest build()
 
 Once you have an **HttpRequest** instance, you can use it use it in a call to **HttpClient**’s **send()** method, as shown in the previous section.
 
-## HttpResponse
-
- The HTTP Client API encapsulates a response in an implementation of the **HttpResponse** interface. It is a generic interface declared like this:
+The HTTP Client API encapsulates a response in an implementation of the **HttpResponse** interface. It is a generic interface declared like this:
 
 HttpResponse<T>
 
@@ -544,7 +535,7 @@ Other predefined handlers obtain the response body as a byte array, a stream of 
 
 connection. In general, it is best to simply read the entire stream.
 
-## A Simple HTTP Client Example
+### A Simple HTTP Client Example
 
  The following example puts into action the features of the HTTP Client API just described. It demonstrates the sending of a request, displaying the body of the response, and obtaining a list of the response headers. You should compare it to parallel sections of code in the preceding **UCDemo** and **HttpURLDemo** programs shown earlier. Notice that it uses **ofInputStream()** to obtain an input stream linked to the response body.  
 ```java
@@ -594,5 +585,5 @@ System.out.println(myResp.body());
 
 Because the body of the response is already stored in a string, it can be output directly. You might want to experiment with other body handlers. Of particular interest is **ofLines()**, which lets you access the body as a stream of lines. One of the benefits of the HTPP Client API is that there are built-in body handlers for a variety of situations.
 
-##Things to Explore in java.net.http 
+### Things to Explore in java.net.http 
 The preceding introduction described a number of key features in the HTTP Client API in **java.net.http**, but there are several more that you will want to explore. One of the most important is the **WebSocket** class, which supports bidirectional communication. Another is the asynchronous capability supported by the API. In general, if network programming is in your future, you will want to thoroughly explore **java.net.http**. It is an important addition to Java’s networking APIs.  

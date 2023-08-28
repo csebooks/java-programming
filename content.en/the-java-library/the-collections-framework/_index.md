@@ -3,23 +3,15 @@ title: 'The Collections Framework'
 weight: 3
 --- 
 
-
-
-## CHAPTER
-
-  
-
-## 19
-
-  
-
-**java.util Part 1: **
+##java.util Part 1:
 
 This chapter begins our examination of **java.util**. This important package contains a large assortment of classes and interfaces that support a broad range of functionality. For example, **java.util** has classes that generate pseudorandom numbers, manage date and time, observe events, manipulate sets of bits, tokenize strings, and handle formatted data. The **java.util** package also contains one of Java’s most powerful subsystems: the _Collections Framework_. The Collections Framework is a sophisticated hierarchy of interfaces and classes that provide state-of-the-art technology for managing groups of objects. It merits close attention by all programmers. Beginning with JDK 9, **java.util** is part of the **java.base** module.
 
 Because **java.util** contains a wide array of functionality, it is quite large. Here is a list of its top-level classes:  
-
+![Alt text](image.png)
+![Alt text](image-1.png)
 The interfaces defined by **java.util** are shown next:
+![Alt text](image-2.png)
 
 Because of its size, the description of **java.util** is broken into two chapters. This chapter examines those members of **java.util** that are part of the Collections Framework. Chapter 20 discusses its other classes and interfaces.
 
@@ -43,23 +35,21 @@ In addition to collections, the framework defines several map interfaces and cla
 
 The collection mechanism was retrofitted to some of the original classes defined by **java.util** so that they too could be integrated into the new system. It is important to understand that although the addition of collections altered the architecture of many of the original utility classes, it did not cause the deprecation of any. Collections simply provide a better way of doing several things.
 
-## NOTE
+**NOTE**
 
  If you are familiar with C++, then you will find it helpful to know that the Java collections technology is similar in spirit to the Standard Template Library (STL) defined by C++. What C++ calls a container, Java calls a collection. However, there are significant differences between the Collections Framework and the STL. It is important to not jump to conclusions.
 
 ## The Collection Interfaces
 
  The Collections Framework defines several core interfaces. This section provides an overview of each interface. Beginning with the collection interfaces is necessary because they determine the fundamental nature of the collection classes. Put differently, the concrete classes simply provide different implementations of the standard interfaces. The interfaces that underpin collections are summarized in the following table:  
-
+![Alt text](image-3.png)
 In addition to the collection interfaces, collections also use the **Comparator**, **RandomAccess**, **Iterator**, **ListIterator**, and **Spliterator** interfaces, which are described in depth later in this chapter. Briefly, **Comparator** defines how two objects are compared; **Iterator**, **ListIterator,** and **Spliterator** enumerate the objects within a collection. By implementing **RandomAccess**, a list indicates that it supports efficient, random access to its elements.
 
 To provide the greatest flexibility in their use, the collection interfaces allow some methods to be optional. The optional methods enable you to modify the contents of a collection. Collections that support these methods are called modifiable. Collections that do not allow their contents to be changed are called unmodifiable. If an attempt is made to use one of these methods on an unmodifiable collection, an **UnsupportedOperationException** is thrown. All the built-in collections are modifiable.
 
 The following sections examine the collection interfaces.
 
-## The Collection Interface
-
- The **Collection** interface is the foundation upon which the Collections Framework is built because it must be implemented by any class that defines a collection. **Collection** is a generic interface that has this declaration:
+The **Collection** interface is the foundation upon which the Collections Framework is built because it must be implemented by any class that defines a collection. **Collection** is a generic interface that has this declaration:
 
 interface Collection<E>
 
@@ -67,9 +57,9 @@ Here, **E** specifies the type of objects that the collection will hold. **Colle
 
 through by use of the for-each style **for** loop. (Recall that only classes that implement **Iterable** can be cycled through by the **for**.)
 
-## Collection
-
- declares the core methods that all collections will have. These methods are summarized in Table 19-1. Because all collections implement **Collection**, familiarity with its methods is necessary for a clear understanding of the framework. Several of these methods can throw an **UnsupportedOperationException**. As explained, this occurs if a collection cannot be modified. A **ClassCastException** is generated when one object is incompatible with another, such as when an attempt is made to add an incompatible object to a collection. A **NullPointerException** is thrown if an attempt is made to store a **null** object and **null** elements are not allowed in the collection. An **IllegalArgumentException** is thrown if an invalid argument is used. An **IllegalStateException** is thrown if an attempt is made to add an element to a fixed-length collection that is full.  
+**Collection** declares the core methods that all collections will have. These methods are summarized in Table 19-1. Because all collections implement **Collection**, familiarity with its methods is necessary for a clear understanding of the framework. Several of these methods can throw an **UnsupportedOperationException**. As explained, this occurs if a collection cannot be modified. A **ClassCastException** is generated when one object is incompatible with another, such as when an attempt is made to add an incompatible object to a collection. A **NullPointerException** is thrown if an attempt is made to store a **null** object and **null** elements are not allowed in the collection. An **IllegalArgumentException** is thrown if an invalid argument is used. An **IllegalStateException** is thrown if an attempt is made to add an element to a fixed-length collection that is full.  
+![Alt text](image-5.png)
+![Alt text](image-6.png)
 
 **Table 19-1** The Methods Declared by **Collection**
 
@@ -96,7 +86,7 @@ interface List<E>
 Here, **E** specifies the type of objects that the list will hold. In addition to the methods defined by **Collection**, **List** defines some of its
 
 own, which are summarized in Table 19-2. Note again that several of these methods will throw an **UnsupportedOperationException** if the list cannot be modified, and a **ClassCastException** is generated when one object is incompatible with another, such as when an attempt is made to add an incompatible object to a list. Also, several methods will throw an **IndexOutOfBoundsException** if an invalid index is used. A **NullPointerException** is thrown if an attempt is made to store a **null** object and **null** elements are not allowed in the list. An **IllegalArgumentException** is thrown if an invalid argument is used.  
-
+![Alt text](image-7.png)
 **Table 19-2** The Methods Declared by **List**
 
 To the versions of **add()** and **addAll()** defined by **Collection**, **List** adds the methods **add(int, E)** and **addAll(int, Collection)**. These methods insert elements at the specified index. Also, the semantics of **add(E)** and **addAll(Collection)** defined by **Collection** are changed by **List** so that they add elements to the end of the list. You can modify each element in the collection by using **replaceAll()**.
@@ -106,9 +96,9 @@ To obtain the object stored at a specific location, call **get()** with the inde
 You can obtain a sublist of a list by calling **subList()**, specifying the beginning and ending indexes of the sublist. As you can imagine, **subList()** makes list processing quite convenient. One way to sort a list is with the **sort()** method defined by **List**.
 
 Beginning with JDK 9, **List** includes the **of()** factory method, which has a number of overloads. Each version returns an unmodifiable, value-based collection that is comprised of the arguments that it is passed. The primary purpose of **of()** is to provide a convenient, efficient way to create a small **List** collection. There are 12 overloads of **of()**. One takes no arguments and creates an empty list. It is shown here:
-
+```java
 static <E> List<E> of()
-
+```
 Ten overloads take from 1 to 10 arguments and create a list that contains the specified elements. They are shown here:
 
 The final **of()** overload specifies a varargs parameter that takes an arbitrary number of elements or an array of elements. It is shown here:
@@ -120,15 +110,15 @@ For all versions, **null** elements are not allowed. In all cases, the **List** 
 ## The Set Interface
 
  The **Set** interface defines a set. It extends **Collection** and specifies the behavior of a collection that does not allow duplicate elements. Therefore, the **add()** method returns **false** if an attempt is made to add duplicate elements to a set. With two exceptions, it does not specify any additional methods of its own. **Set** is a generic interface that has this declaration:
-
+```java
 interface Set<E>
-
+```
 Here, **E** specifies the type of objects that the set will hold. Beginning with JDK 9, **Set** includes the **of()** factory method, which has a
 
 number of overloads. Each version returns an unmodifiable, value-based collection that is comprised of the arguments that it is passed. The primary purpose of **of()** is to provide a convenient, efficient way to create a small **Set** collection. There are 12 overloads of **of()**. One takes no arguments and creates an empty set. It is shown here:
-
+```java
 static <E> Set<E> of()
-
+```
 Ten overloads take from 1 to 10 arguments and create a list that contains the specified elements. They are shown here:
 
 The final **of()** overload specifies a varargs parameter that takes an arbitrary number of elements or an array of elements. It is shown here:
@@ -140,9 +130,9 @@ For all versions, **null** elements are not allowed. In all cases, the **Set** i
 Beginning with JDK 10, **Set** includes the static **copyOf()** method shown  
 
 here:
-
+```JAVA
 static <E> Set<E> copyOf(Collection <? extends E> from)
-
+```
 It returns a set that contains the same elements as from. Null values are not allowed. The returned set is unmodifiable.
 
 ## The SortedSet Interface
@@ -154,7 +144,7 @@ interface SortedSet<E>
 Here, **E** specifies the type of objects that the set will hold. In addition to those methods provided by **Set**, the **SortedSet** interface
 
 declares the methods summarized in Table 19-3. Several methods throw a **NoSuchElementException** when no items are contained in the invoking set. A **ClassCastException** is thrown when an object is incompatible with the elements in a set. A **NullPointerException** is thrown if an attempt is made to use a **null** object and **null** is not allowed in the set. An **IllegalArgumentException** is thrown if an invalid argument is used.
-
+![Alt text](image-8.png)
 **Table 19-3** The Methods Declared by **SortedSet**  
 
 ## SortedSet
@@ -164,21 +154,21 @@ declares the methods summarized in Table 19-3. Several methods throw a **NoSuchE
 ## The NavigableSet Interface
 
  The **NavigableSet** interface extends **SortedSet** and declares the behavior of a collection that supports the retrieval of elements based on the closest match to a given value or values. **NavigableSet** is a generic interface that has this declaration:
-
+```java
 interface NavigableSet<E>
-
+```
 Here, **E** specifies the type of objects that the set will hold. In addition to the methods that it inherits from **SortedSet**, **NavigableSet** adds those summarized in Table 19-4. A **ClassCastException** is thrown when an object is incompatible with the elements in the set. A **NullPointerException** is thrown if an attempt is made to use a **null** object and **null** is not allowed in the set. An **IllegalArgumentException** is thrown if an invalid argument is used.  
-
+![Alt text](image-9.png)
 **Table 19-4** The Methods Declared by **NavigableSet**
 
 ## The Queue Interface
 
  The **Queue** interface extends **Collection** and declares the behavior of a queue, which is often a first-in, first-out list. However, there are types of queues in which the ordering is based upon other criteria. **Queue** is a generic interface that has this declaration:  
-
+```java
 interface Queue<E>
-
+```
 Here, **E** specifies the type of objects that the queue will hold. The methods declared by **Queue** are shown in Table 19-5.
-
+![Alt text](image-10.png)
 **Table 19-5** The Methods Declared by **Queue**
 
 Several methods throw a **ClassCastException** when an object is incompatible with the elements in the queue. A **NullPointerException** is thrown if an attempt is made to store a **null** object and **null** elements are not allowed in the queue. An **IllegalArgumentException** is thrown if an invalid argument is used. An **IllegalStateException** is thrown if an attempt is made to add an element to a fixed-length queue that is full. A **NoSuchElementException** is thrown if an attempt is made to remove an element from an empty queue.
@@ -194,7 +184,8 @@ The **Deque** interface extends **Queue** and declares the behavior of a double-
 interface Deque<E>
 
 Here, **E** specifies the type of objects that the deque will hold. In addition to the methods that it inherits from **Queue**, **Deque** adds those methods summarized in Table 19-6. Several methods throw a **ClassCastException** when an object is incompatible with the elements in the deque. A **NullPointerException** is thrown if an attempt is made to store a **null** object and **null** elements are not allowed in the deque. An **IllegalArgumentException** is thrown if an invalid argument is used. An **IllegalStateException** is thrown if an attempt is made to add an element to a fixed-length deque that is full. A **NoSuchElementException** is thrown if an attempt is made to remove an element from an empty deque.  
-
+![Alt text](image-11.png)
+![Alt text](image-12.png)
 **Table 19-6** The Methods Declared by **Deque**
 
 Notice that **Deque** includes the methods **push()** and **pop()**. These methods enable a **Deque** to function as a stack. Also, notice the **descendingIterator**() method. It returns an iterator that returns elements in reverse order. In other words, it returns an iterator that moves from the end of the collection to the start. A **Deque** implementation can be _capacity-restricted_, which means that only a limited number of elements can be added to the deque. When this is the case, an attempt to add an element to the deque can fail. **Deque** allows you to handle such a failure in two ways. First, methods such as **addFirst()** and **addLast()** throw an **IllegalStateException** if a capacity-restricted deque is full. Second, methods such as **offerFirst()** and **offerLast()** return **false** if the element cannot be added.
@@ -204,41 +195,64 @@ Notice that **Deque** includes the methods **push()** and **pop()**. These metho
  Now that you are familiar with the collection interfaces, you are ready to examine the standard classes that implement them. Some of the classes provide full implementations that can be used as-is. Others are abstract, providing skeletal implementations that are used as starting points for creating concrete collections. As a general rule, the collection classes are not synchronized, but as you will see later in this chapter, it is possible to obtain synchronized versions.
 
 The core collection classes are summarized in the following table:  
-
+![Alt text](image-13.png)
 The following sections examine the concrete collection classes and illustrate their use.
 
-## NOTE
+**NOTE**
 
  In addition to the collection classes, several legacy classes, such as **Vector**, **Stack**, and **Hashtable**, have been reengineered to support collections. These are examined later in this chapter.
 
 ## The ArrayList Class
 
  The **ArrayList** class extends **AbstractList** and implements the **List** interface. **ArrayList** is a generic class that has this declaration:
-
+```java
 class ArrayList<E>
-
+```
 Here, **E** specifies the type of objects that the list will hold. **ArrayList** supports dynamic arrays that can grow as needed. In Java,
 
 standard arrays are of a fixed length. After arrays are created, they cannot grow or shrink, which means that you must know in advance how many elements an array will hold. But, sometimes, you may not know until run time precisely how large an array you need. To handle this situation, the Collections Framework defines **ArrayList**. In essence, an **ArrayList** is a variable-length  
 
 array of object references. That is, an **ArrayList** can dynamically increase or decrease in size. Array lists are created with an initial size. When this size is exceeded, the collection is automatically enlarged. When objects are removed, the array can be shrunk.
 
-## NOTE
+**NOTE**
 
  Dynamic arrays are also supported by the legacy class **Vector**, which is described later in this chapter.
-## NOTE
 
+**ArrayList** has the constructors shown here:
 
-## ArrayList
-
- has the constructors shown here:
-
-ArrayList() ArrayList(Collection<? extends E> c) ArrayList(int capacity)
+ArrayList() 
+ArrayList(Collection<? extends E> c) 
+ArrayList(int capacity)
 
 The first constructor builds an empty array list. The second constructor builds an array list that is initialized with the elements of the collection c. The third constructor builds an array list that has the specified initial capacity. The capacity is the size of the underlying array that is used to store the elements. The capacity grows automatically as elements are added to an array list.
 
 The following program shows a simple use of **ArrayList**. An array list is created for objects of type **String**, and then several strings are added to it. (Recall that a quoted string is translated into a **String** object.) The list is then displayed. Some of the elements are removed and the list is displayed again.  
-
+```java
+// Demonstrate ArrayList. import java.util.*;
+class ArrayList Demo {
+public static void main(String args[]) {
+// Create an array list. ArrayList<String> al = new ArrayList<String>();
+System.out.println("Initial size of al: " +
+al.size());
+// Add elements to the array list.
+al.add("C");
+al.add("A");
+al.add("E");
+al.add("B");
+al.add("D");
+al.add("F");
+al.add(1, "A2");
+System.out.println("Size of al after additions: " +  al.siz());
+// Display the array list.
+System.out.println("Contents of al: " + al);
+// Remove elements from the array list.
+al.remove("F");
+al.remove (2);
+System.out.println("Size of al after deletions:al.size());
+System.out.println("Contents of al: " + al);
+}
+}
+```
 The output from this program is shown here:
 
 Initial size of al: 0  
@@ -256,17 +270,15 @@ Notice that **a1** starts out empty and grows as elements are added to it. When 
 In the preceding example, the contents of a collection are displayed using the default conversion provided by **toString()**, which was inherited from **AbstractCollection**. Although it is sufficient for short, sample programs, you seldom use this method to display the contents of a real-world collection. Usually, you provide your own output routines. But, for the next few examples, the default output created by **toString()** is sufficient.
 
 Although the capacity of an **ArrayList** object increases automatically as objects are stored in it, you can increase the capacity of an **ArrayList** object manually by calling **ensureCapacity()**. You might want to do this if you know in advance that you will be storing many more items in the collection than it can currently hold. By increasing its capacity once, at the start, you can prevent several reallocations later. Because reallocations are costly in terms of time, preventing unnecessary ones improves performance. The signature for **ensureCapacity()** is shown here:
-
+```java
 void ensureCapacity(int cap)
-
+```
 Here, cap specifies the new minimum capacity of the collection. Conversely, if you want to reduce the size of the array that underlies an
 
-## ArrayList
-
- object so that it is precisely as large as the number of items that it is currently holding, call **trimToSize()**, shown here:
-
+**ArrayList** object so that it is precisely as large as the number of items that it is currently holding, call **trimToSize()**, shown here:
+```java
 void trimToSize()
-
+```
 ## Obtaining an Array from an ArrayList
 
  When working with **ArrayList**, you will sometimes want to obtain an actual array that contains the contents of the list. You can do this by calling **toArray()**, which is defined by **Collection**. Several reasons exist why you might want to convert a collection into an array, such as:
@@ -283,7 +295,28 @@ again here for your convenience:
 
 object[ ] toArray() <T> T[ ] toArray(T array[ ]) default <T> T[ ] toArray(IntFunction<T[ ]> arrayGen)
 
-The first returns an array of **Object**. The second and third forms return an array of elements that have the same type as **T**. Here, we will use the second form because of its convenience. The following program shows it in action.  
+The first returns an array of **Object**. The second and third forms return an array of elements that have the same type as **T**. Here, we will use the second form because of its convenience. The following program shows it in action.
+```java
+// Convert an ArrayList into an array. import java.util.*;
+class ArrayListToArray { public static void main(String args[]) { // Create an array list.
+ArrayList<Integer> al = new ArrayList<Integer>();
+// Add elements to the array list.
+al.add(1);
+al.add(2);
+al.add(3);
+al.add(4);
+System.out.println("Contents of al: " + al);
+// Get the array.
+Integer ia[] = new Integer [al.size()];
+ia al.toArray(ia) ; =
+int sum = 0;
+// Sum the array.
+for (int i ia) sum += i;
+System.out.println("Sum is: " + sum);
+}
+}
+
+```
 
 The output from the program is shown here:
 
@@ -300,19 +333,46 @@ manually wrap them within an **Integer**, as the program shows. Autoboxing cause
 ## The LinkedList Class
 
  The **LinkedList** class extends **AbstractSequentialList** and implements the **List**, **Deque**, and **Queue** interfaces. It provides a linked-list data structure. **LinkedList** is a generic class that has this declaration:
-
+```java
 class LinkedList<E>
-
+````
 Here, **E** specifies the type of objects that the list will hold. **LinkedList** has the two constructors shown here:
-
+```java
 LinkedList() LinkedList(Collection<? extends E> c)
-
+```
 The first constructor builds an empty linked list. The second constructor builds a linked list that is initialized with the elements of the collection c.
 
 Because **LinkedList** implements the **Deque** interface, you have access to the methods defined by **Deque**. For example, to add elements to the start of a list, you can use **addFirst()** or **offerFirst()**. To add elements to the end of the list, use **addLast()** or **offerLast()**. To obtain the first element, you can use **getFirst()** or **peekFirst()**. To obtain the last element, use **getLast()** or **peekLast()**. To remove the first element, use **removeFirst()** or **pollFirst()**. To remove the last element, use **removeLast()** or **pollLast()**.
 
 The following program illustrates **LinkedList**:  
-
+```java
+// Demonstrate LinkedList.
+import java.util.*;
+class LinkedListDemo { public static void main(String args[]) { // Create a linked list. LinkedList<String> 11 = new LinkedList<String>();
+// Add elements to the linked list.
+11.add("F");
+11.add("B");
+11.add("D");
+11.add("E");
+11.add("C");
+11.addLast ("Z");
+11.addFirst("A");
+11.add(1, "A2");
+System.out.println("Original contents of 11: " + 11);
+// Remove elements from the linked list.
+11.remove("F");
+11.remove (2);
+System.out.println("Contents of 11 after deletion: + 11);
+}
+// Remove first and last elements.
+11.removeFirst();
+11.removeLast();
+System.out.println("11 after deleting first and last: " +11);
+// Get and set a value.
+String val = 11.get(2); 11.set(2, val + " Changed");
+System.out.println("11 after change: " + 11);
+}
+```
 The output from this program is shown here:
 
 Original contents of ll: [A, A2, F, B, D, E, C, Z]
@@ -331,15 +391,20 @@ Notice how the third element in **ll** is changed by employing calls to **get()*
 
  extends **AbstractSet** and implements the **Set** interface. It creates a collection that uses a hash table for storage. **HashSet** is a generic class that has this declaration:
 
+```java
 class HashSet<E>
 
+```
 Here, **E** specifies the type of objects that the set will hold.  
 
 As most readers likely know, a hash table stores information by using a mechanism called hashing. In hashing, the informational content of a key is used to determine a unique value, called its _hash code_. The hash code is then used as the index at which the data associated with the key is stored. The transformation of the key into its hash code is performed automatically—you never see the hash code itself. Also, your code can’t directly index the hash table. The advantage of hashing is that it allows the execution time of **add()**, **contains()**, **remove()**, and **size()** to remain constant even for large sets.
 
 The following constructors are defined:
 
-HashSet() HashSet(Collection<? extends E> c) HashSet(int capacity) HashSet(int capacity, float fillRatio)
+HashSet() 
+HashSet(Collection<? extends E> c)
+HashSet(int capacity) 
+HashSet(int capacity, float fillRatio)
 
 The first form constructs a default hash set. The second form initializes the hash set by using the elements of c. The third form initializes the capacity of the hash set to capacity. (The default capacity is 16.) The fourth form initializes both the capacity and the fill ratio (also called _load factor_) of the hash set from its arguments. The fill ratio must be between 0.0 and 1.0, and it determines how full the hash set can be before it is resized upward. Specifically, when the number of elements is greater than the capacity of the hash set multiplied by its fill ratio, the hash set is expanded. For constructors that do not take a fill ratio, 0.75 is used.
 
@@ -350,7 +415,21 @@ The first form constructs a default hash set. The second form initializes the ha
 It is important to note that **HashSet** does not guarantee the order of its elements, because the process of hashing doesn’t usually lend itself to the creation of sorted sets. If you need sorted storage, then another collection, such as **TreeSet**, is a better choice.
 
 Here is an example that demonstrates **HashSet**:  
-
+```java
+// Demonstrate HashSet. import java.util.*;
+class HashSet Demo { public static void main(String args[]) { // Create a hash set.
+HashSet<String> hs = new HashSet<String>();
+// Add elements to the hash set.
+hs.add("Beta");
+hs.add("Alpha");
+hs.add("Eta");
+hs.add("Gamma");
+hs.add("Epsilon");
+hs.add("Omega");
+}
+System.out.println (hs);
+}
+```
 The following is the output from this program:
 
 [Gamma, Eta, Alpha, Epsilon, Omega, Beta]
@@ -360,14 +439,12 @@ As explained, the elements are not stored in sorted order, and the precise outpu
 ## The LinkedHashSet Class
 
  The **LinkedHashSet** class extends **HashSet** and adds no members of its own. It is a generic class that has this declaration:
-
+```java
 class LinkedHashSet<E>
-
+```
 Here, **E** specifies the type of objects that the set will hold. Its constructors parallel those in **HashSet**.
 
-## LinkedHashSet
-
- maintains a linked list of the entries in the set, in the order in which they were inserted. This allows insertion-order iteration over the set. That is, when cycling through a **LinkedHashSet** using an iterator, the elements will be returned in the order in which they were inserted. This is also the order in which they are contained in the string returned by **toString()** when called on  
+**LinkedHashSet**maintains a linked list of the entries in the set, in the order in which they were inserted. This allows insertion-order iteration over the set. That is, when cycling through a **LinkedHashSet** using an iterator, the elements will be returned in the order in which they were inserted. This is also the order in which they are contained in the string returned by **toString()** when called on  
 
 a **LinkedHashSet** object. To see the effect of **LinkedHashSet**, try substituting **LinkedHashSet** for **HashSet** in the preceding program. The output will be
 
@@ -375,24 +452,38 @@ a **LinkedHashSet** object. To see the effect of **LinkedHashSet**, try substitu
 
 which is the order in which the elements were inserted.
 
-## The TreeSet Class TreeSet
+## The TreeSet Class 
+**TreeSet** extends **AbstractSet** and implements the **NavigableSet** interface. It creates a collection that uses a tree for storage. Objects are stored in sorted, ascending order. Access and retrieval times are quite fast, which makes **TreeSet** an excellent choice when storing large amounts of sorted information that must be found quickly.
 
- extends **AbstractSet** and implements the **NavigableSet** interface. It creates a collection that uses a tree for storage. Objects are stored in sorted, ascending order. Access and retrieval times are quite fast, which makes **TreeSet** an excellent choice when storing large amounts of sorted information that must be found quickly.
-
-## TreeSet
-
- is a generic class that has this declaration:
-
+**TreeSet**is a generic class that has this declaration:
+```java
 class TreeSet<E>
-
+```
 Here, **E** specifies the type of objects that the set will hold. **TreeSet** has the following constructors:
 
-TreeSet() TreeSet(Collection<? extends E> c) TreeSet(Comparator<? super E> comp) TreeSet(SortedSet<E> ss)
+TreeSet() 
+TreeSet(Collection<? extends E> c) 
+TreeSet(Comparator<? super E> comp) 
+TreeSet(SortedSet<E> ss)
 
 The first form constructs an empty tree set that will be sorted in ascending order according to the natural order of its elements. The second form builds a tree set that contains the elements of c. The third form constructs an empty tree set that will be sorted according to the comparator specified by comp. (Comparators are described later in this chapter.) The fourth form builds a tree set that contains the elements of ss.
 
 Here is an example that demonstrates a **TreeSet**:  
-
+```java
+// Demonstrate TreeSet. import java.util.*;
+class TreeSetDemo {
+public static void main(String args[]) { // Create a tree set.
+TreeSet<String> ts = new TreeSet<String>();
+// Add elements to the tree set.
+ts.add("C");
+ts.add("A");
+ts.add("B");
+ts.add("E");
+ts.add("F");
+ts.add("D"); System.out.println(ts);
+}
+}
+```
 The output from this program is shown here:
 
 [A, B, C, D, E, F]
@@ -411,21 +502,19 @@ You might want to experiment with the other methods defined by **NavigableSet**.
 
 ## The PriorityQueue Class
 
-  
-
-## PriorityQueue
-
- extends **AbstractQueue** and implements the **Queue** interface. It creates a queue that is prioritized based on the queue’s comparator. **PriorityQueue** is a generic class that has this declaration:
-
+**PriorityQueue**extends **AbstractQueue** and implements the **Queue** interface. It creates a queue that is prioritized based on the queue’s comparator. **PriorityQueue** is a generic class that has this declaration:
+```java
 class PriorityQueue<E>
-
+```
 Here, **E** specifies the type of objects stored in the queue. **PriorityQueue**s are dynamic, growing as necessary.
 
-## PriorityQueue
+**PriorityQueue**defines the seven constructors shown here:
 
- defines the seven constructors shown here:
-
-PriorityQueue() PriorityQueue(int capacity) PriorityQueue(Comparator<? super E> comp) PriorityQueue(int capacity, Comparator<? super E> comp) PriorityQueue(Collection<? extends E> c) PriorityQueue(PriorityQueue<? extends E> c) PriorityQueue(SortedSet<? extends E> c)
+PriorityQueue() 
+PriorityQueue(int capacity) 
+PriorityQueue(Comparator<? super E> comp) 
+PriorityQueue(int capacity, Comparator<? super E> comp) PriorityQueue(Collection<? extends E> c) PriorityQueue(PriorityQueue<? extends E> c)
+PriorityQueue(SortedSet<? extends E> c)
 
 The first constructor builds an empty queue. Its starting capacity is 11. The second constructor builds a queue that has the specified initial capacity. The third constructor specifies a comparator, and the fourth builds a queue with the specified capacity and comparator. The last three constructors create queues that are initialized with the elements of the collection passed in c. In all cases, the capacity grows automatically as elements are added.
 
@@ -446,24 +535,42 @@ One word of caution: Although you can iterate through a **PriorityQueue** using 
 ## The ArrayDeque Class
 
  The **ArrayDeque** class extends **AbstractCollection** and implements the **Deque** interface. It adds no methods of its own. **ArrayDeque** creates a dynamic array and has no capacity restrictions. (The **Deque** interface supports implementations that restrict capacity, but does not require such restrictions.) **ArrayDeque** is a generic class that has this declaration:
-
+```java
 class ArrayDeque<E>
-
+```
 Here, **E** specifies the type of objects stored in the collection. **ArrayDeque** defines the following constructors:
 
-ArrayDeque() ArrayDeque(int size) ArrayDeque(Collection<? extends E> c)
+ArrayDeque() 
+ArrayDeque(int size) 
+ArrayDeque(Collection<? extends E> c)
 
 The first constructor builds an empty deque. Its starting capacity is 16. The second constructor builds a deque that has the specified initial capacity. The third constructor creates a deque that is initialized with the elements of the collection passed in c. In all cases, the capacity grows as needed to handle the elements added to the deque.
 
 The following program demonstrates **ArrayDeque** by using it to create a stack:  
-
+```java
+// Demonstrate ArrayDeque.
+import java.util.*;
+class ArrayDequeDemo {
+public static void main(String args[]) {
+// Create an array deque. ArrayDeque<String> adq = new ArrayDeque<String>();
+// Use an ArrayDeque like a stack.
+adq.push("A");
+adq.push("B");
+adq.push("D");
+adq.push("E"); adq.push("F");
+System.out.print ("Popping the stack: ");
+while (adq.peek() != null) System.out.print (adq.pop()
+}
+System.out.println();
+}
+}
+```
 The output is shown here:
 
 Popping the stack: F E D B A
 
-## The EnumSet Class EnumSet
-
- extends **AbstractSet** and implements **Set**. It is specifically for use with elements of an **enum** type. It is a generic class that has this declaration:
+## The EnumSet 
+**Class EnumSet**extends **AbstractSet** and implements **Set**. It is specifically for use with elements of an **enum** type. It is a generic class that has this declaration:
 
 class EnumSet<E extends Enum<E>>
 
@@ -474,7 +581,7 @@ Here, **E** specifies the elements. Notice that **E** must extend **Enum<E>**, w
  defines no constructors. Instead, it uses the factory methods shown in Table 19-7 to create objects. All methods can throw **NullPointerException**. The **copyOf()** and **range()** methods can also throw **IllegalArgumentException**. Notice that the **of()** method is overloaded a number of times. This is in the interest of efficiency. Passing a known number  
 
 of arguments can be faster than using a vararg parameter when the number of arguments is small.
-
+![Alt text](image-15.png)
 **Table 19-7** The Methods Declared by **EnumSet**
 
 ## Accessing a Collection via an Iterator
@@ -486,12 +593,12 @@ the **ListIterator** interface. **Iterator** enables you to cycle through a coll
 interface Iterator<E> interface ListIterator<E>
 
 Here, **E** specifies the type of objects being iterated. The **Iterator** interface declares the methods shown in Table 19-8. The methods declared by **ListIterator** (along with those inherited from **Iterator**) are shown in Table 19- 9. In both cases, operations that modify the underlying collection are optional. For example, **remove()** will throw **UnsupportedOperationException** when used with a read-only collection. Various other exceptions are possible.
-
+![Alt text](image-16.png)
 **Table 19-8** The Methods Declared by **Iterator**  
-
+![Alt text](image-17.png)
 **Table 19-9** The Methods Provided by **ListIterator**
 
-## NOTE
+**NOTE**
 
  Beginning with JDK 8, you can also use a **Spliterator** to cycle through a collection. **Spliterator** works differently than does **Iterator**, and it is described later in this chapter.
 
@@ -508,7 +615,35 @@ Here, **E** specifies the type of objects being iterated. The **Iterator** inter
 For collections that implement **List**, you can also obtain an iterator by calling **listIterator()**. As explained, a list iterator gives you the ability to access the collection in either the forward or backward direction and lets you modify an element. Otherwise, **ListIterator** is used just like **Iterator**.
 
 The following example implements these steps, demonstrating both the **Iterator** and **ListIterator** interfaces. It uses an **ArrayList** object, but the general principles apply to any type of collection. Of course, **ListIterator** is available only to those collections that implement the **List** interface.  
-
+```java
+// Demonstrate iterators. import java.util.*;
+class IteratorDemo {
+// Create an array list.
+public static void main(String args[]) { ArrayList<String> al = new ArrayList<String>();
+// Add elements to the array list.
+al.add("C");
+al.add("A");
+al.add("E"); al.add("B");
+al.add("D"); al.add("F");
+// Use iterator to display contents of al. System.out.print ("Original contents of al: "); Iterator<String> itr = al.iterator(); while (itr.hasNext()) { String element itr.next();
+System.out.print (element + " ");
+}
+System.out.println();
+// Modify objects being iterated. ListIterator<String> litral.listIterator(); while (litr.hasNext()) {
+String element litr.next(); litr.set (element + "+");
+}
+System.out.print ("Modified contents of al: ");
+itral.iterator(); while (itr.hasNext()) {
+String element itr.next(); System.out.print (element + " ");
+}
+System.out.println();
+// Now, display the list backwards. System.out.print ("Modified list backwards: "); while (litr.hasPrevious ()) {
+String element litr.previous ();
+System.out.print (element + " ");
+} System.out.println();
+}
+}
+```
 The output is shown here:
 
 Original contents of al: C A E B D F
@@ -519,10 +654,32 @@ Modified list backwards: F+ D+ B+ E+ A+ C+
 
 Pay special attention to how the list is displayed in reverse. After the list is modified, **litr** points to the end of the list. (Remember, **litr.hasNext()** returns **false** when the end of the list has been reached.) To traverse the list in reverse, the program continues to use **litr**, but this time it checks to see whether it has a previous element. As long as it does, that element is obtained and displayed.
 
-**The For-Each Alternative to Iterators** If you won’t be modifying the contents of a collection or obtaining elements in reverse order, then the for-each version of the **for** loop is often a more convenient alternative to cycling through a collection than is using an iterator. Recall that the **for** can cycle through any collection of objects that implement the **Iterable** interface. Because all of the collection classes implement this interface, they can all be operated upon by the **for**.
+##The For-Each Alternative to Iterators 
+If you won’t be modifying the contents of a collection or obtaining elements in reverse order, then the for-each version of the **for** loop is often a more convenient alternative to cycling through a collection than is using an iterator. Recall that the **for** can cycle through any collection of objects that implement the **Iterable** interface. Because all of the collection classes implement this interface, they can all be operated upon by the **for**.
 
 The following example uses a **for** loop to sum the contents of a collection:  
+```java
+// Use the for-each for loop to cycle through a collection.
+import java.util.*;
+class ForEachDemo { public static void main(String args[]) { // Create an array list for integers. ArrayList<Integer> vals = new ArrayList<Integer>();
+// Add values to the array list.
+vals.add(1);
+vals.add(2);
+vals.add(3);
+vals.add(4);
+vals.add(5);
+// Use for loop to display the values. System.out.print ("Contents of vals: "); for (int v vals)
+System.out.print (v + " ");
+System.out.println();
+// Now, sum the values by using a for loop.
+int sum = 0;
+for (int v : vals)
+sum += V;
+System.out.println("Sum of values: " + sum);
+} 
+}
 
+```
 The output from the program is shown here:
 
 Contents of vals: 1 2 3 4 5
@@ -534,17 +691,15 @@ As you can see, the **for** loop is substantially shorter and simpler to use tha
 ## Spliterators
 
  JDK 8 added another type of iterator called a spliterator that is defined by the **Spliterator** interface. A spliterator cycles through a sequence of elements, and in this regard, it is similar to the iterators just described. However, the techniques required to use it differ. Furthermore, it offers substantially more functionality than does either **Iterator** or **ListIterator**. Perhaps the most important aspect of **Spliterator** is its ability to provide support for parallel iteration of portions of the sequence. Thus, **Spliterator** supports parallel programming. (See Chapter 28 for information on concurrency and parallel programming.) However, you can use **Spliterator** even if you won’t be using parallel execution. One reason you might want to do so is because it offers a streamlined approach that combines the hasNext and next operations into one method.
-## Spliterators
 
 
-## Spliterator
 
- is a generic interface that is declared like this:
-
+**Spliterator**is a generic interface that is declared like this:
+```java
 interface Spliterator<T>
-
+```
 Here, **T** is the type of elements being iterated. **Spliterator** declares the methods shown in Table 19-10.  
-
+![Alt text](image-18.png)
 **Table 19-10** The Methods Declared by **Spliterator**
 
 Using **Spliterator** for basic iteration tasks is quite easy: simply call **tryAdvance()** until it returns **false**. If you will be applying the same action to each element in the sequence, **forEachRemaining()** offers a streamlined alternative. In both cases, the action that will occur with each iteration is defined by what the **Consumer** object does with each element. **Consumer** is a functional interface that applies an action to an object. It is a generic functional interface declared in **java.util.function**. (See Chapter 20 for information on **java.util.function**.) **Consumer** specifies only one abstract method, **accept()**, which is shown here:
@@ -554,7 +709,21 @@ void accept(T objRef)
 In the case of **tryAdvance()**, each iteration passes the next element in the sequence to objRef. Often, the easiest way to implement **Consumer** is by use of a lambda expression.  
 
 The following program provides a simple example of **Spliterator**. Notice that the program demonstrates both **tryAdvance()** and **forEachRemaining()**. Also notice how these methods combine the actions of **Iterator**’s **next()** and **hasNext()** methods into a single call.
-
+```java
+// A simple Spliterator demonstration. import java.util.*;
+class SpliteratorDemo {
+public static void main(String args[]) { // Create an array list for doubles. ArrayList<Double> vals = new ArrayList<>();
+// Add values to the array list.
+vals.add(1.0);
+vals.add(2.0);
+vals.add(3.0);
+vals.add (4.0); vals.add(5.0);
+// Use tryAdvance() to display contents of vals. System.out.print ("Contents of vals: \n"); Spliterator<Double> spltitr vals.spliterator(); while (spltitr.tryAdvance ((n) -> System.out.println(n))); System.out.println();
+// Create new list that contains square roots. spltitr = vals.spliterator(); ArrayList<Double> sqrs = new ArrayList<>(); while (spltitr.tryAdvance ((n) -> sqrs.add (Math.sqrt (n))));
+// Use forEachRemaining () to display contents of sqrs. System.out.print ("Contents of sqrs:\n"); spltitr = sqrs.spliterator(); spltitr.forEachRemaining ((n) -> System.out.println(n)); System.out.println();
+}
+}
+```
 The output is shown here:  
 
 Contents of vals:
@@ -585,16 +754,47 @@ Although this program demonstrates the mechanics of using **Spliterator**, it do
 
 In Table 19-10, notice the methods **characteristics()** and **hasCharacteristics()**. Each **Spliterator** has a set of attributes, called _characteristics,_ associated with it. These are defined by static **int** fields in **Spliterator**, such as **SORTED**, **DISTINCT**, **SIZED**, and **IMMUTABLE**, to name a few. You can obtain the characteristics by calling **characteristics()**. You can determine if a characteristic is present by calling **hasCharacteristics()**. Often, you won’t need to access a **Spliterator**’s characteristics, but in some cases, they can aid in creating efficient, resilient code.
 
-## NOTE
+**NOTE**
 
  For a further discussion of **Spliterator**, see Chapter 29, where it is used in the context of the stream API. For a discussion of lambda expressions, see Chapter 15. See Chapter 28 for a discussion of parallel programming and concurrency.
 
 There are several nested subinterfaces of **Spliterator** designed for use with the primitive types **double**, **int**, and **long**. These are called **Spliterator.OfDouble**, **Spliterator.OfInt**, and **Spliterator.OfLong**. There is also a generalized version called **Spliterator.OfPrimitive()**, which offers additional flexibility and serves as a superinterface of the aforementioned ones.
 
-**Storing User-Defined Classes in Collections** For the sake of simplicity, the foregoing examples have stored built-in objects, such as **String** or **Integer**, in a collection. Of course, collections are not limited to the storage of built-in objects. Quite the contrary. The power of collections is  
+##Storing User-Defined Classes in Collections
+For the sake of simplicity, the foregoing examples have stored built-in objects, such as **String** or **Integer**, in a collection. Of course, collections are not limited to the storage of built-in objects. Quite the contrary. The power of collections is  
 
 that they can store any type of object, including objects of classes that you create. For example, consider the following example that uses a **LinkedList** to store mailing addresses:  
-
+```java
+// A simple mailing list example. import java.util.*;
+class Address {
+private String name; private String street;
+private String city;
+private String state;
+private String code;
+Address (String n, String s, String c, String st, String cd) {
+name= n;
+street S;
+city= c;
+state = st;
+code = cd;
+}
+public String toString() {
+return name + "\n" + street + "\n" + city"" + state + "" + code;
+}
+}
+class Maillist {
+public static void main(String args[]) { LinkedList<Address> ml = new LinkedList<Address>();
+// Add elements to the linked list.
+ml.add(new Address("J.W. West", "11 Oak Ave",
+"Urbana", "IL", "61801"));
+ml.add(new Address ("Ralph Baker", "1142 Maple Lane", "Mahomet", "IL", "61853"));
+ml.add(new Address ("Tom Carlton", "867 Elm St", "Champaign", "IL", "61820"));
+// Display the mailing list.
+for (Address element: ml) System.out.println(element + "\n");
+}
+System.out.println();
+}
+```
 The output from the program is shown here:
 
 J.W. West
@@ -632,7 +832,7 @@ There is one key point about maps that is important to mention at the outset: th
 ## The Map Interfaces
 
  Because the map interfaces define the character and nature of maps, this discussion of maps begins with them. The following interfaces support maps:
-
+![Alt text](image-19.png)
 Each interface is examined next, in turn.
 
 ## The Map Interface
@@ -646,7 +846,9 @@ Here, **K** specifies the type of keys, and **V** specifies the type of values. 
 methods throw a **ClassCastException** when an object is incompatible with the elements in a map. A **NullPointerException** is thrown if an attempt is made to use a **null** object and **null** is not allowed in the map. An **UnsupportedOperationException** is thrown when an attempt is made to change an unmodifiable map. An **IllegalArgumentException** is thrown if an  
 
 invalid argument is used.  
-
+![Alt text](image-20.png)
+![Alt text](image-21.png)
+![Alt text](image-22.png)
 **Table 19-11** The Methods Declared by **Map**
 
 Maps revolve around two basic operations: **get()** and **put()**. To put a value into a map, use **put()**, specifying the key and the value. To obtain a value, call **get()**, passing the key as an argument. The value is returned.
@@ -674,21 +876,20 @@ interface SortedMap<K, V>
 Here, **K** specifies the type of keys, and **V** specifies the type of values. The methods declared by **SortedMap** are summarized in Table 19-12.
 
 Several methods throw a **NoSuchElementException** when no items are in the invoking map. A **ClassCastException** is thrown when an object is incompatible with the elements in a map. A **NullPointerException** is thrown if an attempt is made to use a **null** object when **null** is not allowed in the map. An **IllegalArgumentException** is thrown if an invalid argument is used.
-
+![Alt text](image-23.png)
 **Table 19-12** The Methods Declared by **SortedMap**
 
 Sorted maps allow very efficient manipulations of submaps (in other words, subsets of a map). To obtain a submap, use **headMap()**, **tailMap()**, or **subMap()**. The submap returned by these methods is backed by the invoking map. Changing one changes the other. To get the first key in the set, call **firstKey()**. To get the last key, use **lastKey()**.
 
 ## The NavigableMap Interface
 
-  
-
 The **NavigableMap** interface extends **SortedMap** and declares the behavior of a map that supports the retrieval of entries based on the closest match to a given key or keys. **NavigableMap** is a generic interface that has this declaration:
 
 interface NavigableMap<K,V>
 
 Here, **K** specifies the type of the keys, and **V** specifies the type of the values associated with the keys. In addition to the methods that it inherits from **SortedMap**, **NavigableMap** adds those summarized in Table 19-13. Several methods throw a **ClassCastException** when an object is incompatible with the keys in the map. A **NullPointerException** is thrown if an attempt is made to use a **null** object and **null** keys are not allowed in the set. An **IllegalArgumentException** is thrown if an invalid argument is used.  
-
+![Alt text](image-24.png)
+![Alt text](image-25.png)
 **Table 19-13** The Methods Declared by **NavigableMap**
 
 **The Map.Entry Interface** The **Map.Entry** interface enables you to work with a map entry. For example, recall that the **entrySet()** method declared by the **Map** interface returns a **Set** containing the map entries. Each of these set elements is a **Map.Entry** object. **Map.Entry** is generic and is declared like this:
@@ -696,13 +897,13 @@ Here, **K** specifies the type of the keys, and **V** specifies the type of the 
 interface Map.Entry<K, V>
 
 Here, **K** specifies the type of keys, and **V** specifies the type of values. Table 19- 14 summarizes the non-static methods declared by **Map.Entry**. It also has two static methods. The first is **comparingByKey()**, which returns a **Comparator** that compares entries by key. The second is **comparingByValue()**, which returns a **Comparator** that compares entries by value.  
-
+![Alt text](image-26.png)
 **Table 19-14** The Non-Static Methods Declared by **Map.Entry**
 
 ## The Map Classes
 
  Several classes provide implementations of the map interfaces. The classes that can be used for maps are summarized here:
-
+![Alt text](image-27.png)
 Notice that **AbstractMap** is a superclass for all concrete map implementations. **WeakHashMap** implements a map that uses “weak keys,” which allows an
 
 element in a map to be garbage-collected when its key is otherwise unused. This class is not discussed further here. The other map classes are described next.
@@ -721,16 +922,37 @@ HashMap() HashMap(Map<? extends K, ? extends V> m) HashMap(int capacity) HashMap
 
 The first form constructs a default hash map. The second form initializes the hash map by using the elements of m. The third form initializes the capacity of the hash map to capacity. The fourth form initializes both the capacity and fill ratio of the hash map by using its arguments. The meaning of capacity and fill ratio is the same as for **HashSet**, described earlier. The default capacity is 16. The default fill ratio is 0.75.
 
-## HashMap
-
- implements **Map** and extends **AbstractMap**. It does not add any methods of its own.
+**HashMap** implements **Map** and extends **AbstractMap**. It does not add any methods of its own.
 
 You should note that a hash map does not guarantee the order of its elements. Therefore, the order in which elements are added to a hash map is not necessarily the order in which they are read by an iterator.
 
 The following program illustrates **HashMap**. It maps names to account balances. Notice how a set-view is obtained and used.  
-
+```java
+import java.util.*;
+class HashMapDemo { public static void main(String args[]) {
+// Create a hash map.
+HashMap<String, Double> hm = new HashMap<String, Double>();
+// Put elements to the map hm.put("John Doe", 3434.34);
+hm.put("Tom Smith", 123.22);
+hm.put("Jane Baker", 1378.00);
+hm.put("Tod Hall", 99.22); hm.put("Ralph Smith", -19.08);
+// Get a set of the entries. Set<Map.Entry<String, Double>> set = hm.entrySet();
+// Display the set. for (Map.Entry<String, Double> me : set) { System.out.print (me.getKey() + ": "); System.out.println(me.getValue());
+}
+System.out.println();
+// Deposit 1000 into John Doe's account. double balance = hm.get ("John Doe"); hm.put("John Doe", balance + 1000);
+System.out.println("John Doe's new balance: hm.get("John Doe"));
+}
+}
+```
 Output from this program is shown here (the precise order may vary):  
-
+```java
+Ralph Smith: -19.08. Jane Baker: 1378.0
+Tom Smith: 123.22
+John Doe: 3434.34
+Tod Hall: 99.22
+John Doe's new balance: 4434.34
+```
 The program begins by creating a hash map and then adds the mapping of names to balances. Next, the contents of the map are displayed by using a set- view, obtained by calling **entrySet()**. The keys and values are displayed by calling the **getKey()** and **getValue()** methods that are defined by **Map.Entry**. Pay close attention to how the deposit is made into John Doe’s account. The **put()** method automatically replaces any preexisting value that is associated with the specified key with the new value. Thus, after John Doe’s account is updated, the hash map will still contain just one "John Doe" account.
 
 ## The TreeMap Class
@@ -747,25 +969,52 @@ The first form constructs an empty tree map that will be sorted by using the nat
 
 m, which will be sorted by using the natural order of the keys. The fourth form initializes a tree map with the entries from sm, which will be sorted in the same order as sm.
 
-## TreeMap
-
- has no map methods beyond those specified by the **NavigableMap** interface and the **AbstractMap** class.
+**TreeMap**has no map methods beyond those specified by the **NavigableMap** interface and the **AbstractMap** class.
 
 The following program reworks the preceding example so that it uses **TreeMap**:  
-
+```java
+import java.util.*;
+class TreeMapDemo {
+public static void main(String args[]) {
+// Create a tree map.
+TreeMap<String, Double> tm = new TreeMap<String, Double>();
+// Put elements to the map.
+tm.put("John Doe", 3434.34);
+tm.put("Tom Smith", 123.22);
+tm.put("Jane Baker", 1378.00);
+tm.put("Tod Hall", 99.22); tm.put("Ralph Smith", -19.08);
+// Get a set of the entries. Set<Map.Entry<String, Double>> set = tm.entrySet();
+// Display the elements.
+for (Map. Entry<String, Double> me: set) { System.out.print (me.getKey() System.out.println (me.getValue());
+System.out.println();
+// Deposit 1000 into John Doe's account. double balance = tm.get ("John Doe"); tm.put("John Doe", balance + 1000);
+System.out.println("John Doe's new balance: " tm.get("John Doe"));
+}
+```
 The following is the output from this program:
-
+```java
+Jane Baker: 1378.0
+John Doe: 3434.34
+Ralph Smith: -19.08
+Todd Hall: 99.22
+Tom Smith: 123.22
+John Doe's current balance: 4434.34
+```
 Notice that **TreeMap** sorts the keys. However, in this case, they are sorted by first name instead of last name. You can alter this behavior by specifying a comparator when the map is created, as described shortly.
 
 ## The LinkedHashMap Class LinkedHashMap
 
  extends **HashMap**. It maintains a linked list of the entries in the map, in the order in which they were inserted. This allows insertion-order iteration over the map. That is, when iterating through a collection-view of a **LinkedHashMap**, the elements will be returned in the order in which they were inserted. You can also create a **LinkedHashMap** that returns its elements in the order in which they were last accessed. **LinkedHashMap** is a generic class that has this declaration:
-
+```java
 class LinkedHashMap<K, V>  
-
+```
 Here, **K** specifies the type of keys, and **V** specifies the type of values. **LinkedHashMap** defines the following constructors:
 
-LinkedHashMap() LinkedHashMap(Map<? extends K, ? extends V> m) LinkedHashMap(int capacity) LinkedHashMap(int capacity, float fillRatio) LinkedHashMap(int capacity, float fillRatio, boolean Order)
+LinkedHashMap() 
+LinkedHashMap(Map<? extends K, ? extends V> m) 
+LinkedHashMap(int capacity) 
+LinkedHashMap(int capacity, float fillRatio) 
+LinkedHashMap(int capacity, float fillRatio, boolean Order)
 
 The first form constructs a default **LinkedHashMap**. The second form initializes the **LinkedHashMap** with the elements from m. The third form initializes the capacity. The fourth form initializes both capacity and fill ratio. The meaning of capacity and fill ratio are the same as for **HashMap**. The default capacity is 16. The default ratio is 0.75. The last form allows you to specify whether the elements will be stored in the linked list by insertion order, or by order of last access. If Order is **true**, then access order is used. If Order is **false**, then insertion order is used.
 
@@ -789,48 +1038,41 @@ Here, **K** specifies the type of key, and **V** specifies the type of value. Th
 
   
 
-## The EnumMap Class EnumMap
-
- extends **AbstractMap** and implements **Map**. It is specifically for use with keys of an **enum** type. It is a generic class that has this declaration:
-
+**The EnumMap Class EnumMap**extends **AbstractMap** and implements **Map**. It is specifically for use with keys of an **enum** type. It is a generic class that has this declaration:
+```java
 class EnumMap<K extends Enum<K>, V>
-
+```
 Here, **K** specifies the type of key, and **V** specifies the type of value. Notice that **K** must extend **Enum<K>**, which enforces the requirement that the keys must be of an **enum** type.
 
-## EnumMap
+**EnumMap** defines the following constructors:
 
- defines the following constructors:
-
-EnumMap(Class<K> kType) EnumMap(Map<K, ? extends V> m) EnumMap(EnumMap<K, ? extends V> em)
+EnumMap(Class<K> kType) 
+EnumMap(Map<K, ? extends V> m) 
+EnumMap(EnumMap<K, ? extends V> em)
 
 The first constructor creates an empty **EnumMap** of type kType. The second creates an **EnumMap** map that contains the same entries as m. The third creates an **EnumMap** initialized with the values in em.
 
-## EnumMap
-
- defines no methods of its own.
-## EnumMap
+**EnumMap**defines no methods of its own.
 
 
-## EnumMap
 
-* Both **TreeSet** and **TreeMap** store elements in sorted order. However, it is the comparator that defines precisely what “sorted order” means. By default, these classes store their elements by using what Java refers to as “natural ordering,” which is usually the ordering that you would expect (A before B, 1 before 2, and so forth). If you want to order elements a different way, then specify a **Comparator** when you construct the set or map. Doing so gives you the ability to govern precisely how elements are stored within sorted collections and maps.
+**EnumMap** Both **TreeSet** and **TreeMap** store elements in sorted order. However, it is the comparator that defines precisely what “sorted order” means. By default, these classes store their elements by using what Java refers to as “natural ordering,” which is usually the ordering that you would expect (A before B, 1 before 2, and so forth). If you want to order elements a different way, then specify a **Comparator** when you construct the set or map. Doing so gives you the ability to govern precisely how elements are stored within sorted collections and maps.
 
 ## Comparator
 
  is a generic interface that has this declaration:
-
+```java
 interface Comparator<T>
-
+```
 Here, **T** specifies the type of objects being compared. Prior to JDK 8, the **Comparator** interface defined only two methods:
 
 **compare()** and **equals()**. The **compare()** method, shown here, compares two elements for order:  
-
+```java
 int compare(T _obj1_, T _obj2_)
-
+```
 _obj1_ and _obj2_ are the objects to be compared. Normally, this method returns zero if the objects are equal. It returns a positive value if _obj1_ is greater than _obj2_. Otherwise, a negative value is returned. The method can throw a **ClassCastException** if the types of the objects are not compatible for comparison. By implementing **compare()**, you can alter the way that objects are ordered. For example, to sort in reverse order, you can create a comparator that reverses the outcome of a comparison.
 
 The **equals()** method, shown here, tests whether an object equals the invoking comparator:
-
 boolean equals(object obj)
 
 Here, obj is the object to be tested for equality. The method returns **true** if obj and the invoking object are both **Comparator** objects and use the same ordering. Otherwise, it returns **false**. Overriding **equals()** is not necessary, and most simple comparators will not do so.
@@ -853,13 +1095,19 @@ static <T extends Comparable<? super T>> Comparator<T> naturalOrder()
 
 If you want a comparator that can handle **null** values, use **nullsFirst()** or **nullsLast()**, shown here:
 
-static <T> Comparator<T> nullsFirst(Comparator<? super T> comp) static <T> Comparator<T> nullsLast(Comparator<? super T> comp)
+static <T> 
+Comparator<T> 
+nullsFirst(Comparator<? super T> comp) 
+static <T> 
+Comparator<T> 
+nullsLast(Comparator<? super T> comp)
 
 The **nullsFirst()** method returns a comparator that views **null** values as less than other values. The **nullsLast()** method returns a comparator that views **null** values as greater than other values. In both cases, if the two values being compared are non-**null**, comp performs the comparison. If comp is passed **null**, then all non-**null** values are viewed as equivalent.
 
 Another default method is **thenComparing()**. It returns a comparator that performs a second comparison when the outcome of the first comparison indicates that the objects being compared are equal. Thus, it can be used to create a “compare by X then compare by Y” sequence. For example, when comparing cities, the first comparison might compare names, with the second comparison comparing states. (Therefore, Springfield, Illinois, would come before Springfield, Missouri, assuming normal, alphabetical order.) The **thenComparing()** method has three forms. The first, shown here, lets you specify the second comparator by passing an instance of **Comparator**:
 
-default Comparator<T> thenComparing(Comparator<? super T> thenByComp)
+default Comparator<T> 
+thenComparing(Comparator<? super T> thenByComp)
 
 Here, thenByComp specifies the comparator that is called if the first comparison returns equal.
 
@@ -869,9 +1117,7 @@ In both, getKey refers to function that obtains the next comparison key, which i
 
 specifies the comparator used to compare keys. (Here, and in subsequent uses, **U** specifies the type of the key.)
 
-## Comparator
-
- also adds the following specialized versions of “then comparing” methods for the primitive types:
+**Comparator** also adds the following specialized versions of “then comparing” methods for the primitive types:
 
 In all methods, getKey refers to a function that obtains the next comparison key.
 
@@ -884,7 +1130,29 @@ In all methods, getKey refers to a function that obtains the next comparison key
 ## Using a Comparator
 
  The following is an example that demonstrates the power of a custom comparator. It implements the **compare()** method for strings that operates in reverse of normal. Thus, it causes a tree set to be sorted in reverse order.  
-
+```java
+// Use a custom comparator.
+import java.util.*;
+// A reverse comparator for strings. class MyComp implements Comparator<String> { public int compare (String aStr, String bStr) {
+// Reverse the comparison. return bStr.compareTo (aStr);
+}
+// No need to override equals or the default methods.
+}
+class CompDemo {
+public static void main(String args[]) { // Create a tree set.
+TreeSet<String> ts = new TreeSet<String> (new MyComp());
+// Add elements to the tree set.
+ts.add("C");
+ts.add("A"); ts.add("B");
+ts.add("E");
+ts.add("F");
+ts.add("D");
+// Display the elements.
+for (String element : ts) System.out.print (element + " ");
+System.out.println();
+}
+}
+```
 As the following output shows, the tree is now sorted in reverse order:
 
 F E D C B A
@@ -894,9 +1162,13 @@ Look closely at the **MyComp** class, which implements **Comparator** by
 implementing **compare()**. (As explained earlier, overriding **equals()** is neither necessary nor common. It is also not necessary to override the default methods.) Inside **compare()**, the **String** method **compareTo()** compares the two strings. However, **bStr**—not **aStr**—invokes **compareTo()**. This causes the outcome of the comparison to be reversed.
 
 Although the way in which the reverse order comparator is implemented by the preceding program is perfectly adequate, there is another way to approach a solution. It is now possible to simply call **reversed()** on a natural-order comparator. It will return an equivalent comparator, except that it runs in reverse. For example, assuming the preceding program, you can rewrite **MyComp** as a natural-order comparator, as shown here:
-
+```java
+class MyComp implements Comparator<String> { public int compare (String aStr, String bStr) { return astr.compareTo (bStr); } }
+```
 Next, you can use the following sequence to create a **TreeSet** that orders its string elements in reverse:
-
+```java
+MyComp mc = new MyComp(); // Create a comparator // Pass a reverse order version of MyComp to TreeSet. TreeSet<String> ts = new TreeSet<String> (mc.reversed());
+```
 If you plug this new code into the preceding program, it will produce the same results as before. In this case, there is no advantage gained by using **reversed()**. However, in cases in which you need to create both a natural-order comparator and a reversed comparator, then using **reversed()** gives you an easy way to obtain the reverse-order comparator without having to code it explicitly.
 
 It is not actually necessary to create the **MyComp** class in the preceding examples because a lambda expression can be easily used instead. For example, you can remove the **MyComp** class entirely and create the string comparator by using this statement:
@@ -906,25 +1178,114 @@ It is not actually necessary to create the **MyComp** class in the preceding exa
 Comparator<String> mc = (aStr, bStr) -> aStr.compareTo(bStr);  
 
 One other point: in this simple example, it would also be possible to specify a reverse comparator via a lambda expression directly in the call to the **TreeSet()** constructor, as shown here:
-
+```java
+// Pass a reversed comparator to TreeSet() via a // lambda expression. TreeSet<String> ts = new TreeSet<String>( (aStr, bStr) -> bStr.compareTo (aStr));
+```
 By making these changes, the program is substantially shortened, as its final version shown here illustrates:
-
+```java
+// Use a lambda expression to create a reverse comparator. import java.util.*;
+class CompDemo2 {
+public static void main(String args[]) {
+// Pass a reverse comparator to TreeSet() via a // lambda expression. TreeSet<String> ts = new TreeSet<String>(
+(aStr, bStr) -> bStr.compareTo(aStr));
+// Add elements to the tree set.
+ts.add("C");
+ts.add("A"); ts.add("B");
+ts.add("E");
+ts.add("F");
+ts.add("D");
+// Display the elements.
+for (String element : ts) System.out.print (element + ");
+}
+System.out.println();
+}
+```
 For a more practical example that uses a custom comparator, the following program is an updated version of the **TreeMap** program shown earlier that  
 
 stores account balances. In the previous version, the accounts were sorted by name, but the sorting began with the first name. The following program sorts the accounts by last name. To do so, it uses a comparator that compares the last name of each account. This results in the map being sorted by last name.  
+```java
+// Use a comparator to sort accounts by last name. import java.util.*;
+// Compare last whole words in two strings. class TComp implements Comparator<String> { public int compare (String aStr, String bStr) { int i, j, k;
+// Find index of beginning of last name.
+i=aStr.lastIndexOf(' ');
+j = bStr.lastIndexOf(' ');
+k = aStr.substring (i).compareToIgnoreCase (bStr.substring(j)); if (k==0) // last names match, check entire name return astr.compareToIgnoreCase (bStr);
+else
+return k;
+}
+// No need to override equals.
+}
+class TreeMapDemo2 {
+public static void main(String args[]) {
+// Create a tree map.
+TreeMap<String, Double> tm = new TreeMap<String, Double> (new TComp());
+// Put elements to the map.
+tm.put("John Doe", 3434.34);
+tm.put("Tom Smith", 123.22);
+tm.put("Jane Baker", 1378.00); tm.put("Tod Hall", 99.22);
+tm.put("Ralph Smith", -19.08);
+// Get a set of the entries.
+Set<Map.Entry<String, Double>> set = tm.entrySet();
+// Display the elements.
+for (Map. Entry<String, Double> me : set) { System.out.print (me.getKey() + ": "); System.out.println (me.getValue());
+}
+System.out.println();
+// Deposit 1000 into John Doe's account. double balance = tm.get("John Doe"); tm.put("John Doe", balance + 1000);
+System.out.println("John Doe's new balance: tm.get("John Doe"));
+}
 
+```
 Here is the output; notice that the accounts are now sorted by last name:  
-
-Here is the output; notice that the accounts are now sorted by last name:
+Jane Baker: 1378.0
+John Doe: 3434.34
+Todd Hall: 99.22
+Ralph Smith: -19.08
+Tom Smith: 123.22
+John Doe's new balance: 4434.34
 
 The comparator class **TComp** compares two strings that hold first and last names. It does so by first comparing last names. To do this, it finds the index of the last space in each string and then compares the substrings of each element that begin at that point. In cases where last names are equivalent, the first names are then compared. This yields a tree map that is sorted by last name, and within last name by first name. You can see this because Ralph Smith comes before Tom Smith in the output.
 
 There is another way that you could code the preceding program so the map is sorted by last name and then by first name. This approach uses the **thenComparing()** method. Recall that **thenComparing()** lets you specify a second comparator that will be used if the invoking comparator returns equal. This approach is put into action by the following program, which reworks the preceding example to use **thenComparing()**:  
-
+```java
+// Use thenComparing() to sort by last, then first name.
+import java.util.*;
+// A comparator that compares last names. class CompLast Names implements Comparator<String> { public int compare (String aStr, String bStr) {
+int i, j;
+// Find index of beginning of last name.
+i = aStr.lastIndexOf(' ');
+j = bStr.lastIndexOf(' ');
+return astr.substring (i).compareToIgnoreCase (bStr.substring(j));
+// Sort by entire name when last names are equal. class CompThenByFirstName implements Comparator<String> { public int compare (String aStr, String bStr) {
+int i, j;
+return astr.compareToIgnoreCase (bStr);
+}
+}
+class TreeMapDemo2A {
+public static void main(String args[]) {
+// Use thenComparing () to create a comparator that compares // last names, then compares entire name when last names match.
+CompLastNames compLN= new CompLastNames(); Comparator<String> compLast ThenFirst =
+compLN. thenComparing (new CompThenByFirstName());
+// Create a tree map. TreeMap<String, Double> tm =
+new TreeMap<String, Double> (compLast ThenFirst);
+// Put elements to the map. tm.put("John Doe", 3434.34);
+tm.put("Tom Smith", 123.22); tm.put("Jane Baker", 1378.00);
+tm.put("Tod Hall", 99.22);
+tm.put("Ralph Smith", -19.08);
+// Get a set of the entries. Set<Map.Entry<String, Double>> set = tm.entrySet();
+// Display the elements. for (Map. Entry<String, Double> me : set) { System.out.print (me.getKey() + ": "); System.out.println (me.getValue());
+} System.out.println();
+// Deposit 1000 into John Doe's account. double balance = tm.get("John Doe"); tm.put("John Doe", balance + 1000);
+System.out.println("John Doe's new balance: tm.get("John Doe"));
+}
+}
+}
+```
 This version produces the same output as before. It differs only in how it accomplishes its job. To begin, notice that a comparator called **CompLastNames** is created. This comparator compares only the last names. A second comparator, called **CompThenByFirstName**, compares the entire name, starting with the first name. Next, the **TreeMap** is created by the following sequence:
 
 Here, the primary comparator is **compLN**. It is an instance of **CompLastNames**. On it is called **thenComparing()**, passing in an instance of **CompThenByFirstName**. The result is assigned to the comparator called **compLastThenFirst**. This comparator is used to construct the **TreeMap**, as shown here:  
-
+```java
+TreeMap<String, Double> tm = new TreeMap<String, Double> (compLast ThenFirst);
+```
 Now, whenever the last names of the items being compared are equal, the entire name, beginning with the first name, is used to order the two. This means that names are ordered based on last name, and within last names, by first names.
 
 One last point: in the interest of clarity, this example explicitly creates two comparator classes called **CompLastNames** and **ThenByFirstNames**, but lambda expressions could have been used instead. You might want to try this on your own. Just follow the same general approach described for the **CompDemo2** example shown earlier.
@@ -932,6 +1293,11 @@ One last point: in the interest of clarity, this example explicitly creates two 
 ## The Collection Algorithms
 
  The Collections Framework defines several algorithms that can be applied to collections and maps. These algorithms are defined as static methods within the **Collections** class. They are summarized in Table 19-15.  
+![Alt text](image-28.png)
+![Alt text](image-29.png)
+![Alt text](image-30.png)
+![Alt text](image-31.png)
+![Alt text](image-32.png)
 
 **Table 19-15** The Algorithms Defined by **Collections**
 
@@ -943,15 +1309,33 @@ Notice that several methods, such as **synchronizedList()** and **synchronizedSe
 
 The set of methods that begins with **unmodifiable** returns views of the various collections that cannot be modified. These will be useful when you want to grant some process read—but not write—capabilities on a collection.  
 
-## Collections
-
- defines three static variables: **EMPTY_SET, EMPTY_LIST,** and **EMPTY_MAP**. All are immutable.
+**Collections ** defines three static variables: **EMPTY_SET, EMPTY_LIST,** and **EMPTY_MAP**. All are immutable.
 
 The following program demonstrates some of the algorithms. It creates and initializes a linked list. The **reverseOrder()** method returns a **Comparator** that reverses the comparison of **Integer** objects. The list elements are sorted according to this comparator and then are displayed. Next, the list is randomized by calling **shuffle()**, and then its minimum and maximum values are displayed.  
-
+```java
+// Demonstrate various algorithms. import java.util.*;
+class Algorithms Demo {
+public static void main(String args[]) {
+// Create and initialize linked list.
+LinkedList<Integer> 11 = new LinkedList<Integer>(); 11.add(-8);
+11.add(20); 11.add(-20);
+11.add(8);
+// Create a reverse order comparator. Comparator<Integer> r = Collections.reverseOrder();
+// Sort list by using the comparator.
+Collections.sort (11, r); System.out.print ("List sorted in reverse: ");
+for (int i: 11) System.out.print (i+" ");
+System.out.println();
+// Shuffle list. Collections.shuffle (11);
+// Display randomized list. System.out.print ("List shuffled: "); for (int i: 11).
+System.out.print (i+" ");
+System.out.println();
+System.out.println("Minimum: + Collections.min(11));
+}
+System.out.println("Maximum: " + Collections.max(11));
+}
+}
+```
 Output from this program is shown here:  
-
-Output from this program is shown here:
 
 List sorted in reverse: 20 8 -8 -20
 
@@ -1033,9 +1417,7 @@ static Spliterator.OfDouble spliterator(double array[ ]) static Spliterator.OfIn
 
 Here, array is the array that the spliterator will cycle through. The second version of **spliterator()** enables you to specify a range to iterate within the array.
 
-## Arrays
-
- supports the **Stream** interface by including the **stream()** method. It has two forms. The first is shown here:  
+**Arrays** supports the **Stream** interface by including the **stream()** method. It has two forms. The first is shown here:  
 
 static DoubleStream stream(double array[ ]) static IntStream stream(int array[ ]) static LongStream stream(long array[ ]) static <T> Stream stream(T array[ ])
 
@@ -1055,12 +1437,28 @@ JDK 9 added three comparison methods to **Arrays**. They are **compare()**, **co
 
 comparison of two arrays that hold integer values, use **compareUnsigned()**. To find the location of the first mismatch between two arrays, use **mismatch()**. It returns the index of the mismatch, or −1 if the arrays are equivalent.
 
-## Arrays
-
- also provides **toString()** and **hashCode()** for the various types of arrays. In addition, **deepToString()** and **deepHashCode()** are provided, which operate effectively on arrays that contain nested arrays.
+**Arrays** also provides **toString()** and **hashCode()** for the various types of arrays. In addition, **deepToString()** and **deepHashCode()** are provided, which operate effectively on arrays that contain nested arrays.
 
 The following program illustrates how to use some of the methods of the **Arrays** class:  
-
+```java
+// Demonstrate Arrays import java.util.*;
+class ArraysDemo {
+public static void main(String args[]) {
+// Allocate and initialize array. int array[] = new int[10]; for (int i = 0; i < 10; i++)
+array[i]= -3 i;
+// Display, sort, and display the array. System.out.print ("Original contents: "); display (array); Arrays.sort (array); System.out.print ("Sorted: "); display (array);
+// Fill and display the array. Arrays.fill (array, 2, 6, -1); System.out.print ("After fill(): "); display (array);
+// Sort and display the array.
+Arrays. sort (array); System.out.print ("After sorting again: "); display (array);
+// Binary search for -9.
+System.out.print ("The value 9 is at location "); int index=
+Arrays.binarySearch (array, -9);
+System.out.println (index);
+}
+static void display (int array[]) { for (int i: array)
+System.out.print (i + " ");
+System.out.println();
+```
 The following is the output from this program:
 
 Original contents: 0 -3 -6 -9 -12 -15 -18 -21 -24 -27
@@ -1080,7 +1478,7 @@ The value -9 is at location 2
 One other point: none of the modern collection classes described in this chapter are synchronized, but all the legacy classes are synchronized. This distinction may be important in some situations. Of course, you can easily synchronize collections by using one of the algorithms provided by **Collections**.
 
 The legacy classes defined by **java.util** are shown here:
-
+![Alt text](image-34.png)
 There is one legacy interface called **Enumeration**. The following sections examine **Enumeration** and each of the legacy classes, in turn.
 
 ## The Enumeration Interface
@@ -1103,38 +1501,37 @@ default Iterator<E> asIterator()
 
 It returns an iterator to the elements in the enumeration. As such, it provides an easy way to convert an old-style **Enumeration** into a modern **Iterator**. Furthermore, if a portion of the elements in the enumeration have already been read prior to calling **asIterator()**, the returned iterator accesses only the remaining elements.
 
-## Vector Vector
-
- implements a dynamic array. It is similar to **ArrayList**, but with two differences: **Vector** is synchronized, and it contains many legacy methods that duplicate the functionality of methods defined by the Collections Framework. With the advent of collections, **Vector** was reengineered to extend **AbstractList** and to implement the **List** interface. With the release of JDK 5, it  
+## Vector 
+**Vector**implements a dynamic array. It is similar to **ArrayList**, but with two differences: **Vector** is synchronized, and it contains many legacy methods that duplicate the functionality of methods defined by the Collections Framework. With the advent of collections, **Vector** was reengineered to extend **AbstractList** and to implement the **List** interface. With the release of JDK 5, it  
 
 was retrofitted for generics and reengineered to implement **Iterable**. This means that **Vector** is fully compatible with collections, and a **Vector** can have its contents iterated by the enhanced **for** loop.
 
-## Vector
-
- is declared like this:
-
+**Vector** is declared like this:
+```java
 class Vector<E>
-
+```
 Here, **E** specifies the type of element that will be stored. Here are the **Vector** constructors:
 
-Vector() Vector(int size) Vector(int size, int incr) Vector(Collection<? extends E> c)
+Vector() 
+Vector(int size) 
+Vector(int size, int incr) 
+Vector(Collection<? extends E> c)
 
 The first form creates a default vector, which has an initial size of 10. The second form creates a vector whose initial capacity is specified by size. The third form creates a vector whose initial capacity is specified by size and whose increment is specified by incr. The increment specifies the number of elements to allocate each time that a vector is resized upward. The fourth form creates a vector that contains the elements of collection c.
 
 All vectors start with an initial capacity. After this initial capacity is reached, the next time that you attempt to store an object in the vector, the vector automatically allocates space for that object plus extra room for additional objects. By allocating more than just the required memory, the vector reduces the number of allocations that must take place as the vector grows. This reduction is important, because allocations are costly in terms of time. The amount of extra space allocated during each reallocation is determined by the increment that you specify when you create the vector. If you don’t specify an increment, the vector’s size is doubled by each allocation cycle.
 
-## Vector
-
- defines these protected data members:
-
+**Vector** defines these protected data members:
+```java
 int capacityIncrement; int elementCount; Object[ ] elementData;
-
+```
 The increment value is stored in **capacityIncrement**. The number of elements currently in the vector is stored in **elementCount**. The array that holds the  
 
 vector is stored in **elementData**. In addition to the collections methods specified by **List**, **Vector** defines
 
 several legacy methods, which are summarized in Table 19-16.  
-
+![Alt text](image-35.png)
+![Alt text](image-36.png)
 **Table 19-16** The Legacy Methods Defined by **Vector**
 
 Because **Vector** implements **List**, you can use a vector just like you use an **ArrayList** instance. You can also manipulate one using its legacy methods. For example, after you instantiate a **Vector**, you can add an element to it by calling **addElement()**. To obtain the element at a specific location, call **elementAt()**. To obtain the first element in the vector, call **firstElement()**. To retrieve the last element, call **lastElement()**. You can obtain the index of an element by using **indexOf()** and **lastIndexOf()**. To remove an element, call **removeElement()** or **removeElementAt()**.
@@ -1142,107 +1539,238 @@ Because **Vector** implements **List**, you can use a vector just like you use a
 The following program uses a vector to store various types of numeric objects. It demonstrates several of the legacy methods defined by **Vector**. It  
 
 also demonstrates the **Enumeration** interface.  
-
+```java
+// Demonstrate various Vector operations. import java.util.*;
+class Vector Demo {
+public static void main(String args[]) {
+// initial size is 3, increment is 2 Vector<Integer> v = new Vector<Integer> (3, 2);
+System.out.println("Initial size: +V.size()); System.out.println("Initial capacity: "
+v.capacity());
+v.addElement(1);
+v.addElement (2);
+v.addElement (3);
+v.addElement (4);
+System.out.println("Capacity after four additions: " +
+v.capacity());
+v.addElement (5);
+System.out.println("Current capacity:
+v.capacity());
+v.addElement (6);
+v.addElement (7);
+System.out.println("Current capacity:
+v.capacity());
+v.addElement (9);
+v.addElement (10);
+System.out.println("Current capacity:
+v.capacity());
+v.addElement (11);
+v.addElement (12);
+System.out.println("First element: +v.firstElement()); System.out.println("Last element: " + v.lastElement());
+if (v.contains(3))
+System.out.println("Vector contains 3.");
+// Enumerate the elements in the vector. Enumeration<Integer> vEnum = v.elements();
+System.out.println("\nElements in vector: ");
+while (vEnum.hasMoreElements()) System.out.print (vEnum.nextElement() + " ");
+System.out.println();
+```
 The output from this program is shown here:
-
+```java
+Initial size: 0
+Initial capacity: 3
+Capacity after four additions: 5
+Current capacity: 5
+Current capacity: 7
+Current capacity: 9
+First element: 1
+Last element: 12
+Vector contains 3.
+Elements in vector:
+1 2 3 4 5 6 7 9 10 11 12
+```
 Instead of relying on an enumeration to cycle through the objects (as the preceding program does), you can use an iterator. For example, the following iterator-based code can be substituted into the program:
-
+```java
+// Use an iterator to display contents. Iterator<Integer> vitr = v.iterator();
+System.out.println("\nElements in vector: "); while (vItr.hasNext())
+System.out.print (vItr.next() + " ");
+System.out.println();
+```
 You can also use a for-each **for** loop to cycle through a **Vector**, as the following version of the preceding code shows:
-
+```java
+// Use an enhanced for loop to display contents System.out.println("\nElements in vector: "); for (int iv) System.out.print(i + " ");
+System.out.println();
+```
 Because the **Enumeration** interface is not recommended for new code, you will usually use an iterator or a for-each **for** loop to enumerate the contents of a  
 
 vector. Of course, legacy code will employ **Enumeration**. Fortunately, enumerations and iterators work in nearly the same manner.
 
-## Stack Stack
-
- is a subclass of **Vector** that implements a standard last-in, first-out stack. **Stack** only defines the default constructor, which creates an empty stack. With the release of JDK 5, **Stack** was retrofitted for generics and is declared as shown here:
+## Stack 
+**Stack**is a subclass of **Vector** that implements a standard last-in, first-out stack. **Stack** only defines the default constructor, which creates an empty stack. With the release of JDK 5, **Stack** was retrofitted for generics and is declared as shown here:
 
 class Stack<E>
 
 Here, **E** specifies the type of element stored in the stack. **Stack** includes all the methods defined by **Vector** and adds several of its
 
 own, shown in Table 19-17.
-
+![Alt text](image-37.png)
 **Table 19-17** The Methods Defined by **Stack**
 
 To put an object on the top of the stack, call **push()**. To remove and return the top element, call **pop()**. You can use **peek()** to return, but not remove, the top object. An **EmptyStackException** is thrown if you call **pop()** or **peek()** when the invoking stack is empty. The **empty()** method returns **true** if nothing is on the stack. The **search()** method determines whether an object exists on the stack and returns the number of pops that are required to bring it to the top of the stack. Here is an example that creates a stack, pushes several **Integer** objects onto it, and then pops them off again:  
-
+```java
+// Demonstrate the Stack class.
+import java.util.*;
+class StackDemo { static void showpush (Stack<Integer> st, int a) {
+st.push(a);
+System.out.println("push(" + a + ")"); System.out.println("stack: " + st);
+}
+static void showpop (Stack<Integer> st) { System.out.print ("pop");
+Integer a st.pop();
+System.out.println(a);
+System.out.println("stack: " + st);
+public static void main(String args[]) { Stack<Integer> st = new Stack<Integer>();
+System.out.println("stack: " + st);
+showpush (st, 42); showpush (st, 66);
+showpush (st, 99);
+showpop (st);
+showpop (st);
+showpop (st);
+try {
+showpop (st);
+} catch (EmptyStackException e) { System.out.println("empty stack");
+}
+}
+}
+```
 The following is the output produced by the program; notice how the exception handler for **EmptyStackException** is used so that you can gracefully handle a stack underflow:  
-
+```java
+stack: []
+push (42)
+stack: [42]
+push (66)
+stack: [42, 66]
+push (99)
+stack: [42, 66, 99]
+pop-> 99
+stack: [42, 66]
+pop -> 66
+stack: [42]
+pop -> 42
+stack: [ ]
+pop empty stack
+```
 One other point: although **Stack** is not deprecated, **ArrayDeque** is a better choice.
 
-## Dictionary Dictionary
-
- is an abstract class that represents a key/value storage repository and operates much like **Map**. Given a key and value, you can store the value in a **Dictionary** object. Once the value is stored, you can retrieve it by using its key. Thus, like a map, a dictionary can be thought of as a list of key/value pairs. Although not currently deprecated, **Dictionary** is classified as obsolete, because it is fully superseded by **Map**. However, **Dictionary** is still in use and thus is discussed here.
+## Dictionary 
+**Dictionary** is an abstract class that represents a key/value storage repository and operates much like **Map**. Given a key and value, you can store the value in a **Dictionary** object. Once the value is stored, you can retrieve it by using its key. Thus, like a map, a dictionary can be thought of as a list of key/value pairs. Although not currently deprecated, **Dictionary** is classified as obsolete, because it is fully superseded by **Map**. However, **Dictionary** is still in use and thus is discussed here.
 
 With the advent of JDK 5, **Dictionary** was made generic. It is declared as shown here:
-
+```java
 class Dictionary<K, V>
-
+```
 Here, **K** specifies the type of keys, and **V** specifies the type of values. The abstract methods defined by **Dictionary** are listed in Table 19-18.  
-
+![Alt text](image-38.png)
 **Table 19-18** The Abstract Methods Defined by **Dictionary**
 
 To add a key and a value, use the **put()** method. Use **get()** to retrieve the value of a given key. The keys and values can each be returned as an **Enumeration** by the **keys()** and **elements()** methods, respectively. The **size()** method returns the number of key/value pairs stored in a dictionary, and **isEmpty()** returns **true** when the dictionary is empty. You can use the **remove()** method to delete a key/value pair.
 
-## REMEMBER
+**REMEMBER**
 
  The **Dictionary** class is obsolete. You should implement the **Map** interface to obtain key/value storage functionality.
 
-## Hashtable Hashtable
-
- was part of the original **java.util** and is a concrete implementation of a **Dictionary**. However, with the advent of collections, **Hashtable** was reengineered to also implement the **Map** interface. Thus, **Hashtable** is integrated into the Collections Framework. It is similar to **HashMap**, but is synchronized.
+## Hashtable 
+**Hashtable** was part of the original **java.util** and is a concrete implementation of a **Dictionary**. However, with the advent of collections, **Hashtable** was reengineered to also implement the **Map** interface. Thus, **Hashtable** is integrated into the Collections Framework. It is similar to **HashMap**, but is synchronized.
 
 Like **HashMap**, **Hashtable** stores key/value pairs in a hash table. However, neither keys nor values can be **null**. When using a **Hashtable**, you specify an object that is used as a key, and the value that you want linked to that key. The key is then hashed, and the resulting hash code is used as the index at which the value is stored within the table.
 
-## Hashtable
-
- was made generic by JDK 5. It is declared like this:  
-
+**Hashtable** was made generic by JDK 5. It is declared like this:  
+```java
 class Hashtable<K, V>
-
+```
 Here, **K** specifies the type of keys, and **V** specifies the type of values. A hash table can only store keys that override the **hashCode()** and **equals()**
 
 methods that are defined by **Object**. The **hashCode()** method must compute and return the hash code for the object. Of course, **equals()** compares two objects. Fortunately, many of Java’s built-in classes already implement the **hashCode()** method. For example, the most common type of **Hashtable** uses a **String** object as the key. **String** implements both **hashCode()** and **equals()**.
 
 The **Hashtable** constructors are shown here:
 
-Hashtable() Hashtable(int size) Hashtable(int size, float fillRatio) Hashtable(Map<? extends K, ? extends V> m)
+Hashtable() 
+Hashtable(int size) 
+Hashtable(int size, float fillRatio) 
+Hashtable(Map<? extends K, ? extends V> m)
 
 The first version is the default constructor. The second version creates a hash table that has an initial size specified by size. (The default size is 11.) The third version creates a hash table that has an initial size specified by size and a fill ratio specified by fillRatio. This ratio (also referred to as a _load factor_) must be between 0.0 and 1.0, and it determines how full the hash table can be before it is resized upward. Specifically, when the number of elements is greater than the capacity of the hash table multiplied by its fill ratio, the hash table is expanded. If you do not specify a fill ratio, then 0.75 is used. Finally, the fourth version creates a hash table that is initialized with the elements in m. The default load factor of 0.75 is used.
 
 In addition to the methods defined by the **Map** interface, which **Hashtable** now implements, **Hashtable** defines the legacy methods listed in Table 19-19. Several methods throw **NullPointerException** if an attempt is made to use a **null** key or value.  
-
+![Alt text](image-39.png)
 **Table 19-19** The Legacy Methods Defined by **Hashtable**
 
 The following example reworks the bank account program, shown earlier, so that it uses a **Hashtable** to store the names of bank depositors and their current balances:  
-
+```java
+// Demonstrate a Hashtable. import java.util.*;
+class HTDemo {
+public static void main(String args[]) { Hashtable<String, Double> balance = new Hashtable<String, Double>();
+Enumeration<String> names;
+String str;
+double bal;
+balance.put("John Doe", 3434.34); balance.put("Tom Smith", 123.22);
+balance.put("Jane Baker", 1378.00); balance.put("Tod Hall", 99.22); balance.put("Ralph Smith", -19.08);
+// Show all balances in hashtable. names balance.keys();
+while (names.hasMoreElements()) { str names.nextElement();
+System.out.println(str + ": " +
+}
+balance.get(str));
+System.out.println();
+// Deposit 1,000 into John Doe's account. bal balance.get("John Doe"); balance.put("John Doe", bal+1000); System.out.println("John Doe's new balance: " balance.get("John Doe"));
+}
+}
+```
 The output from this program is shown here:  
-
+```java
+Todd Hall: 99.22
+Ralph Smith: -19.08
+John Doe: 3434.34
+Jane Baker: 1378.0
+Tom Smith: 123.22
+John Doe's new balance: 4434.34
+```
 One important point: Like the map classes, **Hashtable** does not directly support iterators. Thus, the preceding program uses an enumeration to display the contents of **balance**. However, you can obtain set-views of the hash table, which permits the use of iterators. To do so, you simply use one of the collection-view methods defined by **Map**, such as **entrySet()** or **keySet()**. For example, you can obtain a set-view of the keys and cycle through them using either an iterator or an enhanced **for** loop. Here is a reworked version of the program that shows this technique:  
+```java
+// Use iterators with a Hashtable. import java.util.*;
+class HTDemo2 {
+public static void main(String args[]) { 
+Hashtable<String, Double> balance = new Hashtable<String, Double>();
+String str; double bal;
+balance.put("John Doe", 3434.34);
+balance.put("Tom Smith", 123.22);
+balance.put("Jane Baker", 1378.00); 
+balance.put("Tod Hall", 99.22); 
+balance.put("Ralph Smith", -19.08);
+// Show all balances in hashtable. // First, get a set view of the keys. Set<String> set = balance.keySet();
+// Get an iterator. Iterator<String> itr = set.iterator(); while (itr.hasNext()) { stritr.next(); balance.get(str));
+System.out.println(str + ": " + balance.get(str));
+}
+System.out.println();
+// Deposit 1,000 into John Doe's account. bal balance.get("John Doe"); balance.put("John Doe", bal+1000); System.out.println("John Doe's new balance: " + balance.get("John Doe"));
+}
+}
+```
+## Properties 
+**Properties** is a subclass of **Hashtable**. It is used to maintain lists of values in which the key is a **String** and the value is also a **String**. The **Properties** class is used by some other Java classes. For example, it is the type of object returned by **System.getProperties()** when obtaining environmental values. Although the **Properties** class, itself, is not generic, several of its methods are.
 
-## Properties Properties
-
- is a subclass of **Hashtable**. It is used to maintain lists of values in which the key is a **String** and the value is also a **String**. The **Properties** class is used by some other Java classes. For example, it is the type of object returned by **System.getProperties()** when obtaining environmental values. Although the **Properties** class, itself, is not generic, several of its methods are.
-
-## Properties
-
- defines the following protected volatile instance variable:
+**Properties** defines the following protected volatile instance variable:
 
 Properties defaults;
 
 This variable holds a default property list associated with a **Properties** object.  
 
-## Properties
+**Properties** defines these constructors:
 
- defines these constructors:
-
-Properties() Properties(Properties propDefault) Properties(int capacity)
+Properties() 
+Properties(Properties propDefault) 
+Properties(int capacity)
 
 The first version creates a **Properties** object that has no default values. The second creates an object that uses propDefault for its default values. In both cases, the property list is empty. The third constructor lets you specify an initial capacity for the property list. In all cases, the list will grow as needed.
 
 In addition to the methods that **Properties** inherits from **Hashtable**, **Properties** defines the methods listed in Table 19-20. **Properties** also contains one deprecated method: **save()**. This was replaced by **store()** because **save()** did not handle errors correctly.  
-
+![Alt text](image-40.png)
 **Table 19-20** The Methods Defined by **Properties**
 
 One useful capability of the **Properties** class is that you can specify a  
@@ -1250,17 +1778,92 @@ One useful capability of the **Properties** class is that you can specify a
 default property that will be returned if no value is associated with a certain key. For example, a default value can be specified along with the key in the **getProperty()** method—such as **getProperty ("name" ,"default value")**. If the "name" value is not found, then "default value" is returned. When you construct a **Properties** object, you can pass another instance of **Properties** to be used as the default properties for the new instance. In this case, if you call **getProperty("foo")** on a given **Properties** object, and "foo" does not exist, Java looks for "foo" in the default **Properties** object. This allows for arbitrary nesting of levels of default properties.
 
 The following example demonstrates **Properties**. It creates a property list in which the keys are the names of states and the values are the names of their capitals. Notice that the attempt to find the capital for Florida includes a default value.  
-
+```java
+// Demonstrate a Property list. import java.util.*;
+class PropDemo { 
+public static void main(String args[]) { Properties capitals = new Properties();
+capitals.setProperty("Illinois", "Springfield"); 
+capitals.setProperty("Missouri", "Jefferson City"); capitals.setProperty("Washington", "Olympia"); 
+capitals.setProperty("California", "Sacramento"); 
+capitals.setProperty("Indiana", "Indianapolis");
+// Get a set-view of the keys. Set<?> states = capitals.keySet();
+// Show all of the states and capitals. for (Object name : states) System.out.println("The capital of " name" is " + capitals.getProperty((String) name) + ".");
+System.out.println();
+// Look for state not in list specify default. -- String str = capitals.getProperty("Florida", "Not Found"); System.out.println("The capital of Florida is " + str + "."); }
+}
+```
 The output from this program is shown here:  
-
+```java
+The capital of Missouri is Jefferson City.
+The capital of Illinois is Springfield.
+The capital of Indiana is Indianapolis.
+The capital of California is Sacramento.
+The capital of Washington is Olympia.
+The capital of Florida is Not Found.
+```
 Since Florida is not in the list, the default value is used. Although it is perfectly valid to use a default value when you call
 
 **getProperty()**, as the preceding example shows, there is a better way of handling default values for most applications of property lists. For greater flexibility, specify a default property list when constructing a **Properties** object. The default list will be searched if the desired key is not found in the main list. For example, the following is a slightly reworked version of the preceding program, with a default list of states specified. Now, when Florida is sought, it will be found in the default list:  
+```java
+// Use a default property list. import java.util.*;
+class PropDemo Def {
+public static void main(String args[]) { Properties defList = new Properties(); defList.setProperty("Florida", "Tallahassee"); defList.setProperty("Wisconsin", "Madison");
+Properties capitals = new Properties (defList);
+capitals.setProperty("Illinois", "Springfield"); capitals.setProperty("Missouri", "Jefferson City"); capitals.setProperty("Washington", "Olympia"); capitals.setProperty("California", "Sacramento"); capitals.setProperty("Indiana", "Indianapolis");
+// Get a set-view of the keys. Set<?> states = capitals.keySet();
+// Show all of the states and capitals. for (Object name : states) System.out.println("The capital of " name + " is " + capitals.getProperty((String) name) + ".");
+System.out.println();
+// Florida will now be found in the default list. String str = capitals.getProperty("Florida"); System.out.println("The capital of Florida is "+ str + ".");
+}
+}
 
-**Using store() and load()** One of the most useful aspects of **Properties** is that the information contained  
+```
+##Using store() and load()
+One of the most useful aspects of **Properties** is that the information contained  
 
 in a **Properties** object can be easily stored to or loaded from disk with the **store()** and **load()** methods. At any time, you can write a **Properties** object to a stream or read it back. This makes property lists especially convenient for implementing simple databases. For example, the following program uses a property list to create a simple computerized telephone book that stores names and phone numbers. To find a person’s number, you enter his or her name. The program uses the **store()** and **load()** methods to store and retrieve the list. When the program executes, it first tries to load the list from a file called **phonebook.dat**. If this file exists, the list is loaded. You can then add to the list. If you do, the new list is saved when you terminate the program. Notice how little code is required to implement a small, but functional, computerized phone book.  
+```java
+/* A simple telephone number database that uses
+a property list. */ import java.io.
+import java.util.*;
+class Phonebook (
+public static void main(String args[]) throws IOException
+Properties ht = new Properties();
+BufferedReader br = new BufferedReader (new InputStreamReader(System.in)); String name, number; FileInputStream fin null;
+boolean changed = false; // Try to open phonebook.dat file.
+try { fin = new FileInputStream("phonebook.dat"); } catch (FileNotFoundException e) { // ignore missing file.
+/ If phonebook file already exists, load existing telephone numbers. */
+try {
+if(fin != null) { ht.load(fin);
+fin.close();
+}
+} catch (IOException e) {
+System.out.println("Error reading file.");
+// Let user enter new names and numbers.
+do { System.out.println("Enter new name" +('quit' to stop): ");
+name = br.readLine();
+if (name.equals("quit")) continue;
+System.out.println("Enter number: " number = br.readLine();
+ht.setProperty (name, number); changed true;
+} 
+while (!name.equals("quit"));
+);
+// If phone book data has changed, save it. if (changed) {
+FileOutputStream fout = new FileOutputStream("phonebook.dat");
+ht.store (fout, "Telephone Book"); fout.close();
+}
+// Look up numbers given a name.
+do { System.out.println("Enter name to find" +"('quit' to quit): ");
+name = br.readLine();
+if (name.equals("quit")) continue;
+number= (String) ht.get(name);
+System.out.println(number); 
+while (Iname.equals("quit"));
+} 
+}
+}
 
+```
 ## Parting Thoughts on Collections
 
  The Collections Framework gives you, the programmer, a powerful set of well- engineered solutions to some of programming’s most common tasks. Consider using a collection the next time you need to store and retrieve information. Remember, collections need not be reserved for only the “large jobs,” such as corporate databases, mailing lists, or inventory systems. They are also effective when applied to smaller jobs. For example, a **TreeMap** might make an excellent collection to hold the directory structure of a set of files. A **TreeSet** could be quite useful for storing project-management information. Frankly, the types of problems that will benefit from a collections-based solution are limited only by your imagination. One last point: In Chapter 29, the stream API is discussed. Because streams are integrated with collections, consider using a stream when operating on a collection.  

@@ -2,7 +2,9 @@
 title: 'Regular Expressions and Other Packages'
 weight: 11
 --- 
+#Regular Expressions and Other Packages
 
+**********
 When Java was originally released, it included a set of eight packages, called the _core API_. Each subsequent release added to the API. Today, the Java API contains a very large number of packages. Many of the packages support areas of specialization that are beyond the scope of this book. However, several packages warrant an examination here. Four are **java.util.regex**, **java.lang.reflect**, **java.rmi**, and **java.text**. They support regular expression processing, reflection, Remote Method Invocation (RMI), and text formatting, respectively. The chapter ends by introducing the date and time API in **java.time** and its subpackages.
 
 The _regular expression_ package lets you perform sophisticated pattern matching operations. This chapter provides an introduction to this package along with extensive examples. Reflection is the ability of software to analyze itself. It is an essential part of the Java Beans technology that is covered in Chapter 37. _Remote Method Invocation (RMI)_ allows you to build Java applications that are distributed among several machines. This chapter provides a simple client/server example that uses RMI. The _text formatting_ capabilities of **java.text** have many uses. The one examined here formats date and time strings. The date and time API supplies an up-to-date approach to handling date and time.
@@ -74,7 +76,7 @@ A character class is a set of characters. A character class is specified by putt
 The wildcard character is the **.** (dot) and it matches any character. Thus, a pattern that consists of "." will match these (and other) input sequences: "A", "a", "x", and so on.
 
 A quantifier determines how many times an expression is matched. The basic quantifiers are shown here:
-
+![Alt text](image.png)
 For example, the pattern "x+" will match "x", "xx", and "xxx", among others. As you will see, variations are supported that affect how matching is performed.
 
 One other point: In general, if you specify an invalid expression, a **PatternSyntaxException** will be thrown.
@@ -82,7 +84,24 @@ One other point: In general, if you specify an invalid expression, a **PatternSy
 ## Demonstrating Pattern Matching
 
  The best way to understand how regular expression pattern matching operates is to work through some examples. The first, shown here, looks for a match with a literal pattern:  
-
+```java
+// A simple pattern matching demo. import java.util.regex.*;
+class RegExpr {
+public static void main(String args[]) {
+Pattern pat;
+Matcher mat;
+boolean found;
+pat Pattern.compile("Java");
+mat = pat.matcher ("Java");
+found mat.matches(); // check for a match
+System.out.println("Testing Java against Java."); if (found) System.out.println("Matches"); else System.out.println("No Match");
+System.out.println();
+System.out.println("Testing Java against Java SE."); mat = pat.matcher ("Java SE"); // create a new matcher
+found mat.matches(); // check for a match
+if (found) System.out.println("Matches"); else System.out.println("No Match");
+}
+}
+```
 The output from the program is shown here:
 
 Testing Java against Java.
@@ -98,7 +117,15 @@ Let’s look closely at this program. The program begins by creating the pattern
 this case, the pattern and the input sequence differ, and no match is found. Remember, the **matches()** function returns **true** only when the input sequence precisely matches the pattern. It will not return **true** just because a subsequence matches.
 
 You can use **find()** to determine if the input sequence contains a subsequence that matches the pattern. Consider the following program:
-
+```java
+// Use find() to find a subsequence. import java.util.regex.*;
+class RegExpr2 {
+public static void main(String args[]) { Pattern pat = Pattern.compile("Java"); Matcher mat = pat.matcher ("Java SE");
+System.out.println("Looking for Java in Java SE.");
+if (mat.find()) System.out.println("subsequence found"); else System.out.println("No Match");
+}
+}
+```
 The output is shown here:
 
 Looking for Java in Java SE.
@@ -108,7 +135,17 @@ subsequence found
 In this case, **find()** finds the subsequence "Java". The **find()** method can be used to search the input sequence for repeated
 
 occurrences of the pattern because each call to **find()** picks up where the previous one left off. For example, the following program finds two occurrences of the pattern "test":  
-
+```java
+// Use find() to find multiple subsequences. import java.util.regex.*;
+class RegExpr3 {
+public static void main(String args[]) {
+Pattern pat Pattern.compile("test"); Matcher mat = pat.matcher ("test 1 2 3 test");
+while (mat.find()) {
+System.out.println("test found at index " + mat.start());
+}
+}
+}
+```
 The output is shown here:
 
 test found at index 0
@@ -120,7 +157,15 @@ As the output shows, two matches were found. The program uses the **start()** me
 ## Using Wildcards and Quantifiers
 
  Although the preceding programs show the general technique for using **Pattern** and **Matcher**, they don’t show their power. The real benefit of regular expression processing is not seen until wildcards and quantifiers are used. To begin, consider the following example that uses the + quantifier to match any arbitrarily long sequence of Ws:  
-
+```java
+// Use a quantifier. import java.util.regex.*;
+class RegExpr4 {
+public static void main(String args[]) { Pattern pat = Pattern.compile("W+");
+Matcher mat = pat.matcher ("W WW WWW"); while (mat.find())
+System.out.println("Match: " + mat.g
+}
+}
+```
 The output from the program is shown here:
 
 Match: W
@@ -132,13 +177,32 @@ Match: WWW
 As the output shows, the regular expression pattern "W+" matches any arbitrarily long sequence of Ws.
 
 The next program uses a wildcard to create a pattern that will match any sequence that begins with e and ends with d. To do this, it uses the dot wildcard character along with the **+** quantifier.
-
+```java
+// Use wildcard and quantifier. import java.util.regex.*;
+class RegExpr5 {
+public static void main(String args[]) {
+Pattern pat = Pattern.compile("e.+d");
+Matcher mat = pat.matcher ("extend cup end table");
+while (mat.find())
+System.out.println("Match: " +mat.group());
+}
+}
+```
 You might be surprised by the output produced by the program, which is shown here:
 
 Match: extend cup end
 
 Only one match is found, and it is the longest sequence that begins with e and ends with d. You might have expected two matches: "extend" and "end". The reason that the longer sequence is found is that the pattern "e.+d" matches the longest sequence that fits the pattern. This is called _greedy behavior_. You can specify _reluctant behavior_ by adding the **?** to the pattern, as shown in this version of the program. It causes the shortest matching pattern to be obtained.  
-
+```java
+// Use a reluctant quantifier. import java.util.regex.*;
+class RegExpr6 {
+public static void main(String args[]) { // Use reluctant matching behavior.
+Pattern pat = Pattern.compile("e.+?d");
+Matcher mat = pat.matcher ("extend cup end table"); while (mat.find())
+System.out.println("Match: " + mat.group());
+}
+}
+```
 The output from the program is shown here:
 
 Match: extend
@@ -152,7 +216,16 @@ In general, to convert a greedy quantifier into a reluctant quantifier, add a **
 ## Working with Classes of Characters
 
  Sometimes you will want to match any sequence that contains one or more characters, in any order, that are part of a set of characters. For example, to match whole words, you want to match any sequence of the letters of the alphabet. One of the easiest ways to do this is to use a character class, which defines a set of characters. Recall that a character class is created by putting the characters you want to match between brackets. For example, to match the lowercase characters a through z, use **[a-z]**. The following program demonstrates this technique:  
-
+```java
+// Use a character class. import java.util.regex.*;
+class RegExpr7 {
+public static void main(String args[]) { // Match lowercase words.
+Pattern pat = Pattern.compile("[a-z]+"); Matcher mat = pat.matcher ("this is a test.");
+while (mat.find())
+System.out.println("Match: " +mat.group());
+}
+}
+```
 The output is shown here:
 
 Match: this
@@ -163,8 +236,19 @@ Match: a
 
 Match: test
 
-**Using replaceAll()** The **replaceAll()** method supplied by **Matcher** lets you perform powerful search and replace operations that use regular expressions. For example, the following program replaces all occurrences of sequences that begin with "Jon" with "Eric":  
-
+##Using replaceAll()
+The **replaceAll()** method supplied by **Matcher** lets you perform powerful search and replace operations that use regular expressions. For example, the following program replaces all occurrences of sequences that begin with "Jon" with "Eric":  
+```java
+// Use replaceAll(). import java.util.regex.*;
+class RegExpr8 {
+public static void main(String args[]) { String str = "Jon Jonathan Frank Ken Todd";
+Pattern pat = Pattern.compile("Jon. *? "); Matcher mat = pat.matcher (str);
+System.out.println("Original sequence: " + str);
+str = mat.replaceAll("Eric ");
+System.out.println("Modified sequence: + str);
+}
+}
+```
 The output is shown here:
 
 Original sequence: Jon Jonathan Frank Ken Todd
@@ -173,14 +257,25 @@ Modified sequence: Eric Eric Frank Ken Todd
 
 Because the regular expression "Jon.*? " matches any string that begins with Jon followed by zero or more characters, ending in a space, it can be used to match and replace both Jon and Jonathan with the name Eric. Such a substitution is not easily accomplished without pattern matching capabilities.
 
-**Using split()** You can reduce an input sequence into its individual tokens by using the **split()** method defined by **Pattern**. One form of the **split()** method is shown here:
+##Using split()
+ You can reduce an input sequence into its individual tokens by using the **split()** method defined by **Pattern**. One form of the **split()** method is shown here:
 
 String[ ] split(CharSequence str)
 
 It processes the input sequence passed in str, reducing it into tokens based on the delimiters specified by the pattern.
 
 For example, the following program finds tokens that are separated by spaces, commas, periods, and exclamation points:  
-
+```java
+// Use split(). import java.util.regex.*;
+class RegExpr9 {
+public static void main(String args[]) {
+// Match lowercase words.
+Pattern pat = Pattern.compile("[\, . !] ");
+String strs[] = pat.split("one two, alpha9 12! done.");
+for (int i=0; i < strs.length; i++) System.out.println("Next token: " + strs[i]);
+}
+}
+```
 The output is shown here:
 
 Next token: one
@@ -195,7 +290,8 @@ Next token: done
 
 As the output shows, the input sequence is reduced to its individual tokens. Notice that the delimiters are not included.
 
-**Two Pattern-Matching Options** Although the pattern-matching techniques described in the foregoing offer the greatest flexibility and power, there are two alternatives which you might find useful in some circumstances. If you only need to perform a one-time pattern match, you can use the **matches()** method defined by **Pattern**. It is shown here:
+##Two Pattern-Matching Options
+Although the pattern-matching techniques described in the foregoing offer the greatest flexibility and power, there are two alternatives which you might find useful in some circumstances. If you only need to perform a one-time pattern match, you can use the **matches()** method defined by **Pattern**. It is shown here:
 
 static boolean matches(String pattern, CharSequence str)
 
@@ -216,21 +312,79 @@ If the invoking string matches the regular expression in pattern, then **matches
  Reflection is the ability of software to analyze itself. This is provided by the **java.lang.reflect** package and elements in **Class**. Beginning with JDK 9, **java.lang.reflect** is part of the **java.base** module. Reflection is an important capability, especially when using components called Java Beans. It allows you to analyze a software component and describe its capabilities dynamically, at run time rather than at compile time. For example, by using reflection, you can determine what methods, constructors, and fields a class supports. Reflection was introduced in Chapter 12. It is examined further here.
 
 The package **java.lang.reflect** includes several interfaces. Of special interest is **Member**, which defines methods that allow you to get information about a field, constructor, or method of a class. There are also ten classes in this package. These are listed in Table 30-1.  
-
+![Alt text](image-1.png)
 **Table 30-1** Classes Defined in **java.lang.reflect**
 
 The following application illustrates a simple use of the Java reflection capabilities. It prints the constructors, fields, and methods of the class **java.awt.Dimension**. The program begins by using the **forName()** method of **Class** to get a class object for **java.awt.Dimension**. Once this is obtained, **getConstructors()**, **getFields()**, and **getMethods()** are used to analyze this class object. They return arrays of **Constructor**, **Field**, and **Method** objects that provide the information about the object. The **Constructor**, **Field**, and **Method** classes define several methods that can be used to obtain information about an object. You will want to explore these on your own. However, each supports the **toString()** method. Therefore, using **Constructor**, **Field**, and **Method** objects as arguments to the **println()** method is straightforward, as shown in the program.  
-
+```java
+import java.lang.reflect.*; public class ReflectionDemo1 {
+// Demonstrate reflection. public static void main(String args[]) { try {
+Class<?> c = Class.forName ("java.awt. Dimension"); System.out.println("Constructors: ");
+Constructor<?> constructors [] = c.getConstructors(); for (int i = 0; i < constructors.length; i++) { System.out.println(" "+constructors [i]); }
+System.out.println("Fields: "); Field fields[] = c.getFields(); for (int i = 0; i < fields.length; i++) { System.out.println(" "+ fields [i]); }
+System.out.println("Methods: ");
+Method methods [] = c.getMethods(); for (int i = 0; i < methods.length; i++) { System.out.println(" "+ methods[i]); }
+} catch (Exception e) { System.out.println("Exception: " + e);
+}
+}
+}
+```
 Here is the output from this program. (The output you see when you run the program may differ slightly from that shown.)  
-
+```java
+Constructors:
+public java.awt. Dimension (int, int)
+public java.awt.Dimension() public java.awt. Dimension (java.awt.Dimension) Fields:
+public int java.awt.Dimension.width
+public int java.awt. Dimension.height Methods:
+public int java.awt.Dimension. hashCode()
+public boolean java.awt.Dimension.equals(java.lang.Object)
+public java.lang.String java.awt.Dimension.toString() public java.awt.Dimension java.awt.Dimension.getSize()
+public void java.awt.Dimension.setSize (double, double) public void java.awt.Dimension.setSize(java.awt.Dimension
+public void java.awt. Dimension.setSize(int, int)
+public double java.awt.Dimension.getHeight()
+public double java.awt.Dimension.getWidth()
+public java.lang.Object java.awt.geom. Dimension2D.clone()
+public void java.awt.geom.
+Dimension2D.setSize(java.awt.geom. Dimension2D) public final native java.lang.Class java.lang.Object.getClass() public final native void java.lang.Object.wait (long)
+throws java.lang. InterruptedException
+public final void java.lang.Object.wait()
+throws java.lang. InterruptedException
+public final void java.lang.Object.wait (long, int)
+throws java.lang.InterruptedException public final native void java.lang.Object.notify() public final native void java.lang.Object.notifyAll()
+)
+```
 The next example uses Java’s reflection capabilities to obtain the public methods of a class. The program begins by instantiating class **A**. The **getClass()** method is applied to this object reference, and it returns the **Class** object for class **A**. The **getDeclaredMethods()** method returns an array of **Method** objects that describe only the methods declared by this class. Methods inherited from superclasses such as **Object** are not included.
 
 Each element of the **methods** array is then processed. The **getModifiers()** method returns an **int** containing flags that describe which modifiers apply for this element. The **Modifier** class provides a set of **isX** methods, shown in Table 30-2, that can be used to examine this value. For example, the static method **isPublic()** returns **true** if its argument includes the **public** modifier. Otherwise, it returns **false**. In the following program, if the method supports  
 
 public access, its name is obtained by the **getName()** method and is then printed.
-
+![Alt text](image-2.png)
 **Table 30-2** The “is” Methods Defined by **Modifier** That Determine Modifiers  
-
+```java
+// Show public methods. import java.lang.reflect.*; public class ReflectionDemo2 { public static void main(String args[]) {
+try {
+A a new A();
+Class<?> c = a.getClass(); System.out.println("Public Methods: ");
+Method methods [] c.getDeclaredMethods();
+for (int i = 0; i < methods.length; i++) {
+int modifiers methods [i].getModifiers (); if (Modifier.isPublic (modifiers)) {
+System.out.println(" "+ methods[i].getName());
+}
+}
+}
+catch (Exception e) { 
+System.out.println("Exception: " + e);
+}
+}
+}
+class A {
+public void al() {
+public void a2() {
+} protected void a3() {
+} private void a4 () {
+}
+}
+```
 Here is the output from this program:
 
 Public Methods:
@@ -239,9 +393,7 @@ a1
 
 a2
 
-## Modifier
-
- also includes a set of static methods that return the type of modifiers that can be applied to a specific type of program element. These methods are
+**Modifier**also includes a set of static methods that return the type of modifiers that can be applied to a specific type of program element. These methods are
 
 static int classModifiers()  
 
@@ -259,24 +411,58 @@ static int parameterModifiers()
 
 For example, **methodModifiers()** returns the modifiers that can be applied to a method. Each method returns flags, packed into an **int**, that indicate which modifiers are legal. The modifier values are defined by constants in **Modifier**, which include **PROTECTED**, **PUBLIC**, **PRIVATE**, **STATIC**, **FINAL**, and so on.
 
-**Remote Method Invocation (RMI)** Remote Method Invocation (RMI) allows a Java object that executes on one machine to invoke a method of a Java object that executes on another machine. This is an important feature, because it allows you to build distributed applications. While a complete discussion of RMI is outside the scope of this book, the following simplified example describes the basic principles involved. RMI is supported by the **java.rmi** package. Beginning with JDK 9, it is part of the **java.rmi** module.
+##Remote Method Invocation (RMI)
+Remote Method Invocation (RMI) allows a Java object that executes on one machine to invoke a method of a Java object that executes on another machine. This is an important feature, because it allows you to build distributed applications. While a complete discussion of RMI is outside the scope of this book, the following simplified example describes the basic principles involved. RMI is supported by the **java.rmi** package. Beginning with JDK 9, it is part of the **java.rmi** module.
 
 **A Simple Client/Server Application Using RMI** This section provides step-by-step directions for building a simple client/server application by using RMI. The server receives a request from a client, processes it, and returns a result. In this example, the request specifies two numbers. The server adds these together and returns the sum.
 
 **Step One: Enter and Compile the Source Code** This application uses four source files. The first file, **AddServerIntf.java**, defines the remote interface that is provided by the server. It contains one method that accepts two **double** arguments and returns their sum. All remote  
 
 interfaces must extend the **Remote** interface, which is part of **java.rmi**. **Remote** defines no members. Its purpose is simply to indicate that an interface uses remote methods. All remote methods can throw a **RemoteException**.
-
+```java
+import java.rmi.*;
+public interface AddServerIntf extends Remote { double add (double dl, double d2) throws RemoteException; }
+```
 The second source file, **AddServerImpl.java**, implements the remote interface. The implementation of the **add()** method is straightforward. Remote objects typically extend **UnicastRemoteObject**, which provides functionality that is needed to make objects available from remote machines.
-
+```java
+import java.rmi.*;
+import java.rmi.server.*;
+public class AddServerImpl extends Unicast RemoteObject implements AddServerIntf {
+public AddServerImpl() throws RemoteException { }
+public double add (double d1, double d2) throws RemoteException { return d1 + d2; }
+}
+```
 The third source file, **AddServer.java**, contains the main program for the server machine. Its primary function is to update the RMI registry on that machine. This is done by using the **rebind()** method of the **Naming** class (found in **java.rmi**). That method associates a name with an object reference. The first argument to the **rebind()** method is a string that names the server as "AddServer". Its second argument is a reference to an instance of **AddServerImpl**.  
-
+```java
+import java.net.*; import java.rmi.*;
+public class AddServer { public static void main(String args[]) {
+try {
+AddServerImpl addServerImpl = new AddServerImpl(); Naming.rebind ("AddServer", addServerImpl); }
+catch (Exception e) {
+System.out.println("Exception: " + e);
+}
+}
+```
 The fourth source file, **AddClient.java**, implements the client side of this distributed application. **AddClient.java** requires three command-line arguments. The first is the IP address or name of the server machine. The second and third arguments are the two numbers that are to be summed.
 
 The application begins by forming a string that follows the URL syntax. This URL uses the **rmi** protocol. The string includes the IP address or name of the server and the string "AddServer". The program then invokes the **lookup()** method of the **Naming** class. This method accepts one argument, the **rmi** URL, and returns a reference to an object of type **AddServerIntf**. All remote method invocations can then be directed to this object.
 
 The program continues by displaying its arguments and then invokes the remote **add()** method. The sum is returned from this method and is then printed.  
-
+```java
+import java.rmi.*;
+public class AddClient {
+public static void main(String args[]) {
+try {
+String addServerURL = "rmi://" + args[0] + "/AddServer";
+AddServerIntf addServerIntf =
+(AddServerIntf) Naming.lookup (addServerURL); System.out.println("The first number is: " + args[1]); double d1 = Double.valueOf (args [1]).doubleValue(); System.out.println("The second number is: " + args [2]);
+double d2 = Double.valueOf(args [2]). doubleValue(); System.out.println("The sum is: " + addServerIntf.add(d1, d2));
+} catch (Exception e) {
+System.out.println("Exception: " + e);
+}
+}
+}
+```
 After you enter all the code, use **javac** to compile the four source files that you created.
 
 **Step Two: Manually Generate a Stub if Required** In the context of RMI, a stub is a Java object that resides on the client machine. Its function is to present the same interfaces as the remote server. Remote method calls initiated by the client are actually directed to the stub. The stub works with the other parts of the RMI system to formulate a request that is sent to the remote machine.
@@ -287,9 +473,7 @@ If a response must be returned to the client, the process works in reverse. Note
 
 Prior to Java 5, stubs needed to be built manually by using **rmic**. This step **is**  
 
-## not
-
- **required** for modern versions of Java. However, if you are working in a very old legacy environment, then you can use the **rmic** compiler, as shown here, to build a stub:
+** not required** for modern versions of Java. However, if you are working in a very old legacy environment, then you can use the **rmic** compiler, as shown here, to build a stub:
 
 rmic AddServerImpl
 
@@ -297,9 +481,7 @@ This command generates the file **AddServerImpl_Stub.class**. When using **rmic*
 
 **Step Three: Install Files on the Client and Server Machines** Copy **AddClient.class**, **AddServerImpl_Stub.class** (if needed), and **AddServerIntf.class** to a directory on the client machine. Copy **AddServerIntf.class**, **AddServerImpl.class**, **AddServerImpl_Stub.class** (if needed), and **AddServer.class** to a directory on the server machine.
 
-## NOTE
-
- RMI has techniques for dynamic class loading, but they are not used by the example at hand. Instead, all of the files that are used by the client and server applications must be installed manually on those machines.
+**NOTE** RMI has techniques for dynamic class loading, but they are not used by the example at hand. Instead, all of the files that are used by the client and server applications must be installed manually on those machines.
 
 **Step Four: Start the RMI Registry on the Server Machine** The JDK provides a program called **rmiregistry**, which executes on the server machine. It maps names to object references. First, check that the **CLASSPATH** environment variable includes the directory in which your files are located. Then, start the RMI Registry from the command line, as shown here:
 
@@ -335,9 +517,7 @@ The second number is: 9
 
 The sum is: 17.0
 
-## NOTE
-
- When working with RMI in the real world, it may be necessary for the server to install a security manager.
+**NOTE**When working with RMI in the real world, it may be necessary for the server to install a security manager.
 
 **Formatting Date and Time with java.text** The package **java.text** allows you to format, parse, search, and manipulate text. Beginning with JDK 9, **java.text** is part of the **java.base** module. This section  
 
@@ -389,14 +569,24 @@ Canada: 1:03:31 PM Central Daylight Time
 
 The **DateFormat** class also has a **getDateTimeInstance()** method that can format both date and time information. You may wish to experiment with it on your own.
 
-## SimpleDateFormat Class SimpleDateFormat
-
- is a concrete subclass of **DateFormat**. It allows you to define your own formatting patterns that are used to display date and time information.
+## SimpleDateFormat Class 
+**SimpleDateFormat**is a concrete subclass of **DateFormat**. It allows you to define your own formatting patterns that are used to display date and time information.
 
 One of its constructors is shown here:
-
+```java
+// Demonstrate time formats. import java.text.*; import java.util.*; public class Time FormatDemo { public static void main(String args[]) { Date date = new Date(); DateFormat df;
+df = DateFormat.getTimeInstance (DateFormat. SHORT, Locale.JAPAN); System.out.println("Japan: " + df. format (date));
+df = DateFormat.getTime Instance (DateFormat. LONG, Locale.UK); System.out.println("United Kingdom: " + df. format (date));
+df = DateFormat.getTimeInstance (DateFormat.FULL, Locale.CANADA); System.out.println("Canada: " + df. format (date));
+}
+}
+```
+##SimpleDateFormat Class
+**SimpleDateFormat** is a concrete subclass of DateFormat. It allows you to
+define your own formatting patterns that are used to display date and time
+information.
+One of its constructors is shown here:
 SimpleDateFormat(String formatString)
-
 The argument formatString describes how date and time information is  
 
 displayed. An example of its use is given here:
@@ -406,7 +596,7 @@ SimpleDateFormat sdf = SimpleDateFormat("dd MMM yyyy hh:mm:ss
 zzz");
 
 The symbols used in the formatting string determine the information that is displayed. Table 30-3 lists these symbols and gives a description of each.
-
+![Alt text](image-4.png)
 **Table 30-3** Formatting String Symbols for **SimpleDateFormat**  
 
 In most cases, the number of times a symbol is repeated determines how that data is presented. Text information is displayed in an abbreviated form if the pattern letter is repeated less than four times. Otherwise, the unabbreviated form is used. For example, a zzzz pattern can display Pacific Daylight Time, and a zzz pattern can display PDT.
@@ -416,7 +606,20 @@ For numbers, the number of times a pattern letter is repeated determines how man
 Finally, M or MM causes the month to be displayed as one or two digits. However, three or more repetitions of M cause the month to be displayed as a text string.
 
 The following program shows how this class is used:
-
+```java
+// Demonstrate SimpleDateFormat. import java.text.*;
+import java.util.*;
+public class SimpleDateFormat Demo { public static void main(String args[]) {
+Date date = new Date();
+SimpleDateFormat sdf;
+sdf = new SimpleDateFormat ("hh:mm:ss");
+System.out.println(sdf. format (date));
+sdf = new SimpleDateFormat("dd MMM yyyy hh:mm:ss zzz");
+System.out.println(sdf. format (date));
+sdf = new SimpleDateFormat ("E MMM dd yyyy");
+System.out.println(sdf. format (date)); }
+}
+```
 Sample output from this program is shown here:
 
 01:30:51
@@ -425,10 +628,11 @@ Sample output from this program is shown here:
 
 Wed Jun 20 2018
 
-**The java.time Time and Date API** In Chapter 20, Java’s long-standing approach to handling date and time through the use of classes such as **Calendar** and **GregorianCalendar** was discussed. It  
+##The java.time Time and Date API
+ In Chapter 20, Java’s long-standing approach to handling date and time through the use of classes such as **Calendar** and **GregorianCalendar** was discussed. It  
 
 is expected that this traditional approach will remain in widespread use for some time and is, therefore, something that all Java programmers need to be familiar with. However, beginning with JDK 8, Java includes another approach to handling time and date. This new approach is defined in the following packages:
-
+![Alt text](image-5.png)
 These packages define a large number of classes, interfaces, and enumerations that provide extensive, finely grained support for time and date operations. Because of the number of elements that comprise the new time and date API, it can seem fairly intimidating at first. However, it is well organized and logically structured. Its size reflects the detail of control and flexibility that it provides. Although it is far beyond the scope of this book to examine each element in this extensive API, we will look at several of its main classes. As you will see, these classes are sufficient for many uses. Beginning with JDK 9, these packages are in the **java.base** module.
 
 ## Time and Date Fundamentals
@@ -456,7 +660,13 @@ static LocalDateTime now()
 As you can see, in each case, an appropriate object is returned. The object returned by **now()** can be displayed in its default, human-readable form by use of a **println()** statement, for example. However, it is also possible to take full control over the formatting of date and time.
 
 The following program uses **LocalDate** and **LocalTime** to obtain the current date and time and then displays them. Notice how **now()** is called to retrieve the current date and time.
-
+```java
+// A simple example of Local Date and Local Time. import java.time.*;
+class DateTimeDemo { public static void main(String args[]) {
+LocalDate curDate = LocalDate.now(); System.out.println(curDate); LocalTime curTime Local Time.now(); System.out.println(curTime); }
+}
+}
+```
 Sample output is shown here:  
 
 2018-06-20
@@ -466,11 +676,11 @@ Sample output is shown here:
 The output reflects the default format that is given to the date and time. (The next section shows how to specify a different format.)
 
 Because the preceding program displays both the current date and the current time, it could have been more easily written using the **LocalDateTime** class. In this approach, only a single instance needs to be created and only a single call to **now()** is required, as shown here:
-
+```java
 LocalDateTime curDateTime = LocalDateTime.now();
 
 System.out.println(curDateTime);
-
+```
 Using this approach, the default output includes both date and time. Here is a sample:
 
 2018-06-20T17:34:18.991974600
@@ -499,9 +709,7 @@ methods. Three are shown here:
 
 Of course, the type of **DateTimeFormatter** that you create will be based on the type of object it will be operating on. For example, if you want to format the date in a **LocalDate** instance, then use **ofLocalizedDate()**. The specific format is specified by the **FormatStyle** parameter.
 
-## FormatStyle
-
- is an enumeration that is packaged in **java.time.format**. It defines the following constants:
+**FormatStyle**is an enumeration that is packaged in **java.time.format**. It defines the following constants:
 
 FULL
 
@@ -514,7 +722,19 @@ SHORT
 These specify the level of detail that will be displayed. (Thus, this form of **DateTimeFormatter** works similarly to **java.text.DateFormat**, described earlier in this chapter.)
 
 Here is an example that uses **DateTimeFormatter** to display the current date and time:  
-
+```java
+import java.time.*;
+// Demonstrate DateTimeFormatter. import java.time.format.*;
+class DateTimeDemo2 {
+public static void main(String args[]) {
+LocalDate curDate LocalDate.now();
+System.out.println(curDate.format( DateTimeFormatter. of LocalizedDate (FormatStyle. FULL)));
+LocalTime curTime = LocalTime.now();
+System.out.println(curTime.format(
+DateTimeFormatter.ofLocalizedTime (FormatStyle.SHORT)));
+}
+}
+```
 Sample output is shown here:
 
 Wednesday, June 20, 2018
@@ -528,7 +748,7 @@ static DateTimeFormatter ofPattern(String fmtPattern)
 Here, fmtPattern specifies a string that contains the date and time pattern that you want. It returns a **DateTimeFormatter** that will format according to that pattern. The default locale is used.
 
 In general, a pattern consists of format specifiers, called _pattern letters_. A pattern letter will be replaced by the date or time component that it specifies. The full list of pattern letters is shown in the API documentation for **ofPattern()**. Here is a sampling. Note that the pattern letters are case-sensitive.  
-
+![Alt text](image-6.png)
 In general, the precise output that you see will be determined by how many times a pattern letter is repeated. (Thus, **DateTimeFormatter** works a bit like **java.text.SimpleDateFormat**, described earlier in this chapter.) For example, assuming that the month is April, the patterns:
 
 M MM MMM MMMM
@@ -564,11 +784,21 @@ own formatter. The version specified by **LocalDateTime** is shown next. (The ot
 Here, dateTimeFmtr specifies the formatter that you want to use. Here is a simple example that parses a date and time string by use of a
 
 custom formatter:
-
+```java
+// Parse a date and time. import java.time.*; import java.time. format.*;
+class DateTimeDemo4 { public static void main(String args[]) {
+// Obtain a LocalDateTime object by parsing a date and time string. LocalDateTime curDateTime =
+LocalDateTime.parse("June 21, 2018 12:01 AM",
+DateTimeFormatter. of Pattern ("MMMM d, yyyy hh': 'mm a"));
+// Now, display the parsed date and time.
+System.out.println(curDateTime.format( DateTimeFormatter. of Pattern ("MMMM d', yyyy h': 'mm a"))); }
+}
+```
 Sample output is shown here:
 
 June 21, 2018 12:01 AM
 
-**Other Things to Explore in java.time** Although you will want to explore all of the date and time packages, a good place to start is with **java.time**. It contains a great deal of functionality that you may find useful. Begin by examining the methods defined by **LocalDate**, **LocalTime**, and **LocalDateTime**. Each has methods that let you add or subtract dates and/or times, adjust dates and/or times by a given component, compare dates and/or times, and create instances based on date and/or time components, among others. Other classes in **java.time** that you may find of particular interest include **Instant**, **Duration**, and **Period**. **Instant** encapsulates an instant  
+##Other Things to Explore in java.time 
+Although you will want to explore all of the date and time packages, a good place to start is with **java.time**. It contains a great deal of functionality that you may find useful. Begin by examining the methods defined by **LocalDate**, **LocalTime**, and **LocalDateTime**. Each has methods that let you add or subtract dates and/or times, adjust dates and/or times by a given component, compare dates and/or times, and create instances based on date and/or time components, among others. Other classes in **java.time** that you may find of particular interest include **Instant**, **Duration**, and **Period**. **Instant** encapsulates an instant  
 
 in time. **Duration** encapsulates a length of time. **Period** encapsulates a length of date.
