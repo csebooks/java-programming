@@ -622,7 +622,7 @@ Also provided by JDK 11 are the methods **stripLeading()** and **stripTrailing(*
 
 **)**, which delete whitespace characters from the start or end, respectively, of the invoking string and return the result.
 
-##Data Conversion Using valueOf() 
+## Data Conversion Using valueOf() 
 The **valueOf()** method converts data from its internal format into a human- readable form. It is a static method that is overloaded within **String** for all of Java’s built-in types so that each type can be converted properly into a string. **valueOf()** is also overloaded for type **Object**, so an object of any class type you create can also be used as an argument. (Recall that **Object** is a superclass for all classes.) Here are a few of its forms:
 
 static String valueOf(double num) static String valueOf(long num) static String valueOf(Object ob) static String valueOf(char chars[ ])
@@ -701,6 +701,7 @@ Several are summarized in the following table:
 Notice that several of these methods work with regular expressions. Regular expressions are described in Chapter 30.
 
 ## StringBuffer 
+
 **StringBuffer**supports a modifiable string. As you know, **String** represents fixed-length, immutable character sequences. In contrast, **StringBuffer** represents growable and writable character sequences. **StringBuffer** may have characters and substrings inserted in the middle or appended to the end. **StringBuffer** will automatically grow to make room for such additions and often has more characters preallocated than are actually needed, to allow room for growth.
 
 ## StringBuffer Constructors 
@@ -788,6 +789,7 @@ buffer after = Hi
 charAt(1) after = i
 
 ### getChars()
+
 To copy a substring of a **StringBuffer** into an array, use the **getChars()** method. It has this general form:
 
 void getChars(int sourceStart, int sourceEnd, char target[ ], int targetStart)
