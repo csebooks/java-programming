@@ -2,13 +2,15 @@
 title: 'Control Statements'
 weight: 5
 --- 
-
+# Control Statements
 
 A programming language uses control statements to cause the flow of execution to advance and branch based on changes to the state of a program. Java’s program control statements can be put into the following categories: selection, iteration, and jump. Selection statements allow your program to choose different paths of execution based upon the outcome of an expression or the state of a variable. Iteration statements enable program execution to repeat one or more statements (that is, iteration statements form loops). Jump statements allow your program to execute in a nonlinear fashion. All of Java’s control statements are examined here.
 
-**Java’s Selection Statements** Java supports two selection statements: **if** and **switch**. These statements allow you to control the flow of your program’s execution based upon conditions known only during run time. You will be pleasantly surprised by the power and flexibility contained in these two statements.
+## Java’s Selection Statements
 
-## if
+Java supports two selection statements: **if** and **switch**. These statements allow you to control the flow of your program’s execution based upon conditions known only during run time. You will be pleasantly surprised by the power and flexibility contained in these two statements.
+
+### if
 
  The **if** statement was introduced in Chapter 2. It is examined in detail here. The **if** statement is Java’s conditional branch statement. It can be used to route program execution through two different paths. Here is the general form of the **if** statement:
 ```
@@ -77,7 +79,7 @@ bytesAvailable = n;
 
 }
 ```
-## Nested ifs
+#### Nested ifs
 
  A nested **if** is an **if** statement that is the target of another **if** or **else**. Nested **if**s are very common in programming. When you nest **if**s, the main thing to remember is that an **else** statement always refers to the nearest **if** statement that is within the same block as the **else** and that is not already associated with an **else**. Here is an example:  
 ```
@@ -142,7 +144,7 @@ April is in the Spring.
 ```
 You might want to experiment with this program before moving on. As you will find, no matter what value you give **month**, one and only one assignment statement within the ladder will be executed.
 
-## switch
+### switch
 
  The **switch** statement is Java’s multiway branch statement. It provides an easy way to dispatch execution to different parts of your code based on the value of an expression. As such, it often provides a better alternative than a large series of **if-else-if** statements. Here is the general form of a **switch** statement:
 ```
@@ -346,7 +348,7 @@ The string contained in **str** (which is "two" in this program) is tested again
 
 Being able to use strings in a **switch** statement streamlines many situations. For example, using a string-based **switch** is an improvement over using the equivalent sequence of **if/else** statements. However, switching on strings can be more expensive than switching on integers. Therefore, it is best to switch on strings only in cases in which the controlling data is already in string form. In other words, don’t use strings in a **switch** unnecessarily.
 
-## Nested switch Statements
+#### Nested switch Statements
 
 You can use a **switch** as part of the statement sequence of an outer **switch**. This is called a nested **switch**. Since a **switch** statement defines its own block, no conflicts arise between the **case** constants in the inner **switch** and those in the outer **switch**. For example, the following fragment is perfectly valid:
 ```
@@ -388,7 +390,7 @@ of **if-else**s. The compiler can do this because it knows that the **case** con
 
  Java’s iteration statements are **for**, **while**, and **do-while**. These statements create what we commonly call loops. As you probably know, a loop repeatedly executes the same set of instructions until a termination condition is met. As you will see, Java has a loop to fit any programming need.
 
-## while
+### while
 
  The **while** loop is Java’s most fundamental loop statement. It repeats a statement or block while its controlling expression is true. Here is its general form:
 ```
@@ -466,7 +468,9 @@ Midpoint is 150
 ```
 Here is how this **while** loop works. The value of **i** is incremented, and the value of **j** is decremented. These values are then compared with one another. If the new value of **i** is still less than the new value of **j**, then the loop repeats. If **i** is equal to or greater than **j**, the loop stops. Upon exit from the loop, **i** will hold a value that is midway between the original values of **i** and **j**. (Of course, this procedure only works when **i** is less than **j** to begin with.) As you can see, there is no need for a loop body; all of the action occurs within the conditional expression, itself. In professionally written Java code, short loops are frequently coded without bodies when the controlling expression can handle all of the details itself.
 
-**do-while** As you just saw, if the conditional expression controlling a **while** loop is initially false, then the body of the loop will not be executed at all. However, sometimes it is desirable to execute the body of a loop at least once, even if the conditional expression is false to begin with. In other words, there are times when you would like to test the termination expression at the end of the loop rather than at the beginning. Fortunately, Java supplies a loop that does just that: the **do-while**. The **do-while** loop always executes its body at least once,  
+### do-while
+
+ As you just saw, if the conditional expression controlling a **while** loop is initially false, then the body of the loop will not be executed at all. However, sometimes it is desirable to execute the body of a loop at least once, even if the conditional expression is false to begin with. In other words, there are times when you would like to test the termination expression at the end of the loop rather than at the beginning. Fortunately, Java supplies a loop that does just that: the **do-while**. The **do-while** loop always executes its body at least once,  
 
 because its conditional expression is at the bottom of the loop. Its general form is
 ```
@@ -586,7 +590,7 @@ A few other points about this example: Notice that characters are read from the 
 
 Java’s console input can be a bit awkward to work with. Further, most real- world Java programs will use a graphical user interface (GUI). For these reasons, not much use of console input has been made in this book. However, it is useful in this context. One other point to consider: Because **System.in.read()** is being used, the program must specify the **throws java.io.IOException** clause. This line is necessary to handle input errors. It is part of Java’s exception handling features, which are discussed in Chapter 10.
 
-## for
+### for
 
  You were introduced to a simple form of the **for** loop in Chapter 2. As you will see, it is a powerful and versatile construct.  
 
@@ -750,7 +754,7 @@ for(;;){
 }
 This loop will run forever because there is no condition under which it will terminate. Although there are some programs, such as operating system command processors, that require an infinite loop, most “infinite loops” are really just loops with special termination requirements. As you will soon see, there is a way to terminate a loop—even an infinite loop like the one shown— that does not make use of the normal loop conditional expression.
 
-**The For-Each Version of the for Loop**  
+## The For-Each Version of the for Loop  
 
 A second form of **for** implements a “for-each” style loop. As you may know, contemporary language theory has embraced the for-each concept, and it has become a standard feature that programmers have come to expect. A for-each style loop is designed to cycle through a collection of objects, such as an array, in strictly sequential fashion, from start to finish. In Java, the for-each style of **for** is also referred to as the enhanced **for** loop.
 
@@ -1090,15 +1094,15 @@ The output produced by this program is shown here:
 
 here.
 
-## NOTE
+**NOTE**
 
  In addition to the jump statements discussed here, Java supports one other way that you can change your program’s flow of execution: through exception handling. Exception handling provides a structured method by which run-time errors can be trapped and handled by your program. It is supported by the keywords **try**, **catch**, **throw**, **throws**, and **finally**. In essence, the exception handling mechanism allows your program to perform a nonlocal branch. Since exception handling is a large topic, it is discussed in its own chapter, Chapter 10.
 
-## Using break
+### Using break
 
  In Java, the **break** statement has three uses. First, as you have seen, it terminates a statement sequence in a **switch** statement. Second, it can be used to exit a loop. Third, it can be used as a “civilized” form of goto. The last two uses are explained here.
 
-## Using break to Exit a Loop
+#### Using break to Exit a Loop
 
  By using **break**, you can force immediate termination of a loop, bypassing the conditional expression and any remaining code in the body of the loop. When a **break** statement is encountered inside a loop, the loop is terminated and program control resumes at the next statement following the loop. Here is a simple example:
 ```
@@ -1199,11 +1203,11 @@ As you can see, the **break** statement in the inner loop only causes terminatio
 
 Here are two other points to remember about **break**. First, more than one **break** statement may appear in a loop. However, be careful. Too many **break** statements have the tendency to destructure your code. Second, the **break** that terminates a **switch** statement affects only that **switch** statement and not any enclosing loops.
 
-## REMEMBER break
+#### REMEMBER break
 
  was not designed to provide the normal means by which a loop is terminated. The loop’s conditional expression serves this purpose. The **break** statement should be used to cancel a loop only when some sort of special situation occurs.
 
-## Using break as a Form of Goto
+#### Using break as a Form of Goto
 
  In addition to its uses with the **switch** statement and loops, the **break** statement can also be employed by itself to provide a “civilized” form of the goto statement. Java does not have a goto statement because it provides a way to branch in an arbitrary and unstructured manner. This usually makes goto-ridden code hard to understand and hard to maintain. It also prohibits certain compiler optimizations. There are, however, a few places where the goto is a valuable and legitimate construct for flow control. For example, the goto can be useful when you are exiting from a deeply nested set of loops. To handle such situations, Java defines an expanded form of the **break** statement. By using this form of **break**, you can, for example, break out of one or more blocks of code. These blocks need not be part of a loop or a **switch**. They can be any block. Further, you can specify precisely where execution will resume, because this form of **break** works with a label. As you will see, **break** gives you the benefits of a goto without its problems.
 
@@ -1289,7 +1293,7 @@ class BreakErr
 ```
 Since the loop labeled **one** does not enclose the **break** statement, it is not possible to transfer control out of that block.
 
-## Using continue
+### Using continue
 
  Sometimes it is useful to force an early iteration of a loop. That is, you might want to continue running the loop but stop processing the remainder of the code in its body for this particular iteration. This is, in effect, a goto just past the body of the loop, to the loop’s end. The **continue** statement performs such an action. In **while** and **do-while** loops, a **continue** statement causes control to be transferred directly to the conditional expression that controls the loop. In a **for** loop, control goes first to the iteration portion of the **for** statement and then to the conditional expression. For all three loops, any intermediate code is bypassed.
 
@@ -1369,7 +1373,7 @@ The **continue** statement in this example terminates the loop counting **j** an
 ```
 Good uses of **continue** are rare. One reason is that Java provides a rich set of loop statements which fit most applications. However, for those special circumstances in which early iteration is needed, the **continue** statement provides a structured way to accomplish it.
 
-## return
+### return
 
  The last control statement is **return**. The **return** statement is used to explicitly return from a method. That is, it causes program control to transfer back to the caller of the method. As such, it is categorized as a jump statement. Although a full discussion of **return** must wait until methods are discussed in Chapter 6, a brief look at **return** is presented here.
 

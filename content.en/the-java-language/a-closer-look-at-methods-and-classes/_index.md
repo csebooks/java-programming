@@ -2,6 +2,7 @@
 title: 'A Closer Look at Methods and Classes'
 weight: 7
 --- 
+# A Closer Look at Methods and Classes
 
 This chapter continues the discussion of methods and classes begun in the preceding chapter. It examines several topics relating to methods, including overloading, parameter passing, and recursion. The chapter then returns to the class, discussing access control, the use of the keyword **static**, and one of Java’s most important built-in classes: **String**.
 
@@ -395,7 +396,7 @@ ob.a and ob.b after call: 30 10
 
 As you can see, in this case, the actions inside **meth()** have affected the object used as an argument.
 
-## REMEMBER
+** REMEMBER**
 
  When an object reference is passed to a method, the reference itself is passed by use of call-by-value. However, since the value being passed refers to an object, the copy of that value will still refer to the same object that its corresponding argument does.  
 
@@ -545,7 +546,7 @@ This program generates the following output:
 
 How a member can be accessed is determined by the _access modifier_ attached to its declaration. Java supplies a rich set of access modifiers. Some aspects of access control are related mostly to inheritance or packages. (A package is, essentially, a grouping of classes.) These parts of Java’s access control mechanism will be discussed in subsequent chapters. Here, let’s begin by examining access control as it applies to a single class. Once you understand the fundamentals of access control, the rest will be easy.
 
-## NOTE
+**NOTE**
 
  The modules feature added by JDK 9 can also impact accessibility. Modules are described in Chapter 16.
 
@@ -1168,7 +1169,7 @@ args[4]: 100
 args[5]: -1
 ```
 
-## REMEMBER
+**REMEMBER**
 
  All command-line arguments are passed as strings. You must convert numeric values to their internal forms manually, as explained in Chapter 18.
 

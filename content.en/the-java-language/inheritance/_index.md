@@ -2,7 +2,7 @@
 title: 'Inheritance'
 weight: 8
 --- 
-
+# Inheritance
 Inheritance is one of the cornerstones of object-oriented programming because it allows the creation of hierarchical classifications. Using inheritance, you can create a general class that defines traits common to a set of related items. This class can then be inherited by other, more specific classes, each adding those things that are unique to it. In the terminology of Java, a class that is inherited is called a superclass. The class that does the inheriting is called a subclass. Therefore, a subclass is a specialized version of a superclass. It inherits all of the members defined by the superclass and adds its own, unique elements.
 
 ## Inheritance Basics
@@ -93,7 +93,7 @@ class subclass-name extends superclass-name
 ```
 You can only specify one superclass for any subclass that you create. Java does not support the inheritance of multiple superclasses into a single subclass. You can, as stated, create a hierarchy of inheritance in which a subclass becomes a superclass of another subclass. However, no class can be a superclass of itself.
 
-## Member Access and Inheritance
+### Member Access and Inheritance
 
  Although a subclass includes all of the members of its superclass, it cannot access those members of the superclass that have been declared as **private**. For example, consider the following simple class hierarchy:  
 ```
@@ -140,7 +140,7 @@ This program will not compile because the use of **j** inside the **sum()** meth
 
  A class member that has been declared as private will remain private to its class. It is not accessible by any code outside its class, including subclasses.
 
-## A More Practical Example
+### A More Practical Example
 
  Let’s look at a more practical example that will help illustrate the power of inheritance. Here, the final version of the **Box** class developed in the preceding chapter will be extended to include a fourth component called **weight**. Thus, the new class will contain a box’s width, height, depth, and weight.  
 ```
@@ -249,7 +249,7 @@ class ColorBox extends Box
 ```
 Remember, once you have created a superclass that defines the general aspects of an object, that superclass can be inherited to form specialized classes. Each subclass simply adds its own unique attributes. This is the essence of inheritance.
 
-## A Superclass Variable Can Reference a Subclass Object
+### A Superclass Variable Can Reference a Subclass Object
 
  A reference variable of a superclass can be assigned a reference to any subclass derived from that superclass. You will find this aspect of inheritance quite useful in a variety of situations. For example, consider the following:  
 ```
@@ -289,7 +289,7 @@ Although the preceding may seem a bit esoteric, it has some important practical 
 
 **super** has two general forms. The first calls the superclass’ constructor. The second is used to access a member of the superclass that has been hidden by a member of a subclass. Each use is examined here.
 
-## Using super to Call Superclass Constructors
+### Using super to Call Superclass Constructors
 
  A subclass can call a constructor defined by its superclass by use of the following form of **super**:
 ```
@@ -468,7 +468,7 @@ Notice that **super()** is passed an object of type **BoxWeight**—not of type 
 
 Let’s review the key concepts behind **super()**. When a subclass calls **super()**, it is calling the constructor of its immediate superclass. Thus, **super()** always refers to the superclass immediately above the calling class. This is true even in a multileveled hierarchy. Also, **super()** must always be the first statement executed inside a subclass constructor.
 
-## A Second Use for super
+### A Second Use for super
 
  The second form of **super** acts somewhat like **this**, except that it always refers to the superclass of the subclass in which it is used. This usage has the following general form:  
 
@@ -898,17 +898,19 @@ Inside C's callme method
 ```
 This program creates one superclass called **A** and two subclasses of it, called **B** and **C**. Subclasses **B** and **C** override **callme()** declared in **A**. Inside the **main()** method, objects of type **A**, **B**, and **C** are declared. Also, a reference of type **A**, called **r**, is declared. The program then in turn assigns a reference to each type of object to **r** and uses that reference to invoke **callme()**. As the output shows, the version of **callme()** executed is determined by the type of object being referred to at the time of the call. Had it been determined by the type of the reference variable, **r**, you would see three calls to **A**’s **callme()** method.
 
-## NOTE
+**NOTE**
 
  Readers familiar with C++ or C# will recognize that overridden methods in Java are similar to virtual functions in those languages.
 
-**Why Overridden Methods?** As stated earlier, overridden methods allow Java to support run-time polymorphism. Polymorphism is essential to object-oriented programming for one reason: it allows a general class to specify methods that will be common to all of its derivatives, while allowing subclasses to define the specific implementation of some or all of those methods. Overridden methods are another way that Java implements the “one interface, multiple methods” aspect of polymorphism.
+### Why Overridden Methods?
+
+ As stated earlier, overridden methods allow Java to support run-time polymorphism. Polymorphism is essential to object-oriented programming for one reason: it allows a general class to specify methods that will be common to all of its derivatives, while allowing subclasses to define the specific implementation of some or all of those methods. Overridden methods are another way that Java implements the “one interface, multiple methods” aspect of polymorphism.
 
 Part of the key to successfully applying polymorphism is understanding that the superclasses and subclasses form a hierarchy which moves from lesser to greater specialization. Used correctly, the superclass provides all elements that a subclass can use directly. It also defines those methods that the derived class must implement on its own. This allows the subclass the flexibility to define its own methods, yet still enforces a consistent interface. Thus, by combining inheritance with overridden methods, a superclass can define the general form of the methods that will be used by all of its subclasses.
 
 Dynamic, run-time polymorphism is one of the most powerful mechanisms that object-oriented design brings to bear on code reuse and robustness. The ability of existing code libraries to call methods on instances of new classes without recompiling while maintaining a clean abstract interface is a profoundly powerful tool.  
 
-## Applying Method Overriding
+### Applying Method Overriding
 
  Let’s look at a more practical example that uses method overriding. The following program creates a superclass called **Figure** that stores the dimensions of a two-dimensional object. It also defines a method called **area()** that computes the area of an object. The program derives two subclasses from **Figure**. The first is **Rectangle** and the second is **Triangle**. Each of these subclasses overrides **area()** so that it returns the area of a rectangle and a triangle, respectively.  
 ```
@@ -1043,7 +1045,7 @@ Although abstract classes cannot be used to instantiate objects, they can be use
 
 Using an        `       ` abstract class, you can improve the **Figure** class shown earlier. Since there is no meaningful concept of area for an undefined two-dimensional figure, the following version of the program declares **area()** as abstract inside  
 
-## Figure
+**Figure**
 
 . This, of course, means that all classes derived from **Figure** must override **area()**.  
 ```
@@ -1111,7 +1113,7 @@ Although it is not possible to create an object of type **Figure**, you can crea
 
  The keyword **final** has three uses. First, it can be used to create the equivalent of a named constant. This use was described in the preceding chapter. The other two uses of **final** apply to inheritance. Both are examined here.
 
-## Using final to Prevent Overriding
+### Using final to Prevent Overriding
 
  While method overriding is one of Java’s most powerful features, there will be times when you will want to prevent it from occurring. To disallow a method from being overridden, specify **final** as a modifier at the start of its declaration. Methods declared as **final** cannot be overridden. The following fragment illustrates **final**:  
 ```
@@ -1135,7 +1137,7 @@ Because **meth()** is declared as **final**, it cannot be overridden in **B**. I
 
 Methods declared as **final** can sometimes provide a performance enhancement: The compiler is free to inline calls to them because it “knows” they will not be overridden by a subclass. When a small **final** method is called, often the Java compiler can copy the bytecode for the subroutine directly inline with the compiled code of the calling method, thus eliminating the costly overhead associated with a method call. Inlining is an option only with **final** methods. Normally, Java resolves calls to methods dynamically, at run time. This is called _late binding_. However, since **final** methods cannot be overridden, a call to one can be resolved at compile time. This is called _early binding_.
 
-## Using final to Prevent Inheritance
+### Using final to Prevent Inheritance
 
  Sometimes you will want to prevent a class from being inherited. To do this, precede the class declaration with **final**. Declaring a class as **final** implicitly declares all of its methods as **final**, too. As you might expect, it is illegal to declare a class as both **abstract** and **final** since an abstract class is incomplete by itself and relies upon its subclasses to provide complete implementations.
 

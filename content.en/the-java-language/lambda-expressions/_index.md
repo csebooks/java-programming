@@ -3,6 +3,7 @@ title: 'Lambda Expressions'
 weight: 15
 --- 
 
+# Lambda Expressions
 
 During Java’s ongoing development and evolution, many features have been added since its original 1.0 release. However, two stand out because they have profoundly reshaped the language, fundamentally changing the way that code is written. The first was the addition of generics, added by JDK 5. (See Chapter 14.) The second is the _lambda expression,_ which is the subject of this chapter.
 
@@ -20,13 +21,13 @@ expression results in a form of anonymous class. Lambda expressions are also com
 
 A _functional interface_ is an interface that contains one and only one abstract method. Normally, this method specifies the intended purpose of the interface. Thus, a functional interface typically represents a single action. For example, the standard interface **Runnable** is a functional interface because it defines only one method: **run()**. Therefore, **run()** defines the action of **Runnable**. Furthermore, a functional interface defines the _target type_ of a lambda expression. Here is a key point: a lambda expression can be used only in a context in which its target type is specified. One other thing: a functional interface is sometimes referred to as a _SAM type,_ where SAM stands for Single Abstract Method.
 
-## NOTE
+**NOTE**
 
  A functional interface may specify any public method defined by **Object**, such as **equals()**, without affecting its “functional interface” status. The public **Object** methods are considered implicit members of a functional interface because they are automatically implemented by an instance of a functional interface.
 
 Let’s now look more closely at both lambda expressions and functional interfaces.
 
-## Lambda Expression Fundamentals
+### Lambda Expression Fundamentals
 
  The lambda expression introduced a new syntax element and operator into the Java language. The new operator, sometimes referred to as the _lambda operator_ or the _arrow operator_, is **−>**. It divides a lambda expression into two parts. The left side specifies any parameters required by the lambda expression. (If no parameters are needed, an empty parameter list is used.) On the right side is the _lambda body,_ which specifies the actions of the lambda expression. The **−>** can be verbalized as “becomes” or “goes to.”
 
@@ -52,7 +53,7 @@ When a lambda expression requires a parameter, it is specified in the parameter 
 
 This lambda expression returns **true** if the value of parameter **n** is even. Although it is possible to explicitly specify the type of a parameter, such as **n** in this case, often you won’t need to do so because in many cases its type can be inferred. Like a named method, a lambda expression can specify as many parameters as needed.
 
-## Functional Interfaces
+### Functional Interfaces
 
  As stated, a functional interface is an interface that specifies only one abstract method. If you have been programming in Java for some time, you might at first think that all interface methods are implicitly abstract. Although this was true prior to JDK 8, the situation has changed. As explained in Chapter 9, beginning with JDK 8, it is possible to specify a default implementation for a method declared in an interface. Private and static interface methods also supply an implementation. As a result, today, an interface method is abstract only if it does not specify an implementation. Because non-default non-static, non-private interface methods are implicitly abstract, there is no need to use the **abstract** modifier (although you can specify it, if you like).
 
@@ -88,7 +89,7 @@ Because the lambda expression assigned to **myNum** returns the value 123.45, th
 
 In order for a lambda expression to be used in a target type context, the type of the abstract method and the type of the lambda expression must be compatible. For example, if the abstract method specifies two **int** parameters, then the lambda must specify two parameters whose type either is explicitly **int** or can be implicitly inferred as **int** by the context. In general, the type and number of the lambda expression’s parameters must be compatible with the method’s parameters; the return types must be compatible; and any exceptions thrown by the lambda expression must be acceptable to the method.
 
-## Some Lambda Expression Examples
+### Some Lambda Expression Examples
 
 With the preceding discussion in mind, let’s look at some simple examples that illustrate the basic lambda expression concepts. The first example puts together the pieces shown in the foregoing section.
 
@@ -549,7 +550,7 @@ reference. A method reference provides a way to refer to a method without execut
 
 There are different types of method references. We will begin with method references to **static** methods.
 
-## Method References to static Methods
+### Method References to static Methods
 
 To create a **static** method reference, use this general syntax:
 ```
@@ -610,13 +611,14 @@ Here, a reference to the **static** method **strReverse()**, declared inside **M
 
 because **strReverse** is compatible with the **StringFunc** functional interface. Thus, the expression **MyStringOps::strReverse** evaluates to a reference to an object in which **strReverse** provides the implementation of **func()** in **StringFunc**.
 
-## Method References to Instance Methods
+### Method References to Instance Methods
 
 To pass a reference to an instance method on a specific object, use this basic syntax:
 ```
 objRef::methodName
 ```
 As you can see, the syntax is similar to that used for a **static** method, except that an object reference is used instead of a class name. Here is the previous program rewritten to use an instance method reference:  
+
 
 ```java
 // Demonstrate a method reference to an instance method
@@ -769,7 +771,7 @@ typeName.**super**::name
 ```
 where typeName refers to an enclosing class or super interface.
 
-## Method References with Generics
+### Method References with Generics
 
  You can use method references with generic classes and/or generic methods. For example, consider the following program:
 

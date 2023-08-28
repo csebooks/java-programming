@@ -2,7 +2,7 @@
 title: 'An Overview of Java'
 weight: 2
 --- 
-
+# An Overview of Java
 
 As in all other computer languages, the elements of Java do not exist in isolation. Rather, they work together to form the language as a whole. However, this interrelatedness can make it difficult to describe one aspect of Java without involving several others. Often a discussion of one feature implies prior knowledge of another. For this reason, this chapter presents a quick overview of several key features of Java. The material described here will give you a foothold that will allow you to write and understand simple programs. Most of the topics discussed will be examined in greater detail in the remaining chapters of Part I.
 
@@ -28,7 +28,7 @@ Object-oriented concepts form the heart of Java just as they form the basis for 
 
  All object-oriented programming languages provide mechanisms that help you implement the object-oriented model. They are encapsulation, inheritance, and polymorphism. Let’s take a look at these concepts now.
 
-## Encapsulation
+### Encapsulation
 
  Encapsulation is the mechanism that binds together code and the data it manipulates, and keeps both safe from outside interference and misuse. One way to think about encapsulation is as a protective wrapper that prevents the code and data from being arbitrarily accessed by other code defined outside the wrapper. Access to the code and data inside the wrapper is tightly controlled through a well-defined interface. To relate this to the real world, consider the automatic transmission on an automobile. It encapsulates hundreds of bits of information about your engine, such as how much you are accelerating, the pitch of the surface you are on, and the position of the shift lever. You, as the user, have only one method of affecting this complex encapsulation: by moving the gear-shift lever. You can’t affect the transmission by using the turn signal or windshield wipers, for example. Thus, the gear-shift lever is a well-defined (indeed, unique) interface to the transmission. Further, what occurs inside the transmission does not affect objects outside the transmission. For example, shifting gears does not turn on the headlights! Because an automatic transmission is encapsulated, dozens of car manufacturers can implement one in any way they please. However, from the driver’s point of view, they all work the same. This same idea can be applied to programming. The power of encapsulated code is that everyone knows how to access it and thus can use it regardless of the implementation details—and without fear of unexpected side effects.
 
@@ -42,7 +42,7 @@ Since the purpose of a class is to encapsulate complexity, there are mechanisms 
 ![Alt text](fig2.1.png)
 **Figure 2-1** Encapsulation: public methods can be used to protect private data.
 
-## Inheritance
+### Inheritance
 
  Inheritance is the process by which one object acquires the properties of another object. This is important because it supports the concept of hierarchical classification. As mentioned earlier, most knowledge is made manageable by hierarchical (that is, top-down) classifications. For example, a Golden Retriever is part of the classification dog, which in turn is part of the mammal class, which is under the larger class animal. Without the use of hierarchies, each object would need to define all of its characteristics explicitly. However, by use of inheritance, an object need only define those qualities that make it unique within its class. It can inherit its general attributes from its parent. Thus, it is the inheritance mechanism that makes it possible for one object to be a specific instance of a more general case. Let’s take a closer look at this process.
 
@@ -56,7 +56,7 @@ Inheritance interacts with encapsulation as well. If a given class encapsulates 
 ![Alt text](fig2.2.png)
 ![Alt text](fig2.2.2.png)
 
-## Polymorphism
+### Polymorphism
 
 Polymorphism (from Greek, meaning “many forms”) is a feature that allows one interface to be used for a general class of actions. The specific action is determined by the exact nature of the situation. Consider a stack (which is a last-in, first-out list). You might have a program that requires three types of stacks. One stack is used for integer values, one for floating-point values, and one for characters. The algorithm that implements each stack is the same, even though the data being stored differs. In a non–object-oriented language, you would be required to create three different sets of stack routines, with each set using different names. However, because of polymorphism, in Java you can specify a general set of stack routines that all share the same names.
 
@@ -95,11 +95,11 @@ class Example
     }
 }
 ```
-## NOTE
+**NOTE**
 
  The descriptions that follow use the standard Java SE Development Kit (JDK), which is available from Oracle. (Open source versions are also available.) If you are using an integrated development environment (IDE), then you will need to follow a different procedure for compiling and executing Java programs. In this case, consult your IDE’s documentation for details.
 
-## Entering the Program
+### Entering the Program
 
  For most computer languages, the name of the file that holds the source code to a program is immaterial. However, this is not the case with Java. The first thing that you must learn about Java is that the name you give to a source file is very important. For this example, the name of the source file should be **Example.java**. Let’s see why.
 
@@ -107,7 +107,7 @@ In Java, a source file is officially called a _compilation unit_. It is a text f
 
 As you can see by looking at the program, the name of the class defined by the program is also **Example**. This is not a coincidence. In Java, all code must reside inside a class. By convention, the name of the main class should match the name of the file that holds the program. You should also make sure that the capitalization of the filename matches the class name. The reason for this is that Java is case-sensitive. At this point, the convention that filenames correspond to class names may seem arbitrary. However, this convention makes it easier to maintain and organize your programs. Furthermore, as you will see later in this book, in some cases, it is required.
 
-## Compiling the Program
+### Compiling the Program
 
 To compile the **Example** program, execute the compiler, **javac**, specifying the name of the source file on the command line, as shown here:
 
@@ -125,7 +125,7 @@ This is a simple Java program.
 
 When Java source code is compiled, each individual class is put into its own output file named after the class and using the **.class** extension. This is why it is a good idea to give your Java source files the same name as the class they contain—the name of the source file will match the name of the **.class** file. When you execute **java** as just shown, you are actually specifying the name of the class that you want to execute. It will automatically search for a file by that name that has the **.class** extension. If it finds the file, it will execute the code contained in the specified class.
 
-## NOTE
+**NOTE**
 
  Beginning with JDK 11, Java provides a way to run some types of simple programs directly from a source file, without explicitly invoking **javac**. This technique, which can be useful in some situations, is described in Appendix C. For the purposes of this book, it is assumed that you are using the normal compilation process just described.
 
@@ -255,7 +255,7 @@ Several new things are occurring here. First, the built-in method **print()** is
 
 4. They will also help illustrate an important aspect of Java: blocks of code.
 
-## The if Statement
+### The if Statement
 
  The Java **if** statement works much like the IF statement in any other language. It determines the flow of execution based on whether some condition is true or false. Its simplest form is shown here:
 
@@ -313,7 +313,7 @@ int x, y;
 ```
 declares two variables, **x** and **y**, by use of a comma-separated list.
 
-## The for Loop
+### The for Loop
 
  Loop statements are an important part of nearly any programming language because they provide a way to repeatedly execute some task. As you will see in Chapter 5, Java supplies a powerful assortment of loop constructs. Perhaps the most versatile is the **for** loop. The simplest form of the **for** loop is shown here:
 ```
@@ -455,15 +455,15 @@ In this case, the target of the **for** loop is a block of code and not just a s
 
 As you will see later in this book, blocks of code have additional properties and uses. However, the main reason for their existence is to create logically inseparable units of code.
 
-## Lexical Issues
+### Lexical Issues
 
  Now that you have seen several short Java programs, it is time to more formally describe the atomic elements of Java. Java programs are a collection of whitespace, identifiers, literals, comments, operators, separators, and keywords. The operators are described in the next chapter. The others are described next.
 
-## Whitespace
+### Whitespace
 
  Java is a free-form language. This means that you do not need to follow any special indentation rules. For instance, the **Example** program could have been written all on one line or in any other strange way you felt like typing it, as long as there was at least one whitespace character between each token that was not already delineated by an operator or separator. In Java, whitespace includes a space, tab, newline, or form feed.
 
-## Identifiers
+### Identifiers
 
  Identifiers are used to name things, such as classes, variables, and methods. An identifier may be any descriptive sequence of uppercase and lowercase letters, numbers, or the underscore and dollar-sign characters. (The dollar-sign character is not intended for general use.) They must not begin with a number,  
 
@@ -471,21 +471,22 @@ lest they be confused with a numeric literal. Again, Java is case-sensitive, so 
 ![Alt text](f1.png)
 Invalid identifier names include these:
 ![Alt text](f2.png)
-## NOTE
+
+**NOTE**
 
  Beginning with JDK 9, the underscore cannot be used by itself as an identifier.
 
-## Literals
+### Literals
 
  A constant value in Java is created by using a literal representation of it. For example, here are some literals:
 ![Alt text](f3.png)
 Left to right, the first literal specifies an integer, the next is a floating-point value, the third is a character constant, and the last is a string. A literal can be used anywhere a value of its type is allowed.
 
-## Comments
+### Comments
 
  As mentioned, there are three types of comments defined by Java. You have already seen two: single-line and multiline. The third type is called a _documentation comment_. This type of comment is used to produce an HTML file that documents your program. The documentation comment begins with a /** and ends with a */. Documentation comments are explained in Appendix A.
 
-## Separators
+### Separators
 
  In Java, there are a few characters that are used as separators. The most commonly used separator in Java is the semicolon. As you have seen, it is often used to terminate statements. The separators are shown in the following table:  
 ![Alt text](t2.png)

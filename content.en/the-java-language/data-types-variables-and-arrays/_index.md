@@ -3,7 +3,7 @@ title: 'Data Types, Variables, and Arrays'
 weight: 3
 --- 
 
-
+# Data Types, Variables, and Arrays
 
 This chapter examines three of Java’s most fundamental elements: data types, variables, and arrays. As with all modern programming languages, Java supports several types of data. You may use these types to declare variables and to create arrays. As you will see, Java’s approach to these items is clean, efficient, and cohesive.
 
@@ -33,7 +33,7 @@ The primitive types are defined to have an explicit range and mathematical behav
 
 Let’s look at each type of data in turn.
 
-## Integers
+### Integers
 
  Java defines four integer types: **byte**, **short**, **int**, and **long**. All of these are signed, positive and negative values. Java does not support unsigned, positive- only integers. Many other computer languages support both signed and unsigned integers. However, Java’s designers felt that unsigned integers were unnecessary. Specifically, they felt that the concept of unsigned was used mostly to specify the behavior of the _high-order bit_, which defines the sign of an integer value. As you will see in Chapter 4, Java manages the meaning of the high-order bit differently, by adding a special “unsigned right shift” operator. Thus, the need for an unsigned integer type was eliminated.
 
@@ -41,7 +41,7 @@ The width of an integer type should not be thought of as the amount of storage i
 ![Alt text](t1.png)
 Let’s look at each type of integer.
 
-## byte
+#### byte
 
  The smallest integer type is **byte**. This is a signed 8-bit type that has a range from –128 to 127. Variables of type **byte** are especially useful when you’re working with a stream of data from a network or file. They are also useful when you’re working with raw binary data that may not be directly compatible with Java’s other built-in types.
 
@@ -50,7 +50,7 @@ Byte variables are declared by use of the **byte** keyword. For example, the fol
 byte b, c;
 ```
 
-## short short
+#### short
 
  is a signed 16-bit type. It has a range from –32,768 to 32,767. It is probably the least-used Java type. Here are some examples of **short** variable declarations:
 ```
@@ -59,13 +59,13 @@ short s;
 short t;
 ```
 
-## int
+#### int
 
  The most commonly used integer type is **int**. It is a signed 32-bit type that has a range from –2,147,483,648 to 2,147,483,647. In addition to other uses, variables of type **int** are commonly employed to control loops and to index arrays. Although you might think that using a **byte** or **short** would be more efficient than using an **int** in situations in which the larger range of an **int** is not needed, this may not be the case. The reason is that when **byte** and **short** values are used in an expression, they are promoted to **int** when the expression is evaluated. (Type promotion is described later in this chapter.) Therefore, **int** is  
 
 often the best choice when an integer is needed.
 
-## long long
+#### long
 
  is a signed 64-bit type and is useful for those occasions where an **int** type is not large enough to hold the desired value. The range of a **long** is quite large. This makes it useful when big, whole numbers are needed. For example, here is a program that computes the number of miles that light will travel in a specified number of days:
 ```
@@ -101,7 +101,7 @@ Clearly, the result could not have been held in an **int** variable.
 ![Alt text](<Screenshot from 2023-08-23 18-22-20.png>)
 Each of these floating-point types is examined next.
 
-## float
+### float
 
  The type **float** specifies a _single-precision_ value that uses 32 bits of storage. Single precision is faster on some processors and takes half as much space as double precision, but will become imprecise when the values are either very large or very small. Variables of type **float** are useful when you need a fractional component, but don’t require a large degree of precision. For example, **float** can be useful when representing dollars and cents.
 
@@ -110,7 +110,7 @@ Here are some example **float** variable declarations:
 float hightemp, lowtemp;
 ```
 
-## double
+### double
 
  Double precision, as denoted by the **double** keyword, uses 64 bits to store a value. Double precision is actually faster than single precision on some modern processors that have been optimized for high-speed mathematical calculations. All transcendental math functions, such as **sin()**, **cos()**, and **sqrt()**, return **double** values. When you need to maintain accuracy over many iterative calculations, or are manipulating large-valued numbers, **double** is the best choice.
 
@@ -129,7 +129,7 @@ class Area
     }
 }
 ```
-## Characters
+### Characters
 
  In Java, the data type used to store characters is **char**. A key point to understand is that Java uses Unicode to represent characters. Unicode defines a fully international character set that can represent all of the characters found in all human languages. It is a unification of dozens of character sets, such as Latin, Greek, Arabic, Cyrillic, Hebrew, Katakana, Hangul, and many more. At the time of Java’s creation, Unicode required 16 bits. Thus, in Java **char** is a 16-bit type. The range of a **char** is 0 to 65,536. There are no negative **char**s. The standard set of characters known as ASCII still ranges from 0 to 127 as always, and the extended 8-bit character set, ISO-Latin-1, ranges from 0 to 255. Since Java is designed to allow programs to be written for worldwide use, it makes sense that it would use Unicode to represent characters. Of course, the use of Unicode is somewhat inefficient for languages such as English, German, Spanish, or French, whose characters can easily be contained within 8 bits. But such is the price that must be paid for global portability.
 ```
@@ -146,7 +146,7 @@ class CharDemo
     }
 }
 ```
-## NOTE
+**NOTE**
 
  More information about Unicode can be found at http://www.unicode.org.
 
@@ -182,11 +182,11 @@ ch1 is now Y
 
 In the program, **ch1** is first given the value X. Next, **ch1** is incremented. This results in **ch1** containing Y, the next character in the ASCII (and Unicode) sequence.
 
-## NOTE
+**NOTE**
 
  In the formal specification for Java, **char** is referred to as an _integral type_, which means that it is in the same general category as **int**, **short**, **long**, and **byte**. However, because its principal use is for representing Unicode characters, **char** is commonly considered to be in a category of its own.
 
-## Booleans
+### Booleans
 
  Java has a primitive type, called **boolean**, for logical values. It can have only one of two possible values, **true** or **false**. This is the type returned by all relational operators, as in the case of **a < b**. **boolean** is also the type required by the conditional expressions that govern the control statements such as **if** and **for**.
 
@@ -233,7 +233,7 @@ Third, the outcome of a relational operator, such as **<**, is a **boolean** val
 
  Literals were mentioned briefly in Chapter 2. Now that the built-in types have been formally described, let’s take a closer look at them.
 
-## Integer Literals
+### Integer Literals
 
  Integers are probably the most commonly used type in the typical program. Any whole number value is an integer literal. Examples are 1, 2, 3, and 42. These are all decimal values, meaning they are describing a base 10 number. Two other bases that can be used in integer literals are octal (base eight) and hexadecimal (base 16). Octal values are denoted in Java by a leading zero. Normal decimal numbers cannot have a leading zero. Thus, the seemingly valid value 09 will produce an error from the compiler, since 9 is outside of octal’s 0 to 7 range. A more common base for numbers used by programmers is hexadecimal, which matches cleanly with modulo 8 word sizes, such as 8, 16, 32, and 64 bits. You signify a hexadecimal constant with a leading zero-x, (**0x** or **0X**). The range of a hexadecimal digit is 0 to 15, so A through F (or a through f) are substituted for 10 through 15.
 
@@ -275,11 +275,11 @@ double num = 9_423_497.1_0_9;
 ```
 is legal. In this case, the fractional part is **.109**.
 
-## Boolean Literals
+### Boolean Literals
 
  Boolean literals are simple. There are only two logical values that a **boolean** value can have, **true** and **false**. The values of **true** and **false** do not convert into any numerical representation. The **true** literal in Java does not equal 1, nor does the **false** literal equal 0. In Java, the Boolean literals can only be assigned to variables declared as **boolean** or used in expressions with Boolean operators.
 
-## Character Literals
+### Character Literals
 
  Characters in Java are indices into the Unicode character set. They are 16-bit values that can be converted into integers and manipulated with the integer operators, such as the addition and subtraction operators. A literal character is represented inside a pair of single quotes. All of the visible ASCII characters can be directly entered inside the quotes, such as 'a', 'z', and '@'. For characters that are impossible to enter directly, there are several escape sequences that allow you to enter the character you need, such as ' \\' ' for the single-quote character itself and ' \**n**' for the newline character. There is also a mechanism for directly entering the value of a character in octal or hexadecimal. For octal notation, use the backslash followed by the three-digit number. For example, '  
 
@@ -287,7 +287,7 @@ is legal. In this case, the fractional part is **.109**.
 ![Alt text](table3.1.png)
 **Table 3-1** Character Escape Sequences
 
-## String Literals
+### String Literals
 
  String literals in Java are specified like they are in most other languages—by enclosing a sequence of characters between a pair of double quotes. Examples of string literals are
 ```
@@ -298,17 +298,15 @@ is legal. In this case, the fractional part is **.109**.
 
 The escape sequences and octal/hexadecimal notations that were defined for character literals work the same way inside of string literals. One important thing to note about Java strings is that they must begin and end on the same line. There is no line-continuation escape sequence as there is in some other languages.
 
-## NOTE
+**NOTE**
 
- As you may know, in some other languages strings are implemented as arrays of characters. However, this is not the case in Java. Strings are actually object types. As you will see later in this book, because Java implements strings as objects, Java  
-
-includes extensive string-handling capabilities that are both powerful and easy to use.
+ As you may know, in some other languages strings are implemented as arrays of characters. However, this is not the case in Java. Strings are actually object types. As you will see later in this book, because Java implements strings as objects, Java includes extensive string-handling capabilities that are both powerful and easy to use.
 
 ## Variables
 
  The variable is the basic unit of storage in a Java program. A variable is defined by the combination of an identifier, a type, and an optional initializer. In addition, all variables have a scope, which defines their visibility, and a lifetime. These elements are examined next.
 
-## Declaring a Variable
+### Declaring a Variable
 
  In Java, all variables must be declared before they can be used. The basic form of a variable declaration is shown here:
 
@@ -328,7 +326,7 @@ char x = 'x';              // the variable x has the value 'x'.
 ```
 The identifiers that you choose have nothing intrinsic in their names that indicates their type. Java allows any properly formed identifier to have any declared type.
 
-## Dynamic Initialization
+### Dynamic Initialization
 
  Although the preceding examples have used only constants as initializers, Java allows variables to be initialized dynamically, using any expression valid at the  
 
@@ -350,7 +348,7 @@ class DynInit
 ```
 Here, three local variables—**a**, **b**, and **c**—are declared. The first two, **a** and **b**, are initialized by constants. However, **c** is initialized dynamically to the length of the hypotenuse (using the Pythagorean theorem). The program uses another of Java’s built-in methods, **sqrt()**, which is a member of the **Math** class, to compute the square root of its argument. The key point here is that the initialization expression may use any element valid at the time of the initialization, including calls to methods, other variables, or literals.
 
-## The Scope and Lifetime of Variables
+### The Scope and Lifetime of Variables
 
  So far, all of the variables used have been declared at the start of the **main()** method. However, Java allows variables to be declared within any block. As explained in Chapter 2, a block is begun with an opening curly brace and ended by a closing curly brace. A block defines a scope. Thus, each time you start a new block, you are creating a new scope. A scope determines what objects are visible to other parts of your program. It also determines the lifetime of those objects.
 
@@ -455,7 +453,7 @@ As mentioned earlier, Java also performs an automatic type conversion when
 
 storing a literal integer constant into variables of type **byte**, **short**, **long**, or **char**.
 
-## Casting Incompatible Types
+### Casting Incompatible Types
 
  Although the automatic type conversions are helpful, they will not fulfill all needs. For example, what if you want to assign an **int** value to a **byte** variable? This conversion will not be performed automatically, because a **byte** is smaller than an **int**. This kind of conversion is sometimes called a _narrowing conversion_, since you are explicitly making the value narrower so that it will fit into the target type.
 
@@ -516,7 +514,7 @@ d and b 323.142 67
 ```
 Let’s look at each conversion. When the value 257 is cast into a **byte** variable, the result is the remainder of the division of 257 by 256 (the range of a **byte**), which is 1 in this case. When the **d** is converted to an **int**, its fractional component is lost. When **d** is converted to a **byte**, its fractional component is lost, and the value is reduced modulo 256, which in this case is 67.
 
-## Automatic Type Promotion in Expressions
+### Automatic Type Promotion in Expressions
 
  In addition to assignments, there is another place where certain type  
 
@@ -548,7 +546,7 @@ b = (byte)(b * 2);
 ```
 which yields the correct value of 100.
 
-## The Type Promotion Rules
+### The Type Promotion Rules
 
  Java defines several _type promotion_ rules that apply to expressions. They are as follows: First, all **byte**, **short**, and **char** values are promoted to **int**, as just described. Then, if one operand is a **long**, the whole expression is promoted to **long**. If one operand is a **float**, the entire expression is promoted to **float**. If any of the operands are **double**, the result is **double**.
 
@@ -679,7 +677,7 @@ class Average
     }
 }
 ```
-## Multidimensional Arrays
+### Multidimensional Arrays
 
  In Java, _multidimensional arrays_ are implemented as arrays of arrays. To declare a multidimensional array variable, specify each additional index using another set of square brackets. For example, the following declares a two- dimensional array variable called **twoD**:
 
@@ -867,7 +865,7 @@ This program generates the following output:
 
 0 6 12 18 24
 ```
-## Alternative Array Declaration Syntax
+### Alternative Array Declaration Syntax
 
  There is a second form that may be used to declare an array:  
 
@@ -989,7 +987,7 @@ As mentioned earlier, **var** cannot be used as the name of a class. It also can
 
 to Java features described in subsequent chapters but mentioned here in the interest of completeness. Local variable type inference cannot be used to declare the exception type caught by a **catch** statement. Also, neither lambda expressions nor method references can be used as initializers.
 
-## NOTE
+**NOTE**
 
  At the time of this writing, local variable type inference is quite new, and many readers of this book will be using Java environments that don’t support it. So that as many of the code examples as possible will compile and run for all readers, local variable type inference will not be used by most of the programs in the remainder of this edition of the book. Using the full declaration syntax also makes it very clear at a glance what type of variable is being created, which is important for the example code. Of course, going forward, you should consider the use of local variable type inference where appropriate in your own code.
 

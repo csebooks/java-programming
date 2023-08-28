@@ -3,7 +3,7 @@ title: 'Operators'
 weight: 4
 --- 
 
-
+# Operators
 Java provides a rich operator environment. Most of its operators can be divided into the following four groups: arithmetic, bitwise, relational, and logical. Java also defines some additional operators that handle certain special situations. This chapter describes all of Java’s operators except for the type comparison operator **instanceof**, which is examined in Chapter 13 and the arrow operator (−>), which is described in Chapter 15.
 
 ## Arithmetic Operators
@@ -13,7 +13,7 @@ Java provides a rich operator environment. Most of its operators can be divided 
 
 The operands of the arithmetic operators must be of a numeric type. You cannot use them on **boolean** types, but you can use them on **char** types, since the **char** type in Java is, essentially, a subset of **int**.
 
-## The Basic Arithmetic Operators
+### The Basic Arithmetic Operators
 
  The basic arithmetic operations—addition, subtraction, multiplication, and division—all behave as you would expect for all numeric types. The unary minus operator negates its single operand. The unary plus operator simply returns the value of its operand. Remember that when the division operator is applied to an integer type, there will be no fractional component attached to the result.
 
@@ -78,7 +78,7 @@ dd = -0.5
 
 de = 0.5
 ```
-## The Modulus Operator
+### The Modulus Operator
 
  The modulus operator, **%**, returns the remainder of a division operation. It can be applied to floating-point types as well as integer types. The following example program demonstrates the **%**:
 ```
@@ -100,7 +100,7 @@ x mod 10 = 2
 
 y mod 10 = 2.25
 ```
-## Arithmetic Compound Assignment Operators
+### Arithmetic Compound Assignment Operators
 
  Java provides special operators that can be used to combine an arithmetic operation with an assignment. As you probably know, statements like the following are quite common in programming:
 
@@ -160,7 +160,7 @@ b = 8
 
 c = 3
 ```
-## Increment and Decrement
+### Increment and Decrement
 
  The ++ and the – – are Java’s increment and decrement operators. They were introduced in Chapter 2. Here they will be discussed in detail. As you will see, they have some special properties that make them quite interesting. Let’s begin by reviewing precisely what the increment and decrement operators do.
 
@@ -251,12 +251,12 @@ The reason Java (and most other computer languages) uses two’s complement is e
 
 Because Java uses two’s complement to store negative numbers—and because all integers are signed values in Java—applying the bitwise operators can easily produce unexpected results. For example, turning on the high-order bit will cause the resulting value to be interpreted as a negative number, whether this is what you intended or not. To avoid unpleasant surprises, just remember that the high-order bit determines the sign of an integer no matter how that high-order bit gets set.
 
-## The Bitwise Logical Operators
+### The Bitwise Logical Operators
 
  The bitwise logical operators are **&**, **|**, **^**, and **~**. The following table shows the outcome of each operation. In the discussion that follows, keep in mind that the bitwise operators are applied to each individual bit within each operand.
 ![Alt text](basedbitoper.png)
 
-## The Bitwise NOT
+### The Bitwise NOT
 
  Also called the _bitwise complement_, the unary NOT operator, ~, inverts all of  
 
@@ -270,7 +270,7 @@ becomes
 
 after the NOT operator is applied.
 
-## The Bitwise AND
+### The Bitwise AND
 
  The AND operator, **&**, produces a 1 bit if both operands are also 1. A zero is produced in all other cases. Here is an example:
 ```
@@ -279,7 +279,7 @@ after the NOT operator is applied.
     _________
      00001010    10
 ```
-## The Bitwise OR
+### The Bitwise OR
 
  The OR operator, **|**, combines bits such that if either of the bits in the operands is a 1, then the resultant bit is a 1, as shown here:
 ```
@@ -288,7 +288,7 @@ after the NOT operator is applied.
     _________
     00101111    47
 ```
-## The Bitwise XOR
+### The Bitwise XOR
 
  The XOR operator, **^**, combines bits such that if exactly one operand is 1, then the result is 1. Otherwise, the result is zero. The following example shows the effect of the **^**. This example also demonstrates a useful attribute of the XOR operation. Notice how the bit pattern of 42 is inverted wherever the second operand has a 1 bit. Wherever the second operand has a 0 bit, the first operand is unchanged. You will find this property useful when performing some types of bit manipulations.  
 ```
@@ -297,7 +297,7 @@ after the NOT operator is applied.
     _________
     00100101
 ```
-## Using the Bitwise Logical Operators
+### Using the Bitwise Logical Operators
 
  The following program demonstrates the bitwise logical operators:
 ```
@@ -335,7 +335,7 @@ a^b = 0101
 ~a&b|a&-b -a&b a&-b = 0101
 -a = 1100
 ```
-## The Left Shift
+### The Left Shift
 
  The left shift operator, **<<,** shifts all of the bits in a value to the left a specified number of times. It has this general form:
 
@@ -396,7 +396,7 @@ The program generates the following output:
 ```
 The starting value was carefully chosen so that after being shifted left 4 bit positions, it would produce –32. As you can see, when a 1 bit is shifted into bit 31, the number is interpreted as negative.
 
-## The Right Shift
+### The Right Shift
 
  The right shift operator, **\>>**, shifts all of the bits in a value to the right a specified number of times. Its general form is shown here:
 
@@ -493,7 +493,7 @@ extension that happened when **b** was promoted to **int** before the shift. The
         b >>> 4 = 0xff 
 (b & 0xff) >> 4 = 0x0f
 ```
-## Bitwise Operator Compound Assignments
+### Bitwise Operator Compound Assignments
 
  All of the binary bitwise operators have a compound form similar to that of the algebraic operators, which combines the assignment with the bitwise operation. For example, the following two statements, which shift the value in **a** right by four bits, are equivalent:
 
@@ -613,7 +613,8 @@ a^b = true
 !a = false
 ```
 
-**Short-Circuit Logical Operators** Java provides two interesting Boolean operators not found in some other computer languages. These are secondary versions of the Boolean AND and OR operators, and are commonly known as _short-circuit_ logical operators. As you can see from the preceding table, the OR operator results in **true** when **A** is **true**, no matter what **B** is. Similarly, the AND operator results in **false** when **A** is **false**, no matter what **B** is. If you use the **||** and **&&** forms, rather than the **|** and **&** forms of these operators, Java will not bother to evaluate the right-hand operand when the outcome of the expression can be determined by the left operand alone. This is very useful when the right-hand operand depends on the value of the left one in order to function properly. For example, the following code fragment shows how you can take advantage of short-circuit logical evaluation to be sure that a division operation will be valid before evaluating it:
+## Short-Circuit Logical Operators
+ Java provides two interesting Boolean operators not found in some other computer languages. These are secondary versions of the Boolean AND and OR operators, and are commonly known as _short-circuit_ logical operators. As you can see from the preceding table, the OR operator results in **true** when **A** is **true**, no matter what **B** is. Similarly, the AND operator results in **false** when **A** is **false**, no matter what **B** is. If you use the **||** and **&&** forms, rather than the **|** and **&** forms of these operators, Java will not bother to evaluate the right-hand operand when the outcome of the expression can be determined by the left operand alone. This is very useful when the right-hand operand depends on the value of the left one in order to function properly. For example, the following code fragment shows how you can take advantage of short-circuit logical evaluation to be sure that a division operation will be valid before evaluating it:
 ```
 if (denom != 0 && num / denom > 10)
 ```
@@ -625,7 +626,7 @@ if(c==1 & e++ < 100) d = 100;
 ```
 Here, using a single **&** ensures that the increment operation will be applied to **e** whether **c** is equal to 1 or not.
 
-## NOTE
+**NOTE**
 
  The formal specification for Java refers to the short-circuit operators as the _conditional-and_ and the _conditional-or_.
 
@@ -633,7 +634,7 @@ Here, using a single **&** ensures that the increment operation will be applied 
 
  You have been using the assignment operator since Chapter 2. Now it is time to take a formal look at it. The _assignment operator_ is the single equal sign, =. The assignment operator works in Java much as it does in any other computer language. It has this general form:
 
-_var = expression_;
+_var_ = _expression_;
 
 Here, the type of var must be compatible with the type of expression. The assignment operator does have one interesting attribute that you may not be familiar with: it allows you to create a chain of assignments. For example, consider this fragment:  
 ```
