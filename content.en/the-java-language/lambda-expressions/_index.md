@@ -65,101 +65,169 @@ As mentioned earlier, a lambda expression is not executed on its own. Rather, it
 Let’s work through an example that shows how a lambda expression can be used in an assignment context. First, a reference to the functional interface **MyNumber** is declared:
 
 // Create a reference to a MyNumber instance.
-
+```java
 MyNumber myNum;
-
+```
 Next, a lambda expression is assigned to that interface reference:
 
 // Use a lambda in an assignment context.
-
+```java
 myNum = () -> 123.45;
-
+```
 When a lambda expression occurs in a target type context, an instance of a class is automatically created that implements the functional interface, with the lambda expression defining the behavior of the abstract method declared by the functional interface. When that method is called through the target, the lambda expression is executed. Thus, a lambda expression gives us a way to transform a code segment into an object.
 
 In the preceding example, the lambda expression becomes the implementation for the **getValue()** method. As a result, the following displays the value 123.45:
 
-// Call getValue(), which is implemented by the previously
-
-assigned
+// Call getValue(), which is implemented by the previously assigned
 
 // lambda expression.
-
+```java
 System.out.println(myNum.getValue());
-
+```
 Because the lambda expression assigned to **myNum** returns the value 123.45, that is the value obtained when **getValue()** is called.
 
-In order for a lambda expression to be used in a target type context, the type  
-
-of the abstract method and the type of the lambda expression must be compatible. For example, if the abstract method specifies two **int** parameters, then the lambda must specify two parameters whose type either is explicitly **int** or can be implicitly inferred as **int** by the context. In general, the type and number of the lambda expression’s parameters must be compatible with the method’s parameters; the return types must be compatible; and any exceptions thrown by the lambda expression must be acceptable to the method.
+In order for a lambda expression to be used in a target type context, the type of the abstract method and the type of the lambda expression must be compatible. For example, if the abstract method specifies two **int** parameters, then the lambda must specify two parameters whose type either is explicitly **int** or can be implicitly inferred as **int** by the context. In general, the type and number of the lambda expression’s parameters must be compatible with the method’s parameters; the return types must be compatible; and any exceptions thrown by the lambda expression must be acceptable to the method.
 
 ## Some Lambda Expression Examples
 
- With the preceding discussion in mind, let’s look at some simple examples that illustrate the basic lambda expression concepts. The first example puts together the pieces shown in the foregoing section.
+With the preceding discussion in mind, let’s look at some simple examples that illustrate the basic lambda expression concepts. The first example puts together the pieces shown in the foregoing section.
+
+```java
+ // Demonstrate a simple labda expression.
+A functional interface.
+ Interface Mydu{
+double getValue();
+}
+class LamdaDemo{
+public static void main(String args[])
+{}
+MyNumber myNum;
+ // declare an interface reference
+Here, the lambda expression is simply a constant expression.
+ // When it is assigned to sylum, a class instance is 
+  //constructed in which the lambda expression implementa 
+  // the getValue() method in Mythumber
+   myNum =() -> 123.45;
+// Call getValue(), which is provided by the previously assigned 
+// Lambda xpression.
+ System.out.println("A Fixed value:" +myNum.getValue());
+// Here, a more complex expression used
+myNum =() -> Math.random() * 100;
+// These call the lambda expression in the previous line.
+ System.out.println("A randon value:" * myNum.getValue()); 
+ system.out.println("Another random value:" myNum.getValue());
+// A labda expression must be compatible with the method
+ // defined by the functional interface. Therefore, this won't work,
+  //myNum = () -> *123.03*; // Error!;
+}
+}
+```
 
 Sample output from the program is shown here:
-
+```java
 A fixed value: 123.45
 
 A random value: 88.90663650412304
 
 Another random value: 53.00582701784129
-
+```
 As mentioned, the lambda expression must be compatible with the abstract method that it is intended to implement. For this reason, the commented-out line at the end of the preceding program is illegal because a value of type **String** is not compatible with **double**, which is the return type required by  
 
 **getValue()**. The next example shows the use of a parameter with a lambda expression:
 
-The output from this program is shown here:
+```java
+// Demonstrate a lambda expression that takes a parameter.
+// Another functional interface. 
+interface NumericTest {
+     boolean test (int n);
+class LambdaDemo2 (
+public static void main(String args[])
+// A lambda expression that tests if a number is even. NumericTest isEven (n) (n = 2)==0;
+if (isgven.test (10))
+ System.out.println("10 is even"); 
+if (!isEven.test(91)
+ System.out.println("9 is not even");
 
+// Now, use a lambda expression that teats if a number
+ // is non-negative.
+NumericTest isNonNeg = (n) -> >= 0;
+
+if (isNonNeg.teat (1)) 
+System.out.println("1 is non-negative"); 
+if(isNonNeg.test(-1)) 
+System.out.println("-1 is negative");
+ }
+ }
+ ```
+The output from this program is 
+down here:
+```java
 10 is even
-
 9 is not even
-
 1 is non-negative
-
-\-1 is negative
-
-This program demonstrates a key fact about lambda expressions that warrants close examination. Pay special attention to the lambda expression that performs the test for evenness. It is shown again here:
-
+-1 is negative
+```
+This program demonstes a key fact about lambda expressons that warrats close examination. Pa specdal attention to the lambda expression that performs the test for evenness. It is shown again here:
+```java
 (n) -> (n % 2)==0
-
+```
 Notice that the type of **n** is not specified. Rather, its type is inferred from the context. In this case, its type is inferred from the parameter type of **test()** as defined by the **NumericTest** interface, which is **int**. It is also possible to explicitly specify the type of a parameter in a lambda expression. For example, this is also a valid way to write the preceding:
-
+```java
 (int n) -> (n % 2)==0
-
+```
 Here, **n** is explicitly specified as **int**. Usually it is not necessary to explicitly specify the type, but you can in those situations that require it. Beginning with JDK 11, you can also use **var** to explicitly indicate local variable type inference for a lambda expression parameter.
 
-This program demonstrates another important point about lambda  
-
-expressions: A functional interface reference can be used to execute any lambda expression that is compatible with it. Notice that the program defines two different lambda expressions that are compatible with the **test()** method of the functional interface **NumericTest**. The first, called **isEven**, determines if a value is even. The second, called **isNonNeg**, checks if a value is non-negative. In each case, the value of the parameter **n** is tested. Because each lambda expression is compatible with **test()**, each can be executed through a **NumericTest** reference.
+This program demonstrates another important point about lambda expressions: A functional interface reference can be used to execute any lambda expression that is compatible with it. Notice that the program defines two different lambda expressions that are compatible with the **test()** method of the functional interface **NumericTest**. The first, called **isEven**, determines if a value is even. The second, called **isNonNeg**, checks if a value is non-negative. In each case, the value of the parameter **n** is tested. Because each lambda expression is compatible with **test()**, each can be executed through a **NumericTest** reference.
 
 One other point before moving on. When a lambda expression has only one parameter, it is not necessary to surround the parameter name with parentheses when it is specified on the left side of the lambda operator. For example, this is also a valid way to write the lambda expression used in the program:
-
+```java
 n -> (n % 2)==0
-
+```
 For consistency, this book will surround all lambda expression parameter lists with parentheses, even those containing only one parameter. Of course, you are free to adopt a different style.
 
 The next program demonstrates a lambda expression that takes two parameters. In this case, the lambda expression tests if one number is a factor of another.
 
-The output is shown here:
+```java
+// Demonstrate a lambda expression that takes two parameters.
 
+interface NumericTest2 {
+     boolean test (int n, int d);
+}
+class LambdaDemo3 {
+     public static void main(String args[])
+     {
+      // This lambda expression determines if one number is
+      // a factor of another. 
+      NumericTest2 isFactor = (n, d) ->{n & d) = 0;
+
+if(isFactor.test (10, 2)) 
+System.out.println("2 is a factor of 10");
+if(!iaFactor.test(10, 3)) 
+System.out.println("3 is not a factor of 10");
+      }
+     }
+
+```
+The output is shown here:
+```java
 2 is a factor of 10
 
 3 is not a factor of 10
-
+```
 In this program, the functional interface **NumericTest2** defines the **test()** method:  
-
+```java
 boolean test(int n, int d);
-
+```
 In this version, **test()** specifies two parameters. Thus, for a lambda expression to be compatible with **test()**, the lambda expression must also specify two parameters. Notice how they are specified:
-
+```java
 (n, d) -> (n % d) == 0
-
+```
 The two parameters, **n** and **d**, are specified in the parameter list, separated by commas. This example can be generalized. Whenever more than one parameter is required, the parameters are specified, separated by commas, in a parenthesized list on the left side of the lambda operator.
 
 Here is an important point about multiple parameters in a lambda expression: If you need to explicitly declare the type of a parameter, then all of the parameters must have declared types. For example, this is legal:
-
+```java
 (int n, int d) -> (n % d) == 0
-
+```
 But this is not:
 
 (int n, d) -> (n % d) == 0
@@ -168,52 +236,130 @@ But this is not:
 
  The body of the lambdas shown in the preceding examples consist of a single expression. These types of lambda bodies are referred to as _expression bodies,_ and lambdas that have expression bodies are sometimes called _expression lambdas._ In an expression body, the code on the right side of the lambda operator must consist of a single expression. While expression lambdas are quite useful, sometimes the situation will require more than a single expression. To handle such cases, Java supports a second type of lambda expression in which the code on the right side of the lambda operator consists of a block of code that can contain more than one statement. This type of lambda body is called a _block body._ Lambdas that have block bodies are sometimes referred to as _block lambdas_.
 
-A block lambda expands the types of operations that can be handled within a lambda expression because it allows the body of the lambda to contain multiple statements. For example, in a block lambda you can declare variables, use loops, specify **if** and **switch** statements, create nested blocks, and so on. A  
-
-block lambda is easy to create. Simply enclose the body within braces as you would any other block of statements.
+A block lambda expands the types of operations that can be handled within a lambda expression because it allows the body of the lambda to contain multiple statements. For example, in a block lambda you can declare variables, use loops, specify **if** and **switch** statements, create nested blocks, and so on. A block lambda is easy to create. Simply enclose the body within braces as you would any other block of statements.
 
 Aside from allowing multiple statements, block lambdas are used much like the expression lambdas just discussed. One key difference, however, is that you must explicitly use a **return** statement to return a value. This is necessary because a block lambda body does not represent a single expression.
 
 Here is an example that uses a block lambda to compute and return the factorial of an **int** value:
 
-The output is shown here:
+```java
+// A block lambda that computes the factorial of an int value.
+interface NumericFunc {
+int func(int n);
+}
+class BlockLambda Demo {
+public static void main(String args[])
+{
+// This block lambda computes the factorial of an int value. NumericFunc factorial (n) -> 
+int result 1;
 
+for (int i=1; i <= n; i++)
+ result = i * result;
+
+return result;
+};
+
+System.out.println("The factoral of 3 is " + factorial. func (3));
+System.out.println("The factoral of 5 is " + factorial. func (5));
+}
+}
+
+```
+
+The output is shown here:
+```java
 The factorial of 3 is 6
 
 The factorial of 5 is 120
-
-In the program, notice that the block lambda declares a variable called **result**, uses a **for** loop, and has a **return** statement. These are legal inside a  
-
-block lambda body. In essence, the block body of a lambda is similar to a method body. One other point. When a **return** statement occurs within a lambda expression, it simply causes a return from the lambda. It does not cause an enclosing method to return.
+```
+In the program, notice that the block lambda declares a variable called **result**, uses a **for** loop, and has a **return** statement. These are legal inside a block lambda body. In essence, the block body of a lambda is similar to a method body. One other point. When a **return** statement occurs within a lambda expression, it simply causes a return from the lambda. It does not cause an enclosing method to return.
 
 Another example of a block lambda is shown in the following program. It reverses the characters in a string.
 
+```java
+// A block lambda that reverses the characters in a string.
+interface StringFunc { 
+    String func (String n);
+}
+
+class BlockLambda Demo2 {
+public static void main(String args[]) 
+{
+// This block lambda reverses the characters in a string. StringFunc reverse = (str) -> { String result = "";
+int i;
+for (i= str.length()-1; i >= 0; i--) result = str.charAt(i);
+
+return result;
+}:
+System.out.println("Lambda reversed is " +
+reverse. func ("Lambda"));
+System.out.println("Expression reversed is "+ reverse. func ("Expression"));
+}
+}
+
+```
 The output is shown here:
-
+```
 Lambda reversed is adbmaL
-
 Expression reversed is noisserpxE  
-
+```
 In this example, the functional interface **StringFunc** declares the **func()** method. This method takes a parameter of type **String** and has a return type of **String**. Thus, in the **reverse** lambda expression, the type of **str** is inferred to be **String**. Notice that the **charAt()** method is called on **str**. This is legal because of the inference that **str** is of type **String**.
 
 ## Generic Functional Interfaces
 
  A lambda expression, itself, cannot specify type parameters. Thus, a lambda expression cannot be generic. (Of course, because of type inference, all lambda expressions exhibit some “generic-like” qualities.) However, the functional interface associated with a lambda expression can be generic. In this case, the target type of the lambda expression is determined, in part, by the type argument or arguments specified when a functional interface reference is declared.
 
-To understand the value of generic functional interfaces, consider this. The two examples in the previous section used two different functional interfaces, one called **NumericFunc** and the other called **StringFunc**. However, both defined a method called **func()** that took one parameter and returned a result. In the first case, the type of the parameter and return type was **int**. In the second case, the parameter and return type was **String**. Thus, the only difference between the two methods was the type of data they required. Instead of having two functional interfaces whose methods differ only in their data types, it is possible to declare one generic interface that can be used to handle both circumstances. The following program shows this approach:  
+To understand the value of generic functional interfaces, consider this. The two examples in the previous section used two different functional interfaces, one called **NumericFunc** and the other called **StringFunc**. However, both defined a method called **func()** that took one parameter and returned a result. In the first case, the type of the parameter and return type was **int**. In the second case, the parameter and return type was **String**. Thus, the only difference between the two methods was the type of data they required. Instead of having two functional interfaces whose methods differ only in their data types, it is possible to declare one generic interface that can be used to handle both circumstances. The following program shows this approach:
+
+```java
+// Use a generic functional interface with lambda expressions.
+// A generic functional interface.
+interface Some Func<T>{
+T func (T t);
+}
+
+class GenericFunctionalInterfaceDemo { public static void main(String args[])
+{
+// Use a String-based version of Some Func. 
+Some Func<String> reverse= (str) -> { String result = "";
+int i;
+
+for(i= str.length()-1; i = 0; i--) 
+result += str.charAt();
+
+return result;
+};
+System.out.println("Lambda reversed is " + reverse func("Lambda"));
+ System.out.println("Expression reversed is" + reverse func ("Expression"));
+
+// Now, use an Integer-based version of SomeFunc. Some Func<Integer> factorial (n) ->
+ {
+     int result = 1;
+
+for (int i=1; i <= n; i++) 
+result = i + result;
+
+return result;
+];
+System.out.println("The factoral of 3 is " +factorial. func (3)); 
+System.out.println("The factoral of 5 is "+ factorial. func (5));
+ }
+}
+```
 
 The output is shown here:
-
+```
 Lambda reversed is adbmaL
-
 Expression reversed is noisserpxE
-
 The factoral of 3 is 6
-
 The factoral of 5 is 120
-
+```
 In the program, the generic functional interface **SomeFunc** is declared as shown here:
-
+```java
+interface some func<T>{
+    T func(T,t);
+}
+```
 Here, **T** specifies both the return type and the parameter type of **func()**. This means that it is compatible with any lambda expression that takes one parameter and returns a value of the same type.
 
 The **SomeFunc** interface is used to provide a reference to two different types of lambdas. The first uses type **String**. The second uses type **Integer**. Thus, the same functional interface can be used to refer to the **reverse** lambda and the **factorial** lambda. Only the type argument passed to **SomeFunc** differs.
@@ -222,28 +368,86 @@ The **SomeFunc** interface is used to provide a reference to two different types
 
  As explained earlier, a lambda expression can be used in any context that provides a target type. One of these is when a lambda expression is passed as an argument. In fact, passing a lambda expression as an argument is a common use of lambdas. Moreover, it is a very powerful use because it gives you a way to pass executable code as an argument to a method. This greatly enhances the expressive power of Java.
 
-To pass a lambda expression as an argument, the type of the parameter receiving the lambda expression argument must be of a functional interface type compatible with the lambda. Although using a lambda expression as an argument is straightforward, it is still helpful to see it in action. The following program demonstrates the process:  
+To pass a lambda expression as an argument, the type of the parameter receiving the lambda expression argument must be of a functional interface type compatible with the lambda. Although using a lambda expression as an argument is straightforward, it is still helpful to see it in action. The following program demonstrates the process:
+
+```java
+// Use lambda expressions as an argument to a method.
+interface StringFunc{
+     String func (String n);
+}
+class LambdasAsArgumentsDemo {
+// This method has a functional interface as the type of
+// its first parameter. Thus, it can be passed a reference to // any instance of that interface, including the instance created
+// by a lambda expression.
+// The second parameter specifies the string to operate on. static String stringop (StringFunc sf, String s) {
+return sf.func(s);
+}
+public static void main(String args[])
+String instr = "Lambdas add power to Java";
+String outStr;
+
+System.out.println("Here is input string: " inStr);
+// Here, a simple expression lambda that uppercases a string 17 is passed to stringop(). outstr = stringop((str) -> str.toUpperCase(), instr); System.out.println("The string in uppercase: " + outStr);
+// This passes a block lambda that removes spaces.
+outStr stringOp((str) -> {
+String result = "";
+ int i;
+
+for(i=0; i str.length(); i++)
+ if(str.charAt(i) !=' ' )
+  result = str.charAt(i);
+return result;
+}, instr);
+
+System.out.println("The string with spaces removed: " + outstr);
+
+// created by an earlier lambda expression. For example,
+ // after this declaration executes, reverse refers to an
+// Of course, it is also possible to pass a StringFunc instance
+ // instance of StringFunc. StringFunc reverse = (str) => {
+String result="";
+ int i;
+
+for (i str.length()-1; i > 0; i--) resultstr.charAt(i);
+
+return result;
+};
+
+// Now, reverse can be passed as the first parameter to stringop() // since it refers to a StringFunc object. System.out.println("The string reversed: "
+stringop (reverse, instr));
+}
+}
+```
 
 The output is shown here:
-
+```
 Here is input string: Lambdas add power to Java
-
 The string in uppercase: LAMBDAS ADD POWER TO JAVA
-
 The string with spaces removed: LambdasaddpowertoJava
-
 The string reversed: avaJ ot rewop dda sadbmaL
-
+```
 In the program, first notice the **stringOp()** method. It has two parameters. The first is of type **StringFunc**, which is a functional interface. Thus, this parameter can receive a reference to any instance of **StringFunc**, including one created by a lambda expression. The second argument of **stringOp()** is of type **String**, and this is the string operated on.
 
 Next, notice the first call to **stringOp()**, shown again here:
-
+```java
 outStr = stringOp((str) -> str.toUpperCase(), inStr);
-
+```
 Here, a simple expression lambda is passed as an argument. When this occurs, an instance of the functional interface **StringFunc** is created and a reference to that object is passed to the first parameter of **stringOp()**. Thus, the lambda code, embedded in a class instance, is passed to the method. The target type context is determined by the type of parameter. Because the lambda expression is compatible with that type, the call is valid. Embedding simple lambdas, such as the one just shown, inside a method call is often a convenient technique— especially when the lambda expression is intended for a single use.
 
 Next, the program passes a block lambda to **stringOp()**. This lambda removes spaces from a string. It is shown again here:
 
+```java
+out Str = stringop ((str) -> {
+String result = " ";
+int i;
+
+for (i = 0; i < str.length(); i++) 
+if (str.charAt(i) !=' ')
+result += str.charAt(i);
+
+return result; }, instr);
+
+```
 Although this uses a block lambda, the process of passing the lambda expression is the same as just described for the simple expression lambda. In  
 
 expression is the same as just described for the simple expression lambda. In this case, however, some programmers will find the syntax a bit awkward.
@@ -254,7 +458,44 @@ One last point: In addition to variable initialization, assignment, and argument
 
 ## Lambda Expressions and Exceptions
 
- A lambda expression can throw an exception. However, it if throws a checked exception, then that exception must be compatible with the exception(s) listed in the **throws** clause of the abstract method in the functional interface. Here is an example that illustrates this fact. It computes the average of an array of **double** values. If a zero-length array is passed, however, it throws the custom exception **EmptyArrayException**. As the example shows, this exception is listed in the **throws** clause of **func()** declared inside the **DoubleNumericArrayFunc** functional interface.  
+ A lambda expression can throw an exception. However, it if throws a checked exception, then that exception must be compatible with the exception(s) listed in the **throws** clause of the abstract method in the functional interface. Here is an example that illustrates this fact. It computes the average of an array of **double** values. If a zero-length array is passed, however, it throws the custom exception **EmptyArrayException**. As the example shows, this exception is listed in the **throws** clause of **func()** declared inside the **DoubleNumericArrayFunc** functional interface.
+
+ ```java
+ // Throw an exception from a lambda expression.
+interface DoubleNumericArrayFunc{
+double func (double[] n) throws EmptyArrayException;
+}
+
+class EmptyArrayException extends Exception {
+     EmptyArrayException() {
+     super("Array Empty");
+     }
+}
+
+class Lambda ExceptionDemo {
+
+public static void main(String args[]) throws EmptyArrayException
+{
+double[] values = {1.0, 2.0, 3.0, 4.0);
+}
+// This block lambda computes the average of an array of doubles. DoubleNumericArrayFunc average (n) -> {
+     double sum = 0;
+if (n.length == 0)
+   throw new EmptyArrayException();
+
+for (int i=0; i < n.length; i++)
+ sum += n[i];
+
+return sum/n.length;
+};
+
+System.out.println("The average is " + average. func (values));
+
+// This causes an exception to be thrown.
+System.out.println("The average is average"+average. func (new double[0]));
+}
+}
+ ```  
 
 The first call to **average.func()** returns the value 2.5. The second call, which passes a zero-length array, causes an **EmptyArrayException** to be thrown. Remember, the inclusion of the **throws** clause in **func()** is necessary. Without it, the program will not compile because the lambda expression will no longer be compatible with **func()**.  
 
@@ -268,7 +509,33 @@ However, when a lambda expression uses a local variable from its enclosing scope
 
 It is important to understand that a local variable of the enclosing scope cannot be modified by the lambda expression. Doing so would remove its effectively final status, thus rendering it illegal for capture.
 
-The following program illustrates the difference between effectively final and mutable local variables:  
+The following program illustrates the difference between effectively final and mutable local variables:
+
+```java
+// An example of capturing a local variable from the enclosing scope.
+interface MyFunc {
+int func(int n);
+}
+
+class VarCapture {
+public static void main(String args[])
+{
+    // A local variable that can be captured. 
+    int num= 10;
+
+MyFunc myLambda = (n) -> {
+// This use of num is OK. It does not modify num.
+ int vnum + n;
+
+// However, the following is illegal because it attempts 
+// to modify the value of num. num++;
+return v;
+};
+// The following line would also cause an error, because // it would remove the effectively final status from num.
+// num= 9;
+}
+}
+```
 
 As the comments indicate, **num** is effectively final and can, therefore, be used inside **myLambda**. However, if **num** were to be modified, either inside the lambda or outside of it, **num** would lose its effectively final status. This would cause an error, and the program would not compile.
 
@@ -284,95 +551,282 @@ There are different types of method references. We will begin with method refere
 
 ## Method References to static Methods
 
- To create a **static** method reference, use this general syntax:
-
+To create a **static** method reference, use this general syntax:
+```
 ClassName::methodName
-
+```
 Notice that the class name is separated from the method name by a double colon. The **::** is a separator that was added to Java by JDK 8 expressly for this purpose. This method reference can be used anywhere in which it is compatible with its target type.
 
-The following program demonstrates a **static** method reference:  
+The following program demonstrates a **static** method reference:
+
+```java
+// Demonstrate a method reference for a static method.
+// A functional interface for string operations. 
+interface StringFunc {
+String func (String n); 
+}
+// This class defines a static method called strReverse(). class MyStringOps {
+// A static method that reverses a string. 
+static String strReverse (String str) {
+    String result =" "; 
+    int i;
+
+for (i= str.length()-1; i >= 0; i--) result = str.charAt(i);
+
+return result;
+}
+}
+class MethodRefDemo {
+// This method has a functional interface as the type of 
+// its first parameter. Thus, it can be passed any instance 
+// of that interface, including a method reference.
+ static String stringop (StringFunc sf, String s) {
+     return sf. func (s);
+}
+
+public static void main(String args[])
+{
+String instr = "Lambdas add power to Java";
+String outStr;
+// Here, a method reference to strReverse is passed to stringop (). 
+outStr = stringOp (MyStringOps: :strReverse, inStr);
+
+System.out.println("Original string:"+ instr); 
+System.out.println("String reversed: "+ outStr);
+}
+}
+```
 
 The output is shown here:
-
+```
 Original string: Lambdas add power to Java
-
 String reversed: avaJ ot rewop dda sadbmaL
-
+```
 In the program, pay special attention to this line:
-
+```
 outStr = stringOp(MyStringOps::strReverse, inStr);
-
+```
 Here, a reference to the **static** method **strReverse()**, declared inside **MyStringOps**, is passed as the first argument to **stringOp()**. This works  
 
 because **strReverse** is compatible with the **StringFunc** functional interface. Thus, the expression **MyStringOps::strReverse** evaluates to a reference to an object in which **strReverse** provides the implementation of **func()** in **StringFunc**.
 
 ## Method References to Instance Methods
 
- To pass a reference to an instance method on a specific object, use this basic syntax:
-
+To pass a reference to an instance method on a specific object, use this basic syntax:
+```
 objRef::methodName
-
+```
 As you can see, the syntax is similar to that used for a **static** method, except that an object reference is used instead of a class name. Here is the previous program rewritten to use an instance method reference:  
+
+```java
+// Demonstrate a method reference to an instance method
+// A functional interface for string operations.
+interface StringFunc{
+String func(String n);
+}
+// Now, this class defines an instance method called strReverse().
+class MyStringOps {
+     String strReverse (String str) { String result = "";
+     int i;
+
+for (i str.length()-1; 10; 1-) 
+resultstr.charAt(i);
+
+return result;
+     }
+}
+class MethodRefDemo2 {
+// This method has a functional interface as the type of
+ // its first parameter. Thus, it can be passed any instance 
+ // of that interface, including method references. 
+ static String stringop (StringFunc sf, String s) {
+     return st. func (s);
+ }
+
+public static void main(String args[])
+{
+String instr = "Lambdas add power to Java"; 
+String outStr;
+
+// Create a MyStringOps object.
+ MyStringOps strOps = new MyStringOps();
+// Now, a method reference to the instance method strReverse
+ // is passed to stringop().
+  outStr = stringop (strops: :strReverse, instr);
+
+System.out.println("Original string:"+ instr);
+System.out.println("String reversed: "+ outStr);
+}
+}
+```
 
 This program produces the same output as the previous version. In the program, notice that **strReverse()** is now an instance method of
 
 ## MyStringOps
 
 . Inside **main()**, an instance of **MyStringOps** called **strOps** is created. This instance is used to create the method reference to **strReverse** in the call to **stringOp**, as shown again, here:
-
+```java
 outStr = stringOp(strOps::strReverse, inStr);
-
+```
 In this example, **strReverse()** is called on the **strOps** object. It is also possible to handle a situation in which you want to specify an
 
 instance method that can be used with any object of a given class—not just a specified object. In this case, you will create a method reference as shown here:
-
+```
 ClassName::instanceMethodName
+```
+Here, the name of the class is used instead of a specific object, even though an instance method is specified. With this form, the first parameter of the functional interface matches the invoking object and the second parameter matches the parameter specified by the method. Here is an example. It defines a method called **counter()** that counts the number of objects in an array that satisfy the condition defined by the **func()** method of the **MyFunc** functional interface. In this case, it counts instances of the **HighTemp** class.
 
-Here, the name of the class is used instead of a specific object, even though an instance method is specified. With this form, the first parameter of the functional interface matches the invoking object and the second parameter matches the parameter specified by the method. Here is an example. It defines a method called **counter()** that counts the number of objects in an array that satisfy the condition defined by the **func()** method of the **MyFunc** functional interface. In this case, it counts instances of the **HighTemp** class.  
+```java
+// Use an instance method reference with different objects.
+// A functional interface that takes two reference arguments
+ // and returns a boolean result.
+interface MyFunc<T> { 
+    boolean func (T v1, T v2);
+}
+
+// A class that stores the temperature high for a day. 
+class HighTemp (
+private int hTemp;
+
+HighTemp (int ht) { hTemp = ht; }
+
+// Return true if the invoking HighTemp object has the same 
+// temperature as ht2.
+ boolean same Temp (HighTemp ht2) {
+     return hTemp = ht2.hTemp;
+ }
+// Return true if the invoking HighTemp object has a temperature // that is less than ht2.
+boolean lessThanTemp (HighTemp ht2) { return hTemp< ht2.hTemp;
+}
+}
+class Instance MethWithObjectRefDemo (
+// A method that returns the number of occurrences 
+// of an object for which some criteria, as specified by 
+// the MyFunc parameter, is true.
+static <T> int counter (T1 vals, MyFunc<T> E, T v) {
+    int count = 0;
+for(int i=0; i < vals.length; i++)
+ if (f.func(vals[i], v)) count++;
+
+return count;
+}
+
+public static void main(String args[])
+{
+int count;
+
+// Create an array of HighTemp objects.
+HighTemp weekDayHighs = {new HighTemp (89), new HighTemp (82).
+new HighTemp (90), new HighTemp (89),
+new HighTemp (89). new HighTemp (91), new HighTemp (84), new HighTemp (83)}
+// Use counter() with arrays of the class HighTemp. 
+// Notice that a reference to the instance method
+// sameTemp() is passed as the second argument. 
+count counter =(weekDayHighs, HighTemp:: sameTemp
+new HighTemp (89));
+System.out.println(count + "days had a high of 89");
+// Now, create and use another array of HighTemp objects.
+HighTemp [] weekDayHighs2 = { new HighTemp (32), new HighTemp (12),
+new HighTemp (24), new HighTemp (19), new HighTemp (18), new HighTemp (12).
+new HighTemp (-1), new HighTemp (13)) };
+count =counter (weekDayHighs2, HighTemp::sameTemp. new HighTemp (12));
+System.out.println(count days had a high of 12")
+
+// Now, use lessThanTemp () to find days when temperature was less
+// than a specified value.
+
+count = counter (weekDayHighs,
+HighTemp::lessThanTemp.
+new HighTemp (89));
+System.out.println(count days had a high less than 89");
+count = counter (weekDayHighs2, HighTemp::lessThanTemp,
+new HighTemp (19));
+System.out.println(count days had a high of less than 19");
+}
+}
+```
 
 The output is shown here:
-
+```
 3 days had a high of 89
-
 2 days had a high of 12
-
 3 days had a high less than 89
-
 5 days had a high of less than 19
-
+```
 In the program, notice that **HighTemp** has two instance methods: **sameTemp()** and **lessThanTemp()**. The first returns **true** if two **HighTemp** objects contain the same temperature. The second returns **true** if the temperature of the invoking object is less than that of the passed object. Each method has a parameter of type **HighTemp** and each method returns a **boolean** result. Thus, each is compatible with the **MyFunc** functional interface because the invoking object type can be mapped to the first parameter of **func()** and the argument mapped to **func()**’s second parameter. Thus, when the expression
-
+```
 HighTemp::sameTemp
-
+```
 is passed to the **counter()** method, an instance of the functional interface **MyFunc** is created in which the parameter type of the first parameter is that of the invoking object of the instance method, which is **HighTemp**. The type of the second parameter is also **HighTemp** because that is the type of the parameter to **sameTemp()**. The same is true for the **lessThanTemp()** method.
 
 One other point: you can refer to the superclass version of a method by use of **super**, as shown here:
-
+```
 super::name
-
+```
 The name of the method is specified by name. Another form is
-
+```
 typeName.**super**::name
-
+```
 where typeName refers to an enclosing class or super interface.
 
 ## Method References with Generics
 
- You can use method references with generic classes and/or generic methods. For example, consider the following program:  
+ You can use method references with generic classes and/or generic methods. For example, consider the following program:
+
+ ```java
+// Demonstrate a method reference to a generic method
+ // declared inside a non-generic class.
+// A functional interface that operates on an array 
+// and a value, and returns an int result. interface MyFunc<T> {
+int func (T[] vals, T v);
+}
+// This class defines a method called countMatching () that 
+// returns the number of items in an array that are equal
+// to a specified value. Notice that countMatching ()
+// is generic, but MyArrayOps is not.
+class MyArrayOps { 
+    static <T> int countMatching (TI vals, T v) { 
+        int count = 0;
+
+for (int i=0; i < vals.length; i++)
+if (vals[i] == v) count++;
+
+return count;
+}
+}
+
+class GenericMethodRef Demo {
+// This method has the MyFunc functional interface as the 
+// type of its first parameter. The other two parameters
+ // receive an array and a value, both of type T. 
+ static <T> int myop (MyFunc<T> f, Til vals, T v) {
+     return f. func (vals, v);
+}
+
+public static void main(String args[])
+Integer [] vals = {1, 2, 3, 4, 2, 3, 4, 4, 5 };
+ String[] strs = { "One", "Two", "Three", "Two" };
+  int count;
+
+count = myOp (MyArrayOps: :<Integer>count Matching, vals, 4);
+ System.out.println("vals contains " + count + " 4s");
+
+count = myOp (MyArrayOps: : <String>countMatching, strs, "Two");
+ System.out.println("strs contains "+count + " Twos");
+}
+}
+ ```  
 
 The output is shown here:
-
+```
 vals contains 3 4s
-
 strs contains 2 Twos
-
+```
 In the program, **MyArrayOps** is a non-generic class that contains a generic method called **countMatching()**. The method returns a count of the elements in an array that match a specified value. Notice how the generic type argument is specified. For example, its first call in **main()**, shown here:
-
+```java
 count = myOp(MyArrayOps::<Integer>countMatching, vals, 4);
-
-passes the type argument **Integer**. Notice that it occurs after the **::**. This syntax can be generalized: When a generic method is specified as a method reference, its type argument comes after the **::** and before the method name. It is important to point out, however, that explicitly specifying the type argument is not required in this situation (and many others) because the type argument  
-
-would have been automatically inferred. In cases in which a generic class is specified, the type argument follows the class name and precedes the **::**.
+```
+passes the type argument **Integer**. Notice that it occurs after the **::**. This syntax can be generalized: When a generic method is specified as a method reference, its type argument comes after the **::** and before the method name. It is important to point out, however, that explicitly specifying the type argument is not required in this situation (and many others) because the type argument would have been automatically inferred. In cases in which a generic class is specified, the type argument follows the class name and precedes the **::**.
 
 Although the preceding examples show the mechanics of using method references, they don’t show their real benefits. One place method references can be quite useful is in conjunction with the Collections Framework, which is described later in Chapter 19. However, for completeness, a short, but effective, example that uses a method reference to help determine the largest element in a collection is included here. (If you are unfamiliar with the Collections Framework, return to this example after you have worked through Chapter 19.)
 
@@ -380,6 +834,38 @@ One way to find the largest element in a collection is to use the **max()** meth
 
 In the past, to use **max()** with user-defined objects, an instance of **Comparator<T>** had to be obtained by first explicitly implementing it by a class, and then creating an instance of that class. This instance was then passed as the comparator to **max()**. Beginning with JDK 8, it is now possible to simply pass a reference to a comparison method to **max()** because doing so automatically implements the comparator. The following simple example shows the process by creating an **ArrayList** of **MyClass** objects and then finding the one in the list that has the highest value (as defined by the comparison method).  
 
+```JAVA
+// Use a method reference to help find the maximum value in a collection. import java.util.*;
+class MyClass
+private int val;
+
+MyClass (int v) val = v; }
+
+int getVal() { return val; }
+}
+class UseMethodRef [
+// A compare() method compatible with the one defined by Comparator<T>.
+ static int compareMC (MyClass a, MyClass b) {
+     return a.getVal() - b.getVal();
+}
+
+public static void main(String args[])
+{
+ArrayList<MyClass> al = new ArrayList<MyClass>();
+al.add(new MyClass (1));
+al.add(new MyClass (4));
+al.add(new MyClass (2));
+al.add(new MyClass (9));
+al.add(new MyClass(3));
+al.add(new MyClass (7));
+
+// Find the maximum value in al using the compareMC() method.
+ MyClass maxValobj Collections.max(al, UseMethodRef::compareMC);
+
+System.out.println("Maximum value is:maxValobj.getVal());
+}
+}
+```
 The output is shown here:
 
 Maximum value is: 9
@@ -391,53 +877,188 @@ with the **compare()** method defined by **Comparator**. Therefore, there is no 
 ## Constructor References
 
  Similar to the way that you can create references to methods, you can create references to constructors. Here is the general form of the syntax that you will use:
-
+```
 classname::new
-
+```
 This reference can be assigned to any functional interface reference that defines a method compatible with the constructor. Here is a simple example:  
 
+```JAVA
+// Demonstrate a Constructor reference.
+// MyFunc is a functional interface whose method returns
+// a MyClass reference.
+ interface MyPune (
+MyClass func(int n);
+}
+
+class MyClass{ 
+private int val;
+// This constructor takes an argument.
+MyClass (int v) val = v; 
+}
+// This is the default constructor. 
+MyClass() { val = 0; }
+//..
+
+int getVal() { return val; };
+}
+class ConstructorRef Demo
+public static void main(String args[])
+{
+// Create a reference to the MyClass constructor.
+// Because func() in MyPunc takes an argument, new
+// refers to the parameterized constructor in MyClass, // not the default constructor.
+MyFunc myClassCons= MyClass::new;
+// Create an instance of MyClass via that constructor reference. MyClass me myClassCons. func (100);
+// Use the instance of MyClass just created. 
+System.out.println("val in me is " + mc.getVal());
+}
+}
+```
 The output is shown here:  
-
+```
 val in mc is 100
-
+```
 In the program, notice that the **func()** method of **MyFunc** returns a reference of type **MyClass** and has an **int** parameter. Next, notice that **MyClass** defines two constructors. The first specifies a parameter of type **int**. The second is the default, parameterless constructor. Now, examine the following line:
-
+```
 MyFunc myClassCons = MyClass::new;
-
+```
 Here, the expression **MyClass::new** creates a constructor reference to a **MyClass** constructor. In this case, because **MyFunc**’s **func()** method takes an **int** parameter, the constructor being referred to is **MyClass(int v)** because it is the one that matches. Also notice that the reference to this constructor is assigned to a **MyFunc** reference called **myClassCons**. After this statement executes, **myClassCons** can be used to create an instance of **MyClass**, as this line shows:
-
+```java
 MyClass mc = myClassCons.func(100);
-
+```
 In essence, **myClassCons** has become another way to call **MyClass(int v)**. Constructor references to generic classes are created in the same fashion.
 
-The only difference is that the type argument can be specified. This works the same as it does for using a generic class to create a method reference: simply specify the type argument after the class name. The following illustrates this by modifying the previous example so that **MyFunc** and **MyClass** are generic.  
+The only difference is that the type argument can be specified. This works the same as it does for using a generic class to create a method reference: simply specify the type argument after the class name. The following illustrates this by modifying the previous example so that **MyFunc** and **MyClass** are generic.
+
+```JAVA
+// Demonstrate a constructor reference with a generic class.
+// MyFunc is now a generic functional interface. 
+interface MyFunc<T>{
+     MyClass<T> func (T n);
+ }
+
+class MyClass<T> { 
+    private T val;
+
+// A constructor that takes an argument. 
+MyClass(Tv) { val = v; }
+
+// This is the default constructor. 
+MyClass() val = null; }
+//..
+
+T getVal() { return val; };
+
+class ConstructorRef Demo2
+{
+public static void main(String args[]} 
+{
+// Create a reference to the MyClass<T> constructor.
+ MyFunc<Integer> myClassCons MyClass<Integer>::new;
+
+// Create an instance of MyClass<T> via that constructor reference. 
+MyClass<Integer> me myClassCons. func (100);
+
+// Use the instance of MyClass<T> just created.
+ System.out.println("val in me is " +mc.getVal());
+}
+}
+```
 
 This program produces the same output as the previous version. The difference is that now both **MyFunc** and **MyClass** are generic. Thus, the sequence that creates a constructor reference can include a type argument (although one is not always needed), as shown here:  
-
+```java
 MyFunc<Integer> myClassCons = MyClass<Integer>::new;
-
+```
 Because the type argument **Integer** has already been specified when **myClassCons** is created, it can be used to create a **MyClass<Integer>** object, as the next line shows:
-
+```java
 MyClass<Integer> mc = myClassCons.func(100);
+```
+Although the preceding examples demonstrate the mechanics of using a constructor reference, no one would use a constructor reference as just shown because nothing is gained. Furthermore, having what amounts to two names for the same constructor creates a confusing situation (to say the least). However, to give you the flavor of a more practical usage, the following program uses a **static** method, called **myClassFactory()**, that is a factory for objects of any type of **MyFunc** objects. It can be used to create any type of object that has a constructor compatible with its first parameter.
 
-Although the preceding examples demonstrate the mechanics of using a constructor reference, no one would use a constructor reference as just shown because nothing is gained. Furthermore, having what amounts to two names for the same constructor creates a confusing situation (to say the least). However, to give you the flavor of a more practical usage, the following program uses a **static** method, called **myClassFactory()**, that is a factory for objects of any type of **MyFunc** objects. It can be used to create any type of object that has a constructor compatible with its first parameter.  
+```JAVA
+// Implement a simple class factory using a constructor reference.
+interface MyFunc<R, T> {
+     R func (T n);
+}
 
+// A simple generic class. 
+class MyClass<T> {
+     private T val;
+
+// A constructor that takes an argument. 
+MyClass (T v) { val = v; }
+
+// The default constructor. This constructor
+// is NOT used by this program.
+
+MyClass() val = null; }
+//..
+
+T getVal() return val; };
+}
+
+// A simple, non-generic class.
+class MyClass2 (
+     String str;
+
+// A constructor that takes an argument. 
+MyClass2 (String s) { str = 0; }
+
+// The default constructor. This
+ // constructor is NOT used by this program. 
+ MyClass2() str {= ""; }
+ //..
+
+String getVal() { return str; }; 
+}
+
+class ConstructorRefDemo] [
+// A factory method for class objects. The class must
+ // have a constructor that takes one parameter of type T.
+  // R specifies the type of object being created.
+   static «R, T> R myClassFactory (MyFunc<R. T> cons, T v) 
+   { return cons.fune (v)
+   }
+
+public static void main(String args[])
+{
+// Create a reference to a MyClans constructor.
+// In this case, new refers to the constructor that
+// takes an argument. 
+MyFunc<MyClass<Double>. Double> myClasscons MyClass<Double>::new;
+
+// Create an instance of MyClass by use of the factory method. 
+MyClass<Double> me myClassFactory (myClassCone, 100.1)
+
+// Use the instance of MyClass just created. 
+System.out.println("val in me in mc" +getVal());
+
+// Now, create a different class by use of myClass Factory().
+ MyFunc<MyClass2, String> myClassCons2 = MyClass2::new;
+
+// Create an instance of MyClass2 by use of the factory method. 
+MyClass2 mc2 = myClassFactory (myClassCons2, "Lambda");
+
+// Use the instance of MyClass just created. 
+System.out.println("str in mc2 is "+mc2.getVal(1);
+}
+}
+```
 The output is shown here:
-
+```
 val in mc is 100.1
-
 str in mc2 is Lambda
-
+```
 As you can see, **myClassFactory()** is used to create objects of type **MyClass<Double>** and **MyClass2**. Although both classes differ, for example **MyClass** is generic and **MyClass2** is not, both can be created by **myClassFactory()** because they both have constructors that are compatible with **func()** in **MyFunc**. This works because **myClassFactory()** is passed the constructor for the object that it builds. You might want to experiment with this program a bit, trying different classes that you create. Also try creating instances of different types of **MyClass** objects. As you will see, **myClassFactory()** can create any type of object whose class has a constructor that is compatible with **func()** in **MyFunc**. Although this example is quite simple, it hints at the power that constructor references bring to Java.
 
 Before moving on, it is important to mention a second form of the constructor reference syntax that is used for arrays. To create a constructor reference for an array, use this construct:
-
+```
 type[]::new
-
+```
 Here, type specifies the type of object being created. For example, assuming the form of **MyClass** as shown in the first constructor reference example (**ConstructorRefDemo**) and given the **MyArrayCreator** interface shown here:
 
 the following creates a two-element array of **MyClass** objects and gives each element an initial value:
-
+```
 MyArrayCreator<MyClass[]> mcArrayCons = MyClass[]::new;
 
 MyClass[] a = mcArrayCons.func(2);
@@ -445,15 +1066,33 @@ MyClass[] a = mcArrayCons.func(2);
 a[0] = new MyClass(1);
 
 a[1] = new MyClass(2);
-
-Here, the call to **func(2)** causes a two-element array to be created. In general, a functional interface must contain a method that takes a single **int** parameter if  
-
-it is to be used to refer to an array constructor.
+```
+Here, the call to **func(2)** causes a two-element array to be created. In general, a functional interface must contain a method that takes a single **int** parameter if it is to be used to refer to an array constructor.
 
 ## Predefined Functional Interfaces
 
  Up to this point, the examples in this chapter have defined their own functional interfaces so that the fundamental concepts behind lambda expressions and functional interfaces could be clearly illustrated. However, in many cases, you won’t need to define your own functional interface because the package called **java.util.function** provides several predefined ones. Although we will look at them more closely in Part II, here is a sampling:
+ ![](4.png)
 
 The following program shows the **Function** interface in action by using it to rework the earlier example called **BlockLambdaDemo** that demonstrated block lambdas by implementing a factorial example. That example created its own functional interface called **NumericFunc**, but the built-in **Function** interface could have been used, as this version of the program illustrates:  
+
+```JAVA
+// Use the Function built-in functional interface.
+// Import the Function interface. import java.util.function. Function;
+class UseFunctionInterfaceDemo {
+    public static void main(String args[])
+}
+
+// This block lambda computes the factorial of an int value. // This time, Function is the functional interface. 
+Function<Integer, Integer> factorial = (n) => {
+int result = 1;
+for (int i=1; i <= n; i++) result = i result;
+return result;
+};
+
+System.out.println("The factoral of 3 is " + factorial.apply(3)); System.out.println("The factoral of 5 is " + factorial.apply(5));
+}
+}
+```
 
 It produces the same output as previous versions of the program.  
