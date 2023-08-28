@@ -15,7 +15,7 @@ The _regular expression_ package lets you perform sophisticated pattern matching
 
 There are two classes that support regular expression processing: **Pattern** and **Matcher**. These classes work together. Use **Pattern** to define a regular expression. Match the pattern against another sequence using **Matcher**.
 
-## Pattern
+### Pattern
 
  The **Pattern** class defines no constructors. Instead, a pattern is created by calling the **compile()** factory method. One of its forms is shown here:
 
@@ -29,7 +29,7 @@ Matcher matcher(CharSequence str)
 
 Here str is the character sequence that the pattern will be matched against. This is called the _input sequence_. **CharSequence** is an interface that defines a read- only set of characters. It is implemented by the **String** class, among others. Thus, you can pass a string to **matcher()**.
 
-## Matcher
+### Matcher
 
  The **Matcher** class has no constructors. Instead, you create a **Matcher** by calling the **matcher()** factory method defined by **Pattern**, as just explained. Once you have created a **Matcher**, you will use its methods to perform various pattern matching operations. Several are described here.
 
@@ -63,7 +63,7 @@ String replaceAll(String newStr)
 
 Here, newStr specifies the new character sequence that will replace the ones that match the pattern. The updated input sequence is returned as a string.
 
-## Regular Expression Syntax
+### Regular Expression Syntax
 
  Before demonstrating **Pattern** and **Matcher**, it is necessary to explain how to construct a regular expression. Although no rule is complicated by itself, there are a large number of them, and a complete discussion is beyond the scope of this chapter. However, a few of the more commonly used constructs are described here.
 
@@ -81,7 +81,7 @@ For example, the pattern "x+" will match "x", "xx", and "xxx", among others. As 
 
 One other point: In general, if you specify an invalid expression, a **PatternSyntaxException** will be thrown.
 
-## Demonstrating Pattern Matching
+### Demonstrating Pattern Matching
 
  The best way to understand how regular expression pattern matching operates is to work through some examples. The first, shown here, looks for a match with a literal pattern:  
 ```java
@@ -154,9 +154,7 @@ test found at index 11
 
 As the output shows, two matches were found. The program uses the **start()** method to obtain the index of each match.
 
-## Using Wildcards and Quantifiers
-
- Although the preceding programs show the general technique for using **Pattern** and **Matcher**, they don’t show their power. The real benefit of regular expression processing is not seen until wildcards and quantifiers are used. To begin, consider the following example that uses the + quantifier to match any arbitrarily long sequence of Ws:  
+**Using Wildcards and Quantifiers**Although the preceding programs show the general technique for using **Pattern** and **Matcher**, they don’t show their power. The real benefit of regular expression processing is not seen until wildcards and quantifiers are used. To begin, consider the following example that uses the + quantifier to match any arbitrarily long sequence of Ws:  
 ```java
 // Use a quantifier. import java.util.regex.*;
 class RegExpr4 {
@@ -257,7 +255,7 @@ Modified sequence: Eric Eric Frank Ken Todd
 
 Because the regular expression "Jon.*? " matches any string that begins with Jon followed by zero or more characters, ending in a space, it can be used to match and replace both Jon and Jonathan with the name Eric. Such a substitution is not easily accomplished without pattern matching capabilities.
 
-##Using split()
+## Using split()
  You can reduce an input sequence into its individual tokens by using the **split()** method defined by **Pattern**. One form of the **split()** method is shown here:
 
 String[ ] split(CharSequence str)
@@ -290,7 +288,7 @@ Next token: done
 
 As the output shows, the input sequence is reduced to its individual tokens. Notice that the delimiters are not included.
 
-##Two Pattern-Matching Options
+## Two Pattern-Matching Options
 Although the pattern-matching techniques described in the foregoing offer the greatest flexibility and power, there are two alternatives which you might find useful in some circumstances. If you only need to perform a one-time pattern match, you can use the **matches()** method defined by **Pattern**. It is shown here:
 
 static boolean matches(String pattern, CharSequence str)
@@ -303,7 +301,7 @@ boolean matches(String pattern)
 
 If the invoking string matches the regular expression in pattern, then **matches()** returns **true**. Otherwise, it returns **false**.
 
-## Exploring Regular Expressions
+### Exploring Regular Expressions
 
  The overview of regular expressions presented in this section only hints at their power. Since text parsing, manipulation, and tokenization are a large part of programming, you will likely find Java’s regular expression subsystem a powerful tool that you can use to your advantage. It is, therefore, wise to explore the capabilities of regular expressions. Experiment with several different types of patterns and input sequences. Once you understand how regular expression pattern matching works, you will find it useful in many of your programming endeavors.
 
@@ -411,7 +409,8 @@ static int parameterModifiers()
 
 For example, **methodModifiers()** returns the modifiers that can be applied to a method. Each method returns flags, packed into an **int**, that indicate which modifiers are legal. The modifier values are defined by constants in **Modifier**, which include **PROTECTED**, **PUBLIC**, **PRIVATE**, **STATIC**, **FINAL**, and so on.
 
-##Remote Method Invocation (RMI)
+## Remote Method Invocation (RMI)
+
 Remote Method Invocation (RMI) allows a Java object that executes on one machine to invoke a method of a Java object that executes on another machine. This is an important feature, because it allows you to build distributed applications. While a complete discussion of RMI is outside the scope of this book, the following simplified example describes the basic principles involved. RMI is supported by the **java.rmi** package. Beginning with JDK 9, it is part of the **java.rmi** module.
 
 **A Simple Client/Server Application Using RMI** This section provides step-by-step directions for building a simple client/server application by using RMI. The server receives a request from a client, processes it, and returns a result. In this example, the request specifies two numbers. The server adds these together and returns the sum.
@@ -519,13 +518,15 @@ The sum is: 17.0
 
 **NOTE**When working with RMI in the real world, it may be necessary for the server to install a security manager.
 
-**Formatting Date and Time with java.text** The package **java.text** allows you to format, parse, search, and manipulate text. Beginning with JDK 9, **java.text** is part of the **java.base** module. This section  
+## Formatting Date and Time with java.text
+
+The package **java.text** allows you to format, parse, search, and manipulate text. Beginning with JDK 9, **java.text** is part of the **java.base** module. This section  
 
 examines two of **java.text**'s most commonly used classes: those that format date and time information. However, it is important to state at the outset that the new date and time API described later in this chapter offers a modern approach to handling date and time that also supports formatting. Of course, legacy code will continue to use the classes shown here for some time.
 
-## DateFormat Class DateFormat
+## DateFormat Class
 
- is an abstract class that provides the ability to format and parse dates and times. The **getDateInstance()** method returns an instance of **DateFormat** that can format date information. It is available in these forms:
+DateFormat is an abstract class that provides the ability to format and parse dates and times. The **getDateInstance()** method returns an instance of **DateFormat** that can format date information. It is available in these forms:
 
 static final DateFormat getDateInstance() static final DateFormat getDateInstance(int style) static final DateFormat getDateInstance(int style, Locale locale)
 
@@ -555,9 +556,25 @@ static final DateFormat getTimeInstance() static final DateFormat getTimeInstanc
 
 Here, style is one of the following values: **DEFAULT**, **SHORT**, **MEDIUM**, **LONG**, or **FULL**. These are **int** constants defined by **DateFormat**. They cause different details about the time to be presented. The parameter locale specifies the locale. If the style and/or locale is not specified, defaults are used.
 
-The following listing illustrates how to format time information. It begins  
+The following listing illustrates how to format time information. It begins by creating a **Date** object. This captures the current date and time information. Then it outputs the time information by using different styles and locales.
 
-by creating a **Date** object. This captures the current date and time information. Then it outputs the time information by using different styles and locales.
+```java
+// Demonstrate time formats.
+import java.text.*;
+import java.util.*;
+public class Time FormatDemo {
+    public static void main(String args[]) {
+        Date date = new Date();
+        DateFormat df;
+df = DateFormat.getTimeInstance (DateFormat. SHORT, Locale.JAPAN);
+System.out.println("Japan: " + df. format (date));
+df = DateFormat.getTime Instance (DateFormat. LONG, Locale.UK); 
+System.out.println("United Kingdom: " + df. format (date));
+df = DateFormat.getTimeInstance (DateFormat.FULL, Locale.CANADA);
+System.out.println("Canada: " + df. format (date));
+}
+}
+```
 
 Sample output from this program is shown here:
 
@@ -569,27 +586,14 @@ Canada: 1:03:31 PM Central Daylight Time
 
 The **DateFormat** class also has a **getDateTimeInstance()** method that can format both date and time information. You may wish to experiment with it on your own.
 
-## SimpleDateFormat Class 
-**SimpleDateFormat**is a concrete subclass of **DateFormat**. It allows you to define your own formatting patterns that are used to display date and time information.
+### SimpleDateFormat Class
 
-One of its constructors is shown here:
-```java
-// Demonstrate time formats. import java.text.*; import java.util.*; public class Time FormatDemo { public static void main(String args[]) { Date date = new Date(); DateFormat df;
-df = DateFormat.getTimeInstance (DateFormat. SHORT, Locale.JAPAN); System.out.println("Japan: " + df. format (date));
-df = DateFormat.getTime Instance (DateFormat. LONG, Locale.UK); System.out.println("United Kingdom: " + df. format (date));
-df = DateFormat.getTimeInstance (DateFormat.FULL, Locale.CANADA); System.out.println("Canada: " + df. format (date));
-}
-}
-```
-##SimpleDateFormat Class
 **SimpleDateFormat** is a concrete subclass of DateFormat. It allows you to
 define your own formatting patterns that are used to display date and time
 information.
 One of its constructors is shown here:
 SimpleDateFormat(String formatString)
-The argument formatString describes how date and time information is  
-
-displayed. An example of its use is given here:
+The argument formatString describes how date and time information is displayed. An example of its use is given here:
 
 SimpleDateFormat sdf = SimpleDateFormat("dd MMM yyyy hh:mm:ss
 
@@ -628,8 +632,9 @@ Sample output from this program is shown here:
 
 Wed Jun 20 2018
 
-##The java.time Time and Date API
- In Chapter 20, Java’s long-standing approach to handling date and time through the use of classes such as **Calendar** and **GregorianCalendar** was discussed. It  
+## The java.time Time and Date API
+
+In Chapter 20, Java’s long-standing approach to handling date and time through the use of classes such as **Calendar** and **GregorianCalendar** was discussed. It  
 
 is expected that this traditional approach will remain in widespread use for some time and is, therefore, something that all Java programmers need to be familiar with. However, beginning with JDK 8, Java includes another approach to handling time and date. This new approach is defined in the following packages:
 ![Alt text](image-5.png)
@@ -639,9 +644,7 @@ These packages define a large number of classes, interfaces, and enumerations th
 
  In **java.time** are defined several top-level classes that give you easy access to the time and date. Three of these are **LocalDate**, **LocalTime**, and **LocalDateTime**. They are value-based, and as their names suggest, they encapsulate the local date, time, and date and time. Using these classes, it is easy to obtain the current date and time, format the date and time, and compare dates and times, among other operations.
 
-## LocalDate
-
- encapsulates a date that uses the default Gregorian calendar as specified by ISO 8601. **LocalTime** encapsulates a time, as specified by ISO 8601. **LocalDateTime** encapsulates both date and time. These classes contain a large number of methods that give you access to the date and time components, allow you to compare dates and times, add or subtract date or time components, and so on. Because a common naming convention for methods is employed,  
+**LocalDate** encapsulates a date that uses the default Gregorian calendar as specified by ISO 8601. **LocalTime** encapsulates a time, as specified by ISO 8601. **LocalDateTime** encapsulates both date and time. These classes contain a large number of methods that give you access to the date and time components, allow you to compare dates and times, add or subtract date or time components, and so on. Because a common naming convention for methods is employed,  
 
 once you know how to use one of these classes, the others are easy to master. **LocalDate**, **LocalTime**, and **LocalDateTime** do not define public
 
@@ -769,7 +772,7 @@ June 20, 2018 2:22 PM
 
 One other point about creating custom date and time output: **LocalDate**, **LocalTime**, and **LocalDateTime** define methods that let you obtain various date and time components. For example, **getHour()** returns the hour as an **int**; **getMonth()** returns the month in the form of a **Month** enumeration value; and **getYear()** returns the year as an **int**. Using these, and other methods, you can manually construct output. You can also use these values for other purposes, such as when creating specialized timers.
 
-## Parsing Date and Time Strings LocalDate
+### Parsing Date and Time Strings LocalDate
 
 , **LocalTime**, and **LocalDateTime** provide the ability to parse date and/or time strings. To do this, call **parse()** on an instance of one of those classes. It has two forms. The first uses the default formatter that parses the date and/or time formatted in the standard ISO fashion, such as 03:31 for time and 2020-08-02 for date. The form of this version of **parse()** for **LocalDateTime** is shown here. (Its form for the other classes is similar except for the type of object returned.)
 
@@ -798,7 +801,7 @@ Sample output is shown here:
 
 June 21, 2018 12:01 AM
 
-##Other Things to Explore in java.time 
+### Other Things to Explore in java.time 
 Although you will want to explore all of the date and time packages, a good place to start is with **java.time**. It contains a great deal of functionality that you may find useful. Begin by examining the methods defined by **LocalDate**, **LocalTime**, and **LocalDateTime**. Each has methods that let you add or subtract dates and/or times, adjust dates and/or times by a given component, compare dates and/or times, and create instances based on date and/or time components, among others. Other classes in **java.time** that you may find of particular interest include **Instant**, **Duration**, and **Period**. **Instant** encapsulates an instant  
 
 in time. **Duration** encapsulates a length of time. **Period** encapsulates a length of date.
