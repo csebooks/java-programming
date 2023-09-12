@@ -6,7 +6,6 @@ weight: 2
 
 # Introducing Servlets
 
-
 This chapter presents an introduction to _servlets._ Servlets are small programs that execute on the server side of a web connection. The topic of servlets is quite large, and it is beyond the scope of this chapter to cover it all. Instead, we will focus on the core concepts, interfaces, and classes, and develop several examples.
 
 ## Background
@@ -23,7 +22,7 @@ Servlets offer several advantages in comparison with CGI. First, performance is 
 
 ## The Life Cycle of a Servlet
 
- Three methods are central to the life cycle of a servlet. These are **init()**, **service()**, and **destroy()**. They are implemented by every servlet and are invoked at specific times by the server. Let us consider a typical user scenario to understand when these methods are called.
+Three methods are central to the life cycle of a servlet. These are **init()**, **service()**, and **destroy()**. They are implemented by every servlet and are invoked at specific times by the server. Let us consider a typical user scenario to understand when these methods are called.
 
 First, assume that a user enters a Uniform Resource Locator (URL) to a web browser. The browser then generates an HTTP request for this URL. This request is then sent to the appropriate server.
 
@@ -39,7 +38,8 @@ Finally, the server may decide to unload the servlet from its memory. The algori
 
 ## Servlet Development Options
 
- To experiment with servlets, you will need access to a servlet container/server. Two popular ones are Glassfish and Apache Tomcat. Glassfish is an open source project sponsored by Oracle and is provided with the Java EE SDK. It is supported by NetBeans. Apache Tomcat is an open-source product maintained by the Apache Software Foundation. It can also be used by NetBeans. Both Tomcat and Glassfish can also be used with other IDEs, such as Eclipse.
+
+To experiment with servlets, you will need access to a servlet container/server. Two popular ones are Glassfish and Apache Tomcat. Glassfish is an open source project sponsored by Oracle and is provided with the Java EE SDK. It is supported by NetBeans. Apache Tomcat is an open-source product maintained by the Apache Software Foundation. It can also be used by NetBeans. Both Tomcat and Glassfish can also be used with other IDEs, such as Eclipse.
 
 Although IDEs such as NetBeans and Eclipse are very useful and can streamline the creation of servlets, they are not used in this chapter. The way you develop and deploy servlets differs among IDEs, and it is simply not possible for this book to address each environment. Furthermore, many readers will be using the command-line tools rather than an IDE. Therefore, if you are using an IDE, you must refer to the instructions for that environment for information concerning the development and deployment of servlets. For this reason, the instructions given here and elsewhere in this chapter assume that only the command-line tools are employed. Thus, they will work for nearly any reader.
 
@@ -47,16 +47,14 @@ This chapter uses Tomcat in the examples. It provides a simple, yet effective wa
 
 **REMEMBER** The instructions for developing and deploying servlets in this chapter are based on Tomcat and use only command-line tools. If you are using an IDE and/or a different servlet container/server, consult the documentation for your environment.
 
-
-
 ## Using Tomcat
 
- Tomcat contains the class libraries, documentation, and run-time support that you will need to create and test servlets. At the time of this writing, several versions of Tomcat are available. The instructions that follow use 8.5.31. This version of Tomcat is used here because it will work for a very wide range of readers. You can download Tomcat from **tomcat.apache.org**. You should choose a version appropriate to your environment.
+Tomcat contains the class libraries, documentation, and run-time support that you will need to create and test servlets. At the time of this writing, several versions of Tomcat are available. The instructions that follow use 8.5.31. This version of Tomcat is used here because it will work for a very wide range of readers. You can download Tomcat from **tomcat.apache.org**. You should choose a version appropriate to your environment.
 
 The examples in this chapter assume a 64-bit Windows environment. Assuming that a 64-bit version of Tomcat 8.5.31 was unpacked from the root directly, the default location is
-
+```
 C:\\apache-tomcat-8.5.31-windows-x64\\apache-tomcat-8.5.31\\
-
+```
 This is the location assumed by the examples in this book. If you load Tomcat in a different location (or use a different version of Tomcat), you will need to make appropriate changes to the examples. You may need to set the environmental variable **JAVA_HOME** to the top-level directory in which the Java Development Kit is installed.
 
 **NOTE** All of the directories shown in this section assume Tomcat 8.5.31. If you install a different version of Tomcat, then you will need to adjust the directory names and paths to match those used by the version you installed.
@@ -64,9 +62,9 @@ This is the location assumed by the examples in this book. If you load Tomcat in
 Once installed, you start Tomcat by selecting **startup.bat** from the **bin** directly under the **apache-tomcat-8.5.31** directory. To stop Tomcat, execute **shutdown.bat**, also in the **bin** directory.
 
 The classes and interfaces needed to build servlets are contained in **servlet- api.jar**, which is in the following directory:
-
+```
 C:\\apache-tomcat-8.5.31-windows-x64\\apache-tomcat-8.5.31\\lib
-
+```
 To make **servlet-api.jar** accessible, update your **CLASSPATH** environment variable so that it includes
 
 C:\\apache-tomcat-8.5.31-windows-x64\\apache-tomcat-
@@ -92,48 +90,50 @@ C:\\apache-tomcat-8.5.31-windows-x64\\apache-tomcat-
 examples\\WEB-INF
 
 For instance, assuming the first example, called **HelloServlet**, you will add the following lines in the section that defines the servlets:
-```js
+```
 <servlet> 
- <servlet-name>HelloServlet</servlet-name>
- <servlet-class>HelloServlet</servlet-class> 
+   <servlet-name>HelloServlet</servlet-name>
+   <servlet-class>HelloServlet</servlet-class> 
 </servlet>
 ```
 Next, you will add the following lines to the section that defines the servlet mappings:
-```js
+```
 <servlet-mapping> 
- <servlet-name>HelloServlet</servlet-name> 
- <url-pattern>/servlets/servlet/HelloServlet</url-pattern> 
+   <servlet-name>HelloServlet</servlet-name> 
+   <url-pattern>/servlets/servlet/HelloServlet</url-pattern> 
 </servlet-mapping>
 ```
 Follow this same general procedure for all of the examples.  
 
 ## A Simple Servlet
 
- To become familiar with the key servlet concepts, we will begin by building and testing a simple servlet. The basic steps are the following:
+To become familiar with the key servlet concepts, we will begin by building and testing a simple servlet. The basic steps are the following:
 
-1\. Create and compile the servlet source code. Then, copy the servlet’s class file to the proper directory, and add the servlet’s name and mappings to the proper **web.xml** file.
+1. Create and compile the servlet source code. Then, copy the servlet’s class file to the proper directory, and add the servlet’s name and mappings to the proper **web.xml** file.
 
-2\. Start Tomcat. 3. Start a web browser and request the servlet.
+2. Start Tomcat. 
+
+3. Start a web browser and request the servlet.
 
 Let us examine each of these steps in detail.
 
 ### Create and Compile the Servlet Source Code
 
- To begin, create a file named **HelloServlet.java** that contains the following program:
-```js
+To begin, create a file named **HelloServlet.java** that contains the following program:
+```
 import java.io.*; 
 import javax.servlet.*;
 
-public class HelloServlet extends GenericServlet {
-
-public void service (ServletRequest request, 
-    ServletResponse response) 
- throws ServletException, IOException { 
-    response.setContentType ("text/html"); 
-    PrintWriter pw = response.getWriter(); 
-    pw.println("<B>Hello!"); 
-    pw.close(); 
-}
+public class HelloServlet extends GenericServlet 
+{
+   public void service (ServletRequest request,ServletResponse response) 
+      throws ServletException, IOException 
+   {
+      response.setContentType ("text/html"); 
+      PrintWriter pw = response.getWriter(); 
+      pw.println("<B>Hello!"); 
+      pw.close(); 
+   }
 }
 ```
 Let’s look closely at this program. First, note that it imports the **javax.servlet** package. This package contains the classes and interfaces required to build servlets. You will learn more about these later in this chapter. Next, the program defines **HelloServlet** as a subclass of **GenericServlet**. The **GenericServlet** class provides functionality that simplifies the creation of a servlet. For example, it provides versions of **init()** and **destroy()**, which may be used as is. You need supply only the **service()** method.  
@@ -172,7 +172,8 @@ servlets described in this chapter. These are **javax.servlet** and **javax.serv
 
 The Servlet API has been in a process of ongoing development and enhancement. The servlet specification supported by Tomcat 8.5.31 is version 3.1. (As a point of interest, Tomcat 9 supports servlet specification 4.) This chapter discusses the core of the Servlet API, which will be available to most readers and works with all modern versions of the servlet specification.
 
-##The javax.servlet Package 
+## The javax.servlet Package 
+
 The **javax.servlet** package contains a number of interfaces and classes that establish the framework in which servlets operate. The following table summarizes several key interfaces that are provided in this package. The most significant of these is **Servlet**. All servlets must implement this interface or extend a class that implements the interface. The **ServletRequest** and **ServletResponse** interfaces are also very important.
 
 |Interface|Description|
@@ -210,7 +211,7 @@ Let us examine these interfaces and classes in more detail.
 
 **Table 35-1** The Methods Defined by **Servlet**
 
-The **init()**, **service()**, and **destroy()** methods are the life cycle methods of the servlet. These are invoked by the server. The **getServletConfig()** method is called by the servlet to obtain initialization parameters. A servlet developer overrides the **getServletInfo()** method to provide a string with useful information (for example, the version number). This method is also invoked by the server.  
+The **init()**, **service()**, and **destroy()** methods are the life cycle methods of the servlet. These are invoked by the server. The **getServletConfig()** method is called by the servlet to obtain   initialization parameters. A servlet developer overrides the **getServletInfo()** method to provide a string with useful information (for example, the version number). This method is also invoked by the server.  
 
 ### The ServletConfig Interface
 
@@ -280,7 +281,7 @@ The **init()**, **service()**, and **destroy()** methods are the life cycle meth
 
 ### The GenericServlet Class
 
- The **GenericServlet** class provides implementations of the basic life cycle methods for a servlet. **GenericServlet** implements the **Servlet** and **ServletConfig** interfaces. In addition, a method to append a string to the server log file is available. The signatures of this method are shown here:
+The **GenericServlet** class provides implementations of the basic life cycle methods for a servlet. **GenericServlet** implements the **Servlet** and **ServletConfig** interfaces. In addition, a method to append a string to the server log file is available. The signatures of this method are shown here:
 
 void log(String s) void log(String s, Throwable e)
 
@@ -288,67 +289,63 @@ Here, s is the string to be appended to the log, and e is an exception that occu
 
 ### The ServletInputStream Class
 
- The **ServletInputStream** class extends **InputStream**. It is implemented by the servlet container and provides an input stream that a servlet developer can use to read the data from a client request. In addition to the input methods inherited from **InputStream**, a method is provided to read bytes from the stream. It is shown here:
+The **ServletInputStream** class extends **InputStream**. It is implemented by the servlet container and provides an input stream that a servlet developer can use to read the data from a client request. In addition to the input methods inherited from **InputStream**, a method is provided to read bytes from the stream. It is shown here:
 
-int readLine(byte[ ] buffer, int offset, int size) throws IOException
+_int readLine(byte[ ] buffer, int offset, int size) throws IOException_
 
 Here, buffer is the array into which size bytes are placed starting at _offset._ The method returns the actual number of bytes read or –1 if an end-of-stream condition is encountered.
 
 ### The ServletOutputStream Class
 
+The **ServletOutputStream** class extends **OutputStream**. It is implemented by the servlet container and provides an output stream that a servlet developer can use to write data to a client response. In addition to the output methods provided by **OutputStream**, it also defines the **print()** and **println()** methods, which output data to the stream.
 
- The **ServletOutputStream** class extends **OutputStream**. It is implemented by the servlet container and provides an output stream that a servlet developer can use to write data to a client response. In addition to the output methods provided by **OutputStream**, it also defines the **print()** and **println()** methods, which output data to the stream.
+### The Servlet Exception Classes
 
-###The Servlet Exception Classes 
-javax.servlet** defines two exceptions. The first is **ServletException**, which indicates that a servlet problem has occurred. The second is **UnavailableException**, which extends **ServletException**. It indicates that a servlet is unavailable.
+**javax.servlet** defines two exceptions. The first is **ServletException**, which indicates that a servlet problem has occurred. The second is **UnavailableException**, which extends **ServletException**. It indicates that a servlet is unavailable.
 
 ## Reading Servlet Parameters
 
  The **ServletRequest** interface includes methods that allow you to read the names and values of parameters that are included in a client request. We will develop a servlet that illustrates their use. The example contains two files. A web page is defined in **PostParameters.html**, and a servlet is defined in **PostParametersServlet.java**.
 
 The HTML source code for **PostParameters.html** is shown in the following listing. It defines a table that contains two labels and two text fields. One of the labels is Employee and the other is Phone. There is also a submit button. Notice that the action parameter of the form tag specifies a URL. The URL identifies the servlet to process the HTTP POST request.  
-```js
+```
 <html>
 <body>
 <center>
-<form name="Form1"
-  method="post"
-  action="http://localhost:8080/examples/servlets/        
-          servlet/Post ParametersServlet">
-<table>
-<tr>
-    <td><B>Employee</td>
-    <td><input type=textbox name="e" size="25" value=""></td>
-</tr>
-<tr>
-  <td><B>Phone</td>
-  <td><input type=textbox name=" "p" size="25" value=""; ""></td>
-</tr>
-</table>
-<input type=submit value="Submit">
+<form name="Form1" method="post" action="http://localhost:8080/examples/servlets/servlet/Post ParametersServlet">
+   <table>
+   <tr>
+      <td><B>Employee</td>
+      <td><input type=textbox name="e" size="25" value=""></td>
+   </tr>
+   <tr>
+      <td><B>Phone</td>
+      <td><input type=textbox name=" "p" size="25" value=""; ""></td>
+   </tr>
+   </table>
+   <input type=submit value="Submit">
 </body>
 </html>
 ```
 The source code for **PostParametersServlet.java** is shown in the following listing. The **service()** method is overridden to process client requests. The **getParameterNames()** method returns an enumeration of the parameter names. These are processed in a loop. You can see that the parameter name and value are output to the client. The parameter value is obtained via the **getParameter()** method.  
-```js
+```
 import java.io.*;
 import java.util.*;
 import javax.servlet.*;
 
-public class Post ParametersServlet 
-extends GenericServlet {
-
-public void service (ServletRequest request, 
-  ServletResponse response) 
-throws ServletException, IOException {
+public class PostParametersServlet extends GenericServlet 
+{
+   public void service (ServletRequest request,ServletResponse response) throws ServletException, IOException {
 
    // Get print writer. 
    PrintWriter pw = response.getWriter();
 
-   // Get enumeration of parameter names. Enumeration<String> e = request.getParameterNames();
+   // Get enumeration of parameter names. 
+   Enumeration<String> e = request.getParameterNames();
 
    // Display parameter names and values. 
-   while (e.hasMoreElements()) {
+   while (e.hasMoreElements()) 
+   {
      String pname = e.nextElement();
      pw.print (pname + "=");
      String pvalue = request.getParameter(pname); 
@@ -361,7 +358,10 @@ throws ServletException, IOException {
 
 Compile the servlet. Next, copy it to the appropriate directory, and update the **web.xml** file, as previously described. Then, perform these steps to test this example:
 
-1\. Start Tomcat (if it is not already running). 2. Display the web page in a browser. 3. Enter an employee name and phone number in the text fields. 4. Submit the web page.
+1. Start Tomcat (if it is not already running). 
+2. Display the web page in a browser. 
+3. Enter an employee name and phone number in the text fields. 
+4. Submit the web page.
 
 After following these steps, the browser will display a response that is dynamically generated by the servlet.  
 
@@ -387,7 +387,7 @@ The following table summarizes the classes used in this chapter. The most import
 
 ### The HttpServletRequest Interface
 
- The **HttpServletRequest** interface enables a servlet to obtain information about a client request. Several of its methods are shown in Table 35-5.  
+The **HttpServletRequest** interface enables a servlet to obtain information about a client request. Several of its methods are shown in Table 35-5.  
 
 |Method|Description|
 |-----|---------|
@@ -438,7 +438,7 @@ different status codes that can be assigned to an HTTP response. For example, **
 
 ### The HttpSession Interface
 
- The **HttpSession** interface enables a servlet to read and write the state information that is associated with an HTTP session. Several of its methods are summarized in Table 35-7. All of these methods throw an **IllegalStateException** if the session has already been invalidated.  
+The **HttpSession** interface enables a servlet to read and write the state information that is associated with an HTTP session. Several of its methods are summarized in Table 35-7. All of these methods throw an **IllegalStateException** if the session has already been invalidated.  
 
 |Method|Description|
 |------|----------|
@@ -456,7 +456,7 @@ different status codes that can be assigned to an HTTP response. For example, **
 
 ### The Cookie Class
 
- The **Cookie** class encapsulates a cookie. A cookie is stored on a client and contains state information. Cookies are valuable for tracking user activities. For example, assume that a user visits an online store. A cookie can save the user’s name, address, and other information. The user does not need to enter this data each time he or she visits the store.
+The **Cookie** class encapsulates a cookie. A cookie is stored on a client and contains state information. Cookies are valuable for tracking user activities. For example, assume that a user visits an online store. A cookie can save the user’s name, address, and other information. The user does not need to enter this data each time he or she visits the store.
 
 A servlet can write a cookie to a user’s machine via the **addCookie()** method of the **HttpServletResponse** interface. The data for that cookie is then included in the header of the HTTP response that is sent to the browser.
 
@@ -467,9 +467,7 @@ The names and values of cookies are stored on the user’s machine. Some of the 
 - The expiration date of the cookie
 - The domain and path of the cookie
 
-The expiration date determines when this cookie is deleted from the user’s  
-
-machine. If an expiration date is not explicitly assigned to a cookie, it is deleted when the current browser session ends.
+The expiration date determines when this cookie is deleted from the user’s machine. If an expiration date is not explicitly assigned to a cookie, it is deleted when the current browser session ends.
 
 The domain and path of the cookie determine when it is included in the header of an HTTP request. If the user enters a URL whose domain and path match these values, the cookie is then supplied to the web server. Otherwise, it is not.
 
@@ -481,7 +479,7 @@ Here, the name and value of the cookie are supplied as arguments to the construc
 
 |Method|Description|
 |-------|--------|
-|Object clone()|Returns a copy of this object.|
+|Object clone()|Returns a copy of this object.| 
 |String getComment()|Returns the comment.|
 |String getDomain()|Returns the domain.|
 |int getMaxAge()|Returns the maximum age (in seconds).|
@@ -529,37 +527,34 @@ types of HTTP requests. A servlet developer typically overrides one of these met
 ### Handling HTTP GET Requests
 
  Here we will develop a servlet that handles an HTTP GET request. The servlet is invoked when a form on a web page is submitted. The example contains two files. A web page is defined in **ColorGet.html**, and a servlet is defined in **ColorGetServlet.java**. The HTML source code for **ColorGet.html** is shown in the following listing. It defines a form that contains a select element and a submit button. Notice that the action parameter of the form tag specifies a URL. The URL identifies a servlet to process the HTTP GET request.
-```js
+```
 <html>
 <body>
 <center>
 <form name="Form1"
-  action="http://localhost:8080/examples/servlets/servlet/ColorGetServlet">
-<B>Color: </B>
-<select name="color" size="1">
-<option value="Red">Red</option>
-<option value="Green">Green</option>
-
-<option value="Blue" >Blue</option>
-</select>
-<br><br>
-<input type=submit value="Submit">
+   action="http://localhost:8080/examples/servlets/servlet/ColorGetServlet">
+   <B>Color: </B>
+   <select name="color" size="1">
+      <option value="Red">Red</option>
+      <option value="Green">Green</option>
+      <option value="Blue" >Blue</option>
+   </select><br><br>
+   <input type=submit value="Submit">
 </form>
 </body>
 </html>
 ```
 The source code for **ColorGetServlet.java** is shown in the following listing. The **doGet()** method is overridden to process any HTTP GET requests that are sent to this servlet. It uses the **getParameter()** method of **HttpServletRequest** to obtain the selection that was made by the user. A response is then formulated.  
-```js
+```
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class ColorGetServlet extends HttpServlet {
-
-   public void doGet (HttpServletRequest request,   
-    HttpServletResponse response) 
-   throws ServletException, IOException {
-
+public class ColorGetServlet extends HttpServlet 
+{
+   public void doGet (HttpServletRequest request,HttpServletResponse response) 
+   throws ServletException, IOException 
+   {
       String color = request.getParameter("color");
       response.setContentType("text/html"); 
       PrintWriter pw = response.getWriter(); 
@@ -571,56 +566,54 @@ public class ColorGetServlet extends HttpServlet {
 ```
 Compile the servlet. Next, copy it to the appropriate directory, and update the **web.xml** file, as previously described. Then, perform these steps to test this example:
 
-1\. Start Tomcat, if it is not already running. 2. Display the web page in a browser. 3. Select a color. 4. Submit the web page.
+1. Start Tomcat, if it is not already running. 
+2. Display the web page in a browser. 
+3. Select a color. 
+4. Submit the web page.
 
 After completing these steps, the browser will display the response that is dynamically generated by the servlet.
 
 One other point: Parameters for an HTTP GET request are included as part of the URL that is sent to the web server. Assume that the user selects the red option and submits the form. The URL sent from the browser to the server is
-
-http://localhost:8080/examples/servlets/servlet/ColorGetServlet?
-
-color=Red
-
+```
+http://localhost:8080/examples/servlets/servlet/ColorGetServlet?color=Red
+```
 The characters to the right of the question mark are known as the _query string._  
 
 ### Handling HTTP POST Requests
 
- Here we will develop a servlet that handles an HTTP POST request. The servlet is invoked when a form on a web page is submitted. The example contains two files. A web page is defined in **ColorPost.html**, and a servlet is defined in **ColorPostServlet.java**.
+Here we will develop a servlet that handles an HTTP POST request. The servlet is invoked when a form on a web page is submitted. The example contains two files. A web page is defined in **ColorPost.html**, and a servlet is defined in **ColorPostServlet.java**.
 
 The HTML source code for **ColorPost.html** is shown in the following listing. It is identical to **ColorGet.html** except that the method parameter for the form tag explicitly specifies that the POST method should be used, and the action parameter for the form tag specifies a different servlet.
-```js
+```
 <html>
 <body>
 <center>
-<form name="Form1"
-  method="post"
+<form name="Form1" method="post"
   action="http://localhost:8080/examples/servlets/servlet/ColorPostServlet">
-<B>Color:</B>
-<select name="color" size="1">
-<option value="Red">Red</option>
-<option value="Green">Green</option>
-<option value="Blue" >Blue</option>
-</select>
-<br><br>
-<input type=submit value="Submit">
+   <B>Color:</B>
+   <select name="color" size="1">
+      <option value="Red">Red</option>
+      <option value="Green">Green</option>
+      <option value="Blue" >Blue</option>
+   </select><br><br>
+   <input type=submit value="Submit">
 </form>
 </body>
 </html>
->
 ```
 The source code for **ColorPostServlet.java** is shown in the following listing. The **doPost()** method is overridden to process any HTTP POST requests that are sent to this servlet. It uses the **getParameter()** method of **HttpServletRequest** to obtain the selection that was made by the user. A response is then formulated.  
-```js
+```
 import java.io.*; 
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class Color Post Servlet extends HttpServlet {
-
-   public void doPost (HttpServletRequest request,   
-      HttpServletResponse response) 
-   throws ServletException, IOException {
-
-      String color = request.getParameter ("color"); response.setContentType ("text/html"); 
+public class ColorPostServlet extends HttpServlet 
+{
+   public void doPost (HttpServletRequest request,HttpServletResponse response) 
+   throws ServletException, IOException 
+   {
+      String color = request.getParameter ("color"); 
+      response.setContentType ("text/html"); 
       PrintWriter pw = response.getWriter(); 
       pw.println("<B>The selected color is: "); 
       pw.println(color); 
@@ -630,10 +623,13 @@ public class Color Post Servlet extends HttpServlet {
 ```
 Compile the servlet and perform the same steps as described in the previous section to test it.
 
-**NOTE** Parameters for an HTTP POST request are not included as part of the URL that is sent to the web server. In this example, the URL sent from the browser to the server is http://localhost:8080/examples/servlets/servlet/ColorPostServlet. The parameter names and values are sent in the body of the HTTP request.
+**NOTE** 
 
-**Using Cookies** Now, let’s develop a servlet that illustrates how to use cookies. The servlet is invoked when a form on a web page is submitted. The example contains three files as summarized here:
+Parameters for an HTTP POST request are not included as part of the URL that is sent to the web server. In this example, the URL sent from the browser to the server is http://localhost:8080/examples/servlets/servlet/ColorPostServlet. The parameter names and values are sent in the body of the HTTP request.
 
+
+**Using Cookies** 
+Now, let’s develop a servlet that illustrates how to use cookies. The servlet is invoked when a form on a web page is submitted. The example contains three files as summarized here:
 |File|Description|
 |----|---------|
 |AddCookie.html|Allows a user to specify a value for the cookie named MyCookie.|
@@ -644,60 +640,57 @@ Compile the servlet and perform the same steps as described in the previous sect
 The HTML source code for **AddCookie.html** is shown in the following  
 
 listing. This page contains a text field in which a value can be entered. There is also a submit button on the page. When this button is pressed, the value in the text field is sent to **AddCookieServlet** via an HTTP POST request.
-```js
+```
 <html>
 <body>
 <center>
-<form name="Form1"
-   method="post"
-   action="http://localhost:8080/examples/servlets/servlet/AddCookieServlet">
-<B>Enter a value for MyCookie: </B>
-<input type=textbox name="data" size=25 value="">
-<input type=submit value="Submit">
+<form name="Form1" method="post"
+   action="http://localhost:8080/examples/servlets/servlet/AddCookieServlet"> 
+   <B>Enter a value for MyCookie: </B>
+   <input type=textbox name="data" size=25 value="">
+   <input type=submit value="Submit">
 </form>
 </body>
 </html>
 ```
 The source code for **AddCookieServlet.java** is shown in the following listing. It gets the value of the parameter named "data". It then creates a **Cookie** object that has the name "MyCookie" and contains the value of the "data" parameter. The cookie is then added to the header of the HTTP response via the **addCookie()** method. A feedback message is then written to the browser.  
-```js
+```
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class AddCookieServlet extends HttpServlet {
+public class AddCookieServlet extends HttpServlet 
+{
+   public void doPost (HttpServletRequest request,HttpServletResponse response) 
+   throws ServletException, IOException 
+   {
+      // Get parameter from HTTP request. String data = request.getParameter ("data");
+      // Create cookie.
+      Cookie cookie = new Cookie ("MyCookie", data);
 
-   public void doPost (HttpServletRequest request,    
-      HttpServletResponse response) 
-   throws ServletException, IOException {
-   // Get parameter from HTTP request. String data = request.getParameter ("data");
-
-   // Create cookie.
-   Cookie cookie = new Cookie ("MyCookie", data);
-
-   // Add cookie to HTTP response. 
-   response.addCookie (cookie);
-
-   // Write output to browser. 
-   response.setContentType ("text/html"); 
-   PrintWriter pw = response.getWriter(); 
-   pw.println("<B>MyCookie has been set to"); 
-   pw.println(data); 
-   pw.close();
- }
+      // Add cookie to HTTP response. 
+      response.addCookie (cookie);
+      
+      // Write output to browser. 
+      response.setContentType ("text/html"); 
+      PrintWriter pw = response.getWriter(); 
+      pw.println("<B>MyCookie has been set to"); 
+      pw.println(data); 
+      pw.close();
+   }
 }
 ```
 The source code for **GetCookiesServlet.java** is shown in the following listing. It invokes the **getCookies()** method to read any cookies that are included in the HTTP GET request. The names and values of these cookies are then written to the HTTP response. Observe that the **getName()** and **getValue()** methods are called to obtain this information.  
-```js
+```
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class GetCookiesServlet extends HttpServlet {
-
-   public void doGet (HttpServletRequest request,   
-      HttpServletResponse response) 
-   throws ServletException, IOException {
-
+public class GetCookiesServlet extends HttpServlet 
+{
+   public void doGet(HttpServletRequest request,HttpServletResponse response) 
+   throws ServletException, IOException 
+   {
       // Get cookies from header of HTTP request. 
       Cookie[] cookies = request.getCookies ();
 
@@ -705,11 +698,12 @@ public class GetCookiesServlet extends HttpServlet {
       response.setContentType ("text/html"); 
       PrintWriter pw = response.getWriter(); 
       pw.println("<B>");
-      for (int i = 0; i < cookies.length; i++) { 
+      
+      for (int i = 0; i < cookies.length; i++) 
+      { 
          String name = cookies [i].getName(); 
          String value = cookies [i].getValue(); 
-         pw.println("name = " + name +
-            "; value = " + value);
+         pw.println("name = " + name +" value = " + value);
       }
       pw.close();
    }
@@ -717,54 +711,57 @@ public class GetCookiesServlet extends HttpServlet {
 ```
 Compile the servlets. Next, copy them to the appropriate directory, and update the **web.xml** file, as previously described. Then, perform these steps to test this example:
 
-1\. Start Tomcat, if it is not already running. 2. Display **AddCookie.html** in a browser. 3. Enter a value for **MyCookie**. 4. Submit the web page.
+1. Start Tomcat, if it is not already running. 
+2. Display **AddCookie.html** in a browser. 
+3. Enter a value for **MyCookie**. 
+4. Submit the web page.
 
 After completing these steps, you will observe that a feedback message is displayed by the browser.
 
 Next, request the following URL via the browser:  
 
+```
 http://localhost:8080/examples/servlets/servlet/GetCookiesServlet
+```
+Observe that the name and value of the cookie are displayed in the browser. 
+In this example, an expiration date is not explicitly assigned to the cookie via the **setMaxAge()** method of **Cookie**. Therefore, the cookie expires when the browser session ends. You can experiment by using **setMaxAge()** and observe that the cookie is then saved on the client machine.
 
-Observe that the name and value of the cookie are displayed in the browser. In this example, an expiration date is not explicitly assigned to the cookie
-
-via the **setMaxAge()** method of **Cookie**. Therefore, the cookie expires when the browser session ends. You can experiment by using **setMaxAge()** and observe that the cookie is then saved on the client machine.
-
-**Session** Tracking HTTP is a stateless protocol. Each request is independent of the previous one. However, in some applications, it is necessary to save state information so that information can be collected from several interactions between a browser and a server. Sessions provide such a mechanism.
+## Session Tracking 
+HTTP is a stateless protocol. Each request is independent of the previous one. However, in some applications, it is necessary to save state information so that information can be collected from several interactions between a browser and a server. Sessions provide such a mechanism.
 
 A session can be created via the **getSession()** method of **HttpServletRequest**. An **HttpSession** object is returned. This object can store a set of bindings that associate names with objects. The **setAttribute()**, **getAttribute()**, **getAttributeNames()**, and **removeAttribute()** methods of **HttpSession** manage these bindings. Session state is shared by all servlets that are associated with a client.
 
 The following servlet illustrates how to use session state. The **getSession()** method gets the current session. A new session is created if one does not already exist. The **getAttribute()** method is called to obtain the object that is bound to the name "date". That object is a **Date** object that encapsulates the date and time when this page was last accessed. (Of course, there is no such binding when the page is first accessed.) A **Date** object encapsulating the current date and time is then created. The **setAttribute()** method is called to bind the name "date" to this object.  
-```js
+```
 import java.io.*; 
 import java.util.*;
 import javax.servlet.;
 import javax.servlet.http.*;
 
-public class DateServlet extends HttpServlet {
+public class DateServlet extends HttpServlet 
+{
+   public void doGet (HttpServletRequest request,HttpServletResponse response) 
+   throws ServletException, IOException 
+   {
+      // Get the HttpSession object. 
+      HttpSession hs = request.getSession (true);
 
-public void doGet (HttpServletRequest request, 
-   HttpServletResponse response) 
-throws ServletException, IOException {
+      // Get writer.
+      response.setContentType ("text/html"); 
+      PrintWriter pw response.getWriter(); 
+      pw.print ("<B>");
 
-   // Get the HttpSession object. 
-   HttpSession hs = request.getSession (true);
-
-   // Get writer.
-   response.setContentType ("text/html"); 
-   PrintWriter pw response.getWriter(); 
-   pw.print ("<B>");
-
-   // Display date/time of last access. 
-   Date date (Date) hs.getAttribute("date"); 
-   if (date = null) {
-      pw.print ("Last access:+ date + "<br>");
+      // Display date/time of last access. 
+      Date date (Date) hs.getAttribute("date"); 
+      if(date = null) {
+         pw.print ("Last access:+ date + "<br>");
    }
    
    // Display current date/time.
-   date new Date(); 
+   date = new Date(); 
    hs.setAttribute("date", date); 
    pw.println("Current date: " + date);
- }
+   }
 }
 ```
 When you first request this servlet, the browser displays one line with the current date and time information. On subsequent invocations, two lines are displayed. The first line shows the date and time when the servlet was last accessed. The second line shows the current date and time.

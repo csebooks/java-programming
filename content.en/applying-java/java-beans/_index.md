@@ -2,7 +2,7 @@
 title: 'Java Beans'
 weight: 1
 ---
-#Java Beans
+# Java Beans
 
 This chapter provides an overview of creating Java Beans. Beans are important because they allow you to build complex systems from software components. These components may be provided by you or supplied by one or more different vendors. Java Beans use an architecture called JavaBeans that specifies how these building blocks can operate together.
 
@@ -12,13 +12,11 @@ The software industry also sought the benefits of reusability and interoperabili
 
 ## What Is a Java Bean?
 
-A _Java Bean_ is a software component that has been designed to be reusable in a variety of different environments. There is no restriction on the capability of a Bean. It may perform a simple function, such as obtaining an inventory value, or a complex function, such as forecasting the performance of a stock portfolio. A Bean may be visible to an end user. One example of this is a button on a graphical user interface. A Bean may also be invisible to a user. Software to decode a stream of multimedia information in real time is an example of this type of building block. Finally, a Bean may be designed to work autonomously  
-
-on a user’s workstation or to work in cooperation with a set of other distributed components. Software to generate a pie chart from a set of data points is an example of a Bean that can execute locally. However, a Bean that provides real- time price information from a stock or commodities exchange would need to work in cooperation with other distributed software to obtain its data.
+A _Java Bean_ is a software component that has been designed to be reusable in a variety of different environments. There is no restriction on the capability of a Bean. It may perform a simple function, such as obtaining an inventory value, or a complex function, such as forecasting the performance of a stock portfolio. A Bean may be visible to an end user. One example of this is a button on a graphical user interface. A Bean may also be invisible to a user. Software to decode a stream of multimedia information in real time is an example of this type of building block. Finally, a Bean may be designed to work autonomously on a user’s workstation or to work in cooperation with a set of other distributed components. Software to generate a pie chart from a set of data points is an example of a Bean that can execute locally. However, a Bean that provides real- time price information from a stock or commodities exchange would need to work in cooperation with other distributed software to obtain its data.
 
 ## Advantages of Beans
 
- The following list enumerates some of the benefits that JavaBeans technology provides for a component developer:
+The following list enumerates some of the benefits that JavaBeans technology provides for a component developer:
 
 - A Bean obtains all the benefits of Java’s “write-once, run-anywhere” paradigm.
 
@@ -38,72 +36,91 @@ There are two ways in which the developer of a Bean can indicate which of its pr
 
 ### Design Patterns for Properties
 
- A property is a subset of a Bean’s state. The values assigned to the properties determine the behavior and appearance of that component. A property is set through a setter method. A property is obtained by a getter method. There are two types of properties: simple and indexed.
+A property is a subset of a Bean’s state. The values assigned to the properties determine the behavior and appearance of that component. A property is set through a setter method. A property is obtained by a getter method. There are two types of properties: simple and indexed.
 
 **Simple Properties**
 
- A simple property has a single value. It can be identified by the following design patterns, where **N** is the name of the property and **T** is its type:
-
+A simple property has a single value. It can be identified by the following design patterns, where **N** is the name of the property and **T** is its type:
+```
 public T getN() 
 public void setN(T arg)
-
+```
 A read/write property has both of these methods to access its values. A read- only property has only a get method. A write-only property has only a set method.
 
 Here are three read/write simple properties along with their getter and setter methods:  
 ```
 private double depth, height, width;
 
-public double get Depth() { 
-    return depth;
+public double get Depth() 
+{ 
+  return depth;
 } 
-public void setDepth (double d) {
-    depth = d; 
+public void setDepth (double d) 
+{
+  depth = d; 
 }
-public double getHeight() {
-    return height;
+public double getHeight() 
+{
+  return height;
 } 
-public void setHeight (double h) { 
-    height = h;
+public void setHeight (double h)
+{ 
+  height = h;
 }
-public double getWidth() { 
-    return width;
+public double getWidth() 
+{ 
+  return width;
 } 
-public void setWidth (double w) { 
-    width = W;
+public void setWidth (double w) 
+{ 
+  width = W;
 }
 ```
-**NOTE** For a **boolean** property, a method of the form **is**PropertyName() can also be used as an accessor.
+**NOTE** 
+For a **boolean** property, a method of the form **is**PropertyName() can also be used as an accessor.
 
 **Indexed Properties**
 
  An indexed property consists of multiple values. It can be identified by the following design patterns, where **N** is the name of the property and **T** is its type:
-
-public T getN(int index); public void setN(int index, T value); public T[ ] getN(); public void setN(T values[ ]);
-
+```
+public T getN(int index); 
+public void setN(int index, T value); 
+public T[ ] getN(); 
+public void setN(T values[ ]);
+```
 Here is an indexed property called **data** along with its getter and setter methods:  
 ```
 private double data[ ];
 
-public double get Data (int index) { 
+public double getData (int index) 
+{ 
     return data [index];
 } 
-public void setData (int index, double value) { 
+public void setData (int index, double value) 
+{ 
     data [index] = value; 
 } 
-public double[] getData() {
+public double[] getData() 
+{
     return data;
 } 
-public void setData (double[] values) { 
+public void setData (double[] values) 
+{ 
     data = new double [values.length]; 
     System.arraycopy (values, 0, data, 0, values.length); 
 }
 ```
 ### Design Patterns for Events
 
- Beans use the delegation event model that was discussed earlier in this book. Beans can generate events and send them to other objects. These can be identified by the following design patterns, where **T** is the type of the event:
-
+Beans use the delegation event model that was discussed earlier in this book. Beans can generate events and send them to other objects. These can be identified by the following design patterns, where **T** is the type of the event:
+```
+public void addTListener(TListener eventListener)
+public void addTListener(TListener eventListener)
+                throws java.util.TooManyListenersException
+public void removeTListener(TListener eventListener)
+```
 These methods are used to add or remove a listener for the specified event. The version of **addTListener()** that does not throw an exception can be used to multicast an event, which means that more than one listener can register for the event notification. The version that throws **TooManyListenersException** unicasts the event, which means that the number of listeners can be restricted to one. In either case, **removeTListener()** is used to remove the listener. For example, assuming an event interface type called **TemperatureListener**, a Bean that monitors temperature might supply the following methods:
-
+```
 public void addTemperatureListener(TemperatureListener tl) {
 
 ...
@@ -115,17 +132,17 @@ public void removeTemperatureListener(TemperatureListener tl) {
 ...
 
 }
-
+```
 ### Methods and Design Patterns
 
- Design patterns are not used for naming nonproperty methods. The introspection mechanism finds all of the public methods of a Bean. Protected and private methods are not presented.
+Design patterns are not used for naming nonproperty methods. The introspection mechanism finds all of the public methods of a Bean. Protected and private methods are not presented.
 
 ### Using the BeanInfo Interface
 
- As the preceding discussion shows, design patterns implicitly determine what information is available to the user of a Bean. The **BeanInfo** interface enables you to explicitly control what information is available. The **BeanInfo** interface defines several methods, including these:
-
+As the preceding discussion shows, design patterns implicitly determine what information is available to the user of a Bean. The **BeanInfo** interface enables you to explicitly control what information is available. The **BeanInfo** interface defines several methods, including these:
+```
 PropertyDescriptor[ ] getPropertyDescriptors() EventSetDescriptor[ ] getEventSetDescriptors() MethodDescriptor[ ] getMethodDescriptors()
-
+```
 They return arrays of objects that provide information about the properties, events, and methods of a Bean. The classes **PropertyDescriptor**, **EventSetDescriptor**, and **MethodDescriptor** are defined within the **java.beans** package, and they describe the indicated elements. By implementing these methods, a developer can designate exactly what is presented to a user, bypassing introspection based on design patterns.
 
 When creating a class that implements **BeanInfo**, you must call that class bnameBeanInfo, where bname is the name of the Bean. For example, if the Bean is called **MyBean**, then the information class must be called **MyBeanBeanInfo**.
@@ -134,13 +151,13 @@ To simplify the use of **BeanInfo**, JavaBeans supplies the **SimpleBeanInfo** c
 
 ## Bound and Constrained Properties
 
- A Bean that has a bound property generates an event when the property is changed. The event is of type **PropertyChangeEvent** and is sent to objects that previously registered an interest in receiving such notifications. A class that handles this event must implement the **PropertyChangeListener** interface.
+A Bean that has a bound property generates an event when the property is changed. The event is of type **PropertyChangeEvent** and is sent to objects that previously registered an interest in receiving such notifications. A class that handles this event must implement the **PropertyChangeListener** interface.
 
 A Bean that has a constrained property generates an event when an attempt is made to change its value. It also generates an event of type **PropertyChangeEvent**. It too is sent to objects that previously registered an interest in receiving such notifications. However, those other objects have the ability to veto the proposed change by throwing a **PropertyVetoException**. This capability allows a Bean to operate differently according to its run-time environment. A class that handles this event must implement the **VetoableChangeListener** interface.
 
 ## Persistence
 
- Persistence is the ability to save the current state of a Bean, including the values of a Bean’s properties and instance variables, to nonvolatile storage and to retrieve them at a later time. The object serialization capabilities provided by the Java class libraries are used to provide persistence for Beans.
+Persistence is the ability to save the current state of a Bean, including the values of a Bean’s properties and instance variables, to nonvolatile storage and to retrieve them at a later time. The object serialization capabilities provided by the Java class libraries are used to provide persistence for Beans.
 
 The easiest way to serialize a Bean is to have it implement the **java.io.Serializable** interface, which is simply a marker interface. Implementing **java.io.Serializable** makes serialization automatic. Your Bean need take no other action. Automatic serialization can also be inherited. Therefore, if any superclass of a Bean implements **java.io.Serializable**, then automatic serialization is obtained.
 
@@ -204,16 +221,14 @@ A Bean developer can provide a customizer that helps another developer configure
 
 **Table 34-2** The Classes in **java.beans**
 
-Although it is beyond the scope of this chapter to discuss all of the classes, four are of particular interest: **Introspector**, **PropertyDescriptor**,  
-
-**EventSetDescriptor**, and **MethodDescriptor**. Each is briefly examined here.
+Although it is beyond the scope of this chapter to discuss all of the classes, four are of particular interest: **Introspector**, **PropertyDescriptor**,**EventSetDescriptor**, and **MethodDescriptor**. Each is briefly examined here.
 
 ### Introspector
 
  The **Introspector** class provides several static methods that support introspection. Of most interest is **getBeanInfo()**. This method returns a **BeanInfo** object that can be used to obtain information about the Bean. The **getBeanInfo()** method has several forms, including the one shown here:
-
+```
 static BeanInfo getBeanInfo(Class<?> bean) throws IntrospectionException
-
+```
 The returned object contains information about the Bean specified by _bean._
 
 ### PropertyDescriptor
@@ -235,77 +250,92 @@ An object of type **Method** that describes the method is returned.
 ### A Bean Example
 
  This chapter concludes with an example that illustrates various aspects of Bean programming, including introspection and using a **BeanInfo** class. It also makes use of the **Introspector**, **PropertyDescriptor**, and **EventSetDescriptor** classes. The example uses three classes. The first is a Bean called **Colors**, shown here:  
-```js
+```
  // A simple Bean.
 import java.awt.*;
 import java.awt.event.*;
 import java.io.Serializable;
 
-public class Colors extends Canvas implements Serializable { 
-    transient private Color color; // not persistent 
-    private boolean rectangular; // is persistent
-public Colors () {
-  addMouseListener(new MouseAdapter() { 
-    public void mouse Pressed (MouseEvent me) { 
+public class Colors extends Canvas implements Serializable 
+{ 
+  transient private Color color; // not persistent 
+  private boolean rectangular; // is persistent
+  public Colors () 
+  {
+    addMouseListener(new MouseAdapter() 
+    {
+      public void mouse Pressed (MouseEvent me) 
+      {
         change ();
-    } 
-  });
+      } 
+    }
+    );
   rectangular = false; 
   setSize (200, 100);
   change();
-}
-public boolean getRectangular () { 
+  }
+  public boolean getRectangular () 
+  { 
     return rectangular; 
-}
-public void setRectangular (boolean flag) { 
-    this.rectangular flag;
+  }
+  public void setRectangular (boolean flag) 
+  { 
+    this.rectangular = flag;
     repaint ();
-}
-public void change() { 
+  }
+  public void change() 
+  { 
     color = randomColor();
     repaint();
-}
-private Color randomColor() {
-  int r = (int) (255* Math.random()); 
-  int g = (int) (255* Math.random());
-  int b = (int) (255*Math.random()); 
-  return new Color (r, g, b);
-}
-public void paint (Graphics g) {
-  Dimension d = getSize();
-  int h = d.height;
-  int w = d.width;
-  g.setcolor(color);
-  if(rectangular)  {
-    g.fillRect(0, 0, w-1, h-1);
   }
-  else {
-    g.fillOval(0, 0, w-1, h-1);
+  private Color randomColor() 
+  {
+    int r = (int) (255* Math.random()); 
+    int g = (int) (255* Math.random());
+    int b = (int) (255*Math.random()); 
+    return new Color (r, g, b);
   }
- }
+  public void paint (Graphics g) 
+  {
+    Dimension d = getSize();
+    int h = d.height;
+    int w = d.width;
+    g.setcolor(color);
+    if(rectangular)  
+    {
+      g.fillRect(0, 0, w-1, h-1);
+    }
+    else 
+    {
+      g.fillOval(0, 0, w-1, h-1);
+    }
+  }
 }
 ```
-
 The **Colors** Bean displays a colored object within a frame. The color of the component is determined by the private **Color** variable **color**, and its shape is determined by the private **boolean** variable **rectangular**. The constructor defines an anonymous inner class that extends **MouseAdapter** and overrides its **mousePressed()** method. The **change()** method is invoked in response to mouse presses. It selects a random color and then repaints the component. The **getRectangular()** and **setRectangular()** methods provide access to the one property of this Bean. The **change()** method calls **randomColor()** to choose a color and then calls **repaint()** to make the change visible. Notice that the **paint()** method uses the **rectangular** and **color** variables to determine how to present the Bean.
 
 The next class is **ColorsBeanInfo**. It is a subclass of **SimpleBeanInfo** that provides explicit information about **Colors**. It overrides **getPropertyDescriptors()** in order to designate which properties are presented to a Bean user. In this case, the only property exposed is **rectangular**. The method creates and returns a **PropertyDescriptor** object for the **rectangular** property. The **PropertyDescriptor** constructor that is used is shown here:
-
+```
 PropertyDescriptor(String property, Class<?> beanCls) throws IntrospectionException
-
+```
 Here, the first argument is the name of the property, and the second argument is the class of the Bean.  
 
-```js
+```
 // A Bean information class. 
 import java.beans.*;
-public class Colors BeanInfo extendsSimpleBeanInfo { 
-  public PropertyDescriptor [] get  PropertyDescriptors () { 
-    try {
+public class ColorsBeanInfo extends SimpleBeanInfo 
+{ 
+  public PropertyDescriptor [] get PropertyDescriptors () 
+  { 
+    try 
+    {
       PropertyDescriptor rectangular = new 
          PropertyDescriptor ("rectangular", Colors.class); 
       PropertyDescriptor pd[] = { rectangular}; 
       return pd; 
     } 
-    catch (Exception e) { 
+    catch (Exception e) 
+    { 
       System.out.println("Exception caught. " + e);
     }
     return null;
@@ -315,41 +345,45 @@ public class Colors BeanInfo extendsSimpleBeanInfo {
 
 The final class is called **IntrospectorDemo**. It uses introspection to display the properties and events that are available within the **Colors** Bean.  
 
-```js
+```
 // Show properties and events.
 import java.awt.*;
 import java.beans.*;
 
-public class IntrospectorDemo {
-    public static void main(string args[]) {
-        try {
-            class<?> c = Class.forName("Coloer");
-            BeanInfo beanInfo = Introspector.getBeanInfo (c);
-
-            system.out.println("Properties:");
-            propertyDescriptor propertyDescriptor[] =
-              beanInfo.getPropertyDescriptor();
-            for(int i = 0; i < PropertyDescriptor.length; i++) {
-                system.out.println("\t" + propertyDesriptor[i].getName());
-        }
-        system.out.println("Event:");
-        EventSetDescriptor eventsetDescriptor[] =
+public class IntrospectorDemo 
+{
+  public static void main(string args[]) 
+  {
+    try 
+    {
+      class<?> c = Class.forName("Colors");
+      BeanInfo beanInfo = Introspector.getBeanInfo (c);
+      
+      System.out.println("Properties:");
+      PropertyDescriptor propertyDescriptor[] = beanInfo.getPropertyDescriptor();
+      for(int i = 0; i < PropertyDescriptor.length; i++) 
+      {
+        system.out.println("\t" + propertyDesriptor[i].getName());
+      }
+      system.out.println("Event:");
+      EventSetDescriptor eventsetDescriptor[] =
           beanInfo.getEventsetDescriptors();
-        for(int i = 0; i < eventsetDescriptor.length;
-        i++) {
-            system.out.println("\t" + eventsetDescriptor[i].getName());
-        }
+      for(int i = 0; i < eventsetDescriptor.length;i++) 
+      {
+        system.out.println("\t" + eventsetDescriptor[i].getName());
+      }
     }
-    catch(Exception e) {
-        system.out.println("Exception caught. " + e);
+    catch(Exception e) 
+    {
+        System.out.println("Exception caught. " + e);
     }
-}
+  }
 }
 
 ```
 
 The output from this program is the following:
-```js
+```
 Properties:
         rectangular
 Events:

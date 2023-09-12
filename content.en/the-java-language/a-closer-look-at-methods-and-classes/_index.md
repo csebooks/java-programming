@@ -1355,7 +1355,7 @@ This program illustrates both ways that a varargs method can be overloaded. Firs
 
 The second way to overload a varargs method is to add one or more normal parameters. This is what was done with **vaTest(String, int ...)**. In this case, Java uses both the number of arguments and the type of the arguments to determine which method to call.
 
-## NOTE
+**NOTE**
 
  A varargs method can also be overloaded by a non-varargs method. For example, **vaTest(int x)** is a valid overload of **vaTest()** in the foregoing program. This version is invoked only when one **int** argument is present. When two or more **int** arguments are passed, the varargs version **vaTest (int…v)** is used.
 
