@@ -64,7 +64,8 @@ More generally, the concept of polymorphism is often expressed by the phrase “
 
 Extending the dog analogy, a dog’s sense of smell is polymorphic. If the dog smells a cat, it will bark and run after it. If the dog smells its food, it will salivate and run to its bowl. The same sense of smell is at work in both situations. The difference is what is being smelled, that is, the type of data being operated upon by the dog’s nose! This same general concept can be implemented in Java as it applies to methods within a Java program.
 
-**Polymorphism, Encapsulation, and Inheritance Work Together** When properly applied, polymorphism, encapsulation, and inheritance combine to produce a programming environment that supports the development of far more robust and scaleable programs than does the process-oriented model. A well-designed hierarchy of classes is the basis for reusing the code in which you have invested time and effort developing and testing. Encapsulation allows you to migrate your implementations over time without breaking the code that depends on the public interface of your classes. Polymorphism allows you to create clean, sensible, readable, and resilient code.
+**Polymorphism, Encapsulation, and Inheritance Work Together**  
+When properly applied, polymorphism, encapsulation, and inheritance combine to produce a programming environment that supports the development of far more robust and scaleable programs than does the process-oriented model. A well-designed hierarchy of classes is the basis for reusing the code in which you have invested time and effort developing and testing. Encapsulation allows you to migrate your implementations over time without breaking the code that depends on the public interface of your classes. Polymorphism allows you to create clean, sensible, readable, and resilient code.
 
 Of the two real-world examples, the automobile more completely illustrates the power of object-oriented design. Dogs are fun to think about from an inheritance standpoint, but cars are more like programs. All drivers rely on inheritance to drive different types (subclasses) of vehicles. Whether the  
 
@@ -80,7 +81,7 @@ As mentioned at the start of this section, every Java program is object- oriente
 
 ## A First Simple Program
 
- Now that the basic object-oriented underpinning of Java has been discussed, let’s look at some actual Java programs. Let’s start by compiling and running the short sample program shown here. As you will see, this involves a little more work than you might imagine.  
+Now that the basic object-oriented underpinning of Java has been discussed, let’s look at some actual Java programs. Let’s start by compiling and running the short sample program shown here. As you will see, this involves a little more work than you might imagine.  
 ```
 /*
 This is a simple Java program.
@@ -97,11 +98,11 @@ class Example
 ```
 **NOTE**
 
- The descriptions that follow use the standard Java SE Development Kit (JDK), which is available from Oracle. (Open source versions are also available.) If you are using an integrated development environment (IDE), then you will need to follow a different procedure for compiling and executing Java programs. In this case, consult your IDE’s documentation for details.
+The descriptions that follow use the standard Java SE Development Kit (JDK), which is available from Oracle. (Open source versions are also available.) If you are using an integrated development environment (IDE), then you will need to follow a different procedure for compiling and executing Java programs. In this case, consult your IDE’s documentation for details.
 
 ### Entering the Program
 
- For most computer languages, the name of the file that holds the source code to a program is immaterial. However, this is not the case with Java. The first thing that you must learn about Java is that the name you give to a source file is very important. For this example, the name of the source file should be **Example.java**. Let’s see why.
+For most computer languages, the name of the file that holds the source code to a program is immaterial. However, this is not the case with Java. The first thing that you must learn about Java is that the name you give to a source file is very important. For this example, the name of the source file should be **Example.java**. Let’s see why.
 
 In Java, a source file is officially called a _compilation unit_. It is a text file that contains (among other things) one or more class definitions. (For now, we will be using source files that contain only one class.) The Java compiler requires that a source file use the **.java** filename extension.
 
@@ -110,44 +111,45 @@ As you can see by looking at the program, the name of the class defined by the p
 ### Compiling the Program
 
 To compile the **Example** program, execute the compiler, **javac**, specifying the name of the source file on the command line, as shown here:
-
+```
 C:\\>javac Example.java
-
+```
 The **javac** compiler creates a file called **Example.class** that contains the bytecode version of the program. As discussed earlier, the Java bytecode is the intermediate representation of your program that contains instructions the Java Virtual Machine will execute. Thus, the output of **javac** is not code that can be directly executed.
 
 To actually run the program, you must use the Java application launcher called **java**. To do so, pass the class name **Example** as a command-line argument, as shown here:
-
+```
 C:\\>java Example
-
+```
 When the program is run, the following output is displayed:
-
+```
 This is a simple Java program.
-
+```
 When Java source code is compiled, each individual class is put into its own output file named after the class and using the **.class** extension. This is why it is a good idea to give your Java source files the same name as the class they contain—the name of the source file will match the name of the **.class** file. When you execute **java** as just shown, you are actually specifying the name of the class that you want to execute. It will automatically search for a file by that name that has the **.class** extension. If it finds the file, it will execute the code contained in the specified class.
 
 **NOTE**
 
- Beginning with JDK 11, Java provides a way to run some types of simple programs directly from a source file, without explicitly invoking **javac**. This technique, which can be useful in some situations, is described in Appendix C. For the purposes of this book, it is assumed that you are using the normal compilation process just described.
+Beginning with JDK 11, Java provides a way to run some types of simple programs directly from a source file, without explicitly invoking **javac**. This technique, which can be useful in some situations, is described in Appendix C. For the purposes of this book, it is assumed that you are using the normal compilation process just described.
 
-## A Closer Look at the First Sample Program
+### A Closer Look at the First Sample Program
 
- Although **Example.java** is quite short, it includes several key features that are common to all Java programs. Let’s closely examine each part of the program.
+Although **Example.java** is quite short, it includes several key features that are common to all Java programs. Let’s closely examine each part of the program.
 
 The program begins with the following lines:  
+```
 /*
 This Is Simple Java Program.
 Call this file "Example.java"
 */
-
+```
 This is a comment. Like most other programming languages, Java lets you enter a remark into a program’s source file. The contents of a comment are ignored by the compiler. Instead, a comment describes or explains the operation of the program to anyone who is reading its source code. In this case, the comment describes the program and reminds you that the source file should be called **Example.java**. Of course, in real applications, comments generally explain how some part of the program works or what a specific feature does.
 
 Java supports three styles of comments. The one shown at the top of the program is called a _multiline comment_. This type of comment must begin with /* and end with */. Anything between these two comment symbols is ignored by the compiler. As the name suggests, a multiline comment may be several lines long.
 
 The next line of code in the program is shown here:
-
+```
 class Example {
-
-This line uses the keyword **class** to declare that a new class is being defined. **Example** is an identifier that is the name of the class. The entire class definition, including all of its members, will be between the opening curly brace ({) and the closing curly brace (}). For the moment, don’t worry too much about the details of a class except to note that in Java, all program activity occurs within one. This is one reason why all Java programs are (at least a little bit) object-oriented.
+```
+This line uses the keyword **class** to declare that a new class is being defined. **Example** is an identifier that is the name of the class. The entire class definition, including all of its members, will be between the opening curly brace ({) and the closing curly brace **(})**. For the moment, don’t worry too much about the details of a class except to note that in Java, all program activity occurs within one. This is one reason why all Java programs are (at least a little bit) object-oriented.
 
 The next line in the program is the _single-line comment_, shown here:
 ```
@@ -189,12 +191,13 @@ The first } in the program ends **main()**, and the last } ends the **Example** 
 
 ## A Second Short Program
 
- Perhaps no other concept is more fundamental to a programming language than that of a variable. As you may know, a variable is a named memory location that may be assigned a value by your program. The value of a variable may be changed during the execution of the program. The next program shows how a variable is declared and how it is assigned a value. The program also illustrates some new aspects of console output. As the comments at the top of the program  
+Perhaps no other concept is more fundamental to a programming language than that of a variable. As you may know, a variable is a named memory location that may be assigned a value by your program. The value of a variable may be changed during the execution of the program. The next program shows how a variable is declared and how it is assigned a value. The program also illustrates some new aspects of console output. As the comments at the top of the program  
 
 state, you should call this file **Example2.java**.
 ```
 /*
-Here is another short example. Call this file "Example2.java".
+Here is another short example. 
+Call this file "Example2.java".
 */
 class Example2 
 { 
@@ -216,9 +219,9 @@ This is num: 100
 The value of num * 2 is 200
 ```
 Let’s take a close look at why this output is generated. The first new line in the program is shown here:
-
+```
 int num; // this declares a variable called num
-
+```
 This line declares an integer variable called **num**. Java (like most other languages) requires that variables be declared before they are used.
 
 Following is the general form of a variable declaration:
@@ -228,15 +231,15 @@ _type var-name;_
 Here, type specifies the type of variable being declared, and _var-name_ is the name of the variable. If you want to declare more than one variable of the specified type, you may use a comma-separated list of variable names. Java defines several data types, including integer, character, and floating-point. The keyword **int** specifies an integer type.
 
 In the program, the line
-
+```
 num = 100; // this assigns num the value 100
-
+```
 assigns to **num** the value 100. In Java, the assignment operator is a single equal sign.
 
 The next line of code outputs the value of **num** preceded by the string "This is num:".
-
+```
 System.out.println("This is num: " + num);
-
+```
 In this statement, the plus sign causes the value of **num** to be appended to the string that precedes it, and then the resulting string is output. (Actually, **num** is first converted from an integer into its string equivalent and then concatenated with the string that precedes it. This process is described in detail later in this book.) This approach can be generalized. Using the + operator, you can join together as many items as you want within a single **println()** statement.
 
 The next line of code assigns **num** the value of **num** times 2. Like most other languages, Java uses the * operator to indicate multiplication. After this line executes, **num** will contain the value 200.
@@ -251,16 +254,15 @@ Several new things are occurring here. First, the built-in method **print()** is
 
 ## Two Control Statements
 
- Although Chapter 5 will look closely at control statements, two are briefly introduced here so that they can be used in example programs in Chapters 3 and  
-
-4. They will also help illustrate an important aspect of Java: blocks of code.
+Although Chapter 5 will look closely at control statements, two are briefly introduced here so that they can be used in example programs in Chapters 3 and 4. They will also help illustrate an important aspect of Java: blocks of code.
 
 ### The if Statement
 
- The Java **if** statement works much like the IF statement in any other language. It determines the flow of execution based on whether some condition is true or false. Its simplest form is shown here:
-
-if_(condition) statement;_
-
+The Java **if** statement works much like the IF statement in any other language. It determines the flow of execution based on whether some condition is true or false. Its simplest form is shown here:
+```
+if(condition) 
+    statement;
+```
 Here, condition is a Boolean expression. (A Boolean expression is one that evaluates to either true or false.) If condition is true, then the statement is executed. If condition is false, then the statement is bypassed. Here is an example:
 ```
 if(num < 100) 
@@ -276,19 +278,22 @@ Notice that the test for equality is the double equal sign. Here is a program th
 Demonstrate the if.
 Call this file "IfSample.java".
 */
-class IfSample 
 {
+class IfSample 
     public static void main(String args[]) 
     {
         int x, y;
         X = 10;
         y = 20;
+        
         if (x < y) 
         System.out.println("x is less than y");
         X = x * 2;
+        
         if (x == y) 
         System.out.println("x now equal to y"); 
         X = X * 2;
+        
         if (x > y) 
         System.out.println("x now greater than y");
         
@@ -315,9 +320,10 @@ declares two variables, **x** and **y**, by use of a comma-separated list.
 
 ### The for Loop
 
- Loop statements are an important part of nearly any programming language because they provide a way to repeatedly execute some task. As you will see in Chapter 5, Java supplies a powerful assortment of loop constructs. Perhaps the most versatile is the **for** loop. The simplest form of the **for** loop is shown here:
+Loop statements are an important part of nearly any programming language because they provide a way to repeatedly execute some task. As you will see in Chapter 5, Java supplies a powerful assortment of loop constructs. Perhaps the most versatile is the **for** loop. The simplest form of the **for** loop is shown here:
 ```
-for (initialization; condition; iteration) statement;
+for (initialization; condition; iteration) 
+    statement;
 ```
 
 In its most common form, the initialization portion of the loop sets a loop control variable to an initial value. The condition is a Boolean expression that tests the loop control variable. If the outcome of that test is true, statement executes and the **for** loop continues to iterate. If it is false, the loop terminates. The iteration expression determines how the loop control variable is changed each time the loop iterates. Here is a short program that illustrates the **for** loop:
@@ -361,24 +367,24 @@ This is x: 9
 In this example, **x** is the loop control variable. It is initialized to zero in the initialization portion of the **for**. At the start of each iteration (including the first one), the conditional test **x < 10** is performed. If the outcome of this test is true, the **println()** statement is executed, and then the iteration portion of the loop is executed, which increases **x** by 1. This process continues until the conditional test is false.
 
 As a point of interest, in professionally written Java programs you will almost never see the iteration portion of the loop written as shown in the preceding program. That is, you will seldom see statements like this:
-
+```
 x = x + 1;
-
+```
 The reason is that Java includes a special increment operator which performs this operation more efficiently. The increment operator is ++. (That is, two plus signs back to back.) The increment operator increases its operand by one. By use of the increment operator, the preceding statement can be written like this:
-
+```
 x++;
-
+```
 Thus, the **for** in the preceding program will usually be written like this:
-
+```
 for(x = 0; x<10; x++)
-
+```
 You might want to try this. As you will see, the loop still runs exactly the same as it did before.
 
 Java also provides a decrement operator, which is specified as – –. This operator decreases its operand by one.
 
 ## Using Blocks of Code
 
- Java allows two or more statements to be grouped into _blocks of code_, also called _code blocks_. This is done by enclosing the statements between opening and closing curly braces. Once a block of code has been created, it becomes a logical unit that can be used any place that a single statement can. For example, a block can be a target for Java’s **if** and **for** statements. Consider this **if** statement:  
+Java allows two or more statements to be grouped into _blocks of code_, also called _code blocks_. This is done by enclosing the statements between opening and closing curly braces. Once a block of code has been created, it becomes a logical unit that can be used any place that a single statement can. For example, a block can be a target for Java’s **if** and **for** statements. Consider this **if** statement:  
 ```
 if(x<y) //Begin Of The Block
 {
@@ -402,9 +408,9 @@ class BlockTest
         // the target of this loop is a block 
         for (x = 0; x<10; x++) 
         {
-            System.out.println("This is x: + x); 
+            System.out.println("This is x: "+ x); 
             System.out.println("This is y: " + y);
-            y = y 2;
+            y = y - 2;
         }
     }
 }
@@ -457,43 +463,41 @@ As you will see later in this book, blocks of code have additional properties an
 
 ### Lexical Issues
 
- Now that you have seen several short Java programs, it is time to more formally describe the atomic elements of Java. Java programs are a collection of whitespace, identifiers, literals, comments, operators, separators, and keywords. The operators are described in the next chapter. The others are described next.
+Now that you have seen several short Java programs, it is time to more formally describe the atomic elements of Java. Java programs are a collection of whitespace, identifiers, literals, comments, operators, separators, and keywords. The operators are described in the next chapter. The others are described next.
 
 ### Whitespace
 
- Java is a free-form language. This means that you do not need to follow any special indentation rules. For instance, the **Example** program could have been written all on one line or in any other strange way you felt like typing it, as long as there was at least one whitespace character between each token that was not already delineated by an operator or separator. In Java, whitespace includes a space, tab, newline, or form feed.
+Java is a free-form language. This means that you do not need to follow any special indentation rules. For instance, the **Example** program could have been written all on one line or in any other strange way you felt like typing it, as long as there was at least one whitespace character between each token that was not already delineated by an operator or separator. In Java, whitespace includes a space, tab, newline, or form feed.
 
 ### Identifiers
 
- Identifiers are used to name things, such as classes, variables, and methods. An identifier may be any descriptive sequence of uppercase and lowercase letters, numbers, or the underscore and dollar-sign characters. (The dollar-sign character is not intended for general use.) They must not begin with a number,  
-
-lest they be confused with a numeric literal. Again, Java is case-sensitive, so **VALUE** is a different identifier than **Value**. Some examples of valid identifiers are
+Identifiers are used to name things, such as classes, variables, and methods. An identifier may be any descriptive sequence of uppercase and lowercase letters, numbers, or the underscore and dollar-sign characters. (The dollar-sign character is not intended for general use.) They must not begin with a number,lest they be confused with a numeric literal. Again, Java is case-sensitive, so **VALUE** is a different identifier than **Value**. Some examples of valid identifiers are
 ![Alt text](f1.png)
 Invalid identifier names include these:
 ![Alt text](f2.png)
 
 **NOTE**
 
- Beginning with JDK 9, the underscore cannot be used by itself as an identifier.
+Beginning with JDK 9, the underscore cannot be used by itself as an identifier.
 
 ### Literals
 
- A constant value in Java is created by using a literal representation of it. For example, here are some literals:
+A constant value in Java is created by using a literal representation of it. For example, here are some literals:
 ![Alt text](f3.png)
 Left to right, the first literal specifies an integer, the next is a floating-point value, the third is a character constant, and the last is a string. A literal can be used anywhere a value of its type is allowed.
 
 ### Comments
 
- As mentioned, there are three types of comments defined by Java. You have already seen two: single-line and multiline. The third type is called a _documentation comment_. This type of comment is used to produce an HTML file that documents your program. The documentation comment begins with a /** and ends with a */. Documentation comments are explained in Appendix A.
+As mentioned, there are three types of comments defined by Java. You have already seen two: single-line and multiline. The third type is called a _documentation comment_. This type of comment is used to produce an HTML file that documents your program. The documentation comment begins with a /** and ends with a */. Documentation comments are explained in Appendix A.
 
 ### Separators
 
- In Java, there are a few characters that are used as separators. The most commonly used separator in Java is the semicolon. As you have seen, it is often used to terminate statements. The separators are shown in the following table:  
+In Java, there are a few characters that are used as separators. The most commonly used separator in Java is the semicolon. As you have seen, it is often used to terminate statements. The separators are shown in the following table:  
 ![Alt text](t2.png)
 
-## The Java Keywords
+### The Java Keywords
 
- There are 61 keywords currently defined in the Java language (see Table 2-1). These keywords, combined with the syntax of the operators and separators, form the foundation of the Java language. In general, these keywords cannot be used as identifiers, meaning that they cannot be used as names for a variable, class, or method. The exceptions to this rule are the context-sensitive keywords added by JDK 9 to support modules. (See Chapter 16 for details.) Also, beginning with JDK 9, an underscore by itself is considered a keyword in order to prevent its use as the name of something in your program.  
+There are 61 keywords currently defined in the Java language (see Table 2-1). These keywords, combined with the syntax of the operators and separators, form the foundation of the Java language. In general, these keywords cannot be used as identifiers, meaning that they cannot be used as names for a variable, class, or method. The exceptions to this rule are the context-sensitive keywords added by JDK 9 to support modules. (See Chapter 16 for details.) Also, beginning with JDK 9, an underscore by itself is considered a keyword in order to prevent its use as the name of something in your program.  
 ![Alt text](Table2.1.png)
 **Table 2-1** Java Keywords
 

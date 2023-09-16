@@ -117,32 +117,31 @@ InputStreamReader(InputStream inputStream)
 
 Because **System.in** refers to an object of type **InputStream**, it can be used for inputStream. Putting it all together, the following line of code creates a **BufferedReader** that is connected to the keyboard:
 
-BufferedReader br = new BufferedReader(new
-                        InputstreamReader(system.in));
+BufferedReader br = new BufferedReader(new InputstreamReader(system.in));
 
 After this statement executes, **br** is a character-based stream that is linked to the console through **System.in**.
 
 ### Reading Characters
 
  To read a character from a **BufferedReader**, use **read()**. The version of **read()** that we will be using is
-
+```
 int read() throws IOException
-
+```
 Each time that **read()** is called, it reads a character from the input stream and returns it as an integer value. It returns –1 when an attempt is made to read at the end of the stream. As you can see, it can throw an **IOException**.
 
 The following program demonstrates **read()** by reading characters from the console until the user types a "q." Notice that any I/O exceptions that might be generated are simply thrown out of **main()**. Such an approach is common when reading from the console in simple example programs such as those shown in this book, but in more sophisticated applications, you can handle the exceptions explicitly.  
-```js
-
+```
 // Use a BufferedReader to read characters from the console. 
 import java.io.*;
 
-class BRRead {
+class BRRead 
+{
     public static void main(String args[]) throws IOException
     {
         char c;
-        BufferedReader br = new 
-                BufferedReader (new InputStreamReader (System.in));
+        BufferedReader br = new BufferedReader (new InputStreamReader (System.in));
         System.out.println("Enter characters, 'q' to quit."); 
+   
         // read characters
         do {
             c = (char) br.read(); 
@@ -152,7 +151,7 @@ class BRRead {
 }
 ```
 Here is a sample run:
-
+```
 Enter characters, 'q' to quit.
 123abcq
 1
@@ -162,28 +161,28 @@ a
 b
 c
 q
-
+```
 This output may look a little different from what you expected because **System.in** is line buffered, by default. This means that no input is actually passed to the program until you press enter. As you can guess, this does not make **read()** particularly valuable for interactive console input.
 
 ### Reading Strings
 
  To read a string from the keyboard, use the version of **readLine()** that is a member of the **BufferedReader** class. Its general form is shown here:
-
+```
 String readLine() throws IOException  
-
+```
 As you can see, it returns a **String** object. 
 The following program demonstrates **BufferedReader** and the **readLine()** method; the program reads and displays lines of text until you enter the word "stop":
 
-```js
+```
 // Read a string from console using a BufferedReader. 
 import java.io.*;
 
-class BRReadLines { 
+class BRReadLines 
+{ 
     public static void main(String args[]) throws IOException
     {
         // create a BufferedReader using System.in 
-        BufferedReader br = new BufferedReader (new 
-                                InputStreamReader (System.in));
+        BufferedReader br = new BufferedReader (new InputStreamReader (System.in));
         String str;
         System.out.println("Enter lines of text.");
         System.out.println("Enter 'stop' to quit."); 
@@ -196,27 +195,33 @@ class BRReadLines {
 ```
 
 The next example creates a tiny text editor. It creates an array of **String** objects and then reads in lines of text, storing each line in the array. It will read up to 100 lines or until you enter "stop." It uses a **BufferedReader** to read from the console.  
-```js
+```
 // A tiny editor. 
 import java.io.*;
 
-class TinyEdit {
+class TinyEdit 
+{
     public static void main(String args[]) throws IOException
     {
         // create a BufferedReader using System.
-        in BufferedReader br = new BufferedReader (new
-                                   InputStreamReader (System.in));
+        BufferedReader br = new BufferedReader (new InputStreamReader (System.in));
         String str[] = new String [100];
+       
         System.out.println("Enter lines of text.");
         System.out.println("Enter 'stop' to quit."); 
-        for (int i=0; i<100; i++) {
+        for (int i=0; i<100; i++) 
+        {
             str[i]= br.readLine();
-            if (str[i].equals ("stop")) break;
+            if (str[i].equals ("stop")) 
+                break;
         }
         System.out.println("\nHere is your file: ");
+       
         // display the lines 
-        for (int i=0; i<100; i++) {
-            if (str[i].equals ("stop")) break;
+        for (int i=0; i<100; i++) 
+        {
+            if (str[i].equals ("stop")) 
+                break;
             System.out.println(str[i]);
         }
     }
@@ -240,17 +245,19 @@ Just create String objects.
 
 ## Writing Console Output
 
- Console output is most easily accomplished with **print()** and **println()**, described earlier, which are used in most of the examples in this book. These methods are defined by the class **PrintStream** (which is the type of object referenced by **System.out**). Even though **System .out** is a byte stream, using it for simple program output is still acceptable. However, a character-based alternative is described in the next section.
+Console output is most easily accomplished with **print()** and **println()**, described earlier, which are used in most of the examples in this book. These methods are defined by the class **PrintStream** (which is the type of object referenced by **System.out**). Even though **System .out** is a byte stream, using it for simple program output is still acceptable. However, a character-based alternative is described in the next section.
 
 Because **PrintStream** is an output stream derived from **OutputStream**, it also implements the low-level method **write()**. Thus, **write()** can be used to write to the console. The simplest form of **write()** defined by **PrintStream** is shown here:
-
+```
 void write(int byteval)
-
+```
 This method writes the byte specified by byteval. Although byteval is declared as an integer, only the low-order eight bits are written. Here is a short example that uses **write()** to output the character "A" followed by a newline to the screen:
-```js
+```
 // Demonstrate System.out.write().
-class WriteDemo { 
-    public static void main(String args[]) { 
+class WriteDemo 
+{ 
+    public static void main(String args[]) 
+    { 
         int b;
 
         b = 'A';
@@ -263,29 +270,29 @@ You will not often use **write()** to perform console output (although doing so 
 
 ## The PrintWriter Class
 
- Although using **System.out** to write to the console is acceptable, its use is probably best for debugging purposes or for sample programs, such as those found in this book. For real-world programs, the recommended method of  
-
-writing to the console when using Java is through a **PrintWriter** stream. **PrintWriter** is one of the character-based classes. Using a character-based class for console output makes internationalizing your program easier.
+ Although using **System.out** to write to the console is acceptable, its use is probably best for debugging purposes or for sample programs, such as those found in this book. For real-world programs, the recommended method of writing to the console when using Java is through a **PrintWriter** stream. **PrintWriter** is one of the character-based classes. Using a character-based class for console output makes internationalizing your program easier.
 
 **PrintWriter** defines several constructors. The one we will use is shown here:
-
+```
 PrintWriter(OutputStream outputStream, boolean flushingOn)
-
+```
 Here, outputStream is an object of type **OutputStream**, and flushingOn controls whether Java flushes the output stream every time a **println()** method (among others) is called. If flushingOn is **true**, flushing automatically takes place. If **false**, flushing is not automatic.
 
 **PrintWriter** supports the **print()** and **println()** methods. Thus, you can use these methods in the same way as you used them with **System.out**. If an argument is not a simple type, the **PrintWriter** methods call the object’s **toString()** method and then display the result.
 
 To write to the console by using a **PrintWriter**, specify **System.out** for the output stream and automatic flushing. For example, this line of code creates a **PrintWriter** that is connected to console output:
-
+```
 PrintWriter pw = new PrintWriter(System.out, true);
-
+```
 The following application illustrates using a **PrintWriter** to handle console output:
 ```
 // Demonstrate PrintWriter 
 import java.io.*;
 
-public class PrintWriterDemo {
-    public static void main(String args[]) {
+public class PrintWriterDemo 
+{
+    public static void main(String args[]) 
+    {
         PrintWriter pw = new PrintWriter (System.out, true);
 
         pw.println("This is a string"); 
@@ -308,36 +315,33 @@ Remember, there is nothing wrong with using **System.out** to write simple text 
 
 ## Reading and Writing Files
 
- Java provides a number of classes and methods that allow you to read and write files. Before we begin, it is important to state that the topic of file I/O is quite large and file I/O is examined in detail in Part II. The purpose of this section is to introduce the basic techniques that read from and write to a file. Although byte streams are used, these techniques can be adapted to the character-based streams.
+Java provides a number of classes and methods that allow you to read and write files. Before we begin, it is important to state that the topic of file I/O is quite large and file I/O is examined in detail in Part II. The purpose of this section is to introduce the basic techniques that read from and write to a file. Although byte streams are used, these techniques can be adapted to the character-based streams.
 
 Two of the most often-used stream classes are **FileInputStream** and **FileOutputStream**, which create byte streams linked to files. To open a file, you simply create an object of one of these classes, specifying the name of the file as an argument to the constructor. Although both classes support additional constructors, the following are the forms that we will be using:
-
-FileInputStream(String fileName) throws FileNotFoundException FileOutputStream(String fileName) throws FileNotFoundException
-
+```
+FileInputStream(String fileName) throws FileNotFoundException 
+FileOutputStream(String fileName) throws FileNotFoundException
+```
 Here, fileName specifies the name of the file that you want to open. When you create an input stream, if the file does not exist, then **FileNotFoundException** is thrown. For output streams, if the file cannot be opened or created, then **FileNotFoundException** is thrown. **FileNotFoundException** is a subclass of **IOException**. When an output file is opened, any preexisting file by the same name is destroyed.
 
-**NOTE** In situations in which a security manager is present, several of the file classes, including **FileInputStream** and **FileOutputStream**, will throw a **SecurityException** if a security violation occurs when attempting to open a file. By default, applications run  
+**NOTE** 
 
-
-
-via **java** do not use a security manager. For that reason, the I/O examples in this book do not need to watch for a possible **SecurityException**. However, other types of applications may use the security manager, and file I/O performed by such an application could generate a **SecurityException**. In that case, you will need to appropriately handle this exception.
+In situations in which a security manager is present, several of the file classes, including **FileInputStream** and **FileOutputStream**, will throw a **SecurityException** if a security violation occurs when attempting to open a file. By default, applications run via **java** do not use a security manager. For that reason, the I/O examples in this book do not need to watch for a possible **SecurityException**. However, other types of applications may use the security manager, and file I/O performed by such an application could generate a **SecurityException**. In that case, you will need to appropriately handle this exception.
 
 When you are done with a file, you must close it. This is done by calling the **close()** method, which is implemented by both **FileInputStream** and **FileOutputStream**. It is shown here:
-
+```
 void close() throws IOException
-
+```
 Closing a file releases the system resources allocated to the file, allowing them to be used by another file. Failure to close a file can result in “memory leaks” because of unused resources remaining allocated.
-
 
 **NOTE**
 
- The **close()** method is specified by the **AutoCloseable** interface in **java.lang**. **AutoCloseable** is inherited by the **Closeable** interface in **java.io**. Both interfaces are implemented by the stream classes, including **FileInputStream** and **FileOutputStream**.
-
+The **close()** method is specified by the **AutoCloseable** interface in **java.lang**. **AutoCloseable** is inherited by the **Closeable** interface in **java.io**. Both interfaces are implemented by the stream classes, including **FileInputStream** and **FileOutputStream**.
 
 Before moving on, it is important to point out that there are two basic approaches that you can use to close a file when you are done with it. The first is the traditional approach, in which **close()** is called explicitly when the file is no longer needed. This is the approach used by all versions of Java prior to JDK 7 and is, therefore, found in all pre-JDK 7 legacy code. The second is to use the **try**\-with-resources statement added by JDK 7, which automatically closes a file when it is no longer needed. In this approach, no explicit call to **close()** is executed. Since you may still encounter pre-JDK 7 legacy code, it is important that you know and understand the traditional approach. Furthermore, the traditional approach could still be the best approach in some situations. Therefore, we will begin with it. The automated approach is described in the following section.
 
 To read from a file, you can use a version of **read()** that is defined within **FileInputStream**. The one that we will use is shown here:
-```java
+```
 int read() throws IOException
 ```
 Each time that it is called, it reads a single byte from the file and returns the byte as an integer value. **read()** returns –1 when an attempt is made to read at the end of the stream. It can throw an **IOException**. 
@@ -346,7 +350,7 @@ The following program uses **read()** to input and display the contents of a
 
 file that contains ASCII text. The name of the file is specified as a command- line argument.  
 
-```js
+```
 /* Display a text file. 
    To use this program, specify the name 
    of the file that you want to see. 
@@ -356,38 +360,54 @@ file that contains ASCII text. The name of the file is specified as a command- l
     java ShowFile TEST.TXT
 */
 import java.io.*;
-class ShowFile { 
+class ShowFile 
+{ 
     public static void main(String args[]) 
     {
         int i;
         FileInputStream fin;
 
         // First, confirm that a filename has been specified. 
-        if (args.length != 1) { 
+        if (args.length != 1) 
+        { 
             System.out.println("Usage: ShowFile filename");
             return;
         }
+        
         // Attempt to open the file.
-        try {
+        try 
+        {
             fin= new FileInputStream (args[0]); 
-        } catch (FileNotFoundException e) { 
-            System.out.println("Cannot Open File"); return;
+        } 
+        catch (FileNotFoundException e) 
+        { 
+            System.out.println("Cannot Open File"); 
+            return;
         }
+        
         // At this point, the file is open and can be read.
         // The following reads characters until EOF is encountered.
-        try {
-          do {
-            i fin.read();
-            if(i-1) System.out.print((char) i);
+        try 
+        {
+          do 
+          {
+            i = fin.read();
+            if(i!=1) 
+                System.out.print((char) i);
           } while (i!= -1);
-        } catch (IOException e) {
+        } 
+        catch (IOException e) 
+        {
           System.out.println("Error Reading File");
         }
 
-         // Close the file.
-         try {
+        // Close the file.
+        try 
+        {
            fin.close();
-        } catch (IOException e) { 
+        } 
+        catch (IOException e) 
+        { 
             System.out.println("Error Closing File");
         }
     }
@@ -397,7 +417,7 @@ class ShowFile {
 In the program, notice the **try/catch** blocks that handle the I/O errors that might occur. Each I/O operation is monitored for exceptions, and if an exception occurs, it is handled. Be aware that in simple programs or example code, it is common to see I/O exceptions simply thrown out of **main()**, as was done in the earlier console I/O examples. Also, in some real-world code, it can be helpful to let an exception propagate to a calling routine to let the caller know that an I/O operation failed. However, most of the file I/O examples in this book handle all I/O exceptions explicitly, as shown, for the sake of illustration.
 
 Although the preceding example closes the file stream after the file is read, there is a variation that is often useful. The variation is to call **close()** within a **finally** block. In this approach, all of the methods that access the file are contained within a **try** block, and the **finally** block is used to close the file. This way, no matter how the **try** block terminates, the file is closed. Assuming the preceding example, here is how the **try** block that reads the file can be recoded:
-```js
+```
 /* Display a text file.
    To use this program, specify the name 
    of the file that you want to see. 
@@ -431,63 +451,86 @@ Sometimes it’s easier to wrap the portions of a program that open the file and
 
 import java.io.*;
 
-class ShowFile {
+class ShowFile 
+{
     public static void main(String args[]) 
     {
         int i;
         FileInputStream fin= null;
 
         // First, confirm that a filename has been specified. 
-        if (args.length != 1) { 
-            System.out.println("Usage: ShowFile filename"); return;
+        if (args.length != 1) 
+        { 
+            System.out.println("Usage: ShowFile filename"); 
+            return;
         }
 
         // The following code opens a file, reads characters until EOF 
         // is encountered, and then closes the file via a finally block.
-        try {
+        try 
+        {
             fin= new FileInputStream (args[0]);
 
             do {
              i = fin.read(); 
-             if(i-1) System.out.print((char) i);
-            } while (i-1);
+             if(i!=-1) 
+                System.out.print((char) i);
+            } while (i!=-1);
    
-        } catch (FileNotFoundException e) {
+        } 
+        catch (FileNotFoundException e) 
+        {
           System.out.println("File Not Found.");
-        } catch (IOException e) { 
+        } 
+        catch (IOException e) 
+        { 
           System.out.println("An I/O Error Occurred");
-        } finally {
+        } 
+        finally 
+        {
           // Close file in all cases.
-        try {
-          if (fin != null) fin.close();
-        } catch (IOException e) { 
-          System.out.println("Error Closing File");
-        }
+           try 
+           {
+                if (fin != null) 
+                    fin.close();
+            } 
+            catch (IOException e) 
+            {
+                System.out.println("Error Closing File");
+            }
         }
     }
-    }    
+}    
 ```
 
-In this approach, notice that **fin** is initialized to **null**. Then, in the **finally** block, the file is closed only if **fin** is not **null**. This works because **fin** will be non-**null**  
-
-only if the file is successfully opened. Thus, **close()** is not called if an exception occurs while opening the file.
+In this approach, notice that **fin** is initialized to **null**. Then, in the **finally** block, the file is closed only if **fin** is not **null**. This works because **fin** will be non-**null** only if the file is successfully opened. Thus, **close()** is not called if an exception occurs while opening the file.
 
 It is possible to make the **try/catch** sequence in the preceding example a bit more compact. Because **FileNotFoundException** is a subclass of **IOException**, it need not be caught separately. For example, here is the sequence recoded to eliminate catching **FileNotFoundException**. In this case, the standard exception message, which describes the error, is displayed.
-```js
-try {
+```
+try 
+{
     fin = new FileInputStream (args[0]);
-    do {
+    do{
         i = fin.read();
-        if (i!= -1) System.out.print ((char) i); 
+        if (i!= -1) 
+            System.out.print ((char) i); 
     } while (i!= -1);
 
-} catch (IOException e) { 
+} 
+catch (IOException e) 
+{ 
     System.out.println("I/O Error: " + e);
-} finally {
+} 
+finally 
+{
     // Close file in all cases. 
-    try {
-       if (fin != null) fin.close();
-    } catch (IOException e) { 
+    try 
+    {
+       if (fin != null) 
+        fin.close();
+    } 
+    catch (IOException e) 
+    { 
         System.out.println("Error Closing File");
     }
 }
@@ -495,11 +538,11 @@ try {
 In this approach, any error, including an error opening the file, is simply handled by the single **catch** statement. Because of its compactness, this approach is used by many of the I/O examples in this book. Be aware, however, that this approach is not appropriate in cases in which you want to deal separately with a failure to open a file, such as might be caused if a user mistypes a filename. In such a situation, you might want to prompt for the correct name, for example, before entering a **try** block that accesses the file.
 
 To write to a file, you can use the **write()** method defined by **FileOutputStream**. Its simplest form is shown here:
-
+```
 void write(int byteval) throws IOException  
-
+```
 This method writes the byte specified by byteval to the file. Although byteval is declared as an integer, only the low-order eight bits are written to the file. If an error occurs during writing, an **IOException** is thrown. The next example uses **write()** to copy a file:  
-```js
+```
 /* Copy a file. 
    To use this program, specify the name 
    of the source file and the destination file. 
@@ -511,7 +554,8 @@ This method writes the byte specified by byteval to the file. Although byteval i
 */
 import java.io.*;
 
-class CopyFile {
+class CopyFile 
+{
     public static void main(String args[]) throws IOException
     {
         int i;
@@ -519,35 +563,50 @@ class CopyFile {
         FileOutputStream fout = null;
         
         // First, confirm that both files have been specified. 
-        if (args.length != 2) {
+        if (args.length != 2) 
+        {
             System.out.println("Usage: CopyFile from to"); 
             return;
-            }
-            // Copy a File.
-            try {
+        }
+        // Copy a File.
+        try 
+        {
               // Attempt to open the files. 
               fin = new FileInputStream (args[0]); 
               fout = new FileOutputStream (args[1]);
 
               do {
                 i = fin.read(); 
-                if(i!= -1) fout.write(i); 
+                if(i!= -1) 
+                    fout.write(i); 
               } while (i!= -1);
 
-            } catch (IOException e) { 
-              System.out.println("I/O Error: + e);
-            } finally {
-              try {
-                if (fin != null) fin.close();
-              } catch (IOException e2) { 
+        } 
+        catch (IOException e) 
+        { 
+            System.out.println("I/O Error: + e);
+        } 
+        finally 
+        {
+            try 
+            {
+                if (fin != null) 
+                    fin.close();
+            } 
+            catch (IOException e2) 
+            { 
                 System.out.println("Error Closing Input File");
-              }
-              try {
-                if (fout != null) fout.close();
-              } catch (IOException e2) { 
-                System.out.println("Error Closing Output File");
-              }
             }
+            try 
+            {
+                if (fout != null) 
+                    fout.close();
+            } 
+            catch (IOException e2) 
+            { 
+                System.out.println("Error Closing Output File");
+            }
+        }
     }
 }
 ```
@@ -558,72 +617,82 @@ In general, notice that all potential I/O errors are handled in the preceding tw
 
 ## Automatically Closing a File
 
- In the preceding section, the example programs have made explicit calls to **close()** to close a file once it is no longer needed. As mentioned, this is the way files were closed when using versions of Java prior to JDK 7. Although this approach is still valid and useful, JDK 7 added a feature that offers another way to manage resources, such as file streams, by automating the closing process. This feature, sometimes referred to as _automatic resource management_, or ARM for short, is based on an expanded version of the **try** statement. The principal advantage of automatic resource management is that it prevents situations in which a file (or other resource) is inadvertently not released after it is no longer needed. As explained, forgetting to close a file can result in memory leaks, and could lead to other problems.
+In the preceding section, the example programs have made explicit calls to **close()** to close a file once it is no longer needed. As mentioned, this is the way files were closed when using versions of Java prior to JDK 7. Although this approach is still valid and useful, JDK 7 added a feature that offers another way to manage resources, such as file streams, by automating the closing process. This feature, sometimes referred to as _automatic resource management_, or ARM for short, is based on an expanded version of the **try** statement. The principal advantage of automatic resource management is that it prevents situations in which a file (or other resource) is inadvertently not released after it is no longer needed. As explained, forgetting to close a file can result in memory leaks, and could lead to other problems.
 
 Automatic resource management is based on an expanded form of the **try** statement. Here is its general form:
-
-try(resource-specification){
+```
+try(resource-specification)
+{
     // use the resource
 }
-
+```
 Typically, _resource-specification_ is a statement that declares and initializes a resource, such as a file stream. It consists of a variable declaration in which the variable is initialized with a reference to the object being managed. When the **try** block ends, the resource is automatically released. In the case of a file, this means that the file is automatically closed. (Thus, there is no need to call **close()** explicitly.) Of course, this form of **try** can also include **catch** and **finally** clauses. This form of **try** is called the **try**_\-with-resources_ statement.
 
-
-**NOTE** Beginning with JDK 9, it is also possible for the resource specification of the **try** to consist of a variable that has been declared and initialized earlier in the program. However, that variable must be _effectively final_, which means that it has not been assigned a new value after being given its initial value.
+**NOTE** 
+Beginning with JDK 9, it is also possible for the resource specification of the **try** to consist of a variable that has been declared and initialized earlier in the program. However, that variable must be _effectively final_, which means that it has not been assigned a new value after being given its initial value.
 
 The **try**\-with-resources statement can be used only with those resources that implement the **AutoCloseable** interface defined by **java.lang**. This interface defines the **close()** method. **AutoCloseable** is inherited by the **Closeable** interface in **java.io**. Both interfaces are implemented by the stream classes. Thus, **try**\-with-resources can be used when working with streams, including file streams.  
 
 As a first example of automatically closing a file, here is a reworked version of the **ShowFile** program that uses it:
-```js
+```
 /* This version of the ShowFile program uses a try-with-resources 
    statement to automatically close a file after it is no longer needed. 
 */
 
 import java.io.*;
 
-class ShowFile{
+class ShowFile
+{
     public static void main(String args[])
     {
         int i;
 
         // First, confirm that a filename has been specified. 
-        if (args.length != 1) { 
+        if (args.length != 1) 
+        { 
             System.out.println("Usage: ShowFile filename");
             return;
         }
+        
         // The following code uses a try-with-resources statement to open 
         // a file and then automatically close it when the try block is left. 
-        try (FileInputStream fin = new FileInputStream (args[0])) {
-
-            do {
-                i fin.read(); 
-                if(i-1) System.out.print ((char) i);
+        try (FileInputStream fin = new FileInputStream (args[0])) 
+        {
+            do 
+            {
+                i = fin.read(); 
+                if(i!=-1) 
+                    System.out.print ((char) i);
             } while(i!= -1);
 
-            } catch (FileNotFoundException e) {
-                System.out.println("File Not Found."); 
-            } catch (IOException e) { 
-                System.out.println("An I/0 Error Occurred");
-            }
+        } 
+        catch (FileNotFoundException e) 
+        {
+            System.out.println("File Not Found."); 
+        } 
+        catch (IOException e) 
+        {
+            System.out.println("An I/0 Error Occurred");
+        }
     }
 }
 ```
 In the program, pay special attention to how the file is opened within the **try** statement:
-
+```
 try(FileInputStream fin = new FileInputStream(args[0])) {  
-
+```
 Notice how the resource-specification portion of the **try** declares a **FileInputStream** called **fin**, which is then assigned a reference to the file opened by its constructor. Thus, in this version of the program, the variable **fin** is local to the **try** block, being created when the **try** is entered. When the **try** is left, the stream associated with **fin** is automatically closed by an implicit call to **close()**. You don’t need to call **close()** explicitly, which means that you can’t forget to close the file. This is a key advantage of using **try**\-with-resources.
 
 It is important to understand that a resource declared in the **try** statement is implicitly **final**. This means that you can’t assign to the resource after it has been created. Also, the scope of the resource is limited to the **try**\-with- resources statement.
 
 Before moving on it is useful to mention that beginning with JDK 10, you can use local variable type inference to specify the type of the resource declared in a **try**\-with-resources statement. To do so, specify the type as **var**. When this is done, the type of the resource is inferred from its initializer. For example, the **try** statement in the preceding program can now be written like this:
-
+```
 try(var fin = new FileInputStream(args[0])) {
-
+```
 Here, **fin** is inferred to be of type **FileInputStream** because that is the type of its initializer. Because many readers will be working in Java environments that predate JDK 10, **try**\-with-resource statements in the remainder of this book will not make use of type inference so that the code works for as many readers as possible. Of course, going forward, you should consider using type inference in your own code.
 
 You can manage more than one resource within a single **try** statement. To do so, simply separate each resource specification with a semicolon. The following program shows an example. It reworks the **CopyFile** program shown earlier so that it uses a single **try**\-with-resources statement to manage both **fin** and **fout**.  
-```js
+```
 /* A version of CopyFile that uses try-with-resources. 
    It demonstrates two resources (in this case files) being 
    managed by a single try statement. 
@@ -637,7 +706,8 @@ class CopyFile {
         int i; 
 
         // First, confirm that both files have been specified. 
-        if (args.length != 2) { 
+        if (args.length != 2) 
+        { 
             System.out.println("Usage: CopyFile from to");
             return;
         }
@@ -648,11 +718,14 @@ class CopyFile {
         {
 
             do {
-                i fin.read(); 
-                if(i!= -1) fout.write(i); 
+                i = fin.read(); 
+                if(i!= -1) 
+                    fout.write(i); 
                 } while (i!= -1);
 
-        } catch (IOException e) {
+        } 
+        catch (IOException e) 
+        {
             System.out.println("I/O Error: " + e);
         }
     }
@@ -673,8 +746,7 @@ Because of the benefits that the **try**\-with-resources statement offers, it wi
 
 **REMEMBER**
 
- A few examples in this book use the traditional approach to closing files as a means of illustrating this technique, which is widely used in legacy code. However, for new code, you will usually want to use the automated approach supported by the **try**\- with-resources statement just described.
-
+A few examples in this book use the traditional approach to closing files as a means of illustrating this technique, which is widely used in legacy code. However, for new code, you will usually want to use the automated approach supported by the **try**\- with-resources statement just described.
 
 ## The transient and volatile Modifiers
 
@@ -682,7 +754,8 @@ Because of the benefits that the **try**\-with-resources statement offers, it wi
 
 When an instance variable is declared as **transient**, its value need not persist when an object is stored. For example:
 ```
-class T {
+class T 
+{
     transient int a; // will not perist
     int b; // will persist
 }
@@ -693,33 +766,38 @@ The **volatile** modifier tells the compiler that the variable modified by **vol
 
 ## Using instanceof
 
- Sometimes, knowing the type of an object during run time is useful. For example, you might have one thread of execution that generates various types of objects, and another thread that processes these objects. In this situation, it might be useful for the processing thread to know the type of each object when it receives it. Another situation in which knowledge of an object’s type at run time is important involves casting. In Java, an invalid cast causes a run-time error. Many invalid casts can be caught at compile time. However, casts involving class hierarchies can produce invalid casts that can be detected only at run time. For example, a superclass called A can produce two subclasses,  
-
-called B and C. Thus, casting a B object into type A or casting a C object into type A is legal, but casting a B object into type C (or vice versa) isn’t legal. Because an object of type A can refer to objects of either B or C, how can you know, at run time, what type of object is actually being referred to before attempting the cast to type C? It could be an object of type A, B, or C. If it is an object of type B, a run-time exception will be thrown. Java provides the run- time operator **instanceof** to answer this question.
+Sometimes, knowing the type of an object during run time is useful. For example, you might have one thread of execution that generates various types of objects, and another thread that processes these objects. In this situation, it might be useful for the processing thread to know the type of each object when it receives it. Another situation in which knowledge of an object’s type at run time is important involves casting. In Java, an invalid cast causes a run-time error. Many invalid casts can be caught at compile time. However, casts involving class hierarchies can produce invalid casts that can be detected only at run time. For example, a superclass called A can produce two subclasses,called B and C. Thus, casting a B object into type A or casting a C object into type A is legal, but casting a B object into type C (or vice versa) isn’t legal. Because an object of type A can refer to objects of either B or C, how can you know, at run time, what type of object is actually being referred to before attempting the cast to type C? It could be an object of type A, B, or C. If it is an object of type B, a run-time exception will be thrown. Java provides the run- time operator **instanceof** to answer this question.
 
 The **instanceof** operator has this general form: objref instanceof type Here, objref is a reference to an instance of a class, and type is a class type. If objref is of the specified type or can be cast into the specified type, then the **instanceof** operator evaluates to **true**. Otherwise, its result is **false**. Thus, **instanceof** is the means by which your program can obtain run-time type information about an object.
 
 The following program demonstrates **instanceof**:  
-```js
+```
 // Demonstrate instanceof operator.
-class A { 
-    int i, j
+class A 
+{ 
+    int i, j;
 }
-class B {
+class B 
+{
     int i, j; 
 }
-class C extends A {
+class C extends A 
+{
     int k;
 }
-class D extends A { 
+class D extends A 
+{ 
     int k;
 }
-class Instanceof { 
-    public static void main(String args[]) {
-        A a new A(); 
-        Bb new B();
-        Cc = new C();
-        Dd= new D();
+class Instanceof 
+{ 
+    public static void main(String args[]) 
+    {
+        A a = new A(); 
+        B b = new B();
+        C c = new C();
+        D d = new D();
+
         if (a instanceof A)
             System.out.println("a is instance of A"); 
         if (b instanceof B)
@@ -771,7 +849,7 @@ class Instanceof {
 ```
 
 The output from this program is shown here:
-
+```
 a is instance of A
 b is instance of B
 c is instance of C
@@ -788,7 +866,7 @@ a may be cast to Object
 b may be cast to Object
 c may be cast to Object
 d may be cast to Object
-
+```
 The **instanceof** operator isn’t needed by most programs, because, generally, you know the type of object with which you are working. However, it can be  
 
 very useful when you’re writing generalized routines that operate on objects of a complex class hierarchy.
@@ -820,9 +898,9 @@ After you declare a native method, you must write the native method and follow a
  Another interesting keyword is **assert**. It is used during program development to create an assertion, which is a condition that should be true during the execution of the program. For example, you might have a method that should always return a positive integer value. You might test this by asserting that the return value is greater than zero using an **assert** statement. At run time, if the condition is true, no other action takes place. However, if the condition is false, then an **AssertionError** is thrown. Assertions are often used during testing to verify that some expected condition is actually met. They are not usually used for released code.
 
 The **assert** keyword has two forms. The first is shown here:
-
+```
 assert condition;
-
+```
 Here, condition is an expression that must evaluate to a Boolean result. If the result is true, then the assertion is true and no other action takes place. If the condition is false, then the assertion fails and a default **AssertionError** object is thrown.
 
 The second form of **assert** is shown here:
@@ -832,20 +910,24 @@ assert _condition: expr_ ;
 In this version, expr is a value that is passed to the **AssertionError** constructor. This value is converted to its string format and displayed if an assertion fails. Typically, you will specify a string for expr, but any non-**void** expression is allowed as long as it defines a reasonable string conversion.
 
 Here is an example that uses **assert**. It verifies that the return value of **getnum()** is positive.  
-```js
+```
 // Demonstrate assert. 
-class Assert Demo { 
+class AssertDemo 
+{ 
     static int val = 3;
 
     // Return an integer. 
-    static int getnum () { 
+    static int getnum () 
+    { 
         return val--;
     }
+    
     public static void main(String args[]) 
     {
         int n;
 
-        for (int i=0; i < 10; i++){
+        for (int i=0; i < 10; i++)
+        {
             n = getnum ();
 
             assert n > 0; // will fail when n is 0
@@ -888,14 +970,16 @@ Exception in thread "main" java.lang.AssertionError: n is not positive!
         at Assert Demo.main (Assert Demo.java:17)
 
 One important point to understand about assertions is that you must not rely on them to perform any action actually required by the program. The reason is that normally, released code will be run with assertions disabled. For example, consider this variation of the preceding program:  
-```js
+```
 // A poor way to use assert!!! 
-class Assert Demo { 
+class AssertDemo 
+{ 
     // get a random number generator 
     static int val = 3;
 
     // Return an integer. 
-    static int getnum () {
+    static int getnum () 
+    {
         return val--;
     }
 
@@ -903,7 +987,8 @@ class Assert Demo {
     {
         int n = 0;
 
-        for (int i=0; i < 10; i++) {
+        for (int i=0; i < 10; i++) 
+        {
 
             assert (n = getnum()) > 0; // This is not a good idea!
 
@@ -916,7 +1001,8 @@ In this version of the program, the call to **getnum()** is moved inside the **a
 
 Assertions can be quite useful because they streamline the type of error checking that is common during development. For example, prior to **assert**, if you wanted to verify that **n** was positive in the preceding program, you had to use a sequence of code similar to this:
 ```
-if (n < 0) { 
+if (n < 0) 
+{ 
     System.out.println("n is negative!"); 
     return; // or throw an exception 
 }
@@ -941,13 +1027,15 @@ You can also specify a class with the **\-ea** or **\-da** option. For example, 
 
 ## Static Import
 
- Java includes a feature called _static import_ that expands the capabilities of the **import** keyword. By following **import** with the keyword **static**, an **import** statement can be used to import the static members of a class or interface. When using static import, it is possible to refer to static members directly by their names, without having to qualify them with the name of their class. This simplifies and shortens the syntax required to use a static member.
+Java includes a feature called _static import_ that expands the capabilities of the **import** keyword. By following **import** with the keyword **static**, an **import** statement can be used to import the static members of a class or interface. When using static import, it is possible to refer to static members directly by their names, without having to qualify them with the name of their class. This simplifies and shortens the syntax required to use a static member.
 
 To understand the usefulness of static import, let’s begin with an example that does not use it. The following program computes the hypotenuse of a right triangle. It uses two static methods from Java’s built-in math class **Math**, which is part of **java.lang**. The first is **Math.pow()**, which returns a value raised to a specified power. The second is **Math.sqrt()**, which returns the square root of its argument.  
 ```
 // Compute the hypotenuse of a right triangle.
-class Hypot{
-    public static void main(String args[]) {
+class Hypot
+{
+    public static void main(String args[]) 
+    {
         double sidel, side2;
         double hypot;
         sidel = 3.0; 
@@ -967,24 +1055,26 @@ class Hypot{
 ```
 Because **pow()** and **sqrt()** are static methods, they must be called through the use of their class’ name, **Math**. This results in a somewhat unwieldy hypotenuse calculation:
 ```
-hypot = Math.sqrt (Math.pow(sidel, 2) + 
-                   Math.pow(side2, 2));
+hypot = Math.sqrt (Math.pow(sidel, 2) + Math.pow(side2, 2));
 ```
 As this simple example illustrates, having to specify the class name each time **pow()** or **sqrt()** (or any of Java’s other math methods, such as **sin()**, **cos()**, and **tan()**) is used can grow tedious.
 
 You can eliminate the tedium of specifying the class name through the use of static import, as shown in the following version of the preceding program:  
-```js
+```
 // Use static import to bring sqrt() and pow() into view. ;
+
 import static java.lang. Math.sqrt;
 import static java.lang. Math.pow;
 // Compute the hypotenuse of a right triangle. 
-class Hypot {
-    public static void main(String args[]) { 
+class Hypot 
+{
+    public static void main(String args[]) 
+    { 
         double sidel, side2; 
         double hypot;
 
-        sidel 3.0; =
-        side2 4.0; =
+        sidel = 3.0; 
+        side2 = 4.0; 
 
         // Here, sqrt() and pow() can be called by themselves, 
         // without their class name. 
@@ -1004,12 +1094,10 @@ import static java.lang.Math.pow;
 ```
 
 After these statements, it is no longer necessary to qualify **sqrt()** or **pow()** with their class name. Therefore, the hypotenuse calculation can more conveniently be specified, as shown here:
-
+```
 hypot = sqrt(pow(side1, 2) + pow(side2, 2));
-
-As you can see, this form is considerably more readable. There are two general forms of the **import static** statement. The first, which
-
-is used by the preceding example, brings into view a single name. Its general form is shown here:  
+```
+As you can see, this form is considerably more readable. There are two general forms of the **import static** statement. The first, which is used by the preceding example, brings into view a single name. Its general form is shown here:  
 
 import static _pkg.type-name.static-member-name_ ;
 
@@ -1029,9 +1117,7 @@ import static java.lang.System.out;
 
 After this statement, you can output to the console without having to qualify **out** with **System**, as shown here:
 
-out.println("After importing System.out, you can use out
-
-directly.");
+out.println("After importing System.out, you can use out directly.");
 
 Whether importing **System.out** as just shown is a good idea is subject to debate. Although it does shorten the statement, it is no longer instantly clear to anyone reading the program that the **out** being referred to is **System.out**.
 
@@ -1049,25 +1135,29 @@ this(_arg-list_)
 When **this()** is executed, the overloaded constructor that matches the parameter list specified by _arg-list_ is executed first. Then, if there are any statements inside the original constructor, they are executed. The call to **this()** must be the first statement within the constructor.
 
 To understand how **this()** can be used, let’s work through a short example. First, consider the following class that _does not_ use **this()**:  
-```js
-class MyClass {
+```
+class MyClass 
+{
     int a;
     int b;
 
     // initialize a and b individually 
-    MyClass (int i, int j) {
+    MyClass (int i, int j) 
+    {
         a = i;
         b = j;
     }
 
     // initialize a and b to the same value 
-    MyClass (int i) {
+    MyClass (int i) 
+    {
         a = i;
         b = i;
     }
 
     // give a and b default values of 0 
-    MyClass() {
+    MyClass() 
+    {
         a = 0;
         b = 0;
     }
@@ -1076,23 +1166,28 @@ class MyClass {
 This class contains three constructors, each of which initializes the values of **a** and **b**. The first is passed individual values for **a** and **b**. The second is passed just one value, which is assigned to both **a** and **b**. The third gives **a** and **b** default values of zero.
 
 By using **this()**, it is possible to rewrite **MyClass** as shown here:  
-```js
-class MyClass {
+```
+class MyClass 
+{
     int a;
     int b;
 
     // initialize a and b individually 
-    MyClass (int i, int j) { 
+    MyClass (int i, int j) 
+    { 
         a = i;
         b = j;
     }
 
     // initialize a and b to the same value 
-    MyClass (int i) { 
+    MyClass (int i) 
+    { 
         this(i, i); // invokes MyClass (i, i)
     }
+    
     // give a and b default values of 0 
-    MyClass() { 
+    MyClass() 
+    { 
         this (0); // invokes MyClass (0)
     }
 }
@@ -1107,9 +1202,7 @@ MyClass mc2 = new MyClass();
 
 In this case, **this(0)** is called. This causes **MyClass(0)** to be invoked because it is the constructor with the matching parameter list. Of course, **MyClass(0)** then calls **MyClass(0,0)** as just described.
 
-One reason why invoking overloaded constructors through **this()** can be useful is that it can prevent the unnecessary duplication of code. In many cases,  
-
-reducing duplicate code decreases the time it takes to load your class because often the object code is smaller. This is especially important for programs delivered via the Internet in which load times are an issue. Using **this()** can also help structure your code when constructors contain a large amount of duplicate code.
+One reason why invoking overloaded constructors through **this()** can be useful is that it can prevent the unnecessary duplication of code. In many cases,reducing duplicate code decreases the time it takes to load your class because often the object code is smaller. This is especially important for programs delivered via the Internet in which load times are an issue. Using **this()** can also help structure your code when constructors contain a large amount of duplicate code.
 
 However, you need to be careful. Constructors that call **this()** will execute a bit slower than those that contain all of their initialization code inline. This is because the call and return mechanism used when the second constructor is invoked adds overhead. If your class will be used to create only a handful of objects, or if the constructors in the class that call **this()** will be seldom used, then this decrease in run-time performance is probably insignificant. However, if your class will be used to create a large number of objects (on the order of thousands) during program execution, then the negative impact of the increased overhead could be meaningful. Because object creation affects all users of your class, there will be cases in which you must carefully weigh the benefits of faster load time against the increased time it takes to create an object.
 
@@ -1119,6 +1212,6 @@ There are two restrictions you need to keep in mind when using **this()**. First
 
 ## A Word About Compact API Profiles
 
- JDK 8 added a feature that organizes subsets of the API library into what are called _compact profiles_. These are called **compact1**, **compact2**, and **compact3**. Each profile contains a subset of the library. Furthermore, **compact2** includes all of **compact1**, and **compact3** includes all of **compact2**. Thus, each profile  
+JDK 8 added a feature that organizes subsets of the API library into what are called _compact profiles_. These are called **compact1**, **compact2**, and **compact3**. Each profile contains a subset of the library. Furthermore, **compact2** includes all of **compact1**, and **compact3** includes all of **compact2**. Thus, each profile  
 
 builds on the previous one. The advantage of the compact profiles is that an application that does not require the full library need not download it. Using a compact profile reduces the size of the library, thus enabling some types of Java applications to run on devices that could not otherwise support the entire Java API. The use of a compact profile can also reduce the time it takes to load a program. The JDK 8 API documentation indicates to which (if any) profile each API element belongs. It is important to emphasize that the modules feature added by JDK 9 supersedes compact profiles.  

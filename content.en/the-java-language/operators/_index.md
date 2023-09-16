@@ -4,11 +4,12 @@ weight: 4
 --- 
 
 # Operators
+
 Java provides a rich operator environment. Most of its operators can be divided into the following four groups: arithmetic, bitwise, relational, and logical. Java also defines some additional operators that handle certain special situations. This chapter describes all of Java’s operators except for the type comparison operator **instanceof**, which is examined in Chapter 13 and the arrow operator (−>), which is described in Chapter 15.
 
 ## Arithmetic Operators
 
- Arithmetic operators are used in mathematical expressions in the same way that they are used in algebra. The following table lists the arithmetic operators:
+Arithmetic operators are used in mathematical expressions in the same way that they are used in algebra. The following table lists the arithmetic operators:
 ![d](<arithmetic.png>)
 
 The operands of the arithmetic operators must be of a numeric type. You cannot use them on **boolean** types, but you can use them on **char** types, since the **char** type in Java is, essentially, a subset of **int**.
@@ -31,7 +32,7 @@ class BasicMath
         int c = b / 4;
         int d = с - a;
         int e = -d;
-        System.out.println("a = + a);
+        System.out.println("a = "+ a);
         System.out.println("b = " + b);
         System.out.println("c = " + c);
         System.out.println("d=  " + e);
@@ -142,10 +143,12 @@ class OpEquals
         int a = 1;
         int b = 2;
         int c = 3;
+
         a += 5;
         b *= 4;
         c += a * b;
         C % = 6;
+
         System.out.println("a = " + a);
         System.out.println("b = " + b);
         System.out.println("c = " + c); 
@@ -218,6 +221,7 @@ class IncDec
         C = ++b;
         d = a++;
         C++;
+        
         System.out.println("a = " + a); 
         System.out.println("b = " + b);
         System.out.println("c = " + c) ; 
@@ -237,15 +241,13 @@ d = 1
 ```
 ## The Bitwise Operators
 
- Java defines several _bitwise operators_ that can be applied to the integer types: **long**, **int**, **short**, **char**, and **byte**. These operators act upon the individual bits of their operands. They are summarized in the following table:  
+Java defines several _bitwise operators_ that can be applied to the integer types: **long**, **int**, **short**, **char**, and **byte**. These operators act upon the individual bits of their operands. They are summarized in the following table:  
 ![Alt text](bitoperator.png)
 Since the bitwise operators manipulate the bits within an integer: it is important to understand what effects such manipulations may have on a value. Specifically, it is useful to know how Java stores integer values and how it represents negative numbers. So, before continuing, let’s briefly review these two topics.
 
 All of the integer types are represented by binary numbers of varying bit widths. For example, the **byte** value for 42 in binary is 00101010, where each position represents a power of two, starting with 20 at the rightmost bit. The next bit position to the left would be 21, or 2, continuing toward the left with 22, or 4, then 8, 16, 32, and so on. So 42 has 1 bits set at positions 1, 3, and 5 (counting from 0 at the right); thus, 42 is the sum of 21 + 23 + 25, which is 2 + 8 + 32.
 
-All of the integer types (except **char**) are signed integers. This means that they can represent negative values as well as positive ones. Java uses an encoding known as _two’s complement_, which means that negative numbers are represented by inverting (changing 1’s to 0’s and vice versa) all of the bits in a value, then adding 1 to the result. For example, –42 is represented by inverting  
-
-all of the bits in 42, or 00101010, which yields 11010101, then adding 1, which results in 11010110, or –42. To decode a negative number, first invert all of the bits, then add 1. For example, –42, or 11010110 inverted, yields 00101001, or 41, so when you add 1 you get 42.
+All of the integer types (except **char**) are signed integers. This means that they can represent negative values as well as positive ones. Java uses an encoding known as _two’s complement_, which means that negative numbers are represented by inverting (changing 1’s to 0’s and vice versa) all of the bits in a value, then adding 1 to the result. For example, –42 is represented by inverting all of the bits in 42, or 00101010, which yields 11010101, then adding 1, which results in 11010110, or –42. To decode a negative number, first invert all of the bits, then add 1. For example, –42, or 11010110 inverted, yields 00101001, or 41, so when you add 1 you get 42.
 
 The reason Java (and most other computer languages) uses two’s complement is easy to see when you consider the issue of _zero crossing_. Assuming a **byte** value, zero is represented by 00000000. In one’s complement, simply inverting all of the bits creates 11111111, which creates negative zero. The trouble is that negative zero is invalid in integer math. This problem is solved by using two’s complement to represent negative values. When using two’s complement, 1 is added to the complement, producing 100000000. This produces a 1 bit too far to the left to fit back into the **byte** value, resulting in the desired behavior, where –0 is the same as 0, and 11111111 is the encoding for –1. Although we used a **byte** value in the preceding example, the same basic principle applies to all of Java’s integer types.
 
@@ -330,9 +332,9 @@ In this example, **a** and **b** have bit patterns that present all four possibi
 a = 0011
 b = 0110
 a | b = 0111 
-a&b = 0010
-a^b = 0101
-~a&b|a&-b -a&b a&-b = 0101
+a & b = 0010
+a ^ b = 0101
+~a&b | a&-b -a&b a&-b = 0101
 -a = 1100
 ```
 ### The Left Shift
@@ -450,7 +452,7 @@ b = 0xf1
 
 ## The Unsigned Right Shift
 
- As you have just seen, the **\>>** operator automatically fills the high-order bit with its previous contents each time a shift occurs. This preserves the sign of the value. However, sometimes this is undesirable. For example, if you are shifting something that does not represent a numeric value, you may not want sign extension to take place. This situation is common when you are working with pixel-based values and graphics. In these cases, you will generally want to shift a zero into the high-order bit no matter what its initial value was. This is known as an _unsigned shift_. To accomplish this, you will use Java’s unsigned, shift-right operator, **\>>>,** which always shifts zeros into the high-order bit.
+ As you have just seen, the **\>>** operator automatically fills the high-order bit wit h its previous contents each time a shift occurs. This preserves the sign of the value. However, sometimes this is undesirable. For example, if you are shifting something that does not represent a numeric value, you may not want sign extension to take place. This situation is common when you are working with pixel-based values and graphics. In these cases, you will generally want to shift a zero into the high-order bit no matter what its initial value was. This is known as an _unsigned shift_. To accomplish this, you will use Java’s unsigned, shift-right operator, **\>>>,** which always shifts zeros into the high-order bit.
 
 The following code fragment demonstrates the **\>>>.** Here, **a** is set to –1, which sets all 32 bits to 1 in binary. This value is then shifted right 24 bits, filling the top 24 bits with zeros, ignoring normal sign extension. This sets **a** to 255.
 ```
@@ -484,9 +486,7 @@ class ByteUShift
     }
 }
 ```
-The following output of this program shows how the >>> operator appears to do nothing when dealing with bytes. The variable **b** is set to an arbitrary negative **byte** value for this demonstration. Then **c** is assigned the **byte** value of **b** shifted right by four, which is 0xff because of the expected sign extension. Then **d** is assigned the **byte** value of **b** unsigned shifted right by four, which you might have expected to be 0x0f, but is actually 0xff because of the sign  
-
-extension that happened when **b** was promoted to **int** before the shift. The last expression sets **e** to the **byte** value of **b** masked to 8 bits using the AND operator, then shifted right by four, which produces the expected value of 0x0f. Notice that the unsigned shift right operator was not used for **d**, since the state of the sign bit after the AND was known.
+The following output of this program shows how the >>> operator appears to do nothing when dealing with bytes. The variable **b** is set to an arbitrary negative **byte** value for this demonstration. Then **c** is assigned the **byte** value of **b** shifted right by four, which is 0xff because of the expected sign extension. Then **d** is assigned the **byte** value of **b** unsigned shifted right by four, which you might have expected to be 0x0f, but is actually 0xff because of the sign extension that happened when **b** was promoted to **int** before the shift. The last expression sets **e** to the **byte** value of **b** masked to 8 bits using the AND operator, then shifted right by four, which produces the expected value of 0x0f. Notice that the unsigned shift right operator was not used for **d**, since the state of the sign bit after the AND was known.
 ```
               b = 0xf1
          b >> 4 = 0xff
@@ -495,7 +495,7 @@ extension that happened when **b** was promoted to **int** before the shift. The
 ```
 ### Bitwise Operator Compound Assignments
 
- All of the binary bitwise operators have a compound form similar to that of the algebraic operators, which combines the assignment with the bitwise operation. For example, the following two statements, which shift the value in **a** right by four bits, are equivalent:
+All of the binary bitwise operators have a compound form similar to that of the algebraic operators, which combines the assignment with the bitwise operation. For example, the following two statements, which shift the value in **a** right by four bits, are equivalent:
 
 a = a >> 4;
 
@@ -516,10 +516,12 @@ class OpBitEquals
         int a = 1;
         int b = 2;
         int c = 3;
-        a = 4;
+        
+        a |= 4;
         b >>= 1;
         C <<= 1;
-        a = c;
+        a ^= c;
+        
         System.out.println("a = "+ a);
         System.out.println("b = " + b); 
         System.out.println("c = "+ c);
@@ -592,6 +594,7 @@ class BoolLogic
         boolean e = a ^ b;
         boolean f = (!a & b) (a & !b);
         boolean g = !a; 
+        
         System.out.println("a = " + a);
         System.out.println("a|b = "+ c);
         System.out.println("b = "+ b);
@@ -614,7 +617,8 @@ a^b = true
 ```
 
 ## Short-Circuit Logical Operators
- Java provides two interesting Boolean operators not found in some other computer languages. These are secondary versions of the Boolean AND and OR operators, and are commonly known as _short-circuit_ logical operators. As you can see from the preceding table, the OR operator results in **true** when **A** is **true**, no matter what **B** is. Similarly, the AND operator results in **false** when **A** is **false**, no matter what **B** is. If you use the **||** and **&&** forms, rather than the **|** and **&** forms of these operators, Java will not bother to evaluate the right-hand operand when the outcome of the expression can be determined by the left operand alone. This is very useful when the right-hand operand depends on the value of the left one in order to function properly. For example, the following code fragment shows how you can take advantage of short-circuit logical evaluation to be sure that a division operation will be valid before evaluating it:
+ 
+Java provides two interesting Boolean operators not found in some other computer languages. These are secondary versions of the Boolean AND and OR operators, and are commonly known as _short-circuit_ logical operators. As you can see from the preceding table, the OR operator results in **true** when **A** is **true**, no matter what **B** is. Similarly, the AND operator results in **false** when **A** is **false**, no matter what **B** is. If you use the **||** and **&&** forms, rather than the **|** and **&** forms of these operators, Java will not bother to evaluate the right-hand operand when the outcome of the expression can be determined by the left operand alone. This is very useful when the right-hand operand depends on the value of the left one in order to function properly. For example, the following code fragment shows how you can take advantage of short-circuit logical evaluation to be sure that a division operation will be valid before evaluating it:
 ```
 if (denom != 0 && num / denom > 10)
 ```
@@ -632,7 +636,7 @@ Here, using a single **&** ensures that the increment operation will be applied 
 
 ## The Assignment Operator
 
- You have been using the assignment operator since Chapter 2. Now it is time to take a formal look at it. The _assignment operator_ is the single equal sign, =. The assignment operator works in Java much as it does in any other computer language. It has this general form:
+You have been using the assignment operator since Chapter 2. Now it is time to take a formal look at it. The _assignment operator_ is the single equal sign, =. The assignment operator works in Java much as it does in any other computer language. It has this general form:
 
 _var_ = _expression_;
 

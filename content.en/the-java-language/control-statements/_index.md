@@ -341,9 +341,9 @@ class StringSwitch
 }
 ```
 As you would expect, the output from the program is
-
+```
 two
-
+```
 The string contained in **str** (which is "two" in this program) is tested against the **case** constants. When a match is found (as it is in the second **case**), the code sequence associated with that sequence is executed.
 
 Being able to use strings in a **switch** statement streamlines many situations. For example, using a string-based **switch** is an improvement over using the equivalent sequence of **if/else** statements. However, switching on strings can be more expensive than switching on integers. Therefore, it is best to switch on strings only in cases in which the controlling data is already in string form. In other words, don’t use strings in a **switch** unnecessarily.
@@ -382,13 +382,11 @@ In summary, there are three important features of the **switch** statement to no
 
 - A **switch** statement is usually more efficient than a set of nested **if**s.
 
-The last point is particularly interesting because it gives insight into how the Java compiler works. When it compiles a **switch** statement, the Java compiler will inspect each of the **case** constants and create a “jump table” that it will use for selecting the path of execution depending on the value of the expression. Therefore, if you need to select among a large group of values, a **switch** statement will run much faster than the equivalent logic coded using a sequence  
-
-of **if-else**s. The compiler can do this because it knows that the **case** constants are all the same type and simply must be compared for equality with the **switch** expression. The compiler has no such knowledge of a long list of **if** expressions.
+The last point is particularly interesting because it gives insight into how the Java compiler works. When it compiles a **switch** statement, the Java compiler will inspect each of the **case** constants and create a “jump table” that it will use for selecting the path of execution depending on the value of the expression. Therefore, if you need to select among a large group of values, a **switch** statement will run much faster than the equivalent logic coded using a sequence of **if-else**s. The compiler can do this because it knows that the **case** constants are all the same type and simply must be compared for equality with the **switch** expression. The compiler has no such knowledge of a long list of **if** expressions.
 
 ## Iteration Statements
 
- Java’s iteration statements are **for**, **while**, and **do-while**. These statements create what we commonly call loops. As you probably know, a loop repeatedly executes the same set of instructions until a termination condition is met. As you will see, Java has a loop to fit any programming need.
+Java’s iteration statements are **for**, **while**, and **do-while**. These statements create what we commonly call loops. As you probably know, a loop repeatedly executes the same set of instructions until a termination condition is met. As you will see, Java has a loop to fit any programming need.
 
 ### while
 
@@ -542,12 +540,12 @@ class Menu
                 break; 
             case '2':
                 System.out.println("The switch:\n"); 
-                System.out.println("switch(expression) {"});
+                System.out.println("switch(expression) ");
                 System.out.println(" case constant:");
                 System.out.println(" statement sequence"); 
                 System.out.println(" break;"); 
                 System.out.println("    //...");
-                System.out.println("}");
+                System.out.println(" ");
                 break;
             case '3':
                 System.out.println("The while:\n"); 
@@ -874,9 +872,7 @@ Summation of first 5 elements: 15
 ```
 As is evident, the **for** loop stops after the fifth element has been obtained. The **break** statement can also be used with Java’s other loops, and it is discussed in detail later in this chapter.
 
-There is one important point to understand about the for-each style loop. Its iteration variable is “read-only” as it relates to the underlying array. An assignment to the iteration variable has no effect on the underlying array. In  
-
-assignment to the iteration variable has no effect on the underlying array. In other words, you can’t change the contents of the array by assigning the iteration variable a new value. For example, consider this program:
+There is one important point to understand about the for-each style loop. Its iteration variable is “read-only” as it relates to the underlying array. An assignment to the iteration variable has no effect on the underlying array. In assignment to the iteration variable has no effect on the underlying array. In other words, you can’t change the contents of the array by assigning the iteration variable a new value. For example, consider this program:
 ```
 // The for-each loop is essentially read-only. 
 class NoChange 
@@ -903,9 +899,8 @@ The first **for** loop increases the value of the iteration variable by a factor
 1 2 3 4 5 6 7 8 9 10
 ```
 ## Iterating Over Multidimensional Arrays
- The enhanced version of the **for** also works on multidimensional arrays. Remember, however, that in Java, multidimensional arrays consist of _arrays of arrays_. (For example, a two-dimensional array is an array of one-dimensional arrays.) This is important when iterating over a multidimensional array, because each iteration obtains the _next array_, not an individual element. Furthermore, the iteration variable in the **for** loop must be compatible with the type of array being obtained. For example, in the case of a two-dimensional array, the iteration variable must be a reference to a one-dimensional array. In  
 
-general, when using the for-each **for** to iterate over an array of N dimensions, the objects obtained will be arrays of N–1 dimensions. To understand the implications of this, consider the following program. It uses nested **for** loops to obtain the elements of a two-dimensional array in row-order, from first to last.
+The enhanced version of the **for** also works on multidimensional arrays. Remember, however, that in Java, multidimensional arrays consist of _arrays of arrays_. (For example, a two-dimensional array is an array of one-dimensional arrays.) This is important when iterating over a multidimensional array, because each iteration obtains the _next array_, not an individual element. Furthermore, the iteration variable in the **for** loop must be compatible with the type of array being obtained. For example, in the case of a two-dimensional array, the iteration variable must be a reference to a one-dimensional array. In general, when using the for-each **for** to iterate over an array of N dimensions, the objects obtained will be arrays of N–1 dimensions. To understand the implications of this, consider the following program. It uses nested **for** loops to obtain the elements of a two-dimensional array in row-order, from first to last.
 ```
 // Use for-each style for on a two-dimensional array.
 class ForEach3 
@@ -929,7 +924,7 @@ class ForEach3
                 sum += y;
             }
         }
-        System.out.println("Summation: + sum);
+        System.out.println("Summation: "+ sum);
     }
 }
 ```
@@ -1090,9 +1085,7 @@ The output produced by this program is shown here:
 ```
 ## Jump Statements
 
- Java supports three jump statements: **break**, **continue**, and **return**. These statements transfer control to another part of your program. Each is examined  
-
-here.
+ Java supports three jump statements: **break**, **continue**, and **return**. These statements transfer control to another part of your program. Each is examined here.
 
 **NOTE**
 

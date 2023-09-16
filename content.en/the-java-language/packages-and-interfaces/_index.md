@@ -50,20 +50,22 @@ _package_ _mypack;_
 In order for a program to find **mypack**, the program can be executed from a directory immediately above **mypack**, or the **CLASSPATH** must be set to include the path to **mypack**, or the **\-classpath** option must specify the path to **mypack** when the program is run via **java**.
 
 When the second two options are used, the class path _must not_ include **mypack**, itself. It must simply specify the _path to_ **mypack**. For example, in a Windows environment, if the path to **mypack** is
-
+```
 _C:\\MyPrograms\\Java\\mypack_
-
+```
 then the class path to **mypack** is
-
+```
 _C:\\MyPrograms\\Java_
-
+```
 The easiest way to try the examples shown in this book is to simply create the package directories below your current development directory, put the **.class** files into the appropriate directories, and then execute the programs from the development directory. This is the approach used in the following example.
 
 ### A Short Package Example
 
  Keeping the preceding discussion in mind, you can try this simple package:
 ```
-// A simple package package mypack;
+// A simple package 
+package mypack;
+
 class Balance 
 {
     String name;
@@ -73,11 +75,12 @@ class Balance
         name = n;
         bal = b;
     }
+
     void show () 
     {
         if (bal<0)
         System.out.print ("-->");
-        System.out.println(name + ': $" + bal);
+        System.out.println(name + " : $" + bal);
     }
 }
 class AccountBalance 
@@ -109,7 +112,7 @@ java AccountBalance
 
 ## Packages and Member Access
 
- In the preceding chapters, you learned about various aspects of Java’s access control mechanism and its access modifiers. For example, you already know that access to a **private** member of a class is granted only to other members of that class. Packages add another dimension to access control. As you will see, Java provides many levels of protection to allow fine-grained control over the visibility of variables and methods within classes, subclasses, and packages.
+In the preceding chapters, you learned about various aspects of Java’s access control mechanism and its access modifiers. For example, you already know that access to a **private** member of a class is granted only to other members of that class. Packages add another dimension to access control. As you will see, Java provides many levels of protection to allow fine-grained control over the visibility of variables and methods within classes, subclasses, and packages.
 
 Classes and packages are both means of encapsulating and containing the name space and scope of variables and methods. Packages act as containers for classes and other subordinate packages. Classes act as containers for data and code. The class is Java’s smallest unit of abstraction. As it relates to the interplay between classes and packages, Java addresses four categories of visibility for class members:
 
@@ -128,11 +131,11 @@ Table 9-1 applies only to members of classes. A non-nested class has only two po
 
 **NOTE**
 
- The modules feature can also affect accessibility. Modules are described in Chapter 16.
+The modules feature can also affect accessibility. Modules are described in Chapter 16.
 
 ### An Package Access Example
 
- The following example shows all combinations of the access control modifiers. This example has two packages and five classes. Remember that the classes for the two different packages need to be stored in directories named after their respective packages—in this case, **p1** and **p2**.
+The following example shows all combinations of the access control modifiers. This example has two packages and five classes. Remember that the classes for the two different packages need to be stored in directories named after their respective packages—in this case, **p1** and **p2**.
 
 The source for the first package defines three classes: **Protection**, **Derived**, and **SamePackage**. The first class defines four **int** variables in each of the legal protection modes. The variable **n** is declared with the default protection, **n_pri** is **private**, **n_pro** is **protected**, and **n_pub** is **public**.
 
@@ -149,6 +152,7 @@ public class Protection
     private int n_pri = 2; 
     protected int n_pro = 3; 
     public int n_pub = 4;
+
     public Protection () 
     {
         System.out.println("base constructor");
@@ -211,7 +215,7 @@ class Protection2 extends pl.Protection
         //System.out.println("n=" + n);
         
         // class only
-        // System.out.println("n_pri = + n_pri);
+        // System.out.println("n_pri = "+ n_pri);
         
         System.out.println("n_pro = "+n_pub);
         System.out.println("n_pub = "+n_pro);  
@@ -227,6 +231,7 @@ class OtherPackage
     { 
         pl.Protection p = new pl. Protection(); 
         System.out.println("other package constructor");
+        
         // class or package only
         // System.out.println("n = "+ p.n);
 
@@ -273,7 +278,7 @@ public class Demo
 ```
 ## Importing Packages
 
- Given that packages exist and are a good mechanism for compartmentalizing diverse classes from each other, it is easy to see why all of the built-in Java classes are stored in packages. There are no core Java classes in the unnamed default package; all of the standard classes are stored in some named package. Since classes within packages must be fully qualified with their package name or names, it could become tedious to type in the long dot-separated package path name for every class you want to use. For this reason, Java includes the **import** statement to bring certain classes, or entire packages, into visibility. Once imported, a class can be referred to directly, using only its name. The **import** statement is a convenience to the programmer and is not technically needed to write a complete Java program. If you are going to refer to a few dozen classes in your application, however, the **import** statement will save a lot of typing.
+Given that packages exist and are a good mechanism for compartmentalizing diverse classes from each other, it is easy to see why all of the built-in Java classes are stored in packages. There are no core Java classes in the unnamed default package; all of the standard classes are stored in some named package. Since classes within packages must be fully qualified with their package name or names, it could become tedious to type in the long dot-separated package path name for every class you want to use. For this reason, Java includes the **import** statement to bring certain classes, or entire packages, into visibility. Once imported, a class can be referred to directly, using only its name. The **import** statement is a convenience to the programmer and is not technically needed to write a complete Java program. If you are going to refer to a few dozen classes in your application, however, the **import** statement will save a lot of typing.
 
 In a Java source file, **import** statements occur immediately following the **package** statement (if it exists) and before any class definitions. This is the general form of the **import** statement:
 ```
@@ -306,7 +311,8 @@ class MyDate extends java.util.Date {
 }
 ```
 In this version, **Date** is fully-qualified. 
-    As shown in Table 9-1, when a package is imported, only those items within the package declared as **public** will be available to non-subclasses in the importing code. For example, if you want the **Balance** class of the package **mypack** shown earlier to be available as a stand-alone class for general use outside of **mypack**, then you will need to declare it as **public** and put it into its own file, as shown here:  
+
+As shown in Table 9-1, when a package is imported, only those items within the package declared as **public** will be available to non-subclasses in the importing code. For example, if you want the **Balance** class of the package **mypack** shown earlier to be available as a stand-alone class for general use outside of **mypack**, then you will need to declare it as **public** and put it into its own file, as shown here:  
 ```
 package mypack;
 
@@ -350,7 +356,7 @@ As an experiment, remove the **public** specifier from the **Balance** class and
 
 ## Interfaces
 
- Using the keyword **interface**, you can fully abstract a class’ interface from its implementation. That is, using **interface**, you can specify what a class must do, but not how it does it. Interfaces are syntactically similar to classes, but they lack instance variables, and, as a general rule, their methods are declared without any body. In practice, this means that you can define interfaces that don’t make assumptions about how they are implemented. Once it is defined, any number of classes can implement an **interface**. Also, one class can implement any number of interfaces.
+Using the keyword **interface**, you can fully abstract a class’ interface from its implementation. That is, using **interface**, you can specify what a class must do, but not how it does it. Interfaces are syntactically similar to classes, but they lack instance variables, and, as a general rule, their methods are declared without any body. In practice, this means that you can define interfaces that don’t make assumptions about how they are implemented. Once it is defined, any number of classes can implement an **interface**. Also, one class can implement any number of interfaces.
 
 To implement an interface, a class must provide the complete set of methods required by the interface. However, each class is free to determine the details of its own implementation. By providing the **interface** keyword, Java allows you to fully utilize the “one interface, multiple methods” aspect of polymorphism.
 
@@ -358,11 +364,11 @@ Interfaces are designed to support dynamic method resolution at run time. Normal
 
 ### Defining an Interface
 
- An interface is defined much like a class. This is a simplified general form of an interface:  
+An interface is defined much like a class. This is a simplified general form of an interface:  
 ```
 access interface name 
 { 
-    return-type method-name 1(parameter-list); 
+    return-type method-name1(parameter-list); 
     return-type method-name2(parameter-list);
     type final-varnamel= value; 
     type final-varname2 = value; 
@@ -386,7 +392,7 @@ interface callback
 ```
 ## Implementing Interfaces
 
- Once an **interface** has been defined, one or more classes can implement that interface. To implement an interface, include the **implements** clause in a class definition, and then create the methods required by the interface. The general form of a class that includes the **implements** clause looks like this:
+Once an **interface** has been defined, one or more classes can implement that interface. To implement an interface, include the **implements** clause in a class definition, and then create the methods required by the interface. The general form of a class that includes the **implements** clause looks like this:
 ```
 class classname [extends superclass][implements interface [.interface...]]{
     //class-body
@@ -434,7 +440,8 @@ The following example calls the **callback()** method via an interface reference
 ```
 class TestIFace
 {
-    public static void main(String args[]){
+    public static void main(String args[])
+    {
         Callback c = new Client();
         c.callback(42);
     }
@@ -566,12 +573,14 @@ class FixedStack implements IntStack
 { 
     private int stek[]; 
     private int tos;
+
     // allocate and initialize stack
     FixedStack (int size) 
     { 
-        stck new int[size];
+        stck = new int[size];
+        tos = -1;
     }
-    tos = -1;
+    
     // Push an item onto the stack 
     public void push (int item) 
     {
@@ -580,6 +589,7 @@ class FixedStack implements IntStack
         else 
             stck [++tos] = item;
     }
+
     // Pop an item from the stack public 
     int pop() 
     {
@@ -696,7 +706,7 @@ class IFTest3
         for (int i=0; i<12; i++) 
             mystack.push(i);
             
-        mystack= fs; // load fixed stack 
+        mystack = fs; // load fixed stack 
         for (int i=0; i<8; i++) 
             mystack.push(i);
             
@@ -730,7 +740,7 @@ interface SharedConstants
 }
 class Question implements SharedConstants 
 { 
-    Random rand new Random();
+    Random rand = new Random();
     int ask() 
     {
         int prob= (int) (100 * rand.nextDouble());
@@ -844,13 +854,11 @@ class IFExtend
     }
 }
 ```
-As an experiment, you might want to try removing the implementation for **meth1()** in **MyClass**. This will cause a compile-time error. As stated earlier, any class that implements an interface must implement all methods required by  
-
-that interface, including any that are inherited from other interfaces.
+As an experiment, you might want to try removing the implementation for **meth1()** in **MyClass**. This will cause a compile-time error. As stated earlier, any class that implements an interface must implement all methods required by that interface, including any that are inherited from other interfaces.
 
 ## Default Interface Methods
 
- As explained earlier, prior to JDK 8, an interface could not define any implementation whatsoever. This meant that for all previous versions of Java, the methods specified by an interface were abstract, containing no body. This is the traditional form of an interface and is the type of interface that the preceding discussions have used. The release of JDK 8 changed this by adding a new capability to **interface** called the _default method_. A default method lets you define a default implementation for an interface method. In other words, by use of a default method, it is possible for an interface method to provide a body, rather than being abstract. During its development, the default method was also referred to as an _extension method,_ and you will likely see both terms used.
+As explained earlier, prior to JDK 8, an interface could not define any implementation whatsoever. This meant that for all previous versions of Java, the methods specified by an interface were abstract, containing no body. This is the traditional form of an interface and is the type of interface that the preceding discussions have used. The release of JDK 8 changed this by adding a new capability to **interface** called the _default method_. A default method lets you define a default implementation for an interface method. In other words, by use of a default method, it is possible for an interface method to provide a body, rather than being abstract. During its development, the default method was also referred to as an _extension method,_ and you will likely see both terms used.
 
 A primary motivation for the default method was to provide a means by which interfaces could be expanded without breaking existing code. Recall that there must be implementations for all methods defined by an interface. In the past, if a new method were added to a popular, widely used interface, then the addition of that method would break existing code because no implementation would be found for that new method. The default method solves this problem by supplying an implementation that will be used if no other implementation is explicitly provided. Thus, the addition of a default method will not cause preexisting code to break.
 
@@ -917,9 +925,7 @@ The output is shown here:
 
 Default String
 ```
-As you can see, the default implementation of **getString()** was automatically  
-
-used. It was not necessary for **MyIFImp** to define it. Thus, for **getString()**, implementation by a class is optional. (Of course, its implementation by a class will be required if the class uses **getString()** for some purpose beyond that supported by its default.)
+As you can see, the default implementation of **getString()** was automatically used. It was not necessary for **MyIFImp** to define it. Thus, for **getString()**, implementation by a class is optional. (Of course, its implementation by a class will be required if the class uses **getString()** for some purpose beyond that supported by its default.)
 
 It is both possible and common for an implementing class to define its own implementation of a default method. For example, **MyIFImp2** overrides **getString()**:
 ```
@@ -940,7 +946,7 @@ class MyIFImp2 implements MyIP
 Now, whe **getString()** is called, a different string is returned.
 ## A More Practical Example
 
- Although the preceding shows the mechanics of using default methods, it doesn’t illustrate their usefulness in a more practical setting. To do this, let’s once again return to the **IntStack** interface shown earlier in this chapter. For the sake of discussion, assume that **IntStack** is widely used and many programs rely on it. Further assume that we now want to add a method to **IntStack** that clears the stack, enabling the stack to be re-used. Thus, we want to evolve the **IntStack** interface so that it defines new functionality, but we don’t want to break any preexisting code. In the past, this would be impossible, but with the inclusion of default methods, it is now easy to do. For example, the **IntStack** interface can be enhanced like this:  
+Although the preceding shows the mechanics of using default methods, it doesn’t illustrate their usefulness in a more practical setting. To do this, let’s once again return to the **IntStack** interface shown earlier in this chapter. For the sake of discussion, assume that **IntStack** is widely used and many programs rely on it. Further assume that we now want to add a method to **IntStack** that clears the stack, enabling the stack to be re-used. Thus, we want to evolve the **IntStack** interface so that it defines new functionality, but we don’t want to break any preexisting code. In the past, this would be impossible, but with the inclusion of default methods, it is now easy to do. For example, the **IntStack** interface can be enhanced like this:  
 
 Here, the default behavior of **clear()** simply displays a message indicating that it is not implemented. This is acceptable because no preexisting class that implements **IntStack** would ever call **clear()** because it was not defined by the earlier version of **IntStack**. However, **clear()** can be implemented by a new class that implements **IntStack**. Furthermore, **clear()** needs to be defined by a new implementation only if it is used. Thus, the default method gives you
 
@@ -951,7 +957,7 @@ One other point: In real-world code, **clear()** would have thrown an exception,
 
 ## Multiple Inheritance Issues
 
- As explained earlier in this book, Java does not support the multiple inheritance of classes. Now that an interface can include default methods, you might be wondering if an interface can provide a way around this restriction. The answer is, essentially, no. Recall that there is still a key difference between a class and an interface: a class can maintain state information (especially through the use of instance variables), but an interface cannot.
+As explained earlier in this book, Java does not support the multiple inheritance of classes. Now that an interface can include default methods, you might be wondering if an interface can provide a way around this restriction. The answer is, essentially, no. Recall that there is still a key difference between a class and an interface: a class can maintain state information (especially through the use of instance variables), but an interface cannot.
 
 The preceding notwithstanding, default methods do offer a bit of what one would normally associate with the concept of multiple inheritance. For example, you might have a class that implements two interfaces. If each of these interfaces provides default methods, then some behavior is inherited from  
 
@@ -966,19 +972,19 @@ Second, in cases in which a class implements two interfaces that both have the s
 In cases in which one interface inherits another, with both defining a common default method, the inheriting interface’s version of the method takes precedence. Therefore, continuing the example, if **Beta** extends **Alpha**, then **Beta**’s version of **reset()** will be used.
 
 It is possible to explicitly refer to a default implementation in an inherited interface by using this form of **super**. Its general form is shown here:
-
-InterfaceName.super._methodName()_
-
+```
+InterfaceName.super.methodName()
+```
 For example, if **Beta** wants to refer to **Alpha**’s default for **reset()**, it can use this statement:
-
+```
 Alpha.super.reset();
-
+```
 ### Use static Methods in an Interface
 
- Another capability added to **interface** by JDK 8 is the ability to define one or more **static** methods. Like **static** methods in a class, a **static** method defined by an interface can be called independently of any object. Thus, no implementation of the interface is necessary, and no instance of the interface is required, in order to call a **static** method. Instead, a **static** method is called by specifying the interface name, followed by a period, followed by the method name. Here is the general form:
-
-_InterfaceName.staticMethodName_
-
+Another capability added to **interface** by JDK 8 is the ability to define one or more **static** methods. Like **static** methods in a class, a **static** method defined by an interface can be called independently of any object. Thus, no implementation of the interface is necessary, and no instance of the interface is required, in order to call a **static** method. Instead, a **static** method is called by specifying the interface name, followed by a period, followed by the method name. Here is the general form:
+```
+InterfaceName.staticMethodName
+```
 Notice that this is similar to the way that a **static** method in a class is called. The following shows an example of a **static** method in an interface by adding one to **MyIF**, shown in the previous section. The **static** method is **getDefaultNumber()**. It returns zero.
 ```
 public interface MyIF 
@@ -1011,7 +1017,7 @@ One last point: **static** interface methods are not inherited by either an impl
 
 ## Private Interface Methods
 
- Beginning with JDK 9, an interface can include a private method. A private interface method can be called only by a default method or another private method defined by the same interface. Because a private interface method is specified **private**, it cannot be used by code outside the interface in which it is defined. This restriction includes subinterfaces because a private interface method is not inherited by a subinterface.
+Beginning with JDK 9, an interface can include a private method. A private interface method can be called only by a default method or another private method defined by the same interface. Because a private interface method is specified **private**, it cannot be used by code outside the interface in which it is defined. This restriction includes subinterfaces because a private interface method is not inherited by a subinterface.
 
 The key benefit of a private interface method is that it lets two or more default methods use a common piece of code, thus avoiding code duplication. For example, here is another version of the **IntStack** interface that has two default methods called **popNElements()** and **skipAndPopNElements()**. The first returns an array that contains the top N elements on the stack. The second skips a specified number of elements and then returns an array that contains the next N elements. Both use a private method called **getElements()** to obtain an array of the specified number of elements from the stack.  
 ```
@@ -1057,4 +1063,4 @@ Although the private interface method is a feature that you will seldom need, in
 
 ## Final Thoughts on Packages and Interfaces
 
- Although the examples we’ve included in this book do not make frequent use of packages or interfaces, both of these tools are an important part of the Java programming environment. Virtually all real programs that you write in Java will be contained within packages. A number will probably implement interfaces as well. It is important, therefore, that you be comfortable with their usage.  
+Although the examples we’ve included in this book do not make frequent use of packages or interfaces, both of these tools are an important part of the Java programming environment. Virtually all real programs that you write in Java will be contained within packages. A number will probably implement interfaces as well. It is important, therefore, that you be comfortable with their usage.  

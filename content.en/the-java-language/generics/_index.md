@@ -28,41 +28,69 @@ Generics added the type safety that was lacking. They also streamlined the proce
 ## A Simple Generics Example
 
  Let’s begin with a simple example of a generic class. The following program defines two classes. The first is the generic class **Gen**, and the second is **GenDemo**, which uses **Gen**.  
-```java
-// A simple generic class.
-// Here, T is a type parameter that // will be replaced by a real type
-// when an object of type Gen is created. class Gen<T> {
-Tob; // declare an object of type T
-// Pass the constructor a reference to // an object of type T.
-Gen (To) {
-ob = 0;
-}
-// Return ob.
-T getob() { return ob;
-}
-// Show type of T.
 ```
-```java
-void showType() { System.out.println("Type of Tis". ob.getClass().getName());
-
+// A simple generic class.
+// Here, T is a type parameter that 
+// will be replaced by a real type
+// when an object of type Gen is created. 
+class Gen<T> 
+{
+    T ob;
+    // declare an object of type T
+    // Pass the constructor a reference to // an object of type T.
+    Gen (T o) 
+    {
+        ob = o;
     }
-// Demonstrate the generic class.
-class GenDemo {
-public static void main(String args[]) { // Create a Gen reference for Integers. Gen<Integer> 10b;
-// Create a Gen<Integer> object and assign its // reference to iob. Notice the use of autoboxing // to encapsulate the value 88 within an Integer object. 10b new Gen<Integer> (88);
-// Show the type of data used by iob. iob.showType();
-// Get the value in iob. Notice that // no cast is needed. int vi0b.getob(); System.out.println("value: "
-System.out.println();
-// Create a Gen object for Strings. Gen<String> strob= new Gen<String> ("Generics Test");
-// Show the type of data used by strob. strob.showType();
-// that no cast is needed.
-// Get the value of strob. Again, notice String str strob.getob(); System.out.println("value: str);
+    
+    // Return ob.
+    T getob() 
+    { 
+        return ob;
+    }
+    // Show type of T.
+    void showType() 
+    { 
+        System.out.println("Type of Tis"+ob.getClass().getName());
+    }
 }
+// Demonstrate the generic class.
+class GenDemo 
+{
+    public static void main(String args[]) 
+    { 
+        // Create a Gen reference for Integers. 
+        Gen<Integer> 1ob;
 
+        // Create a Gen<Integer> object and assign its 
+        // reference to iob. Notice the use of autoboxing 
+        // to encapsulate the value 88 within an Integer object. 
+        1ob = new Gen<Integer> (88);
+
+        // Show the type of data used by iob. 
+        iob.showType();
+
+        // Get the value in iob. Notice that 
+        // no cast is needed. 
+        int v = i0b.getob(); 
+        System.out.println("value: ");
+        System.out.println();
+        
+        // Create a Gen object for Strings. 
+        Gen<String> strob= new Gen<String> ("Generics Test");
+        
+        // Show the type of data used by strob. 
+        strob.showType();
+        
+        // that no cast is needed.
+        // Get the value of strob. Again, notice String str 
+        strob.getob(); 
+        System.out.println("value: str);
+    }
 }
 ```
 The output produced by the program is shown here:
-
+```
 Type of T is java.lang.Integer
 
 value: 88
@@ -70,10 +98,12 @@ value: 88
 Type of T is java.lang.String
 
 value: Generics Test
-
+```
 Let’s examine this program carefully. First, notice how **Gen** is declared by the following line:
 ```
 class Gen<T> {
+    ...
+    }
 ```
 Here, **T** is the name of a _type parameter_. This name is used as a placeholder for the actual type that will be passed to **Gen** when an object is created. Thus, **T** is used within **Gen** whenever the type parameter is needed. Notice that **T** is contained within **< >**. This syntax can be generalized. Whenever a type parameter is being declared, it is specified within angle brackets. Because **Gen** uses a type parameter, **Gen** is a generic class, which is also called a _parameterized type_.
 
@@ -93,15 +123,14 @@ Gen (T o) {
 }
 ```
 
-Notice that its parameter, **o**, is of type **T**. This means that the actual type of **o** is  
-
-determined by the type passed to **T** when a **Gen** object is created. Also, because both the parameter **o** and the member variable **ob** are of type **T**, they will both be of the same actual type when a **Gen** object is created.
+Notice that its parameter, **o**, is of type **T**. This means that the actual type of **o** is determined by the type passed to **T** when a **Gen** object is created. Also, because both the parameter **o** and the member variable **ob** are of type **T**, they will both be of the same actual type when a **Gen** object is created.
 
 The type parameter **T** can also be used to specify the return type of a method, as is the case with the **getob()** method, shown here:
 
 ```
 T getch()
-     return ob;
+{
+    return ob;
 }
 ```
 
@@ -145,9 +174,7 @@ Next, the program obtains the value of **ob** by use of the following line:
 ```
 int v = iOb.getob();
 ```
-Because the return type of **getob()** is **T**, which was replaced by **Integer** when **iOb** was declared, the return type of **getob()** is also **Integer**, which unboxes into **int** when assigned to **v** (which is an **int**). Thus, there is no need to cast the return type of **getob()** to **Integer**. Of course, it’s not necessary to use the auto-  
-
-unboxing feature. The preceding line could have been written like this, too:
+Because the return type of **getob()** is **T**, which was replaced by **Integer** when **iOb** was declared, the return type of **getob()** is also **Integer**, which unboxes into **int** when assigned to **v** (which is an **int**). Thus, there is no need to cast the return type of **getob()** to **Integer**. Of course, it’s not necessary to use the auto-unboxing feature. The preceding line could have been written like this, too:
 ```
 int v = iOb.getob().intValue();
 ```
@@ -163,13 +190,11 @@ Because the type argument is **String**, **String** is substituted for **T** ins
 ```
 Gen<int> intOb = new Gen<int>(53); // Error, can't use primitive
 ```
-type
-
-Of course, not being able to specify a primitive type is not a serious restriction because you can use the type wrappers (as the preceding example did) to encapsulate a primitive type. Further, Java’s autoboxing and auto-unboxing mechanism makes the use of the type wrapper transparent.
+typeOf course, not being able to specify a primitive type is not a serious restriction because you can use the type wrappers (as the preceding example did) to encapsulate a primitive type. Further, Java’s autoboxing and auto-unboxing mechanism makes the use of the type wrapper transparent.
 
 ### Generic Types Differ Based on Their Type Arguments
 
- A key point to understand about generic types is that a reference of one specific version of a generic type is not type compatible with another version of the same generic type. For example, assuming the program just shown, the following line of code is in error and will not compile:
+A key point to understand about generic types is that a reference of one specific version of a generic type is not type compatible with another version of the same generic type. For example, assuming the program just shown, the following line of code is in error and will not compile:
 ```
 iOb = strOb; // Wrong!
 ```
@@ -177,46 +202,71 @@ Even though both **iOb** and **strOb** are of type **Gen<T>**, they are referenc
 
 ### How Generics Improve Type Safety
 
- At this point, you might be asking yourself the following question: Given that the same functionality found in the generic **Gen** class can be achieved without generics, by simply specifying **Object** as the data type and employing the proper casts, what is the benefit of making **Gen** generic? The answer is that generics automatically ensure the type safety of all operations involving **Gen**. In the process, they eliminate the need for you to enter casts and to type-check code by hand.
+At this point, you might be asking yourself the following question: Given that the same functionality found in the generic **Gen** class can be achieved without generics, by simply specifying **Object** as the data type and employing the proper casts, what is the benefit of making **Gen** generic? The answer is that generics automatically ensure the type safety of all operations involving **Gen**. In the process, they eliminate the need for you to enter casts and to type-check code by hand.
 
 To understand the benefits of generics, first consider the following program that creates a non-generic equivalent of **Gen**:
 
-```java
-NonGen 18 functionally equivalent to Gen // but does not use generics.
-class NonGen {
-Object ob; // ob is now of type Object
-Pass the constructor a reference to 
-// an object of type Object NonGen (Object o) {
-ob = 0;
+```
+//NonGen 18 functionally equivalent to Gen 
+// but does not use generics.
+class NonGen 
+{
+    Object ob; // ob is now of type Object Pass the constructor a reference to 
+    
+    // an object of type Object 
+    NonGen (Object o) 
+    {
+        ob = o;
+    }
+
+    // Return type Object.
+    Object getob() 
+    {
+        return ob;
+    }
+    
+    // Show type of ob. 
+    void showType() 
+    {
+        System.out.println("Type of ob is " +ob.getClass().getName());
+    }
 }
-// Return type Object.
-Object getob() {
-return ob;
-}
-// Show type of ob. 
-void showType() {
-     System.out.println("Type of ob is " +
-ob.getClass().getName());
-}
-}
+
 // Demonstrate the non-generic class.
-class NonGenDemo ( public static void main(String args[]) {
-NonGen iob;
-// Create NonGen Object and store
-// an Integer in it. Autoboxing still occurs. 10b = new NonGen (88);
-// Show the type of data used by iob.
-iob.showType();
-// Get the value of iob.
-// This time, a cast is necessary. int (Integer) 10b.getob(); System.out.println("value: "v);
-System.out.println();
-// Create another NonGen object and // store a String in it. NonGen strob= new NonGen ("Non-Generics Test");
-// Show the type of data used by strob. strob.showType();
-// Get the value of strob.
-// Again, notice that a cast is necessary.
-String str(String) strob.getob(); System.out.println("value: " + str);
-// This compiles, but is conceptually wrong! iob strob;
-v = (Integer) iob.getob(); // run-time error!
-}
+class NonGenDemo 
+{ 
+    public static void main(String args[]) 
+    {
+        NonGen iob;
+        // Create NonGen Object and store
+        // an Integer in it. Autoboxing still occurs. 
+        
+        iob = new NonGen (88);
+        // Show the type of data used by iob.
+
+        iob.showType();
+        // Get the value of iob.
+        // This time, a cast is necessary. 
+
+        int (Integer) = iob.getob(); 
+        System.out.println("value: "v);
+        System.out.println();
+        
+        // Create another NonGen object and 
+        // store a String in it. 
+        NonGen strob= new NonGen ("Non-Generics Test");
+
+        // Show the type of data used by strob. 
+        strob.showType();
+
+        // Get the value of strob.
+        // Again, notice that a cast is necessary.
+        String str = (String) strob.getob(); 
+        System.out.println("value: " + str);
+
+        // This compiles, but is conceptually wrong! iob strob;
+        v = (Integer) iob.getob(); // run-time error!
+    }
 }
 
 ```
@@ -230,60 +280,73 @@ int v = (Integer) iOb.getob();
 Because the return type of **getob()** is **Object**, the cast to **Integer** is necessary to enable that value to be auto-unboxed and stored in **v**. If you remove the cast, the program will not compile. With the generic version, this cast was implicit. In the non-generic version, the cast must be explicit. This is not only an inconvenience, but also a potential source of error.
 
 Now, consider the following sequence from near the end of the program:
-
-// This compiles, but is conceptually wrong!
 ```
+// This compiles, but is conceptually wrong!
 iOb = strOb;
 
 v = (Integer) iOb.getob(); // run-time error!
 ```
-Here, **strOb** is assigned to **iOb**. However, **strOb** refers to an object that contains a string, not an integer. This assignment is syntactically valid because all **NonGen** references are the same, and any **NonGen** reference can refer to any other **NonGen** object. However, the statement is semantically wrong, as the next line shows. Here, the return type of **getob()** is cast to **Integer**, and then an attempt is made to assign this value to **v**. The trouble is that **iOb** now refers to an object that stores a **String**, not an **Integer**. Unfortunately, without the use of  
-
-generics, the Java compiler has no way to know this. Instead, a run-time exception occurs when the cast to **Integer** is attempted. As you know, it is extremely bad to have run-time exceptions occur in your code!
+Here, **strOb** is assigned to **iOb**. However, **strOb** refers to an object that contains a string, not an integer. This assignment is syntactically valid because all **NonGen** references are the same, and any **NonGen** reference can refer to any other **NonGen** object. However, the statement is semantically wrong, as the next line shows. Here, the return type of **getob()** is cast to **Integer**, and then an attempt is made to assign this value to **v**. The trouble is that **iOb** now refers to an object that stores a **String**, not an **Integer**. Unfortunately, without the use of generics, the Java compiler has no way to know this. Instead, a run-time exception occurs when the cast to **Integer** is attempted. As you know, it is extremely bad to have run-time exceptions occur in your code!
 
 The preceding sequence can’t occur when generics are used. If this sequence were attempted in the generic version of the program, the compiler would catch it and report an error, thus preventing a serious bug that results in a run-time exception. The ability to create type-safe code in which type-mismatch errors are caught at compile time is a key advantage of generics. Although using **Object** references to create “generic” code has always been possible, that code was not type safe, and its misuse could result in run-time exceptions. Generics prevent this from occurring. In essence, through generics, run-time errors are converted into compile-time errors. This is a major advantage.
 
 ## A Generic Class with Two Type Parameters
 
- You can declare more than one type parameter in a generic type. To specify two or more type parameters, simply use a comma-separated list. For example, the following **TwoGen** class is a variation of the **Gen** class that has two type parameters: 
- ```java
+You can declare more than one type parameter in a generic type. To specify two or more type parameters, simply use a comma-separated list. For example, the following **TwoGen** class is a variation of the **Gen** class that has two type parameters: 
+ ```
 // A simple generic class with two type 
 // parameters: T and V.
-class TwoGen<T, V> {
-T obl;
-V ob2;
-// Pass the constructor a reference to 
-// an object of type T and an object of type V. 
-TwoGen (T 01, V 02) {
-ob1 = o1;
-ob2 = o2;
-}
-// Show types of T and V.
-void showTypes() { 
-    System.out.println("Type of T is " + obl.getClass().getName());
-    System.out.println("Type of V is " + ob2.getClass().getName());
-}
-T getobl() {
-return obl;
-}
-V getob2 () {
-return ob2;
-}
+class TwoGen<T, V> 
+{
+    T obl;
+    V ob2;
+    
+    // Pass the constructor a reference to 
+    // an object of type T and an object of type V. 
+    TwoGen (T 01, V 02) 
+    {
+        ob1 = o1;
+        ob2 = o2;
+    }
+    
+    // Show types of T and V.
+    void showTypes() 
+    {
+        System.out.println("Type of T is " + obl.getClass().getName());
+        System.out.println("Type of V is " + ob2.getClass().getName());
+    }
+    
+    T getobl() 
+    {
+        return obl;
+    }
+    
+    V getob2 ()
+    {
+        return ob2;
+    }
 }
 // Demonstrate TwoGen.
-class SimpGen public static void main(String args[]) {
-TwoGen<Integer, String> tgobj = new TwoGen<Integer, String> (88, "Generics");
-// Show the types. tgobj.showTypes ();
-// Obtain and show values.
-int vtgobj.getobl(); System.out.println("value: " + v):
-String str tgobj.getob2(); System.out.println("value: " + str);
-}
+class SimpGen 
+{
+    public static void main(String args[]) 
+    {
+        TwoGen<Integer, String> tgobj = new TwoGen<Integer, String> (88, "Generics");
+        // Show the types. 
+        tgobj.showTypes ();
+        
+        // Obtain and show values.
+        int vtgobj.getobl(); 
+        System.out.println("value: " + v);
+        String str tgobj.getob2(); 
+        System.out.println("value: " + str);
+    }
 }
 
- ``` 
+``` 
 
 The output from this program is shown here:
-
+```
 Type of T is java.lang.Integer
 
 Type of V is java.lang.String
@@ -291,31 +354,32 @@ Type of V is java.lang.String
 value: 88
 
 value: Generics
+```
 
 Notice how **TwoGen** is declared:
 ```
-class TwoGen<T, V> {
+class TwoGen<T, V> 
+{
+    ...
+}
 ```
 It specifies two type parameters: **T** and **V**, separated by a comma. Because it has two type parameters, two type arguments must be passed to **TwoGen** when an object is created, as shown next:
 
-```java
-TwoGen<Integer, String> tgobj new TwoGen<Integer, String> (88, "Generics");
+```
+TwoGen<Integer, String> tgobj = new TwoGen<Integer, String> (88, "Generics");
 ```
 
-In this case, **Integer** is substituted for **T**, and **String** is substituted for **V**. Although the two type arguments differ in this example, it is possible for
-
-both types to be the same. For example, the following line of code is valid:
+In this case, **Integer** is substituted for **T**, and **String** is substituted for **V**. Although the two type arguments differ in this example, it is possible for both types to be the same. For example, the following line of code is valid:
 ```
-TwoGen<String, String> x = new TwoGen<String, String> ("A",
-"B");
+TwoGen<String, String> x = new TwoGen<String, String> ("A","B");
 ```
 In this case, both **T** and **V** would be of type **String**. Of course, if the type arguments were always the same, then two type parameters would be unnecessary.
 
 ## The General Form of a Generic Class
 
- The generics syntax shown in the preceding examples can be generalized. Here is the syntax for declaring a generic class:
+The generics syntax shown in the preceding examples can be generalized. Here is the syntax for declaring a generic class:
 ```
-class class-name<type-param-list > { // …
+class class-name<type-param-list > { // …}
 ```
 Here is the full syntax for declaring a reference to a generic class and instance creation:
 ```
@@ -325,80 +389,98 @@ new class-name<type-arg-list >(cons-arg-list);
 ```
 ## Bounded Types
 
- In the preceding examples, the type parameters could be replaced by any class type. This is fine for many purposes, but sometimes it is useful to limit the types that can be passed to a type parameter. For example, assume that you want to create a generic class that contains a method that returns the average of an array of numbers. Furthermore, you want to use the class to obtain the average of an array of any type of number, including integers, **float**s, and **double**s. Thus, you want to specify the type of the numbers generically, using a type parameter. To create such a class, you might try something like this:
-
-
- ```java
+In the preceding examples, the type parameters could be replaced by any class type. This is fine for many purposes, but sometimes it is useful to limit the types that can be passed to a type parameter. For example, assume that you want to create a generic class that contains a method that returns the average of an array of numbers. Furthermore, you want to use the class to obtain the average of an array of any type of number, including integers, **float**s, and **double**s. Thus, you want to specify the type of the numbers generically, using a type parameter. To create such a class, you might try something like this:
+ ```
 // Stats attempts (unsuccessfully) to
 // create a generic class that can compute
 // the average of an array of numbers of 
 // any given type.
-//
-// The class contains an error! class Stats<T> {
-T[] nums; // nums is an array of type T
-// Pass the constructor a reference to // an array of type T.
-Stats (To) {
-nums = 0;
-}
-// Return type double in all cases. double average () { double sum = 0.0;
-for (int i=0; i < nums.length; i++) sum += nums[i].doubleValue(); // Error!!!
-return sum nums.length;
-}
-}
- ```  
+// The class contains an error! 
+class Stats<T> 
+{
+    T[] nums; // nums is an array of type T
+    // Pass the constructor a reference to 
+    // an array of type T.
+    Stats (T o) 
+    {
+        nums = o;
+    }
 
+    // Return type double in all cases. 
+    double average () 
+    { 
+        double sum = 0.0;
+        for (int i=0; i < nums.length; i++) 
+        sum += nums[i].doubleValue(); // Error!!!
+        return sum / nums.length;
+    }
+}
+```  
 In **Stats**, the **average()** method attempts to obtain the **double** version of each number in the **nums** array by calling **doubleValue()**. Because all numeric classes, such as **Integer** and **Double**, are subclasses of **Number**, and **Number** defines the **doubleValue()** method, this method is available to all numeric wrapper classes. The trouble is that the compiler has no way to know that you are intending to create **Stats** objects using only numeric types. Thus, when you try to compile **Stats**, an error is reported that indicates that the **doubleValue()** method is unknown. To solve this problem, you need some way to tell the compiler that you intend to pass only numeric types to **T**. Furthermore, you need some way to ensure that only numeric types are actually passed.
 
 To handle such situations, Java provides _bounded types_. When specifying a type parameter, you can create an upper bound that declares the superclass from which all type arguments must be derived. This is accomplished through the use of an **extends** clause when specifying the type parameter, as shown here:
 ```
-<T extends superclass\>
+<T extends superclass>
 ```
 This specifies that T can only be replaced by superclass, or subclasses of superclass. Thus, superclass defines an inclusive, upper limit.
 
 You can use an upper bound to fix the **Stats** class shown earlier by specifying **Number** as an upper bound, as shown here:  
 
-```java
+```
 // In this version of Stats, the type argument for 
-// T must be either Number, or a class derived 
-// from Number.
-class Stats<T extends Number> {
-T[] nums; // array of Number or subclass
-// Pass the constructor a reference to 
-// an array of type Number or subclass. Stats (T[] o) {
-nums = o;
-}
-// Return type double in all cases. double average () { 
-    double sum 0.0;
-for (int i=0; i < nums.length; i++) sum += nums[i].doubleValue();
-return sum/nums.length;
-}
+// T must be either Number, or a class derived from Number.
+class Stats<T extends Number> 
+{
+    T[] nums; // array of Number or subclass
+    // Pass the constructor a reference to 
+    // an array of type Number or subclass. 
+    Stats (T[] o) 
+    {
+        nums = o;
+    }
+    
+    // Return type double in all cases. 
+    double average () 
+    {
+        double sum = 0.0;
+        for (int i=0; i < nums.length; i++) 
+            sum += nums[i].doubleValue();
+        return sum/nums.length;
+    }
 }
 // Demonstrate Stats.
-class Bounds Demo { 
-    public static void main(String args[]) {
-Integer inums []{1, 2, 3, 4, 5}; Stats<Integer> iob= new Stats<Integer>(inums); 
-double v iob.average(); 
-System.out.println("iob average is " + v);
-Double dnums[] = 1.1, 2.2, 3.3, 4.4, 5.5}; Stats<Double> dob= new Stats<Double> (dnums); 
-double w dob. average(); 
-System.out.println("dob average is "+w);
-// This won't compile because String is not a
-// subclass of Number. 
-// String strs[] = { "1", "2", "3", "4","5"}; 
-// Stats<String> strob= new Stats<String> (strs);
-//  double x strob.average (); 
-//  System.out.println("strob average is " + V);
+class BoundsDemo 
+{
+    public static void main(String args[]) 
+    {
+        Integer inums []{1, 2, 3, 4, 5}; 
+        Stats<Integer> iob= new Stats<Integer>(inums); 
+        double v = iob.average(); 
+        System.out.println("iob average is " + v);
+
+        Double dnums[] = {1.1, 2.2, 3.3, 4.4, 5.5}; 
+        Stats<Double> dob= new Stats<Double> (dnums); 
+        double w = dob. average(); 
+        System.out.println("dob average is "+w);
+        
+        // This won't compile because String is not a subclass of Number. 
+        // String strs[] = { "1", "2", "3", "4","5"}; 
+        // Stats<String> strob= new Stats<String> (strs);
+        //  double x strob.average (); 
+        //  System.out.println("strob average is " + V);
+    }
+}
 ```
 
 The output is shown here:
-
+```
 Average is 3.0
 
 Average is 3.3
-
+```
 Notice how **Stats** is now declared by this line:
 ```
-class Stats<T extends Number> {
+class Stats<T extends Number> {...}
 ```
 Because the type **T** is now bounded by **Number**, the Java compiler knows that all objects of type **T** can call **doubleValue()** because it is a method declared by **Number**. This is, by itself, a major advantage. However, as an added bonus, the bounding of **T** also prevents nonnumeric **Stats** objects from being created. For example, if you try removing the comments from the lines at the end of the program, and then try recompiling, you will receive compile-time errors because **String** is not a subclass of **Number**.
 
@@ -410,11 +492,11 @@ Here, **T** is bounded by a class called **MyClass** and an interface called **M
 
 ## Using Wildcard Arguments
 
- As useful as type safety is, sometimes it can get in the way of perfectly acceptable constructs. For example, given the **Stats** class shown at the end of the preceding section, assume that you want to add a method called **sameAvg()** that determines if two **Stats** objects contain arrays that yield the same average, no matter what type of numeric data each object holds. For example, if one object contains the **double** values 1.0, 2.0, and 3.0, and the other object  
+As useful as type safety is, sometimes it can get in the way of perfectly acceptable constructs. For example, given the **Stats** class shown at the end of the preceding section, assume that you want to add a method called **sameAvg()** that determines if two **Stats** objects contain arrays that yield the same average, no matter what type of numeric data each object holds. For example, if one object contains the **double** values 1.0, 2.0, and 3.0, and the other object  
 
 contains the integer values 2, 1, and 3, then the averages will be the same. One way to implement **sameAvg()** is to pass it a **Stats** argument, and then compare the average of that argument against the invoking object, returning true only if the averages are the same. For example, you want to be able to call **sameAvg()**, as shown here:
 
-```java
+```
 Integer inums[] = {1, 2, 3, 4, 5}; 
 Double dnums[] = {1.1, 2.2, 3.3, 4.4, 5.5};
 
@@ -431,12 +513,14 @@ At first, creating **sameAvg()** seems like an easy problem. Because **Stats** i
 
 At first, you might think of a solution like this, in which **T** is used as the type parameter:
 
-```java
+```
 // This won't work!
-// Determine if two averages are the same. boolean sameAvg (Stats<T> ob) {
-if (average () == ob.average ()))
-return true;
-return false;
+// Determine if two averages are the same. 
+boolean sameAvg (Stats<T> ob) 
+{
+    if (average () == ob.average ())
+        return true;
+    return false;
 }
 ```
 
@@ -446,62 +530,87 @@ The trouble with this attempt is that it will work only with other **Stats** obj
 
 To create a generic **sameAvg()** method, you must use another feature of Java generics: the wildcard argument. The wildcard argument is specified by the **?**, and it represents an unknown type. Using a wildcard, here is one way to write the **sameAvg()** method:
 
-```java
+```
 // Determine if two averages are the same.
 // Notice the use of the wildcard.
-boolean sameAvg (Stats<?> ob) { if (average () ob. average ())
-return true;
-return false;
+boolean sameAvg (Stats<?> ob) 
+{ 
+    if (average () == ob. average ())
+        return true;
+    return false;
 }
 ```
 
 Here, **Stats<?>** matches any **Stats** object, allowing any two **Stats** objects to have their averages compared. The following program demonstrates this: 
 
-```java
+```
 // Use a wildcard.
-class Stats<T extends Number> { 
+class Stats<T extends Number> 
+{
     T[] nums; // array of Number or subclass
-// Pass the constructor a reference to 
-// an array of type Number or subclass. Stats (To) {
-nums = 0;
+    // Pass the constructor a reference to 
+    // an array of type Number or subclass. 
+    Stats (T o) 
+    {
+        nums = o;
+    }
+    
+    // Return type double in all cases. 
+    double average () 
+    {
+        double sum = 0.0;
+        for(int i=0; i < nums.length; i++) 
+            sum += nums[i].doubleValue();
+        return sum/nums.length;
+    }
+    
+    // Determine if two averages are the same. 
+    // Notice the use of the wildcard. 
+    boolean sameAvg (Stats<?> ob) 
+    {
+        if (average () == ob.average ())
+            return true;
+        return false;
+    }   
 }
-// Return type double in all cases. double average () { 
-    double sum = 0.0;
-for(int i=0; i < nums.length; i++) sum += nums[i].doubleValue();
-}
-return sum/nums.length;
-// Determine if two averages are the same. 
-// Notice the use of the wildcard. boolean sameAvg (Stats<?> ob) {
-if (average () == ob.average ())
-return true;
-return false;
-}
-}
-// Demonstrate wildcard. class WildcardDemo {
-public static void main(String args[]) { Integer inums[] = {1, 2, 3, 4, 5); Stats<Integer> iob= new Stats<Integer> (inums); 
-double viob. average(); 
-System.out.println("iob average is " + v);
-Double dnums[] ={1.1,2.2,3.3,4.4,5.5}; Stats Doubles dob new Stats<Doubles (dnums); 
-double w dob. average(); 
-System.out.println("dob average is " + W);
-Float fnums[] = { 1.0F, 2.0F, 3.0F, 4.0F, 5.0F}; 
-Stats Float> fob = new Stats<Float>(Enums); double x fob. average(); 
-System.out.println("fob average is " + x); 
-// See which arrays have same average.
-    System.out.print ("Averages of iob and dob "); 
-    if (iob. sameAvg (dob)) System.out.println("are the same.");
-    else 
-    System.out.println("differ.");
-    System.out.print ("Averages of iob and fob "); 
-    if (iob.sameAvg (fob)) System.out.println("are the same.");
-else
-System.out.println("differ.");
-}
+// Demonstrate wildcard. 
+class WildcardDemo 
+{
+    public static void main(String args[]) 
+    { 
+        Integer inums[] = {1, 2, 3, 4, 5}; 
+        Stats<Integer> iob= new Stats<Integer> (inums);
+        double v = iob. average();
+        System.out.println("iob average is " + v);
+        
+        Double dnums[] ={1.1,2.2,3.3,4.4,5.5}; 
+        Stats<Doubles> dob = new Stats<Doubles (dnums); 
+        double w = dob. average(); 
+        System.out.println("dob average is " + W);
+        
+        Float fnums[] = { 1.0F, 2.0F, 3.0F, 4.0F, 5.0F};
+        Stats <Float> fob = new Stats<Float>(Enums); 
+        double x = fob. average();
+        System.out.println("fob average is " + x); 
+        
+        // See which arrays have same average.
+        System.out.print ("Averages of iob and dob "); 
+        if (iob. sameAvg (dob)) 
+            System.out.println("are the same.");
+        else
+            System.out.println("differ.");
+        System.out.print ("Averages of iob and fob "); 
+        
+        if (iob.sameAvg (fob)) 
+            System.out.println("are the same.");
+        else
+            System.out.println("differ.");
+    }
 }
 ```
 
 The output is shown here:
-
+```
 iob average is 3.0
 
 dob average is 3.3
@@ -511,62 +620,74 @@ fob average is 3.0
 Averages of iob and dob differ.
 
 Averages of iob and fob are the same.
-
+```
 One last point: It is important to understand that the wildcard does not affect what type of **Stats** objects can be created. This is governed by the **extends** clause in the **Stats** declaration. The wildcard simply matches any valid **Stats** object.
 
 ### Bounded Wildcards
 
  Wildcard arguments can be bounded in much the same way that a type parameter can be bounded. A bounded wildcard is especially important when you are creating a generic type that will operate on a class hierarchy. To understand why, let’s work through an example. Consider the following hierarchy of classes that encapsulate coordinates:  
 
- ```java
-// Two-dimensional coordinates. 
-class TwoD {
-int x, y;
-TwoD (int a, int b) { 
-    x = a;
-    y = b;
-}
-}
-// Three-dimensional coordinates. 
-class ThreeD extends TwoD { 
-    int z;
-ThreeD (int a, int b, int c) { 
-    super (a, b);
-z = c;
-}
-}
-// Four-dimensional coordinates. class FourD extends ThreeD {
-int t;
-FourD (int a, int b, int c, int d) { super (a, b, c);
-t = d;
-}
-}
  ```
+// Two-dimensional coordinates. 
+class TwoD 
+{
+    int x, y;
+    TwoD (int a, int b) 
+    {
+        x = a;
+        y = b;
+    }
+}
+
+// Three-dimensional coordinates. 
+class ThreeD extends TwoD 
+{ 
+    int z;
+    ThreeD (int a, int b, int c) 
+    {
+        super (a, b);
+        z = c;
+    }
+}
+
+// Four-dimensional coordinates. 
+class FourD extends ThreeD 
+{
+    int t;
+    FourD (int a, int b, int c, int d) 
+    { 
+        super (a, b, c);
+        t = d;
+    }
+}
+```
 
 At the top of the hierarchy is **TwoD**, which encapsulates a two-dimensional, XY coordinate. **TwoD** is inherited by **ThreeD**, which adds a third dimension, creating an XYZ coordinate. **ThreeD** is inherited by **FourD**, which adds a fourth dimension (time), yielding a four-dimensional coordinate.
 
 Shown next is a generic class called **Coords**, which stores an array of coordinates: 
 
-```java
+```
 // This class holds an array of coordinates objects.
-class Coords<T extends TwoD> {
+class Coords<T extends TwoD> 
+{
    T[] coords;
-   Coords (T[] o) { coords = o; }
+   Coords (T[] o) 
+   { 
+        coords = o; 
+    }
 }
 ```
-
-
 Notice that **Coords** specifies a type parameter bounded by **TwoD**. This means that any array stored in a **Coords** object will contain objects of type **TwoD** or one of its subclasses.
 
 Now, assume that you want to write a method that displays the X and Y coordinates for each element in the **coords** array of a **Coords** object. Because all types of **Coords** objects have at least two coordinates (X and Y), this is easy to do using a wildcard, as shown here:
 
-```java
-static void showXY(Coords<?> c) {
+```
+static void showXY(Coords<?> c) 
+{
    System.out.println("X Y Coordinates:");
    for(int i = 0; i < c.coords.length; i++)
-	System.out.println(c.coords [i] .x+ " " + 
-			c.coords[i] .y);
-     System.out.println();
+        System.out.println(c.coords [i].x+ " " +c.coords([i].y);
+    System.out.println();
 }
 ```
 
@@ -578,107 +699,132 @@ A bounded wildcard specifies either an upper bound or a lower bound for the type
 
 Using a bounded wildcard, it is easy to create a method that displays the X, Y, and Z coordinates of a **Coords** object, if that object actually has those three coordinates. For example, the following **showXYZ()** method shows the X, Y, and Z coordinates of the elements stored in a **Coords** object, if those elements are actually of type **ThreeD** (or are derived from **ThreeD**):
 
-```java
-static void showXYZ (Coords<? extends ThreeD> c) { 
+```
+static void showXYZ (Coords<? extends ThreeD> c) 
+{ 
     System.out.println("X Y Z Coordinates: "); 
     for (int i=0; i < c.coords.length; i++) 
-    System.out.println(c.coords[i].x + " " +
-c.coords[i].y + " " +
-c.coords[i].z);
-System.out.println();
+        System.out.println(c.coords[i].x + " " +c.coords[i].y + " " +c.coords[i].z);
+    System.out.println();
 }
 ```
-
 Notice that an **extends** clause has been added to the wildcard in the declaration of parameter **c**. It states that the **?** can match any type as long as it is **ThreeD**, or a class derived from **ThreeD**. Thus, the **extends** clause establishes an upper bound that the **?** can match. Because of this bound, **showXYZ()** can be called with references to objects of type **Coords<ThreeD>** or **Coords<FourD>**, but not with a reference of type **Coords<TwoD>**. Attempting to call **showXZY()** with a **Coords<TwoD>** reference results in a compile-time error, thus ensuring type safety.
 
 Here is an entire program that demonstrates the actions of a bounded wildcard argument: 
 
-```java
+```
 // Bounded Wildcard arguments.
 // Two-dimensional coordinates. 
-class TwoD (
-int x, y
-TwoD (int a, int b) {
-x = a;
-y = b;
+class TwoD 
+{
+    int x, y
+    TwoD (int a, int b) 
+    {
+        x = a;
+        y = b;
+    }
 }
-}
+
 // Three-dimensional coordinates. 
-class ThreeD extends TwoD {
-int z;
-ThreeD (int a, int b, int c) {
-super (a, b);
-z = c;
+class ThreeD extends TwoD 
+{
+    int z;
+    ThreeD (int a, int b, int c) 
+    {
+        super (a, b);
+        z = c;
+    }
 }
-}
+
 // Four-dimensional coordinates. 
-class FourD extends ThreeD {
-int t;
-FourD (int a, int b, int c, int d) { super (a, b, c);
-t=d;
+class FourD extends ThreeD 
+{
+    int t;
+    FourD (int a, int b, int c, int d) 
+    { 
+        super (a, b, c);
+        t=d;
+    }
 }
-}
+
 // This class holds an array of coordinate objects. 
-class Coords<T extends TwoD> { T[] coords;
-Coords (To) { coords = 0; }
+class Coords<T extends TwoD> 
+{ 
+    T[] coords; 
+    Coords (T o) 
+    { 
+        coords = o; 
+    }
 }
-// Demonstrate a bounded wildcard. class BoundedWildcard { 
-    static void showXY (Coords<?> c) { System.out.println("X Y Coordinates: ");
-    for (int i=0; i < c.coords.length; i++)
-System.out.println(c.coords[i].x + " "+
-c.coords[i].y);
-System.out.println();
-}
-static void showXYZ (Coords<? extends ThreeD> e) { 
-    System.out.println("X Y Z Coordinates: "); for (int i=0; i < c.coords.length; i++)
-    System.out.println(c.coords[1].x +
-e.coords[i].y + c.coords[i].z);
-System.out.println();
-static void showAll (Coords<? extends FourD> c) {
-System.out.println("X Y Z T Coordinates: ");
-for(int i=0; i < c.coords.length; i++) System.out.println(e.coords[i].x+""
-System.out.println(c.coords[1].x +
-e.coords[i].y + c.coords[i].z);
-System.out.println();
-static void showAll (Coords<? extends FourD> c) {
-System.out.println("X Y Z T Coordinates: ");
-for(int i=0; i < c.coords.length; i++) System.out.println(e.coords[i].x+""
-c.coords[i].y + "" +
-c.coords[i].z +
-c.coords[i].t);
-}
-System.out.println();
-}
-public static void main(String args[]) {
-TwoD td[] = {
-new TwoD (0, 0),
-new TwoD (7, 9).
-new TwoD (18, 4).
-new TwoD (-1, -23)
-};
-Coords<TwoD> talocs = new Coords<TwoD> (td);
-System.out.println("Contents of tdlocs.");
-showXY (tdlocs); // OK, is a TwoD
-// //
-showXYZ (tdloes); // Error, not a ThreeD
-showAll(tdlocs); // Error, not a FourD
-// Now, create some FourD objects. FourD fd[] = {
-new FourD(1, 2, 3, 4).
-new FourD (6, 8, 14, 8), new FourD (22, 9, 4, 9).
-new FourD (3, -2, -23, 17)
-};
-Coords<FourD> fdlocs = new Coords<FourD> (fd);
-System.out.println("Contents of faloes.");
-// These are all ok.
-showXY (Edlocs);
-showXYZ (faloca);
-showAll (fdlocs);
-}
+
+// Demonstrate a bounded wildcard. 
+class BoundedWildcard 
+{ 
+    static void showXY (Coords<?> c) 
+    { 
+        System.out.println("X Y Coordinates: ");
+        for (int i=0; i < c.coords.length; i++)
+            System.out.println(c.coords[i].x + " "+
+        c.coords[i].y);
+        System.out.println();
+    }
+    static void showXYZ (Coords<? extends ThreeD> e) 
+    {
+        System.out.println("X Y Z Coordinates: "); 
+        for (int i=0; i < c.coords.length; i++)
+            System.out.println(c.coords[1].x +
+        e.coords[i].y + c.coords[i].z);
+        System.out.println();
+    }
+    static void showAll (Coords<? extends FourD> c) 
+    {
+        System.out.println("X Y Z T Coordinates: ");
+        for(int i=0; i < c.coords.length; i++) 
+            System.out.println(e.coords[i].x+" ");
+        System.out.println(c.coords[1].x +e.coords[i].y + c.coords[i].z);
+        System.out.println();
+    }
+    static void showAll (Coords<? extends FourD> c) 
+    {
+        System.out.println("X Y Z T Coordinates: ");
+        for(int i=0; i < c.coords.length; i++) 
+        System.out.println(e.coords[i].x+" "c.coords[i].y + " " +c.coords[i].z+c.coords[i].t);
+        System.out.println();
+    }
+    public static void main(String args[])
+    {
+        TwoD td[] = 
+        {
+            new TwoD (0, 0),
+            new TwoD (7, 9).
+            new TwoD (18, 4).
+            new TwoD (-1, -23)
+        };
+        Coords<TwoD> talocs = new Coords<TwoD> (td);
+        System.out.println("Contents of tdlocs.");
+        showXY (tdlocs); // OK, is a TwoD
+        showXYZ (tdloes); // Error, not a ThreeD
+        showAll(tdlocs); // Error, not a FourD
+        // Now, create some FourD objects.  
+        FourD fd[] = 
+        {
+            new FourD(1, 2, 3, 4).
+            new FourD (6, 8, 14, 8), 
+            new FourD (22, 9, 4, 9).
+            new FourD (3, -2, -23, 17)
+        };
+        Coords<FourD> fdlocs = new Coords<FourD> (fd);
+        System.out.println("Contents of faloes.");
+        // These are all ok.
+        showXY (Edlocs);
+        showXYZ (faloca);
+        showAll (fdlocs);
+    }
 }
 ```
 
 The output from the program is shown here:
-
+```
 Contents of tdlocs.
 
 X Y Coordinates:
@@ -722,7 +868,7 @@ X Y Z T Coordinates:
 22 9 4 9
 
 3 -2 -23 17
-
+```
 Notice these commented-out lines:
 ```
 // showXYZ(tdlocs); // Error, not a ThreeD
@@ -749,37 +895,43 @@ In this case, only classes that are superclasses of subclass are acceptable argu
 
 Let’s begin with an example. The following program declares a non-generic class called **GenMethDemo** and a static generic method within that class called **isIn()**. The **isIn()** method determines if an object is a member of an array. It can be used with any type of object and array as long as the array contains objects that are compatible with the type of the object being sought.
 
-```java
+```
 // Demonstrate a simple generic method. 
-class GenMethDemo {
-// Determine if an object is in an array.
- static <T extends Comparable<T>, V extends T> boolean isIn(T x, VI y) {
-      for (int i=0; i < y.length; i++) if (x.equals (y[i])) return true;
-return false;
- }
-public static void main(String args[]) {
-// Use isin() on Integers. 
-Integer nums[] = {1, 2, 3, 4, 5);
-if (isIn (2, nums))
-System.out.println("2 is in nume");
-if (!isIn (7, nums))
-System.out.println("7 is not in nums");
-System.out.println();
-// Use isIn() on Strings.
- String strs "one", "two", "three", "four", "five" };
-if (isIn("two", strs))
-System.out.println("two is in stre");
-if (lisin ("seven", strs))
-System.out.println("seven is not in stra");
-// Oops! Won't compile! Types must be compatible. 
-//      if (isIn("two", nums)) 
-//      System.out.println("two is in strs");
-}
+class GenMethDemo 
+{
+    // Determine if an object is in an array.
+    static <T extends Comparable<T>, V extends T> 
+    boolean isIn(T x, VI y) 
+    {
+      for (int i=0; i < y.length; i++) 
+      if (x.equals (y[i])) 
+        return true;
+    return false;
+    }
+    public static void main(String args[]) 
+    {
+        // Use isin() on Integers. 
+        Integer nums[] = {1, 2, 3, 4, 5};
+        if (isIn (2, nums))
+            System.out.println("2 is in nume");
+        if (!isIn (7, nums))
+            System.out.println("7 is not in nums");
+        System.out.println();
+        // Use isIn() on Strings.
+        String strs = {"one", "two", "three", "four", "five" };
+        if (isIn("two", strs))
+            System.out.println("two is in stre");
+        if (lisin ("seven", strs))
+            System.out.println("seven is not in stra");
+        // Oops! Won't compile! Types must be compatible. 
+        //      if (isIn("two", nums)) 
+        //      System.out.println("two is in strs");
+    }
 }
 ```
 
 The output from the program is shown here:
-
+```
 2 is in nums
 
 7 is not in nums  
@@ -787,13 +939,13 @@ The output from the program is shown here:
 two is in strs
 
 seven is not in strs
-
+```
 Let’s examine **isIn()** closely. First, notice how it is declared by this line:
-
+```
 static <T extends Comparable<T>, V extends T> boolean isIn(T x,
 
 V[] y) {
-
+```
 The type parameters are declared before the return type of the method. Also note that **T** extends **Comparable<T>**. **Comparable** is an interface declared in **java.lang.** A class that implements **Comparable** defines objects that can be ordered. Thus, requiring an upper bound of **Comparable** ensures that **isIn**() can be used only with objects that are capable of being compared. **Comparable** is generic, and its type parameter specifies the type of objects that it compares. (Shortly, you will see how to create a generic interface.) Next, notice that the type **V** is upper-bounded by **T**. Thus, **V** must either be the same as type **T**, or a subclass of **T**. This relationship enforces that **isIn()** can be called only with arguments that are compatible with each other. Also notice that **isIn()** is static, enabling it to be called independently of any object. Understand, though, that generic methods can be either static or non-static. There is no restriction in this regard.
 
 Now, notice how **isIn()** is called within **main()** by use of the normal call syntax, without the need to specify type arguments. This is because the types of the arguments are automatically discerned, and the types of **T** and **V** are adjusted accordingly. For example, in the first call:
@@ -806,13 +958,11 @@ Although type inference will be sufficient for most generic method calls, you ca
 ```
 GenMethDemo.<Integer, Integer>isIn(2, nums)
 ```
-Of course, in this case, there is nothing gained by specifying the type arguments. Furthermore, JDK 8 improved type inference as it relates to methods. As a result, there are fewer cases in which explicit type arguments are  
-
-methods. As a result, there are fewer cases in which explicit type arguments are needed.
+Of course, in this case, there is nothing gained by specifying the type arguments. Furthermore, JDK 8 improved type inference as it relates to methods. As a result, there are fewer cases in which explicit type arguments are methods. As a result, there are fewer cases in which explicit type arguments are needed.
 
 Now, notice the commented-out code, shown here:
 
-```java
+```
 //	if(isIn("two", nums))
 //	   System.out.println("two is in strs");
 
@@ -830,22 +980,29 @@ In all cases, _type-param-list_ is a comma-separated list of type parameters. No
 
  It is possible for constructors to be generic, even if their class is not. For example, consider the following short program:  
 
- ```java
+ ```
 // Use a generic constructor. 
-class GenCons { 
+class GenCons 
+{ 
     private double val;
-<T extends Number> GenCons (T arg) { val = arg.doubleValue(); }
-void showval() {
-System.out.println("val: "+ val);
+    <T extends Number> GenCons (T arg) 
+    { 
+        val = arg.doubleValue(); 
+    }
+    void showval() 
+    {
+        System.out.println("val: "+ val);
+    }
 }
-}
-class GenConsDemo { 
-    public static void main(String args[]) {
-GenCons test = new GenCons (100);
-GenCons test2 = new GenCons (123.5F);
-test.showval();
-test2.showval();
-}
+class GenConsDemo 
+{ 
+    public static void main(String args[]) 
+    {
+        GenCons test = new GenCons (100);
+        GenCons test2 = new GenCons (123.5F);
+        test.showval();
+        test2.showval();
+    }
 }
  ```
 
@@ -863,42 +1020,62 @@ Because **GenCons()** specifies a parameter of a generic type, which must be a s
 
 **)** and **max()**, which are expected to return the minimum and maximum value of some set of objects.  
 
-```java
+```
 // A generic interface example.
 // A Min/Max interface.
-interface MinMax<T extends Comparable<T>> {
-Tmin();
-T max();
+interface MinMax <T extends Comparable<T>> 
+{
+    T min();
+    T max();
 }
 // Now, implement MinMax
-class MyClass<T extends Comparable<T>> implements MinMax<T> {
-Til vals;
-MyClass (T[] 0) { vals = 0; }
-// Return the minimum value in vals.
-public T min() { Tv vals [0];
-for (int i=1; i < vals.length; i++) if (vals[i].compareTo(v) < 0) v vals(i);
-return v;
+class MyClass <T extends Comparable<T>> implements MinMax<T> 
+{
+    T() vals;
+    MyClass (T[] 0) 
+    { 
+        vals = 0; 
+    }
+    
+    // Return the minimum value in vals.
+    public T min() 
+    { 
+        T v = vals [0];
+        for (int i=1; i < vals.length; i++) 
+            if (vals[i].compareTo(v) < 0) 
+                v = vals(i);
+        return v;
+    }
+    
+    // Return the maximum value in vals.
+    public T max() 
+    { 
+        T v = vals [0];
+        for (int i=1; i < vals.length; i++)
+            if (vals[i].compareTo(v) > 0) 
+                v = vals[i];
+        return v;
+    }
 }
-// Return the maximum value in vals.
-public T max() { Tv vals [0];
-for (int i=1; i < vals.length; i++)
-if (vals[i].compareTo(v) > 0) v = vals[i];
-return v;
-}
-}
-class GenIFDemo {
-public static void main(String args[]) { Integer inums[] = (3, 6, 2, 8, 6); Character chs [] ['b', 'r', 'p', 'w' };
-MyClass<Integer> iob new MyClass<Integer> (inums); 
-MyClass Character> cob = new MyClass<Character>(chs);
-System.out.println("Max value in inums: " + iob.max());
-System.out.println("Min value in inums: " + iob.min());
-System.out.println("Max value in chs: " + cob.max()); System.out.println("Min value in chs: " + cob.min());
-}
+class GenIFDemo 
+{
+    public static void main(String args[]) 
+    { 
+        Integer inums[] = (3, 6, 2, 8, 6); 
+        Character chs [] = {'b', 'r', 'p', 'w' };
+        MyClass<Integer> iob = new MyClass<Integer> (inums);
+        MyClass<Character> cob = new MyClass<Character>(chs);
+     
+        System.out.println("Max value in inums: " + iob.max());
+        System.out.println("Min value in inums: " + iob.min());
+        System.out.println("Max value in chs: " + cob.max()); 
+        System.out.println("Min value in chs: " + cob.min());
+    }
 }
 ```
 
 The output is shown here:
-
+```
 Max value in inums: 8
 
 Min value in inums: 2
@@ -906,7 +1083,7 @@ Min value in inums: 2
 Max value in chs: w
 
 Min value in chs: b
-
+```
 Although most aspects of this program should be easy to understand, a couple of key points need to be made. First, notice that **MinMax** is declared like this:
 ```
 interface MinMax<T extends Comparable<T>> {
@@ -918,18 +1095,14 @@ Next, **MinMax** is implemented by **MyClass**. Notice the declaration of **MyCl
 class MyClass<T extends Comparable<T>> implements MinMax<T> {
 ```
 Pay special attention to the way that the type parameter **T** is declared by **MyClass** and then passed to **MinMax**. Because **MinMax** requires a type that implements **Comparable**, the implementing class (**MyClass** in this case) must specify the same bound. Furthermore, once this bound has been established, there is no need to specify it again in the **implements** clause. In fact, it would be wrong to do so. For example, this line is incorrect and won’t compile:
-
-
-```java
+```
 // This is wrong! 
 class MyClass<T extends Comparable<T>> implements MinMax<T extends Comparable<T>> {
 ```
 
 Once the type parameter has been established, it is simply passed to the interface without further modification.  
 
-interface without further modification. In general, if a class implements a generic interface, then that class must
-
-also be generic, at least to the extent that it takes a type parameter that is passed to the interface. For example, the following attempt to declare **MyClass** is in error:
+interface without further modification. In general, if a class implements a generic interface, then that class must also be generic, at least to the extent that it takes a type parameter that is passed to the interface. For example, the following attempt to declare **MyClass** is in error:
 ```
 class MyClass implements MinMax<T> { // Wrong!
 ```
@@ -937,9 +1110,7 @@ Because **MyClass** does not declare a type parameter, there is no way to pass o
 ```
 class MyClass implements MinMax<Integer> { // OK
 ```
-then the implementing class does not need to be generic. The generic interface offers two benefits. First, it can be implemented for
-
-different types of data. Second, it allows you to put constraints (that is, bounds) on the types of data for which the interface can be implemented. In the **MinMax** example, only types that implement the **Comparable** interface can be passed to **T**.
+then the implementing class does not need to be generic. The generic interface offers two benefits. First, it can be implemented for different types of data. Second, it allows you to put constraints (that is, bounds) on the types of data for which the interface can be implemented. In the **MinMax** example, only types that implement the **Comparable** interface can be passed to **T**.
 
 Here is the generalized syntax for a generic interface:
 ```
@@ -951,49 +1122,64 @@ class class-name<type-param-list\> implements interface-name<type-arg-list\> {
 ```
 ## Raw Types and Legacy Code
 
- Because support for generics did not exist prior to JDK 5, it was necessary to provide some transition path from old, pre-generics code. Furthermore, this transition path had to enable pre-generics code to remain functional while at the same time being compatible with generics. In other words, pre-generics code had to be able to work with generics, and generic code had to be able to work with pre-generics code.  
+Because support for generics did not exist prior to JDK 5, it was necessary to provide some transition path from old, pre-generics code. Furthermore, this transition path had to enable pre-generics code to remain functional while at the same time being compatible with generics. In other words, pre-generics code had to be able to work with generics, and generic code had to be able to work with pre-generics code.  
 
 To handle the transition to generics, Java allows a generic class to be used without any type arguments. This creates a _raw type_ for the class. This raw type is compatible with legacy code, which has no knowledge of generics. The main drawback to using the raw type is that the type safety of generics is lost.
 
 Here is an example that shows a raw type in action:  
 
-```java
+```
 // Demonstrate a raw type. 
-class Gen<T> {
-T ob; // declare an object of type T
-// Pass the constructor a reference to 
-// an object of type T.
-Gen (To) {
-ob = 0;
-}
-// Return ob. T getob() { return ob;
-}
+class Gen<T> 
+{
+    T ob; // declare an object of type T
+    
+    // Pass the constructor a reference to 
+    // an object of type T.
+    Gen (T o) 
+    {
+        ob = 0;
+    }
+    // Return ob. 
+    T getob() 
+    { 
+        return ob;
+    }
 }
 // Demonstrate raw type.
-class RawDemo { 
-    public static void main(String args[]) {
-// Create a Gen object for Integers. 
-Gen<Integer> i0b = new Gen<Integer> (88);
-// Create a Gen object for Strings.
- Gen<String> strob= new Gen<String>("Generics Test");
-// Create a raw-type Gen object and give it 
-// a Double value.
- Gen raw = new Gen (Double.valueOf(98.6));
-// Cast here is necessary because type is unknown.
- double d = (Double) raw.getob(); System.out.println("value: " + d);
-// The use of a raw type can lead to run-time 
-// exceptions. Here are some examples.
-// The following cast causes a run-time error! 
-//      int i = (Integer) raw.getob(); 
-// run-time error
-// This assignment overrides type safety.
- strob = raw; 
- // OK, but potentially wrong String str = strob.getob(); 
- // run-time error
-// This assignment also overrides type safety. 
-raw = iob; // OK, but potentially wrong
-d = (Double) raw.getob(); // run-time error   
-}
+class RawDemo 
+{ 
+    public static void main(String args[]) 
+    {
+        // Create a Gen object for Integers. 
+        Gen<Integer> i0b = new Gen<Integer> (88);
+        
+        // Create a Gen object for Strings.
+        Gen<String> strob= new Gen<String>("Generics Test");
+        
+        // Create a raw-type Gen object and give it 
+        // a Double value.
+        Gen raw = new Gen (Double.valueOf(98.6));
+        
+        // Cast here is necessary because type is unknown.
+        double d = (Double) raw.getob(); 
+        System.out.println("value: " + d);
+        
+        // The use of a raw type can lead to run-time 
+        // exceptions. Here are some examples.
+        // The following cast causes a run-time error! 
+        //      int i = (Integer) raw.getob(); 
+        // run-time error
+        // This assignment overrides type safety.
+            
+            strob = raw; 
+        
+        // OK, but potentially wrong String str = strob.getob(); 
+        // run-time error
+        // This assignment also overrides type safety. 
+        raw = iob; // OK, but potentially wrong
+        d = (Double) raw.getob(); // run-time error   
+    }
 }
 ```
 
@@ -1005,8 +1191,6 @@ Notice that no type arguments are specified. In essence, this creates a **Gen** 
 
 A raw type is not type safe. Thus, a variable of a raw type can be assigned a reference to any type of **Gen** object. The reverse is also allowed; a variable of a specific **Gen** type can be assigned a reference to a raw **Gen** object. However, both operations are potentially unsafe because the type checking mechanism of generics is circumvented.
 
-This lack of type safety is illustrated by the commented-out lines at the end  
-
 This lack of type safety is illustrated by the commented-out lines at the end of the program. Let’s examine each case. First, consider the following situation:
 ```
 // int i = (Integer) raw.getob(); // run-time error
@@ -1015,7 +1199,7 @@ In this statement, the value of **ob** inside **raw** is obtained, and this valu
 
 The next sequence assigns to a **strOb** (a reference of type **Gen<String>**) a reference to a raw **Gen** object:
 
-```java
+```
 strob raw; // OK, but potentially wrong
 //        String str strob.getob(); // run-time error 
 ```
@@ -1024,9 +1208,10 @@ The assignment, itself, is syntactically correct, but questionable. Because **st
 
 The following sequence inverts the preceding case:
 
-```java
-raw = 10b; // OK, but potentially wrong 
-//      d = (Double) raw.getob(); // run-time error
+```
+raw = iob; // OK, but potentially wrong 
+// d = (Double) raw.getob(); 
+// run-time error
 ```
 
 Here, a generic reference is assigned to a raw reference variable. Although this is syntactically correct, it can lead to problems, as illustrated by the second line. In this case, **raw** now refers to an object that contains an **Integer** object, but the cast assumes that it contains a **Double**. This error cannot be prevented at compile time. Rather, it causes a run-time error.
@@ -1041,7 +1226,7 @@ In the first line, it is the call to the **Gen** constructor without a type argu
 
 At first, you might think that this line should also generate an unchecked warning, but it does not:
 ```
-raw = iOb; // OK, but potentially wrong
+raw = iob; // OK, but potentially wrong
 ```
 No compiler warning is issued because the assignment does not cause any further loss of type safety than had already occurred when **raw** was created.
 
@@ -1049,29 +1234,37 @@ One final point: You should limit the use of raw types to those cases in which y
 
 ## Generic Class Hierarchies
 
- Generic classes can be part of a class hierarchy in just the same way as a non- generic class. Thus, a generic class can act as a superclass or be a subclass. The key difference between generic and non-generic hierarchies is that in a generic hierarchy, any type arguments needed by a generic superclass must be passed up the hierarchy by all subclasses. This is similar to the way that constructor arguments must be passed up a hierarchy.
+Generic classes can be part of a class hierarchy in just the same way as a non- generic class. Thus, a generic class can act as a superclass or be a subclass. The key difference between generic and non-generic hierarchies is that in a generic hierarchy, any type arguments needed by a generic superclass must be passed up the hierarchy by all subclasses. This is similar to the way that constructor arguments must be passed up a hierarchy.
 
 ### Using a Generic Superclass
 
- Here is a simple example of a hierarchy that uses a generic superclass:  
+Here is a simple example of a hierarchy that uses a generic superclass:  
 
- ```java
-// A simple generic class hierarchy, class Gen<T> {
-T ob;
-Gen (To) {
-ob = 0;
-}
-// Return ob.
-T getob() { return ob;
-}
-}
-// A subclass of Gen..
-class Gen2<T> extends Gen<T> { 
-    Gen2 (To) { 
-        super (o);
-}
-}
  ```
+// A simple generic class hierarchy, 
+class Gen<T> 
+{
+    T ob;
+    Gen (T o) 
+    {
+        ob = o;
+    }
+    
+    // Return ob.
+    T getob() 
+    { 
+        return ob;
+    }
+}
+// A subclass of Gen.
+class Gen2<T> extends Gen<T> 
+{ 
+    Gen2 (T o) 
+    { 
+        super (o);
+    }
+}
+```
 
 In this hierarchy, **Gen2** extends the generic class **Gen**. Notice how **Gen2** is declared by the following line:
 ```
@@ -1085,43 +1278,51 @@ passes **Integer** as the type parameter to **Gen**. Thus, the **ob** inside the
 
 Notice also that **Gen2** does not use the type parameter **T** except to support the **Gen** superclass. Thus, even if a subclass of a generic superclass would otherwise not need to be generic, it still must specify the type parameter(s) required by its generic superclass.
 
-Of course, a subclass is free to add its own type parameters, if needed. For example, here is a variation on the preceding hierarchy in which **Gen2** adds a  
+Of course, a subclass is free to add its own type parameters, if needed. For example, here is a variation on the preceding hierarchy in which **Gen2** adds a type parameter of its own:  
 
-type parameter of its own:  
-
-```java
+```
 // A subclass can add its own type parameters.
-class Gen<T> {
-Tob; // declare an object of type T
-// Pass the constructor a reference to 
-// an object of type T.
-Gen (To) {
-ob = 0;
-}
-// Return ob.
-T getob() {
-return ob;
-}
+class Gen<T> 
+{
+    T ob; // declare an object of type T
+    // Pass the constructor a reference to an object of type T.
+    
+    Gen (T o) 
+    {
+        ob = 0;
+    }
+    
+    // Return ob.
+    T getob() 
+    {
+        return ob;
+    }
 }
 // A subclass of Gen that defines a second 
-// type parameter, 
-called V. class Gen2<T, V> extends Gen<T> {
-V ob2;
-Gen2 (To, V 02) {
-super (o);
-ob2 = 02;
+// type parameter,called V. 
+class Gen2<T, V> extends Gen<T> 
+{
+    V ob2;
+    Gen2 (T o, V o2) 
+    {
+        super (o);
+        ob2 = o2;
+    }
+    V getob2() 
+    {
+        return ob2;
+    }
 }
-V getob2() {
-return ob2;
-}
-}
-// Create an object of type Gen2. class HierDemo { 
-    public static void main(String args[]) {
-// Create a Gen2 object for String and Integer.
- Gen2<String, Integer> x = new Gen2<String, Integer>("Value is: ", 99);
-System.out.print (x.getob()); 
-System.out.println(x.getob2());
-}
+// Create an object of type Gen2. 
+class HierDemo 
+{ 
+    public static void main(String args[]) 
+    {
+        // Create a Gen2 object for String and Integer.
+        Gen2<String, Integer> x = new Gen2<String, Integer>("Value is: ", 99);
+        System.out.print (x.getob()); 
+        System.out.println(x.getob2());
+    }
 }
 ```
 
@@ -1133,39 +1334,53 @@ Here, **T** is the type passed to **Gen**, and **V** is the type that is specifi
 ```
 Value is: 99
 ```
-## A Generic Subclass
+### A Generic Subclass
 
- It is perfectly acceptable for a non-generic class to be the superclass of a generic subclass. For example, consider this program:
+It is perfectly acceptable for a non-generic class to be the superclass of a generic subclass. For example, consider this program:
 
- ```java
-// A non-generic class can be the superclass // of a generic subclass.
-// A non-generic class. class NonGen (
-int num;
-NonGen (int i) {
-num = i;
-}
-int getnum() {
-return num;
-}
+ ```
+// A non-generic class can be the superclass 
+// of a generic subclass.
+// A non-generic class. 
+class NonGen 
+{
+    int num;
+    NonGen (int i) 
+    {
+        num = i;
+    }
+    int getnum() 
+    {
+        return num;
+    }
 }
 // A generic subclass.
-class Gen<T> extends NonGen {
-T ob; // declare an object of type T
-// Pass the constructor a reference to 
-// an object of type T.
- Gen (To, int i) {
-super (i);
-ob = 0;
+class Gen<T> extends NonGen 
+{
+    T ob; // declare an object of type T
+    // Pass the constructor a reference to an object of type T.
+    Gen (T o, int i) 
+    {
+        super (i);
+        ob = 0;
+    }
+    
+    // Return ob.
+    T getob() 
+    { 
+        return ob;
+    }
 }
-// Return ob.
-T getob() { return ob;
-} }
 // Create a Gen object. 
-class HierDemo2 { public static void main(String args[]) {
-// Create a Gen object for String. 
-Gen<String> w = new Gen<String>("Hello", 47);
-System.out.print (w.getob() + " "); System.out.println(w.getnum () ); 
-}
+class HierDemo2 
+{ 
+    public static void main(String args[]) 
+    {
+        // Create a Gen object for String. 
+        Gen<String> w = new Gen<String>("Hello", 47);
+        System.out.print (w.getob() + " "); 
+        System.out.println(w.getnum () ); 
+    }
 }
  ```  
 
@@ -1179,55 +1394,80 @@ class Gen<T> extends NonGen {
 ```
 Because **NonGen** is not generic, no type argument is specified. Thus, even though **Gen** declares the type parameter **T**, it is not needed by (nor can it be used by) **NonGen**. Thus, **NonGen** is inherited by **Gen** in the normal way. No special conditions apply.
 
-**Run-Time Type Comparisons Within a Generic Hierarchy** Recall the run-time type information operator **instanceof** that was described in Chapter 13. As explained, **instanceof** determines if an object is an instance of a class. It returns true if an object is of the specified type or can be cast to the specified type. The **instanceof** operator can be applied to objects of generic classes. The following class demonstrates some of the type compatibility implications of a generic hierarchy:  
+### Run-Time Type Comparisons Within a Generic Hierarchy
 
-```java
+Recall the run-time type information operator **instanceof** that was described in Chapter 13. As explained, **instanceof** determines if an object is an instance of a class. It returns true if an object is of the specified type or can be cast to the specified type. The **instanceof** operator can be applied to objects of generic classes. The following class demonstrates some of the type compatibility implications of a generic hierarchy:  
+
+```
 // Use the instanceof operator with a generic class hierarchy. 
-class Gen<T> {
-T ob;
-Gen (To) { ob = 0;
-}
-// Return ob.
-T getob() { return ob;
-}
+class Gen<T> 
+{
+    T ob;
+    Gen (T o) 
+    { 
+        ob = o;
+    }
+    
+    // Return ob.
+    T getob() 
+    { 
+        return ob;
+    }
 }
 // A subclass of Gen. 
-class Gen2<T> extends Gen<T> { Gen2 (To) { super (o);
-} 
+class Gen2<T> extends Gen<T> 
+{ 
+    Gen2 (T o) 
+    { 
+        super (o);
+    }    
 }
 // Demonstrate run-time type ID implications of generic 
-// class hierarchy. 
-public static void main(String args[]) {
-class HierDemo3 {
-// Create a Gen object for Integers.
- Gen<Integer> iob = new Gen<Integer>(88);
-// Create a Gen2 object for Integers. 
-Gen2<Integer> 10b2 = new Gen2<Integer> (99);
-// Create a Gen2 object for Strings. 
-Gen2<String> str0b2 = new Gen2<String>("Generics Test");
-// See if 10b2 is some form of Gen2.
-if (10b2 instanceof Gen2<?>) System.out.println("i0b2 is instance of Gen2");
-// See if i0b2 is some form of Gen. 
-if (10b2 instanceof Gen<?>) System.out.println("i0b2 is instance of Gen");
-System.out.println();
-// See if strob2 is a Gen2.
-if (strob2 instanceof Gen2<?>) 
-System.out.println("strob2 is instance of Gen2");
-// See if strob2 is a Gen.
-if (strob2 instanceof Gen<?>) 
-System.out.println("strob2 is instance of Gen");
-System.out.println();
-// See if iob is an instance of Gen2, which it is not. 
-if (iob instanceof Gen2<?>)
-System.out.println("iob is instance of Gen2");
-// See if iob is an instance of Gen, which it is. 
-if (iob instanceof Gen<?>)
- System.out.println("iob is instance of Gen");
-// The following can't be compiled because 
-// generic type info does not exist at run time. 
-if (i0b2 instanceof Gen2<Integer>)
-System.out.println("i0b2 is instance of Gen2<Integer>");
-}
+//class hierarchy. 
+class HierDemo3 
+{
+    public static void main(String args[]) 
+    {
+        // Create a Gen object for Integers.
+        Gen<Integer> iob = new Gen<Integer>(88);
+
+        // Create a Gen2 object for Integers. 
+        Gen2<Integer> iob2 = new Gen2<Integer> (99);
+
+        // Create a Gen2 object for Strings. 
+        Gen2<String> str0b2 = new Gen2<String>("Generics Test");
+
+        // See if 10b2 is some form of Gen2.
+        if (10b2 instanceof Gen2<?>) 
+            System.out.println("i0b2 is instance of Gen2");
+
+        // See if i0b2 is some form of Gen. 
+        if (10b2 instanceof Gen<?>) 
+            System.out.println("i0b2 is instance of Gen");
+        System.out.println();
+
+        // See if strob2 is a Gen2.
+        if (strob2 instanceof Gen2<?>) 
+            System.out.println("strob2 is instance of Gen2");
+
+        // See if strob2 is a Gen.
+        if (strob2 instanceof Gen<?>) 
+            System.out.println("strob2 is instance of Gen");
+        System.out.println();
+
+        // See if iob is an instance of Gen2, which it is not. 
+        if (iob instanceof Gen2<?>)
+            System.out.println("iob is instance of Gen2");
+
+        // See if iob is an instance of Gen, which it is. 
+        if (iob instanceof Gen<?>)
+            System.out.println("iob is instance of Gen");
+
+        // The following can't be compiled because 
+        // generic type info does not exist at run time. 
+        if (i0b2 instanceof Gen2<Integer>)
+            System.out.println("i0b2 is instance of Gen2<Integer>");
+    }
 }
 ```
 
@@ -1247,33 +1487,35 @@ In this program, **Gen2** is a subclass of **Gen**, which is generic on type par
 
 Then, the program performs these **instanceof** tests on the type of **iOb2**:
 
-```java
+```
 // See if i0b2 is some form of Gen2.
 if (i0b2 instanceof Gen2<?>)
-System.out.println("iob2 is instance of Gen2");
+    System.out.println("iob2 is instance of Gen2");
+
 // See if i0b2 is some form of Gen. 
 if (10b2 instanceof Gen<?>)
-System.out.println("iob2 is instance of Gen");
+    System.out.println("iob2 is instance of Gen");
 ```
 
 As the output shows, both succeed. In the first test, **iOb2** is checked against **Gen2<?>**. This test succeeds because it simply confirms that **iOb2** is an object of some type of **Gen2** object. The use of the wildcard enables **instanceof** to determine if **iOb2** is an object of any type of **Gen2**. Next, **iOb2** is tested against **Gen<?>**, the superclass type. This is also true because **iOb2** is some form of **Gen**, the superclass. The next few lines in **main()** show the same sequence (and same results) for **strOb2**.
 
 Next, **iOb**, which is an instance of **Gen<Integer>** (the superclass), is tested by these lines:
 
-```java
+```
 // See if iob is an instance of Gen2, which it is not. 
 if (iob instanceof Gen2<?>)
-System.out.println("iob is instance of Gen2");
+    System.out.println("iob is instance of Gen2");
+
 // See if iob is an instance of Gen, which it is. 
 if (iob instanceof Gen<?>)
-System.out.println("iob is instance of Gen");
+    System.out.println("iob is instance of Gen");
 ```
 
 The first **if** fails because **iOb** is not some type of **Gen2** object. The second test  
 
 succeeds because **iOb** is some type of **Gen** object. Now, look closely at these commented-out lines:
 
-```java
+```
 // The following can't be compiled because 
 // generic type info does not exist at run time. 
 //      if (i0b2 instanceof Gen2<Integer>) 
@@ -1284,7 +1526,7 @@ As the comments indicate, these lines can’t be compiled because they attempt t
 
 ### Casting
 
- You can cast one instance of a generic class into another only if the two are otherwise compatible and their type arguments are the same. For example, assuming the foregoing program, this cast is legal:
+You can cast one instance of a generic class into another only if the two are otherwise compatible and their type arguments are the same. For example, assuming the foregoing program, this cast is legal:
 ```
 (Gen<Integer>) iOb2 // legal
 ```
@@ -1296,41 +1538,60 @@ is not legal because **iOb2** is not an instance of **Gen<Long>**.
 
 ### Overriding Methods in a Generic Class
 
- A method in a generic class can be overridden just like any other method. For example, consider this program in which the method **getob()** is overridden:  
+A method in a generic class can be overridden just like any other method. For example, consider this program in which the method **getob()** is overridden:  
 
- ```java
+```
 // Overriding a generic method in a generic class. 
-class Gen<T> {
-T ob; // declare an object of type T
-// Pass the constructor a reference to 
-// an object of type T.
-Gen (To) { 
-    ob = 0;
+class Gen<T> 
+{
+    T ob; // declare an object of type T
+    // Pass the constructor a reference to an object of type T.
+    Gen (T o) 
+    {
+        ob = o;
+    }
+    
+    // Return ob.
+    T getob() 
+    {
+        System.out.print ("Gen's getob(): ");
+        return ob;
+    }
 }
-// Return ob.
-T getob() {
-     System.out.print ("Gen's getob(): "};return ob;
+
+// A subclass of Gen that overrides getob(). 
+class Gen2<T> extends Gen<T> 
+{
+    Gen2 (T o) 
+    {
+        super (o);
+    } 
 }
-}
-// A subclass of Gen that overrides getob(). class Gen2<T> extends Gen<T> {
-Gen2 (To) ( super (o):
-}
+
 // Override getob().
-T getob() {
-System.out.print ("Gen2's getob(): ") return ob;
-// Demonstrate generic method override. 
-class OverrideDemo { 
-    public static void main(String args[]) {
-// Create a Gen object for Integers. 
-Gen<Integer> iob = new Gen<Integer> (88);
-// Create a Gen2 object for Integers. 
-Gen2<Integer> 10b2 = new Gen2<Integer> (99);
-// Create a Gen2 object for Strings. 
-Gen2<String> strob2 = new Gen2<String> ("Generics Test");
-System.out.println(iob.getob()); 
-System.out.println(i0b2.getob());
-System.out.println(strob2.getob());
+T getob() 
+{
+    System.out.print ("Gen2's getob(): ");
+    return ob;
 }
+
+// Demonstrate generic method override. 
+class OverrideDemo 
+{ 
+    public static void main(String args[]) 
+    {
+        // Create a Gen object for Integers. 
+        Gen<Integer> iob = new Gen<Integer> (88);
+        
+        // Create a Gen2 object for Integers. 
+        Gen2<Integer> iob2 = new Gen2<Integer> (99);
+        
+        // Create a Gen2 object for Strings. 
+        Gen2<String> strob2 = new Gen2<String> ("Generics Test");
+        System.out.println(iob.getob()); 
+        System.out.println(iob2.getob());   
+        System.out.println(strob2.getob());
+    }
 }
  ```
 
@@ -1346,23 +1607,26 @@ As the output confirms, the overridden version of **getob()** is called for obje
 
 ## Type Inference with Generics
 
- Beginning with JDK 7, it is possible to shorten the syntax used to create an instance of a generic type. To begin, consider the following generic class:
+Beginning with JDK 7, it is possible to shorten the syntax used to create an instance of a generic type. To begin, consider the following generic class:
 
- ```java
-class MyClass<T, V> {
-T obl;
-V ob2;
-MyClass (Tol, V 02) {
-obl = 01;
-ob2 = 02;
-}
-// ...
-}
  ```
+class MyClass<T, V> 
+{
+    T obl;
+    V ob2;
+    
+    MyClass (T ol, V o2) 
+    {
+        obl = o1;
+        ob2 = o2;
+    }
+    // ...
+}
+```
 
 Prior to JDK 7, to create an instance of **MyClass**, you would have needed to use a statement similar to the following:
 
-```java
+```
 MyClass<Integer, String> mcob = new MyClass<Integer, String> (98, "A String");
 ```
 
@@ -1378,12 +1642,16 @@ The preceding can be generalized. When type inference is used, the declaration s
 ```
 class-name<type-arg-list > var-name = new class-name <>(cons-arg-list);
 ```
-Here, the type argument list of the constructor in the **new** clause is empty. Type inference can also be applied to parameter passing. For example, if the
+Here, the type argument list of the constructor in the **new** clause is empty. Type inference can also be applied to parameter passing. For example, if the following method is added to **MyClass**,
 
-following method is added to **MyClass**,
-
-```java
-boolean isSame (MyClass<T, V> 0) { if (oblo.obl && ob2 o.ob2) return true; == else return false; }
+```
+boolean isSame (MyClass<T, V> 0) 
+{ 
+    if (oblo.obl && ob2 o.ob2) 
+        return true;  
+    else 
+        return false; 
+}
 ```
 
 then the following call is legal:
@@ -1396,13 +1664,11 @@ In this case, the type arguments for the argument passed to **isSame()** can be 
 
 Most of the examples in this book will continue to use the full syntax when declaring instances of generic classes. This way, the examples will work with any Java compiler that supports generics. Using the full-length syntax also makes it very clear precisely what is being created, which is important in example code shown in a book. However, in your own code, the use of the type- inference syntax will streamline your declarations.
 
-
-
 ## Local Variable Type Inference and Generics
 
  As just explained, type inference is already supported for generics through the use of the diamond operator. However, you can also use the new local variable type inference feature added by JDK 10 with a generic class. For example, assuming **MyClass** used in the preceding section, this declaration:
 
-```java
+```
 MyClass<Integer, String> mcob = new MyClass<Integer, String> (98, "A String");
 ```
 
@@ -1428,50 +1694,62 @@ specified, and then applying the appropriate casts (as determined by the type ar
 
 Although bridge methods are not something that you will normally need to be concerned with, it is still instructive to see a situation in which one is generated. Consider the following program:  
 
-```java
+```
 // A situation that creates a bridge method. 
-class Gen<T> {}
-Tob; // declare an object of type T
-// Pass the constructor a reference to 
-// an object of type T.
- Gen (To) {
-// Return 
-ob = o;
- }   
-T getob(){ 
-    return ob;
+class Gen<T> 
+{
+    T ob; // declare an object of type T
+    // Pass the constructor a reference to 
+    // an object of type T.
+    Gen (T o) 
+    {
+        ob = o;
+    }
+    // Return ob
+    T getob()
+    {
+        return ob;
+    }
 }
+// A subclass of Gen. 
+class Gen2 extends Gen<String> 
+{
+    Gen2 (String o)
+    {
+        super (0)
+    }
+    
+    // A String-specific override of getob().
+    String getob()
+    { 
+        System.out.print ("You called String getob(); ");
+        return ob;
+    } 
 }
-// A subclass of
- Gen. class Gen2 extends Gen<String> {
-Gen2 (String of super (0) {
-// A String-specific override of
- getob().
-String getob System.out.print ("You called String getob(); "} 
-return ob;
- }
- }
 // Demonstrate a situation that requires a bridge method.
- class BridgeDeno 
- public static void main(String argall) (
-// Create a Gen2 object for Strings.
- Gen2 strob2 new Gen2 ("Generics Test");
-System.out.println(str0b2.getob());
- }
- }
+class BridgeDemo
+{
+    public static void main(String argall)
+    {
+        // Create a Gen2 object for Strings.
+        Gen2 strob2 = new Gen2 ("Generics Test");
+        System.out.println(str0b2.getob());
+    }
+}
 ```
 
 In the program, the subclass **Gen2** extends **Gen**, but does so using a **String**\- specific version of **Gen**, as its declaration shows:
-
+```
 class Gen2 extends Gen<String> {
-
+```
 Furthermore, inside **Gen2**, **getob()** is overridden with **String** specified as the return type:
 
-```java
-// A String-specific override of 
-getob(). String getob() {
-     System.out.print("You called String getobi): "); 
-     return obi
+```
+// A String-specific override of getob(). 
+String getob() 
+{
+    System.out.print("You called String getobi): "); 
+    return obi
 }
 ```
 
@@ -1481,8 +1759,12 @@ Object getob() { // ...
 ```
 To handle this problem, the compiler generates a bridge method with the preceding signature that calls the **String** version. Thus, if you examine the class file for **Gen2** by using **javap**, you will see the following methods:
 
-```java
-class Gen2 extends Gen java.lang.String> [ Gen2 (java.lang.String) java.lang.String getob(): Java.lang.Object getob(); // bridge method
+```
+class Gen2 extends Gen java.lang.String> 
+{ 
+    Gen2 (java.lang.String);
+    java.lang.String getob();
+    Java.lang.Object getob(); // bridge method
 }
 ```
 
@@ -1494,21 +1776,25 @@ There is one last point to make about this example. Notice that the only differe
 
  The inclusion of generics gives rise to another type of error that you must guard against: ambiguity. Ambiguity errors occur when erasure causes two seemingly distinct generic declarations to resolve to the same erased type, causing a conflict. Here is an example that involves method overloading:
 
- ```java
+```
 // Ambiguity caused by erasure on 
 // overloaded methods.
-class MyGenClass<T, V> {
-Tobl;
-V ob2;
-// ...
-// These two overloaded methods are ambiguous 
-// and will not compile. 
-void set (To) {
-ob1 = 0;
-}
-void set (Vo) {
-ob2 = 0;
-}
+class MyGenClass<T, V> 
+{
+    T obl;
+    V ob2;
+    
+    // ...
+    // These two overloaded methods are ambiguous 
+    // and will not compile. 
+    void set (T o) 
+    {
+        ob1 = o;
+    }
+    void set (V o) 
+    {
+        ob2 = o;
+    }
 }
  ```  
 
@@ -1516,9 +1802,7 @@ Notice that **MyGenClass** declares two generic types: **T** and **V**. Inside *
 
 First, as **MyGenClass** is written, there is no requirement that **T** and **V** actually be different types. For example, it is perfectly correct (in principle) to construct a **MyGenClass** object as shown here:
 ```
-MyGenClass<String, String> obj = new MyGenClass<String, String>
-
-()
+MyGenClass<String, String> obj = new MyGenClass<String, String>()
 ```
 In this case, both **T** and **V** will be replaced by **String**. This makes both versions of **set()** identical, which is, of course, an error.
 
@@ -1528,9 +1812,7 @@ void set(Object o) { // ...
 ```
 Thus, the overloading of **set()** as attempted in **MyGenClass** is inherently ambiguous.
 
-Ambiguity errors can be tricky to fix. For example, if you know that **V** will  
-
-always be some type of **Number**, you might try to fix **MyGenClass** by rewriting its declaration as shown here:
+Ambiguity errors can be tricky to fix. For example, if you know that **V** will always be some type of **Number**, you might try to fix **MyGenClass** by rewriting its declaration as shown here:
 ```
 class MyGenClass<T, V extends Number> { // almost OK!
 ```
@@ -1552,13 +1834,15 @@ Frankly, in the preceding example, it would be much better to use two separate m
 
 **Type Parameters Can’t Be Instantiated** It is not possible to create an instance of a type parameter. For example, consider this class: 
 
-```java
+```
 // Can't create an instance of T. 
-class Gen<T> { 
+class Gen<T> 
+{ 
     T ob;
-Gen () { 
-    ob = new T(); // Illegal!!! 
-}
+    Gen ()
+    {
+        ob = new T(); // Illegal!!!     
+    }
 }
 ```
 
@@ -1568,14 +1852,17 @@ Here, it is illegal to attempt to create an instance of **T**. The reason should
 
  No **static** member can use a type parameter declared by the enclosing class. For example, both of the **static** members of this class are illegal:
 
- ```java
-class Wrong<T> {
-// Wrong, no static variables of type T.
- static T ob;
-// Wrong, no static method can use T. 
-static T getob() {
-     return ob;
-}
+ ```
+class Wrong<T> 
+{
+    // Wrong, no static variables of type T.
+    static T ob;
+    
+    // Wrong, no static method can use T. 
+    static T getob() 
+    {
+        return ob;
+    }
 }
  ```
 
@@ -1585,28 +1872,35 @@ Although you can’t declare **static** members that use a type parameter declar
 
  There are two important generics restrictions that apply to arrays. First, you cannot instantiate an array whose element type is a type parameter. Second, you cannot create an array of type-specific generic references. The following short program shows both situations:  
 
- ```java
+ ```
 // Generics and arrays.
-class Gen<T extends Number> {
-T ob;
-Tvals[]; // OK
-Gen(To, T[] nums) {
-ob = 0;
-// This statement is illegal.
-// vals = new T[10]; 
-// can't create an array of T
-// But, this statement is OK.
-vals = nums; // OK to assign reference to existent array
+class Gen<T extends Number> 
+{
+    T ob;
+    T vals[]; // OK
+    Gen(T o, T[] nums) 
+    {
+        ob = 0;
+        // This statement is illegal.
+        // vals = new T[10]; 
+        // can't create an array of T
+        // But, this statement is OK.
+        vals = nums; // OK to assign reference to existent array
+    }
 }
-}
-class GenArrays (
-public static void main(String args[]) { Integer n[] = {1, 2, 3, 4, 5);
-Gen<Integer> iob= new Gen<Integer> (50, n);
-// Can't create an array of type-specific generic references. 
-// Gen<Integer> gens []= new Gen<Integer> [10]; // Wrong!
-// This is OK.
-Gen<?> gens [] = new Gen<?> [10]; // OK
-}
+class GenArrays 
+{
+    public static void main(String args[]) 
+    { 
+        Integer n[] = {1, 2, 3, 4, 5};
+        Gen<Integer> iob = new Gen<Integer> (50, n);
+        // Can't create an array of type-specific generic references. 
+        // Gen<Integer> gens []= new Gen<Integer> [10]; 
+        // Wrong!
+        
+        // This is OK.
+        Gen<?> gens [] = new Gen<?> [10]; // OK
+    }
 }
  ```
 
