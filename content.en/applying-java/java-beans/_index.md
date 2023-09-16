@@ -30,7 +30,7 @@ The following list enumerates some of the benefits that JavaBeans technology pro
 
 ## Introspection
 
- At the core of Bean programming is introspection. This is the process of analyzing a Bean to determine its capabilities. This is an essential feature of the JavaBeans API because it allows another application, such as a design tool, to obtain information about a component. Without introspection, the JavaBeans technology could not operate.
+At the core of Bean programming is introspection. This is the process of analyzing a Bean to determine its capabilities. This is an essential feature of the JavaBeans API because it allows another application, such as a design tool, to obtain information about a component. Without introspection, the JavaBeans technology could not operate.
 
 There are two ways in which the developer of a Bean can indicate which of its properties, events, and methods should be exposed. With the first method, simple naming conventions are used. These allow the introspection mechanisms to infer information about a Bean. In the second way, an additional class that extends the **BeanInfo** interface is provided that explicitly supplies this information. Both approaches are examined here.  
 
@@ -77,6 +77,7 @@ public void setWidth (double w)
 }
 ```
 **NOTE** 
+
 For a **boolean** property, a method of the form **is**PropertyName() can also be used as an accessor.
 
 **Indexed Properties**
@@ -242,14 +243,14 @@ The returned object contains information about the Bean specified by _bean._
 ### MethodDescriptor
 
  The **MethodDescriptor** class represents a Bean method. To obtain the name of the method, call **getName()**. You can obtain information about the method by calling **getMethod()**, shown here:
-
+```
 Method getMethod()
-
+```
 An object of type **Method** that describes the method is returned.  
 
 ### A Bean Example
 
- This chapter concludes with an example that illustrates various aspects of Bean programming, including introspection and using a **BeanInfo** class. It also makes use of the **Introspector**, **PropertyDescriptor**, and **EventSetDescriptor** classes. The example uses three classes. The first is a Bean called **Colors**, shown here:  
+This chapter concludes with an example that illustrates various aspects of Bean programming, including introspection and using a **BeanInfo** class. It also makes use of the **Introspector**, **PropertyDescriptor**, and **EventSetDescriptor** classes. The example uses three classes. The first is a Bean called **Colors**, shown here:  
 ```
  // A simple Bean.
 import java.awt.*;
@@ -292,7 +293,7 @@ public class Colors extends Canvas implements Serializable
   {
     int r = (int) (255* Math.random()); 
     int g = (int) (255* Math.random());
-    int b = (int) (255*Math.random()); 
+    int b = (int) (255* Math.random()); 
     return new Color (r, g, b);
   }
   public void paint (Graphics g) 
@@ -329,8 +330,7 @@ public class ColorsBeanInfo extends SimpleBeanInfo
   { 
     try 
     {
-      PropertyDescriptor rectangular = new 
-         PropertyDescriptor ("rectangular", Colors.class); 
+      PropertyDescriptor rectangular = new PropertyDescriptor ("rectangular", Colors.class); 
       PropertyDescriptor pd[] = { rectangular}; 
       return pd; 
     } 
@@ -366,8 +366,7 @@ public class IntrospectorDemo
         system.out.println("\t" + propertyDesriptor[i].getName());
       }
       system.out.println("Event:");
-      EventSetDescriptor eventsetDescriptor[] =
-          beanInfo.getEventsetDescriptors();
+      EventSetDescriptor eventsetDescriptor[] = beanInfo.getEventsetDescriptors();
       for(int i = 0; i < eventsetDescriptor.length;i++) 
       {
         system.out.println("\t" + eventsetDescriptor[i].getName());
@@ -400,7 +399,3 @@ Events:
 ```
 
 Notice two things in the output. First, because **ColorsBeanInfo** overrides **getPropertyDescriptors()** such that the only property returned is **rectangular**, only the **rectangular** property is displayed. However, because **getEventSetDescriptors()** is not overridden by **ColorsBeanInfo**, design- pattern introspection is used, and all events are found, including those in **Colors**’ superclass, **Canvas**. Remember, if you don’t override one of the “get” methods defined by **SimpleBeanInfo**, then the default, design-pattern introspection is used. To observe the difference that **ColorsBeanInfo** makes, erase its class file and then run **IntrospectorDemo** again. This time it will report more properties.  
-
-
-
-

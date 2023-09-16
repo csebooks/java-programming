@@ -51,12 +51,14 @@ The **getLocalHost()** method simply returns the **InetAddress** object that rep
 
 The following example prints the addresses and names of the local machine and two Internet web sites:
 ```
-// Demonstrate InetAddress. import java.net.*;
+// Demonstrate InetAddress. 
+import java.net.*;
+
 class InetAddressTest 
 {
     public static void main(String args[]) throws UnknownHost Exception 
     { 
-        InetAddress Address = InetAddress.getLocalHost (); 
+        InetAddress Address = InetAddress.getLocalHost(); 
         System.out.println (Address);
         
         Address = InetAddress.getByName("www.HerbSchildt.com"); 
@@ -104,9 +106,7 @@ The creation of a **Socket** object implicitly establishes a connection between 
 
 **Socket** defines several instance methods. For example, a **Socket** can be examined at any time for the address and port information associated with it, by use of the following methods:
 ![Alt text](image-4.png)
-You can gain access to the input and output streams associated with a **Socket** by use of the **getInputStream()** and **getOuptutStream()** methods, as shown here. Each can throw an **IOException** if the socket has been invalidated by a loss of connection. These streams are used exactly like the I/O streams  
-
-described in Chapter 21 to send and receive data.
+You can gain access to the input and output streams associated with a **Socket** by use of the **getInputStream()** and **getOuptutStream()** methods, as shown here. Each can throw an **IOException** if the socket has been invalidated by a loss of connection. These streams are used exactly like the I/O streams described in Chapter 21 to send and receive data.
 ![Alt text](image-5.png)
 Several other methods are available, including **connect(),** which allows you to specify a new connection; **isConnected(),** which returns true if the socket is connected to a server; **isBound(),** which returns true if the socket is bound to an address; and **isClosed(),** which returns true if the socket is closed. To close a socket, call **close()**. Closing a socket also closes the I/O streams associated with the socket. Beginning with JDK 7, **Socket** also implements **AutoCloseable**, which means that you can use a **try**\-with-resources block to manage a socket.
 
@@ -224,7 +224,7 @@ class URLDemo
         System.out.println("Port: "+hp.getPort());
 
         System.out.println("Host: "+hp.getHost());
-        System.out.println("File: " + hp.getFile()); 
+        System.out.println("File: "+ hp.getFile()); 
         System.out.println("Ext: " + hp.toExternalForm());
     }
 }
@@ -425,7 +425,7 @@ DatagramSocket() throws SocketException
 
 DatagramSocket(int port) throws SocketException
 
-DatagramSocket(int _port,_ InetAddress ipAddress) throws SocketException
+DatagramSocket(int port, InetAddress ipAddress) throws SocketException
 
 DatagramSocket(SocketAddress address) throws SocketException
 ```
@@ -449,9 +449,9 @@ Other methods give you access to various attributes associated with a **Datagram
 **DatagramPacket**defines several constructors. Four are shown here:
 ```
 DatagramPacket(byte data [ ], int size) 
-DatagramPacket(byte data [ ], int _offset,_ int size) 
-DatagramPacket(byte data [ ], int _size,_ InetAddress _ipAddress,_ int port)
-DatagramPacket(byte data [ ], int _offset,_ int _size,_ InetAddress _ipAddress,_ int port)
+DatagramPacket(byte data [ ], int offset, int size) 
+DatagramPacket(byte data [ ], int size, InetAddress ipAddress, int port)
+DatagramPacket(byte data [ ], int offset, int size, InetAddress ipAddress, int port)
 ```
 The first constructor specifies a buffer that will receive data and the size of a packet. It is used for receiving data over a **DatagramSocket.** The second form allows you to specify an offset into the buffer at which data will be stored. The third form specifies a target address and port, which are used by a **DatagramSocket** to determine where the data in the packet will be sent. The fourth form transmits packets beginning at the specified offset into the data. Think of the first two forms as building an "in box," and the second two forms as stuffing and addressing an envelope.
 

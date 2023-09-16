@@ -3,6 +3,7 @@ title: 'Inheritance'
 weight: 8
 --- 
 # Inheritance
+
 Inheritance is one of the cornerstones of object-oriented programming because it allows the creation of hierarchical classifications. Using inheritance, you can create a general class that defines traits common to a set of related items. This class can then be inherited by other, more specific classes, each adding those things that are unique to it. In the terminology of Java, a class that is inherited is called a superclass. The class that does the inheriting is called a subclass. Therefore, a subclass is a specialized version of a superclass. It inherits all of the members defined by the superclass and adds its own, unique elements.
 
 ## Inheritance Basics
@@ -402,17 +403,17 @@ class DemoSuper
         BoxWeight mybox2 = new BoxWeight (2, 3, 4, 0.076);
         BoxWeight mybox3 = new BoxWeight(); // default
         BoxWeight mycube = new BoxWeight (3, 2);
-        BoxWeight myclone new BoxWeight (mybox1);
+        BoxWeight myclone = new BoxWeight (mybox1);
         double vol;
         
         vol = mybox1.volume();
         System.out.println("Volume of myboxi is " + vol);
-        System.out.println("Weight of myboxl is "myboxl.weight); 
+        System.out.println("Weight of myboxl is " +myboxl.weight); 
         System.out.println();
         
         vol = mybox2. volume();
         System.out.println("Volume of mybox2 is " + vol);
-        System.out.println("Weight of mybox2 is mybox2.weight); 
+        System.out.println("Weight of mybox2 is "+mybox2.weight); 
         System.out.println();
         
         vol = mybox3.volume();
@@ -566,7 +567,8 @@ class Box
     }
 }
 // Add weight.
-class BoxWeight extends Box {
+class BoxWeight extends Box 
+{
     double weight; // weight of box
     // construct clone of an object 
     BoxWeight (BoxWeight ob)
@@ -575,29 +577,29 @@ class BoxWeight extends Box {
         super(ob);
         weight = ob.weight;
     } 
-}
-
-// constructor when all parameters are specified 
-BoxWeight (double w, double h, double d, double m) 
-{ 
-    super (w, h, d); // call superclass constructor weight m
-}
-BoxWeight() 
-{
-    // default constructor
-    super(); 
-    weight = -1;
-}
-// constructor used when cube is created 
-BoxWeight (double len, double m)
-{
-    super (len); 
-    weight = m;
-    // Add shipping costs.
+    // constructor when all parameters are specified 
+    BoxWeight (double w, double h, double d, double m) 
+    { 
+        super (w, h, d); // call superclass constructor weight m
+    }
+    BoxWeight() 
+    {
+        // default constructor
+        super(); 
+        weight = -1;
+    }
+    // constructor used when cube is created 
+    BoxWeight (double len, double m)
+    {
+        super (len); 
+        weight = m;
+        // Add shipping costs.
+    }
 }
 class Shipment extends BoxWeight 
 { 
     double cost;
+   
     // construct clone of an object 
     Shipment (Shipment ob) 
     { 
@@ -605,12 +607,14 @@ class Shipment extends BoxWeight
         super (ob);
         cost = ob.cost;
     }
+   
     // constructor when all parameters are specified 
     Shipment (double w, double h, double d double m, double c) 
     { 
         super (w, h, d, m); // call superclass constructor
         cost c;
     }
+   
     // default constructor 
     Shipment () 
     {
@@ -632,10 +636,12 @@ class DemoShipment
         Shipment shipment1 = new Shipment (10, 20, 15, 10, 3.41); 
         Shipment shipment2 = new Shipment (2, 3, 4, 0.76, 1.28);
         double vol;
-        vol shipment1.volume(); 
+   
+        vol = shipment1.volume(); 
+   
         System.out.println("Volume of shipment1 is " + vol);
         System.out.println("Weight of shipment1 is "+ shipment1.weight);
-        System.out.println("Shipping cost: $" shipment1.cost); 
+        System.out.println("Shipping cost: $"+shipment1.cost); 
         System.out.println();
     }
 }
@@ -660,11 +666,11 @@ This example illustrates one other important point: **super()** always refers to
 
 **NOTE**
 
- In the preceding program, the entire class hierarchy, including **Box**, **BoxWeight**, and **Shipment**, is shown all in one file. This is for your convenience only. In Java, all three classes could have been placed into their own files and compiled separately. In fact, using separate files is the norm, not the  exception, in creating class hierarchies.
+In the preceding program, the entire class hierarchy, including **Box**, **BoxWeight**, and **Shipment**, is shown all in one file. This is for your convenience only. In Java, all three classes could have been placed into their own files and compiled separately. In fact, using separate files is the norm, not the  exception, in creating class hierarchies.
 
 ## When Constructors Are Executed
 
- When a class hierarchy is created, in what order are the constructors for the classes that make up the hierarchy executed? For example, given a subclass called **B** and a superclass called **A**, is **A**’s constructor executed before **B**’s, or vice versa? The answer is that in a class hierarchy, constructors complete their execution in order of derivation, from superclass to subclass. Further, since **super()** must be the first statement executed in a subclass’ constructor, this order is the same whether or not **super()** is used. If **super()** is not used, then the default or parameterless constructor of each superclass will be executed. The following program illustrates when constructors are executed:
+When a class hierarchy is created, in what order are the constructors for the classes that make up the hierarchy executed? For example, given a subclass called **B** and a superclass called **A**, is **A**’s constructor executed before **B**’s, or vice versa? The answer is that in a class hierarchy, constructors complete their execution in order of derivation, from superclass to subclass. Further, since **super()** must be the first statement executed in a subclass’ constructor, this order is the same whether or not **super()** is used. If **super()** is not used, then the default or parameterless constructor of each superclass will be executed. The following program illustrates when constructors are executed:
 ```
 // Demonstrate when constructors are executed.
 // Create a super class.
@@ -688,8 +694,9 @@ class B extends A
 // Create another subclass by extending B. 
 class C extends B 
 {
-    c(){
-    System.out.println("Inside C's constructor.");
+    c()
+    {
+        System.out.println("Inside C's constructor.");
     }
 }
 
@@ -713,7 +720,7 @@ As you can see, the constructors are executed in order of derivation. If you thi
 
 ## Method Overriding
 
- In a class hierarchy, when a method in a subclass has the same name and type signature as a method in its superclass, then the method in the subclass is said to override the method in the superclass. When an overridden method is called from within its subclass, it will always refer to the version of that method defined by the subclass. The version of the method defined by the superclass will be hidden. Consider the following:  
+In a class hierarchy, when a method in a subclass has the same name and type signature as a method in its superclass, then the method in the subclass is said to override the method in the superclass. When an overridden method is called from within its subclass, it will always refer to the version of that method defined by the subclass. The version of the method defined by the superclass will be hidden. Consider the following:  
 ```
 //Method Overriding.
 class A
@@ -837,7 +844,7 @@ The version of **show()** in **B** takes a string parameter. This makes its type
 
 ## Dynamic Method Dispatch
 
- While the examples in the preceding section demonstrate the mechanics of method overriding, they do not show its power. Indeed, if there were nothing more to method overriding than a name space convention, then it would be, at best, an interesting curiosity, but of little real value. However, this is not the case. Method overriding forms the basis for one of Java’s most powerful concepts: _dynamic method dispatch_. Dynamic method dispatch is the mechanism by which a call to an overridden method is resolved at run time, rather than compile time. Dynamic method dispatch is important because this is how Java implements run-time polymorphism.
+While the examples in the preceding section demonstrate the mechanics of method overriding, they do not show its power. Indeed, if there were nothing more to method overriding than a name space convention, then it would be, at best, an interesting curiosity, but of little real value. However, this is not the case. Method overriding forms the basis for one of Java’s most powerful concepts: _dynamic method dispatch_. Dynamic method dispatch is the mechanism by which a call to an overridden method is resolved at run time, rather than compile time. Dynamic method dispatch is important because this is how Java implements run-time polymorphism.
 
 Let’s begin by restating an important principle: a superclass reference variable can refer to a subclass object. Java uses this fact to resolve calls to overridden methods at run time. Here is how. When an overridden method is called through a superclass reference, Java determines which version of that method to execute based upon the type of the object being referred to at the time the call occurs. Thus, this determination is made at run time. When different types of objects are referred to, different versions of an overridden method will be called. In other words, _it is the type of the object being referred to_ (not the type of the reference variable) that determines which version of an overridden method will be executed. Therefore, if a superclass contains a method that is overridden by a subclass, then when different types of objects are referred to through a superclass reference variable, different versions of the method are executed.
 
@@ -912,7 +919,7 @@ Dynamic, run-time polymorphism is one of the most powerful mechanisms that objec
 
 ### Applying Method Overriding
 
- Let’s look at a more practical example that uses method overriding. The following program creates a superclass called **Figure** that stores the dimensions of a two-dimensional object. It also defines a method called **area()** that computes the area of an object. The program derives two subclasses from **Figure**. The first is **Rectangle** and the second is **Triangle**. Each of these subclasses overrides **area()** so that it returns the area of a rectangle and a triangle, respectively.  
+Let’s look at a more practical example that uses method overriding. The following program creates a superclass called **Figure** that stores the dimensions of a two-dimensional object. It also defines a method called **area()** that computes the area of an object. The program derives two subclasses from **Figure**. The first is **Rectangle** and the second is **Triangle**. Each of these subclasses overrides **area()** so that it returns the area of a rectangle and a triangle, respectively.  
 ```
 // Using run-time polymorphism. 
 class Figure 
@@ -963,7 +970,7 @@ class FindAreas
     { 
         Figure f = new Figure (10, 10); 
         Rectangle r = new Rectangle (9, 5);
-        Triangle = new Triangle (10, 8); 
+        Triangle t= new Triangle (10, 8); 
         Figure figref;
         
         figref=r;
@@ -995,19 +1002,15 @@ Through the dual mechanisms of inheritance and run-time polymorphism, it is poss
 
 ## Using Abstract Classes
 
- There are situations in which you will want to define a superclass that declares the structure of a given abstraction without providing a complete implementation of every method. That is, sometimes you will want to create a superclass that only defines a generalized form that will be shared by all of its subclasses, leaving it to each subclass to fill in the details. Such a class determines the nature of the methods that the subclasses must implement. One way this situation can occur is when a superclass is unable to create a meaningful implementation for a method. This is the case with the class **Figure**  
-
-used in the preceding example. The definition of **area()** is simply a placeholder. It will not compute and display the area of any type of object.
+There are situations in which you will want to define a superclass that declares the structure of a given abstraction without providing a complete implementation of every method. That is, sometimes you will want to create a superclass that only defines a generalized form that will be shared by all of its subclasses, leaving it to each subclass to fill in the details. Such a class determines the nature of the methods that the subclasses must implement. One way this situation can occur is when a superclass is unable to create a meaningful implementation for a method. This is the case with the class **Figure** used in the preceding example. The definition of **area()** is simply a placeholder. It will not compute and display the area of any type of object.
 
 As you will see as you create your own class libraries, it is not uncommon for a method to have no meaningful definition in the context of its superclass. You can handle this situation two ways. One way, as shown in the previous example, is to simply have it report a warning message. While this approach can be useful in certain situations—such as debugging—it is not usually appropriate. You may have methods that must be overridden by the subclass in order for the subclass to have any meaning. Consider the class **Triangle**. It has no meaning if **area()** is not defined. In this case, you want some way to ensure that a subclass does, indeed, override all necessary methods. Java’s solution to this problem is the _abstract method_.
 
 You can require that certain methods be overridden by subclasses by specifying the **abstract** type modifier. These methods are sometimes referred to as _subclasser responsibility_ because they have no implementation specified in the superclass. Thus, a subclass must override them—it cannot simply use the version defined in the superclass. To declare an abstract method, use this general form:
-
-abstract _type name_(_parameter-list_);
-
-As you can see, no method body is present. Any class that contains one or more abstract methods must also be declared
-
-abstract. To declare a class abstract, you simply use the **abstract** keyword in front of the **class** keyword at the beginning of the class declaration. There can be no objects of an abstract class. That is, an abstract class cannot be directly instantiated with the **new** operator. Such objects would be useless, because an abstract class is not fully defined. Also, you cannot declare abstract constructors, or abstract static methods. Any subclass of an abstract class must either implement all of the abstract methods in the superclass, or be declared **abstract** itself.
+```
+abstract type name(parameter-list);
+```
+As you can see, no method body is present. Any class that contains one or more abstract methods must also be declared abstract. To declare a class abstract, you simply use the **abstract** keyword in front of the **class** keyword at the beginning of the class declaration. There can be no objects of an abstract class. That is, an abstract class cannot be directly instantiated with the **new** operator. Such objects would be useless, because an abstract class is not fully defined. Also, you cannot declare abstract constructors, or abstract static methods. Any subclass of an abstract class must either implement all of the abstract methods in the superclass, or be declared **abstract** itself.
 
 Here is a simple example of a class with an abstract method, followed by a class which implements that method:  
 ```
@@ -1015,6 +1018,7 @@ Here is a simple example of a class with an abstract method, followed by a class
 abstract class A 
 { 
     abstract void callme();
+
     // concrete methods are still allowed in abstract classes 
     void callmetoo() 
     { 
@@ -1037,28 +1041,27 @@ class AbstractDemo
         b.callmetoo();
     }
 }
-
 ```
 Notice that no objects of class **A** are declared in the program. As mentioned, it is not possible to instantiate an abstract class. One other point: class **A** implements a concrete method called **callmetoo()**. This is perfectly acceptable. Abstract classes can include as much implementation as they see fit.
 
 Although abstract classes cannot be used to instantiate objects, they can be used to create object references, because Java’s approach to run-time polymorphism is implemented through the use of superclass references. Thus, it must be possible to create a reference to an abstract class so that it can be used to point to a subclass object. You will see this feature put to use in the next example.
 
-Using an        `       ` abstract class, you can improve the **Figure** class shown earlier. Since there is no meaningful concept of area for an undefined two-dimensional figure, the following version of the program declares **area()** as abstract inside  
+Using an abstract class, you can improve the **Figure** class shown earlier. Since there is no meaningful concept of area for an undefined two-dimensional figure, the following version of the program declares **area()** as abstract inside **Figure**
 
-**Figure**
-
-. This, of course, means that all classes derived from **Figure** must override **area()**.  
+This, of course, means that all classes derived from **Figure** must override **area()**.  
 ```
 // Using abstract methods and classes. 
 abstract class Figure 
 {
     double diml; 
     double dim2;
+
     Figure (double a, double b) 
     {
         diml = a;
         dim2 = b:
     }
+
     // area is now an abstract method 
     abstract double area();
 }
@@ -1111,11 +1114,11 @@ Although it is not possible to create an object of type **Figure**, you can crea
 
 ## Using final with Inheritance
 
- The keyword **final** has three uses. First, it can be used to create the equivalent of a named constant. This use was described in the preceding chapter. The other two uses of **final** apply to inheritance. Both are examined here.
+The keyword **final** has three uses. First, it can be used to create the equivalent of a named constant. This use was described in the preceding chapter. The other two uses of **final** apply to inheritance. Both are examined here.
 
 ### Using final to Prevent Overriding
 
- While method overriding is one of Java’s most powerful features, there will be times when you will want to prevent it from occurring. To disallow a method from being overridden, specify **final** as a modifier at the start of its declaration. Methods declared as **final** cannot be overridden. The following fragment illustrates **final**:  
+While method overriding is one of Java’s most powerful features, there will be times when you will want to prevent it from occurring. To disallow a method from being overridden, specify **final** as a modifier at the start of its declaration. Methods declared as **final** cannot be overridden. The following fragment illustrates **final**:  
 ```
 class A
 {
@@ -1139,7 +1142,7 @@ Methods declared as **final** can sometimes provide a performance enhancement: T
 
 ### Using final to Prevent Inheritance
 
- Sometimes you will want to prevent a class from being inherited. To do this, precede the class declaration with **final**. Declaring a class as **final** implicitly declares all of its methods as **final**, too. As you might expect, it is illegal to declare a class as both **abstract** and **final** since an abstract class is incomplete by itself and relies upon its subclasses to provide complete implementations.
+Sometimes you will want to prevent a class from being inherited. To do this, precede the class declaration with **final**. Declaring a class as **final** implicitly declares all of its methods as **final**, too. As you might expect, it is illegal to declare a class as both **abstract** and **final** since an abstract class is incomplete by itself and relies upon its subclasses to provide complete implementations.
 
 Here is an example of a **final** class:  
 
@@ -1147,56 +1150,63 @@ As the comments imply, it is illegal for **B** to inherit **A** since **A** is d
 
 ## Local Variable Type Inference and Inheritance
 
- As explained in Chapter 3, JDK 10 added local variable type inference to the Java language, which is supported by the reserved type name **var**. It is important to have a clear understanding of how type inference works within an inheritance hierarchy. Recall that a superclass reference can refer to a derived class object, and this feature is part of Java’s support for polymorphism. However, it is critical to remember that, when using local variable type inference, the inferred type of a variable is based on the declared type of its initializer. Therefore, if the initializer is of the superclass type, that will be the inferred type of the variable. It does not matter if the actual object being referred to by the initializer is an instance of a derived class. For example, consider this program:  
+As explained in Chapter 3, JDK 10 added local variable type inference to the Java language, which is supported by the reserved type name **var**. It is important to have a clear understanding of how type inference works within an inheritance hierarchy. Recall that a superclass reference can refer to a derived class object, and this feature is part of Java’s support for polymorphism. However, it is critical to remember that, when using local variable type inference, the inferred type of a variable is based on the declared type of its initializer. Therefore, if the initializer is of the superclass type, that will be the inferred type of the variable. It does not matter if the actual object being referred to by the initializer is an instance of a derived class. For example, consider this program:  
 ```
 // When working with inheritance, the inferred type is the declared
 // type of the initializer, which may not be the most derived type of 
 // the object being referred to by the initializer.
-class MyClass{
+class MyClass
+{
     //...
 }
 
-class First DerivedClass extends MyClass {
+class FirstDerivedClass extends MyClass 
+{
     int x;
     //...
 }
 
-class SecondDerivedClass extends First DerivedClass {
+class SecondDerivedClass extends FirstDerivedClass 
+{
     int y;
     //...
 }
-class TypeInferenceAndInheritance{
+class TypeInferenceAndInheritance
+{
     // Return some type of MyClass object.
-    static MyClass getObj(int which) {
-        switch(which) { 
+    static MyClass getObj(int which) 
+    {
+        switch(which) 
+        { 
             case 0: return new MyClass();
             case 1: return new FirstDerivedClass();
             default: return new SecondDerivedClass();
+        }
     }
-}
-public static void main(String args[]) {
-    // Even though getObj() returns different types of 
-    // objects within the MyClass inheritance hierarchy,
-    // its declared return type is MyClass. As a result,
-    // in all three cases shown here, the type of the
-    // variables is inferred to be MyClass, even though
-    // different derived types of objects are obtained.
+    public static void main(String args[]) 
+    {
+        // Even though getObj() returns different types of 
+        // objects within the MyClass inheritance hierarchy,
+        // its declared return type is MyClass. As a result,
+        // in all three cases shown here, the type of the
+        // variables is inferred to be MyClass, even though
+        // different derived types of objects are obtained.
 
-    // Here, getObj() returns a MyClass object. 
-    var me = getObj(0);
+        // Here, getObj() returns a MyClass object. 
+        var me = getObj(0);
 
-    // In this case, a First DerivedClass object is returned. 
-    var mc2 = getObj(1);
+        // In this case, a First DerivedClass object is returned. 
+        var mc2 = getObj(1);
     
-    // Here, a SecondDerivedClass object is returned. 
-    var mc3 = getObj (2);
+        // Here, a SecondDerivedClass object is returned. 
+        var mc3 = getObj (2);
     
-    // Because the types of both mc2 and mc3 are inferred 
-    // as MyClass (because the return type of getObj() is 
-    // MyClass), neither mc2 nor mc3 can access the fields
-    // declared by First DerivedClass or SecondDerivedClass. 
-    //mc2.x = 10; // Wrong! MyClass does not have an x field. 
-    //mc3.y = 10; // Wrong! MyClass does not have a y field.
+        // Because the types of both mc2 and mc3 are inferred 
+        // as MyClass (because the return type of getObj() is 
+        // MyClass), neither mc2 nor mc3 can access the fields
+        // declared by First DerivedClass or SecondDerivedClass. 
+        //mc2.x = 10; // Wrong! MyClass does not have an x field. 
+        //mc3.y = 10; // Wrong! MyClass does not have a y field.
     }
 }
 ```
@@ -1204,7 +1214,7 @@ In the program, a hierarchy is created that consists of three classes, at the to
 
 ## The Object Class
 
- There is one special class, **Object**, defined by Java. All other classes are subclasses of **Object**. That is, **Object** is a superclass of all other classes. This means that a reference variable of type **Object** can refer to an object of any other class. Also, since arrays are implemented as classes, a variable of type **Object** can also refer to any array.
+There is one special class, **Object**, defined by Java. All other classes are subclasses of **Object**. That is, **Object** is a superclass of all other classes. This means that a reference variable of type **Object** can refer to an object of any other class. Also, since arrays are implemented as classes, a variable of type **Object** can also refer to any array.
 
 **Object** defines the following methods, which means that they are available in every object.  
 ![Alt text](objectclass.png)

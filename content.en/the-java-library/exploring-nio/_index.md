@@ -327,7 +327,7 @@ public class MappedChannelRead
         }
         catch (IOException e) 
         { 
-            System.out.println("I/O Error + e);
+            System.out.println("I/O Error "+ e);
         }
     }
 }
@@ -614,7 +614,7 @@ class PathDemo
     {
         Path filepath = Path.of ("examples\\test.txt");
         
-        System.out.println("File Name:" filepath.getName(1));
+        System.out.println("File Name:" +filepath.getName(1));
         System.out.println("Path: " + filepath);
         System.out.println("Absolute Path: "+filepath.toAbsolutePath()); 
         System.out.println("Parent: "+filepath.getParent());
@@ -644,14 +644,14 @@ class PathDemo
     
         try 
         {
-            BasicFileAttributes attribs =Files.readAttributes (filepath, BasicFileAttributes.class);
+            BasicFileAttributes attribs = Files.readAttributes (filepath, BasicFileAttributes.class);
             
             if (attribs.isDirectory())
                 System.out.println("The file is a directory");
             else 
                 System.out.println("The file is not a directory");
             
-            if (attribs.isRegular File())
+            if (attribs.isRegularFile())
                 System.out.println("The file is a normal file");
             else 
                 System.out.println("The file is not a normal file");
@@ -702,10 +702,9 @@ If you are using a computer that supports the FAT file system (i.e., the DOS fil
 
 ### List the Contents of a Directory
 
- If a path describes a directory, then you can read the contents of that directory by using **static** methods defined by **Files**. To do this, you first obtain a directory stream by calling **newDirectoryStream()**, passing in a **Path** that describes the directory. One form of **newDirectoryStream()** is shown here:
+If a path describes a directory, then you can read the contents of that directory by using **static** methods defined by **Files**. To do this, you first obtain a directory stream by calling **newDirectoryStream()**, passing in a **Path** that describes the directory. One form of **newDirectoryStream()** is shown here:
 ```
-static DirectoryStream<Path> newDirectoryStream(Path dirPath) 
-throws IOException
+static DirectoryStream<Path> newDirectoryStream(Path dirPath) throws IOException
 ```
 Here, dirPath encapsulates the path to the directory. The method returns a **DirectoryStream<Path>** object that can be used to obtain the contents of the directory. It will throw an **IOException** if an I/O error occurs and a **NotDirectoryException** (which is a subclass of **IOException**) if the specified path is not a directory. A **SecurityException** is also possible if access to the directory is not permitted.
 
@@ -724,8 +723,7 @@ class DirList
         String dirname = "\\MyDir";
         
         // Obtain and manage a directory stream within a try block. 
-        try(DirectoryStream<Path> dirstrm =Files.newDirectoryStream 
-        (Path. of (dirname)) )
+        try(DirectoryStream<Path> dirstrm =Files.newDirectoryStream(Path. of (dirname)) )
         {
             System.out.println("Directory of " + dirname);
             
@@ -775,9 +773,7 @@ In this version, only files that match the wildcard filename specified by wildca
 ![Alt text](image-16.png)
 You can specify a ***** or **?** character, using **\\*** and **\\?**. To specify a **\**, use **\\\**. You can experiment with a glob by substituting this call to **newDirectoryStream()** into the previous program:
 ```
-Files.newDirectoryStream(Path.of(dirname), "{Path,Dir}*.
-
-{java,class}")
+Files.newDirectoryStream(Path.of(dirname), "{Path,Dir}*. {java,class}")
 ```
 This obtains a directory stream that contains only those files whose names begin with either "Path" or "Dir" and use either the "java" or "class" extension. Thus, it would match names like **DirList.java** and **PathDemo.java**, but not **MyPathDemo.java**, for example.
 
@@ -797,6 +793,7 @@ The following program demonstrates the process. It will list only those files th
 import java.io.*;
 import java.nio.file.*; 
 import java.nio.file.attribute.*;
+
 class DirList 
 {
     public static void main(String args[]) 
@@ -804,7 +801,7 @@ class DirList
         String dirname = "\\MyDir";
         
         // Create a filter that returns true only for writable files. 
-        DirectoryStream. Filter<Path> how = new DirectoryStream.Filter<Path>() 
+        DirectoryStream.Filter<Path> how = new DirectoryStream.Filter<Path>() 
         { 
             public boolean accept (Path filename) throws IOException 
             { 
@@ -821,7 +818,7 @@ class DirList
             
             for (Path entry : dirstrm) 
             {
-                BasicFileAttributes attribs =Files.readAttributes (entry, BasicFileAttributes.class);
+                BasicFileAttributes attribs = Files.readAttributes (entry, BasicFileAttributes.class);
                 if (attribs.isDirectory()) 
                     System.out.print ("<DIR>");
                 else

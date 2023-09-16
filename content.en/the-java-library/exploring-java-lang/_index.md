@@ -155,7 +155,7 @@ class ParseDemo
         i = 0;
       } 
       sum += i;
-      System.out.println("Current sum is: + sum) 
+      System.out.println("Current sum is: "+ sum) 
       } while (i!= 0);
   }
 }
@@ -171,7 +171,7 @@ class StringConversions
 { 
   public static void main(String args[]) 
   { 
-    int num 19648; 
+    int num = 19648; 
     System.out.println (num + " in binary: " + Integer.toBinaryString (num));
     System.out.println (num + " in octal: " + Integer.tooctalString (num));
     System.out.println (num + " in hexadecimal: " + Integer.toHexString (num));
@@ -329,11 +329,11 @@ class MemoryDemo
     System.out.println("Total memory is: " +r.totalMemory());
     
     mem1 = r.freeMemory(); 
-    System.out.println("Initial free memory: + mem1);
+    System.out.println("Initial free memory: "+ mem1);
     r.gc();
     
     mem1 = r.freeMemory();
-    System.out.println("Free memory after garbage collection:+ mem1);
+    System.out.println("Free memory after garbage collection: "+ mem1);
     for (int i=0; i<1000; i++)
       someints[i]= Integer.valueOf(i); // allocate integers
     
@@ -934,18 +934,22 @@ class ThreadGroupDemo
   {
     ThreadGroup groupA = new ThreadGroup ("Group A"); 
     ThreadGroup groupB = new ThreadGroup ("Group B");
+   
     NewThread obl = new NewThread ("One", groupA);
     NewThread ob2 = new NewThread ("Two", groupA); 
     NewThread ob3 = new NewThread ("Three", groupB);
     NewThread ob4= new NewThread ("Four", groupB);
+   
     obl.start();
     ob2.start();
     ob3.start();
     ob4.start();
+   
     System.out.println("\nHere is output from list():");
     groupA.list();
     groupB.list();
     System.out.println();
+
     System.out.println("Suspending Group A"); 
     Thread tga [] = new Thread [groupA.activeCount ()]; 
     groupA. enumerate (tga); // get threads in group 
@@ -953,6 +957,7 @@ class ThreadGroupDemo
     {
       ((NewThread) tga [i]).mysuspend(); // suspend each thread 
     }
+
     try 
     {
       Thread.sleep (4000);
@@ -961,6 +966,7 @@ class ThreadGroupDemo
     { 
       System.out.println("Main thread interrupted. ");
     }
+
     System.out.println("Resuming Group A"); 
     for (int i = 0; i < tga.length; i++) 
     { 
@@ -1165,25 +1171,25 @@ In the first form, the character ch is appended to the invoking object. In the s
 ## The Iterable Interface 
 
 **Iterable** must be implemented by any class whose objects will be used by the for-each version of the **for** loop. In other words, in order for an object to be used within a for-each style **for** loop, its class must implement **Iterable**. **Iterable** is a generic interface that has this declaration:
-
+```
 interface Iterable<T>
-
+```
 Here, **T** is the type of the object being iterated. It defines one abstract method,  
 
 **iterator()**, which is shown here:
-
+```
 Iterator<T> iterator()
-
+```
 It returns an iterator to the elements contained in the invoking object. **Iterable** also defines two default methods. The first is called **forEach()**:
-
+```
 default void forEach(Consumer<? super T> action)
-
+```
 For each element being iterated, **forEach()** executes the code specified by action. (**Consumer** is a functional interface defined in **java.util.function**. See Chapter 20.)
 
 The second default method is **spliterator()**, shown next:
-
+```
 default Spliterator<T> spliterator()
-
+```
 It returns a **Spliterator** to the sequence being iterated. (See Chapters 19 and 29 for details on spliterators.)
 
 **NOTE**

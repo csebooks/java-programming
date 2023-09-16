@@ -16,7 +16,7 @@ There are two classes that support regular expression processing: **Pattern** an
 
 ### Pattern
 
- The **Pattern** class defines no constructors. Instead, a pattern is created by calling the **compile()** factory method. One of its forms is shown here:
+The **Pattern** class defines no constructors. Instead, a pattern is created by calling the **compile()** factory method. One of its forms is shown here:
 ```
 static Pattern compile(String pattern)
 ```
@@ -392,7 +392,7 @@ public class ReflectionDemo1
             Constructor<?> constructors [] = c.getConstructors(); 
             for (int i = 0; i < constructors.length; i++) 
             { 
-                System.out.println(" "+constructors [i]); 
+                System.out.println(" "+constructors[i]); 
             }
 
             System.out.println("Fields: "); 
@@ -593,7 +593,7 @@ public class AddClient
         try 
         {
             String addServerURL = "rmi://" + args[0] + "/AddServer";
-            AddServerIntf addServerIntf =(AddServerIntf) Naming.lookup (addServerURL);
+            AddServerIntf addServerIntf =(AddServerIntf)Naming.lookup (addServerURL);
             System.out.println("The first number is: " + args[1]); 
 
             double d1 = Double.valueOf (args [1]).doubleValue(); 
@@ -744,7 +744,7 @@ public class TimeFormatDemo
         df = DateFormat.getTimeInstance (DateFormat. SHORT, Locale.JAPAN);
         System.out.println("Japan: " + df. format (date));
         
-        df = DateFormat.getTime Instance (DateFormat. LONG, Locale.UK); 
+        df = DateFormat.getTimeInstance (DateFormat. LONG, Locale.UK); 
         System.out.println("United Kingdom: " + df. format (date));
         
         df = DateFormat.getTimeInstance (DateFormat.FULL, Locale.CANADA);
@@ -801,13 +801,13 @@ public class SimpleDateFormatDemo
         SimpleDateFormat sdf;
 
         sdf = new SimpleDateFormat ("hh:mm:ss");
-        System.out.println(sdf. format (date));
+        System.out.println(sdf.format (date));
 
         sdf = new SimpleDateFormat("dd MMM yyyy hh:mm:ss zzz");
-        System.out.println(sdf. format (date));
+        System.out.println(sdf.format (date));
 
         sdf = new SimpleDateFormat ("E MMM dd yyyy");
-        System.out.println(sdf. format (date)); 
+        System.out.println(sdf.format (date)); 
     }
 }
 ```

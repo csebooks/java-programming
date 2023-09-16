@@ -124,14 +124,13 @@ After this statement executes, **br** is a character-based stream that is linked
 ### Reading Characters
 
  To read a character from a **BufferedReader**, use **read()**. The version of **read()** that we will be using is
-
+```
 int read() throws IOException
-
+```
 Each time that **read()** is called, it reads a character from the input stream and returns it as an integer value. It returns –1 when an attempt is made to read at the end of the stream. As you can see, it can throw an **IOException**.
 
 The following program demonstrates **read()** by reading characters from the console until the user types a "q." Notice that any I/O exceptions that might be generated are simply thrown out of **main()**. Such an approach is common when reading from the console in simple example programs such as those shown in this book, but in more sophisticated applications, you can handle the exceptions explicitly.  
 ```
-
 // Use a BufferedReader to read characters from the console. 
 import java.io.*;
 
@@ -142,6 +141,7 @@ class BRRead
         char c;
         BufferedReader br = new BufferedReader (new InputStreamReader (System.in));
         System.out.println("Enter characters, 'q' to quit."); 
+   
         // read characters
         do {
             c = (char) br.read(); 
@@ -167,9 +167,9 @@ This output may look a little different from what you expected because **System.
 ### Reading Strings
 
  To read a string from the keyboard, use the version of **readLine()** that is a member of the **BufferedReader** class. Its general form is shown here:
-
+```
 String readLine() throws IOException  
-
+```
 As you can see, it returns a **String** object. 
 The following program demonstrates **BufferedReader** and the **readLine()** method; the program reads and displays lines of text until you enter the word "stop":
 
@@ -206,6 +206,7 @@ class TinyEdit
         // create a BufferedReader using System.
         BufferedReader br = new BufferedReader (new InputStreamReader (System.in));
         String str[] = new String [100];
+       
         System.out.println("Enter lines of text.");
         System.out.println("Enter 'stop' to quit."); 
         for (int i=0; i<100; i++) 
@@ -215,6 +216,7 @@ class TinyEdit
                 break;
         }
         System.out.println("\nHere is your file: ");
+       
         // display the lines 
         for (int i=0; i<100; i++) 
         {
@@ -243,12 +245,12 @@ Just create String objects.
 
 ## Writing Console Output
 
- Console output is most easily accomplished with **print()** and **println()**, described earlier, which are used in most of the examples in this book. These methods are defined by the class **PrintStream** (which is the type of object referenced by **System.out**). Even though **System .out** is a byte stream, using it for simple program output is still acceptable. However, a character-based alternative is described in the next section.
+Console output is most easily accomplished with **print()** and **println()**, described earlier, which are used in most of the examples in this book. These methods are defined by the class **PrintStream** (which is the type of object referenced by **System.out**). Even though **System .out** is a byte stream, using it for simple program output is still acceptable. However, a character-based alternative is described in the next section.
 
 Because **PrintStream** is an output stream derived from **OutputStream**, it also implements the low-level method **write()**. Thus, **write()** can be used to write to the console. The simplest form of **write()** defined by **PrintStream** is shown here:
-
+```
 void write(int byteval)
-
+```
 This method writes the byte specified by byteval. Although byteval is declared as an integer, only the low-order eight bits are written. Here is a short example that uses **write()** to output the character "A" followed by a newline to the screen:
 ```
 // Demonstrate System.out.write().
@@ -268,22 +270,20 @@ You will not often use **write()** to perform console output (although doing so 
 
 ## The PrintWriter Class
 
- Although using **System.out** to write to the console is acceptable, its use is probably best for debugging purposes or for sample programs, such as those found in this book. For real-world programs, the recommended method of  
-
-writing to the console when using Java is through a **PrintWriter** stream. **PrintWriter** is one of the character-based classes. Using a character-based class for console output makes internationalizing your program easier.
+ Although using **System.out** to write to the console is acceptable, its use is probably best for debugging purposes or for sample programs, such as those found in this book. For real-world programs, the recommended method of writing to the console when using Java is through a **PrintWriter** stream. **PrintWriter** is one of the character-based classes. Using a character-based class for console output makes internationalizing your program easier.
 
 **PrintWriter** defines several constructors. The one we will use is shown here:
-
+```
 PrintWriter(OutputStream outputStream, boolean flushingOn)
-
+```
 Here, outputStream is an object of type **OutputStream**, and flushingOn controls whether Java flushes the output stream every time a **println()** method (among others) is called. If flushingOn is **true**, flushing automatically takes place. If **false**, flushing is not automatic.
 
 **PrintWriter** supports the **print()** and **println()** methods. Thus, you can use these methods in the same way as you used them with **System.out**. If an argument is not a simple type, the **PrintWriter** methods call the object’s **toString()** method and then display the result.
 
 To write to the console by using a **PrintWriter**, specify **System.out** for the output stream and automatic flushing. For example, this line of code creates a **PrintWriter** that is connected to console output:
-
+```
 PrintWriter pw = new PrintWriter(System.out, true);
-
+```
 The following application illustrates using a **PrintWriter** to handle console output:
 ```
 // Demonstrate PrintWriter 
@@ -315,12 +315,13 @@ Remember, there is nothing wrong with using **System.out** to write simple text 
 
 ## Reading and Writing Files
 
- Java provides a number of classes and methods that allow you to read and write files. Before we begin, it is important to state that the topic of file I/O is quite large and file I/O is examined in detail in Part II. The purpose of this section is to introduce the basic techniques that read from and write to a file. Although byte streams are used, these techniques can be adapted to the character-based streams.
+Java provides a number of classes and methods that allow you to read and write files. Before we begin, it is important to state that the topic of file I/O is quite large and file I/O is examined in detail in Part II. The purpose of this section is to introduce the basic techniques that read from and write to a file. Although byte streams are used, these techniques can be adapted to the character-based streams.
 
 Two of the most often-used stream classes are **FileInputStream** and **FileOutputStream**, which create byte streams linked to files. To open a file, you simply create an object of one of these classes, specifying the name of the file as an argument to the constructor. Although both classes support additional constructors, the following are the forms that we will be using:
-
-FileInputStream(String fileName) throws FileNotFoundException FileOutputStream(String fileName) throws FileNotFoundException
-
+```
+FileInputStream(String fileName) throws FileNotFoundException 
+FileOutputStream(String fileName) throws FileNotFoundException
+```
 Here, fileName specifies the name of the file that you want to open. When you create an input stream, if the file does not exist, then **FileNotFoundException** is thrown. For output streams, if the file cannot be opened or created, then **FileNotFoundException** is thrown. **FileNotFoundException** is a subclass of **IOException**. When an output file is opened, any preexisting file by the same name is destroyed.
 
 **NOTE** 
@@ -328,16 +329,14 @@ Here, fileName specifies the name of the file that you want to open. When you cr
 In situations in which a security manager is present, several of the file classes, including **FileInputStream** and **FileOutputStream**, will throw a **SecurityException** if a security violation occurs when attempting to open a file. By default, applications run via **java** do not use a security manager. For that reason, the I/O examples in this book do not need to watch for a possible **SecurityException**. However, other types of applications may use the security manager, and file I/O performed by such an application could generate a **SecurityException**. In that case, you will need to appropriately handle this exception.
 
 When you are done with a file, you must close it. This is done by calling the **close()** method, which is implemented by both **FileInputStream** and **FileOutputStream**. It is shown here:
-
+```
 void close() throws IOException
-
+```
 Closing a file releases the system resources allocated to the file, allowing them to be used by another file. Failure to close a file can result in “memory leaks” because of unused resources remaining allocated.
-
 
 **NOTE**
 
- The **close()** method is specified by the **AutoCloseable** interface in **java.lang**. **AutoCloseable** is inherited by the **Closeable** interface in **java.io**. Both interfaces are implemented by the stream classes, including **FileInputStream** and **FileOutputStream**.
-
+The **close()** method is specified by the **AutoCloseable** interface in **java.lang**. **AutoCloseable** is inherited by the **Closeable** interface in **java.io**. Both interfaces are implemented by the stream classes, including **FileInputStream** and **FileOutputStream**.
 
 Before moving on, it is important to point out that there are two basic approaches that you can use to close a file when you are done with it. The first is the traditional approach, in which **close()** is called explicitly when the file is no longer needed. This is the approach used by all versions of Java prior to JDK 7 and is, therefore, found in all pre-JDK 7 legacy code. The second is to use the **try**\-with-resources statement added by JDK 7, which automatically closes a file when it is no longer needed. In this approach, no explicit call to **close()** is executed. Since you may still encounter pre-JDK 7 legacy code, it is important that you know and understand the traditional approach. Furthermore, the traditional approach could still be the best approach in some situations. Therefore, we will begin with it. The automated approach is described in the following section.
 
@@ -497,8 +496,8 @@ class ShowFile
             } 
             catch (IOException e) 
             {
-                  System.out.println("Error Closing File");
-        }
+                System.out.println("Error Closing File");
+            }
         }
     }
 }    
@@ -539,9 +538,9 @@ finally
 In this approach, any error, including an error opening the file, is simply handled by the single **catch** statement. Because of its compactness, this approach is used by many of the I/O examples in this book. Be aware, however, that this approach is not appropriate in cases in which you want to deal separately with a failure to open a file, such as might be caused if a user mistypes a filename. In such a situation, you might want to prompt for the correct name, for example, before entering a **try** block that accesses the file.
 
 To write to a file, you can use the **write()** method defined by **FileOutputStream**. Its simplest form is shown here:
-
+```
 void write(int byteval) throws IOException  
-
+```
 This method writes the byte specified by byteval to the file. Although byteval is declared as an integer, only the low-order eight bits are written to the file. If an error occurs during writing, an **IOException** is thrown. The next example uses **write()** to copy a file:  
 ```
 /* Copy a file. 
@@ -585,7 +584,7 @@ class CopyFile
         } 
         catch (IOException e) 
         { 
-              System.out.println("I/O Error: + e);
+            System.out.println("I/O Error: + e);
         } 
         finally 
         {
@@ -618,11 +617,12 @@ In general, notice that all potential I/O errors are handled in the preceding tw
 
 ## Automatically Closing a File
 
- In the preceding section, the example programs have made explicit calls to **close()** to close a file once it is no longer needed. As mentioned, this is the way files were closed when using versions of Java prior to JDK 7. Although this approach is still valid and useful, JDK 7 added a feature that offers another way to manage resources, such as file streams, by automating the closing process. This feature, sometimes referred to as _automatic resource management_, or ARM for short, is based on an expanded version of the **try** statement. The principal advantage of automatic resource management is that it prevents situations in which a file (or other resource) is inadvertently not released after it is no longer needed. As explained, forgetting to close a file can result in memory leaks, and could lead to other problems.
+In the preceding section, the example programs have made explicit calls to **close()** to close a file once it is no longer needed. As mentioned, this is the way files were closed when using versions of Java prior to JDK 7. Although this approach is still valid and useful, JDK 7 added a feature that offers another way to manage resources, such as file streams, by automating the closing process. This feature, sometimes referred to as _automatic resource management_, or ARM for short, is based on an expanded version of the **try** statement. The principal advantage of automatic resource management is that it prevents situations in which a file (or other resource) is inadvertently not released after it is no longer needed. As explained, forgetting to close a file can result in memory leaks, and could lead to other problems.
 
 Automatic resource management is based on an expanded form of the **try** statement. Here is its general form:
 ```
-try(resource-specification){
+try(resource-specification)
+{
     // use the resource
 }
 ```
@@ -706,7 +706,8 @@ class CopyFile {
         int i; 
 
         // First, confirm that both files have been specified. 
-        if (args.length != 2) { 
+        if (args.length != 2) 
+        { 
             System.out.println("Usage: CopyFile from to");
             return;
         }
@@ -745,8 +746,7 @@ Because of the benefits that the **try**\-with-resources statement offers, it wi
 
 **REMEMBER**
 
- A few examples in this book use the traditional approach to closing files as a means of illustrating this technique, which is widely used in legacy code. However, for new code, you will usually want to use the automated approach supported by the **try**\- with-resources statement just described.
-
+A few examples in this book use the traditional approach to closing files as a means of illustrating this technique, which is widely used in legacy code. However, for new code, you will usually want to use the automated approach supported by the **try**\- with-resources statement just described.
 
 ## The transient and volatile Modifiers
 
@@ -754,7 +754,8 @@ Because of the benefits that the **try**\-with-resources statement offers, it wi
 
 When an instance variable is declared as **transient**, its value need not persist when an object is stored. For example:
 ```
-class T {
+class T 
+{
     transient int a; // will not perist
     int b; // will persist
 }
@@ -774,7 +775,7 @@ The following program demonstrates **instanceof**:
 // Demonstrate instanceof operator.
 class A 
 { 
-    int i, j
+    int i, j;
 }
 class B 
 {
@@ -796,6 +797,7 @@ class Instanceof
         B b = new B();
         C c = new C();
         D d = new D();
+
         if (a instanceof A)
             System.out.println("a is instance of A"); 
         if (b instanceof B)
@@ -1210,6 +1212,6 @@ There are two restrictions you need to keep in mind when using **this()**. First
 
 ## A Word About Compact API Profiles
 
- JDK 8 added a feature that organizes subsets of the API library into what are called _compact profiles_. These are called **compact1**, **compact2**, and **compact3**. Each profile contains a subset of the library. Furthermore, **compact2** includes all of **compact1**, and **compact3** includes all of **compact2**. Thus, each profile  
+JDK 8 added a feature that organizes subsets of the API library into what are called _compact profiles_. These are called **compact1**, **compact2**, and **compact3**. Each profile contains a subset of the library. Furthermore, **compact2** includes all of **compact1**, and **compact3** includes all of **compact2**. Thus, each profile  
 
 builds on the previous one. The advantage of the compact profiles is that an application that does not require the full library need not download it. Using a compact profile reduces the size of the library, thus enabling some types of Java applications to run on devices that could not otherwise support the entire Java API. The use of a compact profile can also reduce the time it takes to load a program. The JDK 8 API documentation indicates to which (if any) profile each API element belongs. It is important to emphasize that the modules feature added by JDK 9 supersedes compact profiles.  

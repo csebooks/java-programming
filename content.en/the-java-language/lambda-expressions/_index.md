@@ -122,8 +122,8 @@ class LamdaDemo
         myNum =() -> Math.random() * 100;
         
         // These call the lambda expression in the previous line.
-        System.out.println("A randon value:" * myNum.getValue()); 
-        System.out.println("Another random value:" myNum.getValue());
+        System.out.println("A randon value:" + myNum.getValue()); 
+        System.out.println("Another random value:" + myNum.getValue());
 
         // A lambda expression must be compatible with the method
         // defined by the functional interface. Therefore, this won't work,
@@ -169,7 +169,7 @@ class LambdaDemo2
 
         if (isNonNeg.teat (1))
             System.out.println("1 is non-negative"); 
-        if(isNonNeg.test(-1))
+        if  (isNonNeg.test(-1))
             System.out.println("-1 is negative");
     }
  }
@@ -219,7 +219,7 @@ class LambdaDemo3
 
     if(isFactor.test (10, 2)) 
         System.out.println("2 is a factor of 10");
-    if(!iaFactor.test(10, 3)) 
+    if(!isFactor.test(10, 3)) 
         System.out.println("3 is not a factor of 10");
       }
 }
@@ -609,7 +609,7 @@ class MethodRefDemo
     // of that interface, including a method reference.
     static String stringop (StringFunc sf, String s) 
     {
-        return sf. func (s);
+        return sf.func (s);
     }
     public static void main(String args[])
     {
@@ -632,9 +632,7 @@ In the program, pay special attention to this line:
 ```
 outStr = stringOp(MyStringOps::strReverse, inStr);
 ```
-Here, a reference to the **static** method **strReverse()**, declared inside **MyStringOps**, is passed as the first argument to **stringOp()**. This works  
-
-because **strReverse** is compatible with the **StringFunc** functional interface. Thus, the expression **MyStringOps::strReverse** evaluates to a reference to an object in which **strReverse** provides the implementation of **func()** in **StringFunc**.
+Here, a reference to the **static** method **strReverse()**, declared inside **MyStringOps**, is passed as the first argument to **stringOp()**. This works because **strReverse** is compatible with the **StringFunc** functional interface. Thus, the expression **MyStringOps::strReverse** evaluates to a reference to an object in which **strReverse** provides the implementation of **func()** in **StringFunc**.
 
 ### Method References to Instance Methods
 

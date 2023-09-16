@@ -16,28 +16,39 @@ oaded methods must differ in the type and/or number of their parameters. While o
 Here is a simple example that illustrates method overloading:  
 ```
 // Demonstrate method overloading. 
-class OverloadDemo {
-    void test () {
+class OverloadDemo 
+{
+    void test () 
+    {
         System.out.println("No parameters");
     }
-// Overload test for one integer parameter. 
-    void test (int a) {
+    
+    // Overload test for one integer parameter. 
+    void test (int a) 
+    {
         System.out.println("a: " + a);
     }
-// Overload test for two integer parameters.
-    void test (int a, int b) { 
+    
+    // Overload test for two integer parameters.
+    void test (int a, int b) 
+    { 
         System.out.println("a and b: " + a + " " + b);
     }
-// Overload test for a double parameter
-    double test (double a) { 
+    
+    // Overload test for a double parameter
+    double test (double a) 
+    { 
         System.out.println("double a: " + a); 
         return a*a;
     }
 }
-class Overload {
-public static void main(String args[]) { 
+class Overload 
+{
+    public static void main(String args[]) 
+    { 
         OverloadDemo ob = new OverloadDemo(); 
         double result;
+    
         // call all versions of test ()
         ob.test();
         ob.test (10, 20);
@@ -66,18 +77,23 @@ As you can see, **test()** is overloaded four times. The first version takes no 
 When an overloaded method is called, Java looks for a match between the arguments used to call the method and the method’s parameters. However, this match need not always be exact. In some cases, Java’s automatic type conversions can play a role in overload resolution. For example, consider the following program:  
 ```
 // Automatic type conversions apply to overloading. 
-class OverloadDemo { 
+class OverloadDemo 
+{ 
     void test() 
     {
         System.out.println("No parameters");
     }
-// Overload test for two integer parameters. 
-    void test (int a, int b) { 
+    
+    // Overload test for two integer parameters. 
+    void test (int a, int b) 
+    { 
         System.out.println("a and b: " + a + " " + b);
     }
-// Overload test for a double parameter 
-    void test (double a) { 
-        System.out.println("Inside test (double) a: + a);
+    
+    // Overload test for a double parameter 
+    void test (double a) 
+    { 
+        System.out.println("Inside test (double) a: "+ a);
     }
 }
 class Overload { 
@@ -222,6 +238,7 @@ class Test
         a = i;
         b = j;
     }
+
     // return true if o is equal to the invoking object
     boolean equalTo (Test o) 
     { 
@@ -235,9 +252,9 @@ class PassOb
 {
     public static void main(String args[]) 
     {
-        Test obl= new Test (100, 22);
+        Test obl = new Test (100, 22);
         Test ob2 = new Test (100, 22); 
-        Test ob3= new Test (-1, -1);
+        Test ob3 = new Test (-1, -1);
         System.out.println("obl == ob2: " + obl.equalTo (ob2));
         System.out.println("obl == ob3: + obl.equalTo (ob3));
     }
@@ -310,11 +327,11 @@ class OverloadCons2
 
         // get volume of second box
         vol = mybox2. volume(); 
-        System.out.println("Volume of mybox2 is + vol);
+        System.out.println("Volume of mybox2 is "+ vol);
 
         // get volume of cube 
         vol = mycube.volume(); 
-        System.out.println("Volume of cube is + vol);
+        System.out.println("Volume of cube is " + vol);
         
         // get volume of clone 
         vol = myclone.volume(); 
@@ -333,14 +350,16 @@ When you pass a primitive type to a method, it is passed by value. Thus, a copy 
 //Primitive Types Are Passed By Value
 class Test
 {
-    void meth(int i,int j){
+    void meth(int i,int j)
+    {
         i*= 2;
         j/= 2;
     }
 }
 class CallByValue
 {
-    public static void main(String args[]){
+    public static void main(String args[])
+    {
         Test obj=new Test();
         int a=15,b=20;
         System.out.println("a and b Before Call : "+a+" "+b);
@@ -381,9 +400,9 @@ class PassObjRef
     public static void main(String args[]) 
     {
         Test ob = new Test (15, 20);
-        System.out.println("ob.a and ob.b before call: ob.a + " " + ob.b); 
+        System.out.println("ob.a and ob.b before call: "+ob.a + " " + ob.b); 
         ob.meth (ob);
-        System.out.println("ob.a and ob.b after call: +ob.a"" + ob.b);
+        System.out.println("ob.a and ob.b after call: " +ob.a + " " + ob.b);
     } 
 }
 ```
@@ -426,7 +445,7 @@ class Test
             Test ob2;
             ob2 = obl. incrByTen();
             System.out.println("obl.a: " + obl. a);
-            System.out.println("ob2. a: + ob2.a);
+            System.out.println("ob2. a: "+ ob2.a);
             ob2 = ob2.incrByTen();
             System.out.println("ob2.a after second increase: "+ ob2. a);
         }
@@ -455,20 +474,23 @@ The classic example of recursion is the computation of the factorial of a number
 class Factorial 
 {
     // this is a recursive method 
-    int fact (int n) {
+    int fact (int n) 
+    {
         int result;
         if (n=1)
             return 1;
         result = fact (n-1)* n;
         return result;
+    }
 }
-}
-class Recursion {
-public static void main(String args[]) { 
-    Factorial f = new Factorial();
-    System.out.println("Factorial of 3 is " +f. fact (3));
-    System.out.println("Factorial of 4 is " +f. fact (4));
-    System.out.println("Factorial of 5 is " +f. fact (5));
+class Recursion 
+{
+    public static void main(String args[]) 
+    { 
+        Factorial f = new Factorial();
+        System.out.println("Factorial of 3 is " +f. fact (3));
+        System.out.println("Factorial of 4 is " +f. fact (4));
+        System.out.println("Factorial of 5 is " +f. fact (5));
     }
 }
 ```
@@ -501,7 +523,7 @@ class Factorial
     int fact (int n) 
     {
         int result;
-        if (n=1) 
+        if (n==1) 
             return 1;
         result fact (n-1)* n;
         return result;
@@ -542,7 +564,7 @@ This program generates the following output:
 ```
 ## Introducing Access Control
 
- As you know, encapsulation links data with the code that manipulates it. However, encapsulation provides another important attribute: _access control_. Through encapsulation, you can control what parts of a program can access the members of a class. By controlling access, you can prevent misuse. For example, allowing access to data only through a well-defined set of methods, you can prevent the misuse of that data. Thus, when correctly implemented, a class creates a “black box” which may be used, but the inner workings of which are not open to tampering. However, the classes that were presented earlier do not completely meet this goal. For example, consider the **Stack** class shown at the end of Chapter 6. While it is true that the methods **push()** and **pop()** do provide a controlled interface to the stack, this interface is not enforced. That is, it is possible for another part of the program to bypass these methods and access the stack directly. Of course, in the wrong hands, this could lead to trouble. In this section, you will be introduced to the mechanism by which you can precisely control access to the various members of a class.
+As you know, encapsulation links data with the code that manipulates it. However, encapsulation provides another important attribute: _access control_. Through encapsulation, you can control what parts of a program can access the members of a class. By controlling access, you can prevent misuse. For example, allowing access to data only through a well-defined set of methods, you can prevent the misuse of that data. Thus, when correctly implemented, a class creates a “black box” which may be used, but the inner workings of which are not open to tampering. However, the classes that were presented earlier do not completely meet this goal. For example, consider the **Stack** class shown at the end of Chapter 6. While it is true that the methods **push()** and **pop()** do provide a controlled interface to the stack, this interface is not enforced. That is, it is possible for another part of the program to bypass these methods and access the stack directly. Of course, in the wrong hands, this could lead to trouble. In this section, you will be introduced to the mechanism by which you can precisely control access to the various members of a class.
 
 How a member can be accessed is determined by the _access modifier_ attached to its declaration. Java supplies a rich set of access modifiers. Some aspects of access control are related mostly to inheritance or packages. (A package is, essentially, a grouping of classes.) These parts of Java’s access control mechanism will be discussed in subsequent chapters. Here, let’s begin by examining access control as it applies to a single class. Once you understand the fundamentals of access control, the rest will be easy.
 
@@ -558,13 +580,13 @@ In the classes developed so far, all members of a class have used the default ac
 
 An access modifier precedes the rest of a member’s type specification. That is, it must begin a member’s declaration statement. Here is an example:
 
-*
+```
 public int i;
 
 private double j;
 
 private int myMethod(int a, char b) { //...
-*
+```
 
 To understand the effects of public and private access, consider the following program:  
 ```
@@ -614,7 +636,10 @@ To see how access control can be applied to a more practical example, consider t
 // This class defines an integer stack that can hold 10 values. 
 class Stack 
 {
-    /* Now, both stck and tos are private. This means that they cannot be accidentally or maliciously altered in a way that would be harmful to the stack.*/ 
+    /* 
+    Now, both stck and tos are private. This means that they cannot be accidentally 
+    or maliciously altered in a way that would be harmful to the stack.
+    */ 
     private int stck[] = new int[10]; 
     private int tos;
     
@@ -669,7 +694,6 @@ class TestStack
         System.out.println (mystack1.pop());
         
         System.out.println("Stack in mystack2: ");
-        
         for (int i=0; i<10; i++)
         System.out.println (mystack2.pop());
         
@@ -702,9 +726,9 @@ class UseStatic
     
     static void meth (int x) 
     {
-        System.out.println("x + x);
-        System.out.println("a = + a);
-        System.out.println("b = + b);
+        System.out.println("x = "+ x);
+        System.out.println("a = "+ a);
+        System.out.println("b = "+ b);
     }
     static 
     {
@@ -731,9 +755,9 @@ b = 12
 
 ```
 Outside of the class in which they are defined, **static** methods and variables can be used independently of any object. To do so, you need only specify the name of their class followed by the dot operator. For example, if you wish to call a **static** method from outside its class, you can do so using the following general form:
-*
+```
 classname.method()  
-*
+```
 Here, classname is the name of the class in which the **static** method is declared. As you can see, this format is similar to that used to call non-**static** methods through object-reference variables. A **static** variable can be accessed in the same way—by use of the dot operator on the name of the class. This is how Java implements a controlled version of global methods and global variables.
 
 Here is an example. Inside **main()**, the **static** method **callme()** and the **static** variable **b** are accessed through their class name **StaticDemo**.
@@ -744,7 +768,7 @@ class StaticDemo
     static int b = 99;
     static void callme() 
     { 
-        System.out.println("a + a);
+        System.out.println("a "+ a);
     }
 }
 class StaticByName 
@@ -766,7 +790,7 @@ b = 99
 ## Introducing final
 
  A field can be declared as **final**. Doing so prevents its contents from being modified, making it, essentially, a constant. This means that you must initialize a **final** field when it is declared. You can do this in one of two ways: First, you can give it a value when it is declared. Second, you can assign it a value within a constructor. The first approach is probably the most common. Here is an example:  
-*
+```
 final int FILE_NEW = 1;
 
 final int FILE_OPEN = 2;
@@ -776,7 +800,7 @@ final int FILE_SAVE = 3;
 final int FILE_SAVEAS = 4;
 
 final int FILE_QUIT = 5;
-*
+```
 Subsequent parts of your program can now use **FILE_OPEN**, etc., as if they were constants, without fear that a value has been changed. It is a common coding convention to choose all uppercase identifiers for **final** fields, as this example shows.
 
 In addition to fields, both method parameters and local variables can be declared **final**. Declaring a parameter **final** prevents it from being changed within the method. Declaring a local variable **final** prevents it from being assigned a value more than once.
@@ -798,7 +822,7 @@ class Length
 
         System.out.println("length of al is " + al.length); 
         System.out.println("length of a2 is " + a2.length); 
-        System.out.println("length of a3 is " +a3.length);
+        System.out.println("length of a3 is " + a3.length);
     }
 }
 ```
@@ -809,7 +833,6 @@ length of a1 is 10
 length of a2 is 8
 
 length of a3 is 4
-
 ```
 As you can see, the size of each array is displayed. Keep in mind that the value of **length** has nothing to do with the number of elements that are actually in use. It only reflects the number of elements that the array is designed to hold.
 
@@ -831,7 +854,7 @@ class Stack
     // Push an item onto the stack 
     void push (int item)
     {
-        if (tos==stck.length-1) // use length member 
+        if (tos == stck.length-1) // use length member 
             System.out.println("Stack is full.");
         else 
             stok [++tos] = item;
@@ -840,9 +863,9 @@ class Stack
     // Pop an item from the stack
     int pop() 
     { 
-        if (tos 0) 
+        if (tos <= 0) 
         {
-           System.out.println("Stack underflow.")/2 
+           System.out.println("Stack underflow.");
             return 0;
         }
         else
@@ -900,7 +923,7 @@ class Outer
     { 
         void display() 
         { 
-            System.out.println("display: outer_x = 11 + outer_x) ;
+            System.out.println("display: outer_x = " + outer_x) ;
         }
     }
 }
@@ -914,14 +937,12 @@ class InnerClassDemo
 }
 ```
 Output from this application is shown here:
-*
+```
 display: outer_x = 100
-*
+```
 In the program, an inner class named **Inner** is defined within the scope of class **Outer**. Therefore, any code in class **Inner** can directly access the variable **outer_x**. An instance method named **display()** is defined inside **Inner**. This method displays **outer_x** on the standard output stream. The **main()** method of **InnerClassDemo** creates an instance of class **Outer** and invokes its **test()** method. That method creates an instance of class **Inner** and the **display()** method is called.
 
 It is important to realize that an instance of **Inner** can be created only in the context of class **Outer**. The Java compiler generates an error message otherwise. In general, an inner class instance is often created by code within its enclosing scope, as the example does.
-
-As explained, an inner class has access to all of the members of its enclosing  
 
 As explained, an inner class has access to all of the members of its enclosing class, but the reverse is not true. Members of the inner class are known only within the scope of the inner class and may not be used by the outer class. For example,
 ```
@@ -939,11 +960,11 @@ class Outer
     // this is an inner class 
     class Inner 
     { 
-        int y 10; // y is local to Inner
+        int y = 10; // y is local to Inner
         
         void display() 
         { 
-            System.out.println("display: outer_x = + outer_x);
+            System.out.println("display: outer_x = "+ outer_x);
         }
     }
     void showy() 
@@ -979,7 +1000,7 @@ class Outer
             { 
                 void display() 
                 {
-                    System.out.println("display: outer_x = + outer_x);
+                    System.out.println("display: outer_x = "+ outer_x);
                 }
             }
         Inner inner = new Inner();
@@ -1039,17 +1060,17 @@ the string "This is a String, too" is a **String** object. The second thing to u
 - Java defines peer classes of **String**, called **StringBuffer** and **StringBuilder**, which allow strings to be altered, so all of the normal string manipulations are still available in Java. (**StringBuffer** and **StringBuilder** are described in Part II of this book.)
 
 Strings can be constructed in a variety of ways. The easiest is to use a statement like this:
-*
+```
 String myString = "this is a test";
-*
+```
 Once you have created a **String** object, you can use it anywhere that a string is allowed. For example, this statement displays **myString**:  
-*
+```
 System.out.println(myString);
-*
+```
 Java defines one operator for **String** objects: **+**. It is used to concatenate two strings. For example, this statement
-*
+```
 String myString = "I" + " like " + "Java.";
-*
+```
 results in **myString** containing "I like Java." The following program demonstrates the preceding concepts:
 ```
 // Demonstrating Strings.
@@ -1088,8 +1109,8 @@ class StringDemo2
         String strobl = "First String";
         String strob2 = "Second String";
         String str0b3 = strobl;
-        System.out.println("Length of strobl: strobl.length());
-        System.out.println("Char at index 3 in strobl: " strobl.charAt (3));
+        System.out.println("Length of strobl: "+strobl.length());
+        System.out.println("Char at index 3 in strobl: " + strobl.charAt (3));
         if (strobl.equals (str0b2)) 
             System.out.println("strobl == str0b2");
         else
@@ -1144,7 +1165,8 @@ Sometimes you will want to pass information into a program when you run it. This
 //Display All Command - Line Arguments 
 class CommandLine 
 {
-    public static void main(String args[]){
+    public static void main(String args[])
+    {
         for(int i=0;i<args.length;i++)
             System.out.println("args [ "+i+" ] : "+args[i]);
     }
@@ -1188,21 +1210,24 @@ class PassArray
 {
     static void vaTest (int v[]) 
     {
-        System.out.print ("Number of args: + v.length + "Contents: ");
+        System.out.print ("Number of args: "+ v.length + "Contents: ");
         for (int x : v) 
             System.out.print (x+" ");
         System.out.println();
     }
-public static void main(String args[])
-{
-// Notice how an array must be created to // hold the arguments.
-int ni[] = {10};
-int n2[] = {1, 2, 3 };
-int n3 []= { };
-vaTest (nl); // 1 arg
-vaTest (n2); // 3 args
-vaTest (n3); // no args
-}
+    public static void main(String args[])
+    {
+        // Notice how an array must be created to 
+        // hold the arguments.
+        
+        int n1[] = {10};
+        int n2[] = {1, 2, 3 };
+        int n3 []= { };
+
+        vaTest (nl); // 1 arg
+        vaTest (n2); // 3 args
+        vaTest (n3); // no args
+    }
 }
 ```
 The output from the program is shown here:
@@ -1219,9 +1244,9 @@ In the program, the method **vaTest()** is passed its arguments through the arra
 A variable-length argument is specified by three periods (**…**). For example,  
 
 here is how **vaTest()** is written using a vararg:
-
+```
 static void vaTest(int ... v) {
-
+```
 This syntax tells the compiler that **vaTest()** can be called with zero or more arguments. As a result, **v** is implicitly declared as an array of type **int[ ]**. Thus, inside **vaTest()**, **v** is accessed using the normal array syntax. Here is the preceding program rewritten using a vararg:
 ```
 // Demonstrate variable-length arguments.
@@ -1248,27 +1273,26 @@ class VarArgs
 The output from the program is the same as the original version. There are two important things to notice about this program. First, as explained, inside **vaTest()**, **v** is operated on as an array. This is because **v** is an array. The … syntax simply tells the compiler that a variable number of arguments will be used, and that these arguments will be stored in the array referred to by **v**. Second, in **main()**, **vaTest()** is called with different numbers of arguments, including no arguments at all. The arguments are automatically put in an array and passed to **v**. In the case of no arguments, the length of the array is zero.
 
 A method can have “normal” parameters along with a variable-length parameter. However, the variable-length parameter must be the last parameter declared by the method. For example, this method declaration is perfectly acceptable:
-
-*
+```
 int doIt(int a, int b, double c, int ... vals) {
-*
+```
 
 In this case, the first three arguments used in a call to **doIt()** are matched to the first three parameters. Then, any remaining arguments are assumed to belong to **vals**.
 
 Remember, the varargs parameter must be last. For example, the following declaration is incorrect:
-*
+```
 int doIt(int a, int b, double c, int ... vals, boolean stopFlag)
 
 { // Error!
-*
+```
 Here, there is an attempt to declare a regular parameter after the varargs parameter, which is illegal.
 
 There is one more restriction to be aware of: there must be only one varargs parameter. For example, this declaration is also invalid:
-*
+```
 int doIt(int a, int b, double c, int ... vals, double ...
 
 morevals) { // Error!
-*
+```
 The attempt to declare the second varargs parameter is illegal. Here is a reworked version of the **vaTest()** method that takes a regular
 
 argument and a variable-length argument:  
@@ -1312,9 +1336,11 @@ class VarArgs
 {
     static void vaTest (int... v) 
     {
-        System.out.print ("vaTest (int ...) : "Number of args : "+v.length+"Contents:");
+        System.out.print ("vaTest (int ...) : "+"Number of args : "+
+        v.length+"Contents:");
+        
         for (int x : v)
-        System.out.print (x+" ");
+            System.out.print (x+" ");
         
         System.out.println();
     }
@@ -1346,9 +1372,7 @@ vaTest(int ...): Number of args: 3 Contents: 1 2 3
 
 vaTest(String, int ...): Testing: 2 Contents: 10 20
 
-vaTest(boolean ...) Number of args: 3 Contents: true false
-
-false
+vaTest(boolean ...) Number of args: 3 Contents: true false false
 
 ```
 This program illustrates both ways that a varargs method can be overloaded. First, the types of its vararg parameter can differ. This is the case for **vaTest(int ...)** and **vaTest(boolean ...**). Remember, the **...** causes the parameter to be treated as an array of the specified type. Therefore, just as you can overload methods by using different types of array parameters, you can overload vararg methods by using different types of varargs. In this case, Java uses the type difference to determine which overloaded method to call.
@@ -1399,15 +1423,15 @@ vaTest(); // Error: Ambiguous!
 Because the vararg parameter can be empty, this call could be translated into a call to **vaTest(int …)** or **vaTest(boolean …)**. Both are equally valid. Thus, the call is inherently ambiguous.
 
 Here is another example of ambiguity. The following overloaded versions of **vaTest()** are inherently ambiguous even though one takes a normal parameter:
-*
+```
 static void vaTest(int ... v) { // ...
 
 static void vaTest(int n, int ... v) { // ...
-*
+```
 Although the parameter lists of **vaTest()** differ, there is no way for the compiler to resolve the following call:
-
+```
 vaTest(1)
-
+```
 Does this translate into a call to **vaTest(int …)**, with one varargs argument, or into a call to **vaTest(int, int …)** with no varargs arguments? There is no way for the compiler to answer this question. Thus, the situation is ambiguous.
 
 Because of ambiguity errors like those just shown, sometimes you will need to forego overloading and simply use two different method names. Also, in some cases, ambiguity errors expose a conceptual flaw in your code, which you can remedy by more carefully crafting a solution.
@@ -1415,25 +1439,25 @@ Because of ambiguity errors like those just shown, sometimes you will need to fo
 ## Local Variable Type Inference with Reference Types
 
  As you saw in Chapter 3, beginning with JDK 10, Java supports local variable type inference. Recall that when using local variable type inference, the type of the variable is specified as **var** and the variable must be initialized. Earlier examples have shown type inference with primitive types, but it can also be used with reference types. In fact, type inference with reference types constitutes a primary use. Here is a simple example that declares a **String** variable called **myStr**:
-*
+```
 var myStr = "This is a string";
-*
+```
 Because a quoted string is used as an initializer, the type **String** is inferred.  
 
 As explained in Chapter 3, one of the benefits of local variable type inference is its ability to streamline code, and it is with reference types where such streamlining is most apparent. The reason for this is that many class types in Java have rather long names. For example, in Chapter 13, you will learn about the **FileInputStream** class, which is used to open a file for input operations. In the past, you would declare and initialize a **FileInputStream** using a traditional declaration like the one shown here:
-*
+```
 FileInputStream fin = new FileInputStream("test.txt");
-*
+```
 With the use of **var**, it can now be written like this:
-*
+```
 var fin = new FileInputStream("test.txt");
-*
+```
 Here, **fin** is inferred to be of type **FileInputStream** because that is the type of its initializer. There is no need to explicitly repeat the type name. As a result, this declaration of **fin** is substantially shorter than writing it the traditional way. Thus, the use of **var** streamlines the declaration. This benefit becomes even more apparent in more complex declarations, such as those involving generics. In general, the streamlining attribute of local variable type inference helps lessen the tedium of entering long type names into your program.
 
 Of course, the streamlining aspect of local variable type inference must be used carefully to avoid reducing the readability of your program and, thus, obscuring its meaning. For example, consider a declaration such as the one shown here:
-*
+```
 var x = o.getNext();
-*
+```
 In this case, it may not be immediately clear to someone reading your code what the type of **x** is. In essence, local variable type inference is a feature that you should use wisely.
 
 As you would expect, you can also use local variable type inference with user-defined classes, as the following program illustrates. It creates a class called **MyClass** and then uses local variable type inference to declare and initialize an object of that class.  
@@ -1475,9 +1499,9 @@ Value of i in mc is now 19
 
 ```
 In the program, pay special attention to this line
-*
+```
 var mc = new MyClass(10); // Notice the use of var here.
-*
+```
 Here, the type of **mc** will be inferred as **MyClass** because that is the type of the initializer, which is a new **MyClass** object.
 
 As explained earlier in this book, for the benefit of readers working in Java environments that do not support local variable type inference, it will not be used by most examples in the remainder of this edition of this book. This way, the majority of examples will compile and run for the largest number of readers.  

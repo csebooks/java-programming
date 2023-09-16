@@ -14,7 +14,7 @@ The stream-based I/O system packaged in **java.io** and described in this chapte
 
 **NOTE**
 
- It is important not to confuse the I/O streams used by the I/O system discussed here with the stream API added by JDK 8. Although conceptually related, they are two different things. Therefore, when the term stream is used in this chapter, it refers to an I/O stream.
+It is important not to confuse the I/O streams used by the I/O system discussed here with the stream API added by JDK 8. Although conceptually related, they are two different things. Therefore, when the term stream is used in this chapter, it refers to an I/O stream.
 
 ## The I/O Classes and Interfaces
 
@@ -308,7 +308,7 @@ try
 { 
     // open and access file 
 } 
-catch( _I/O-exception_) 
+catch( I/O-exception ) 
 {
     // ... 
 } 
@@ -321,7 +321,7 @@ This general technique (or variation thereof) is common in code that predates JD
 
 The second approach to closing a stream is to automate the process by using the **try**\-with-resources statement that was added by JDK 7. The **try**\-with- resources statement is an enhanced form of **try** that has the following form:
 ```
-try (_resource-specification_) 
+try (resource-specification) 
 { 
     // use the resource 
 }
@@ -499,14 +499,15 @@ class FileOutputStream
         FileOutputStream fo = null ;
         FileOutputStream fi = null ;
         FileOutputStream f2 = null ;
+        
         try 
         {
-            fo = new FileOutputStream(file.txt");
+            f0 = new FileOutputStream(file.txt");
             fl = new FileOutputStream(file.txt"); 
             f2 = new FileOutputStream(file.txt");
             
             // write to first file    
-            for (int i;i < buf.length; i+= 2) 
+            for (int i = 0;i < buf.length; i+= 2) 
                 f0.write(buf[1]);
             
             // write to second file
@@ -524,7 +525,7 @@ class FileOutputStream
             try
             {
                 if(f0!=null) 
-                    fo.close();
+                    f0.close();
             }
             catch(I0Exception e)
             { 
@@ -943,7 +944,7 @@ class InputStreamEnumerator implements Enumeration<FileInputStream>
     private Enumeration<String> files;
     public InputStreamEnumerator (Vector<String> files) 
     { 
-        this.files files.elements();
+        this.files = files.elements();
     }
     public boolean hasMoreElements () 
     {
@@ -1053,10 +1054,10 @@ class PrintfDemo
 
         System.out.println();
         
-        System.out.printf ("Default floating-point format: %f\n",1234567.123);
-        System.out.printf ("Floating-point with commas: %, f\n",1234567.123);
-        System.out.printf("Negative floating-point default: %, f\n",-1234567.123);
-        System.out.printf ("Negative floating-point option: %, (f\n", -1234567.123);
+        System.out.printf ("Default floating-point format: %f \n",1234567.123);
+        System.out.printf ("Floating-point with commas: %, f \n",1234567.123);
+        System.out.printf ("Negative floating-point default: %, f\n",-1234567.123);
+        System.out.printf ("Negative floating-point option: %, f\n", -1234567.123);
         System.out.println();
         
         System.out.printf ("Line up positive and negative values: \n"); 
@@ -1260,12 +1261,12 @@ class FileWriterDemo
     public static void main(String args[]) throws IOException 
     {
         String source = "Now is the time for all good men\n" 
+            +"to come to the aid of their country\n"
             +" and pay their due taxes.";
             
-            +"to come to the aid of their country\n"
         char buffer[] = new char [source.length()];
         source.getChars (0, source.length(), buffer, 0);
-        try(FileWriter fo= new FileWriter ("file1.txt"); 
+        try(FileWriter f0= new FileWriter ("file1.txt"); 
             FileWriter fl= new FileWriter ("file2.txt");
             FileWriter f2 = new FileWriter ("file3.txt") )
         {
@@ -1289,9 +1290,7 @@ class FileWriterDemo
 }
 ```
 ### CharArrayReader 
-**CharArrayReader**is an implementation of an input stream that uses a  
-
-character array as the source. This class has two constructors, each of which requires a character array to provide the data source:
+**CharArrayReader**is an implementation of an input stream that uses a character array as the source. This class has two constructors, each of which requires a character array to provide the data source:
 ```
 CharArrayReader(char array [ ]) 
 CharArrayReader(char array [ ], int start, int numChars)
@@ -1419,6 +1418,7 @@ class CharArrayWriterDemo
 }
 ```
 ### BufferedReader 
+
 **BufferedReader**improves performance by buffering input. It has two constructors:
 ```
 BufferedReader(Reader inputStream) 
@@ -1467,20 +1467,21 @@ class BufferedReaderDemo
                     System.out.print (" (c) ");
                     if (marked) 
                     { 
-                        marked false;
+                        marked = false;
+                        System.out.print("(c)");
                     } 
                     else
-                    System.out.print((char) c);
+                        System.out.print((char) c);
                     break;
-                case:
+                case ' ' :
                     if (marked) 
                     {
-                        marked- false;
+                        marked = false;
                         f.reset(); 
                         System.out.print ("&"); 
-                        System.out.print((char) c);
                     } 
                     else
+                        System.out.print((char) c);
                     break; 
                 default:
                     if (!marked)
@@ -1509,7 +1510,7 @@ The first form creates a buffered stream using a buffer with a default size. In 
 
 ### PushbackReader
 
- The **PushbackReader** class allows one or more characters to be returned to the input stream. This allows you to look ahead in the input stream. Here are its two constructors:
+The **PushbackReader** class allows one or more characters to be returned to the input stream. This allows you to look ahead in the input stream. Here are its two constructors:
 ```
 PushbackReader(Reader inputStream) 
 PushbackReader(Reader inputStream, int bufSize)
@@ -1543,7 +1544,7 @@ class PushbackReaderDemo
         
         try (PushbackReader f = new PushbackReader (in) )
         {
-            while ((cf.read()) != -1) 
+            while ((c = f.read()) != -1) 
             { 
                 switch(c)
                 {
@@ -1553,7 +1554,7 @@ class PushbackReaderDemo
                         else 
                         {
                             System.out.print ("<-"); 
-                            f. unread (c);
+                            f.unread (c);
                         } 
                         break;
                     default:
@@ -1670,7 +1671,7 @@ Variables that are declared as **transient** are not saved by the serialization 
 
 ### Externalizable
 
- The Java facilities for serialization and deserialization have been designed so that much of the work to save and restore the state of an object occurs automatically. However, there are cases in which the programmer may need to have control over these processes. For example, it may be desirable to use compression or encryption techniques. The **Externalizable** interface is designed for these situations.
+The Java facilities for serialization and deserialization have been designed so that much of the work to save and restore the state of an object occurs automatically. However, there are cases in which the programmer may need to have control over these processes. For example, it may be desirable to use compression or encryption techniques. The **Externalizable** interface is designed for these situations.
 
 The **Externalizable** interface defines these two methods:
 ```
@@ -1744,7 +1745,7 @@ public class SerializationDemo
         }
         catch (IOException e) 
         { 
-            System.out.println("Exception during serialization: + e);
+            System.out.println("Exception during serialization: "+ e);
         }
         
         // Object deserialization

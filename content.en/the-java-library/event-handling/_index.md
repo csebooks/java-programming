@@ -1,7 +1,7 @@
 ---
 title: 'Event Handling'
 weight: 8
--
+---
 
 # Event Handling
 
@@ -252,7 +252,7 @@ ItemEvent(ItemSelectable src, int type, Object entry, int state)
 Here, src is a reference to the component that generated this event. For example, this might be a list or choice element. The type of the event is specified by _type._ The specific item that generated the item event is passed in _entry._ The current state of that item is in _state._
 
 The **getItem()** method can be used to obtain a reference to the item that changed. Its signature is shown here:
-```java
+```
 Object getItem()
 ```
 The **getItemSelectable()** method can be used to obtain a reference to the **ItemSelectable** object that generated an event. Its general form is shown here:
@@ -262,9 +262,10 @@ ItemSelectable getItemSelectable()
 Lists and choices are examples of user interface elements that implement the **ItemSelectable** interface.
 
 The **getStateChange()** method returns the state change (that is, **SELECTED** or **DESELECTED**) for the event. It is shown here:  
-```java
+```
 int getStateChange()
 ```
+
 ## The KeyEvent Class
 
 A **KeyEvent** is generated when keyboard input occurs. There are three types of key events, which are identified by these integer constants: **KEY_PRESSED**, **KEY_RELEASED**, and **KEY_TYPED**. The first two events are generated when any key is pressed or released. The last event occurs only when a character is generated. Remember, not all keypresses result in characters. For example, pressing SHIFT does not generate a character.
@@ -274,7 +275,7 @@ There are many other integer constants that are defined by **KeyEvent**. For exa
 The **VK** constants specify _virtual key codes_ and are independent of any modifiers, such as control, shift, or alt.
 
 **KeyEvent**is a subclass of **InputEvent**. Here is one of its constructors:
-```java
+```
 KeyEvent(Component src, int type, long when, int modifiers, int code, char ch)
 ```
 Here, src is a reference to the component that generated the event. The type of the event is specified by _type._ The system time at which the key was pressed is passed in _when._ The modifiers argument indicates which modifiers were pressed when this key event occurred. The virtual key code, such as **VK_UP**, **VK_A**, and so forth, is passed in _code._ The character equivalent (if one exists) is passed in _ch._ If no valid character exists, then ch contains **CHAR_UNDEFINED**. For **KEY_TYPED** events, code will contain **VK_UNDEFINED**.
@@ -342,8 +343,7 @@ The **MouseWheelEvent** class encapsulates a mouse wheel event. It is a subclass
 ![Alt text](image-10.png)
 Here is one of the constructors defined by **MouseWheelEvent**:
 ```
-MouseWheelEvent(Component src, int type, long when, int modifiers, int x, int y, int clicks, boolean triggersPopup, 
-int scrollHow, int amount, int count)
+MouseWheelEvent(Component src, int type, long when, int modifiers, int x, int y, int clicks, boolean triggersPopup,int scrollHow, int amount, int count)
 ```
 Here, src is a reference to the object that generated the event. The type of the event is specified by _type._ The system time at which the mouse event occurred is passed in _when._ The modifiers argument indicates which modifiers were pressed when the event occurred. The coordinates of the mouse are passed in x and _y._ The number of clicks is passed in _clicks._ The triggersPopup flag indicates if this event causes a pop-up menu to appear on this platform. The scrollHow value must be either **WHEEL_UNIT_SCROLL** or **WHEEL_BLOCK_ SCROLL**. The number of units to scroll is passed in _amount._ The count parameter indicates the number of rotational units that the wheel moved.
 
@@ -480,7 +480,8 @@ void mouseReleased(MouseEvent me)
 
 This interface defines two methods. The **mouseDragged()** method is called multiple times as the mouse is dragged. The **mouseMoved()** method is called multiple times as the mouse is moved. Their general forms are shown here:
 ```
-void mouseDragged(MouseEvent me) void mouseMoved(MouseEvent me)
+void mouseDragged(MouseEvent me) 
+void mouseMoved(MouseEvent me)
 ```
 ### The MouseWheelListener Interface
 
@@ -599,7 +600,7 @@ public class MouseEventsDemo extends Frame implements MouseListener,MouseMotionL
         // save coordinates 
         mouseX= me.getX(); 
         mouseY = me.getY(); 
-        msg "Button Released";
+        msg = "Button Released";
         repaint();
     }
     
@@ -609,7 +610,7 @@ public class MouseEventsDemo extends Frame implements MouseListener,MouseMotionL
         // save coordinates 
         mouseX = me.getX();
         mouseY = me.getY(); 
-        msg = "*" + " mouse at +mouseX + "," + mouseY; 
+        msg = "*" + " mouse at "+mouseX + "," + mouseY; 
         repaint();
     }
 
@@ -690,7 +691,7 @@ public class KeyEventsDemo extends Frame implements KeyListener
     // Handle a key press. 
     public void keyPressed (KeyEvent ke) 
     {
-        keyState= "Key Down";
+        keyState = "Key Down";
         int key = ke.getKeyCode();
         switch (key) 
         {
@@ -718,18 +719,21 @@ public class KeyEventsDemo extends Frame implements KeyListener
         }
        repaint();
     }
+    
     // Handle a key release. 
     public void keyReleased (KeyEvent ke) 
     { 
         keyState= "Key Up"; 
         repaint();  
     }
+    
     // Handle key typed.
     public void keyTyped (KeyEvent ke) 
     { 
-        msg ke.getKeyChar(); 
+        msg =ke.getKeyChar(); 
         repaint();
     }
+    
     // Display keystrokes.
     public void paint (Graphics g) 
     { 
@@ -750,15 +754,14 @@ class MyWindowAdapter extends WindowAdapter
 { 
     public void windowClosing (WindowEvent we) 
     {
-            System.exit(0);
+        System.exit(0);
     }
 }
 ```
 Sample output is shown here:
 ![Alt text](image-17.png)
-If you want to handle the special keys, such as the arrow or function keys, you need to respond to them within the **keyPressed()** handler. They are not  
 
-available through **keyTyped()**. To identify the keys, you use their virtual key codes. For example, the next program outputs the name of a few of the special keys:  
+If you want to handle the special keys, such as the arrow or function keys, you need to respond to them within the **keyPressed()** handler. They are not available through **keyTyped()**. To identify the keys, you use their virtual key codes. For example, the next program outputs the name of a few of the special keys:  
 
 Sample output is shown here:
 ![Alt text](image-15.png)
@@ -805,6 +808,7 @@ public class AdapterDemo extends Frame
         appwin.setVisible(true); 
     }
 }
+
 // Handle only mouse click and drag events. 
 class MyMouseAdapter extends MouseAdapter 
 {
@@ -813,19 +817,24 @@ class MyMouseAdapter extends MouseAdapter
     {
         this.adapterDemo = adapterDemo; 
     }
+    
     // Handle mouse clicked. 
     public void mouseClicked (MouseEvent me) 
     { 
-        adapterDemo.msg = "Mouse clicked"; adapterDemo. repaint();
+        adapterDemo.msg = "Mouse clicked"; 
+        adapterDemo. repaint();
     }
+
     // Handle mouse dragged. 
     public void mouseDragged (MouseEvent me) 
     { 
-        adapterDemo.msg = "Mouse dragged"; adapterDemo. repaint ();
+        adapterDemo.msg = "Mouse dragged"; 
+        adapterDemo. repaint ();
     }
 }
-    // When the close box in the frame is clicked, 
-    // close the window and exit the program. 
+
+// When the close box in the frame is clicked, 
+// close the window and exit the program. 
 class MyWindowAdapter extends WindowAdapter 
 { 
     public void windowClosing (WindowEvent we) 
@@ -870,13 +879,15 @@ class MyMouseAdapter extends MouseAdapter
     {
         this.mousePressedDemo = mousePressedDemo; 
     }
+    
     // Handle a mouse pressed. 
-    public void mouse Pressed (MouseEvent me) 
+    public void mousePressed (MouseEvent me) 
     {
         mousePressedDemo.msg = "Mouse Pressed."; 
-        mousePressedDemo. repaint();
+        mousePressedDemo.repaint();
     }
 }
+
 // When the close box in the frame is clicked, 
 // close the window and exit the program. 
 class MyWindowAdapter extends WindowAdapter 
@@ -910,6 +921,7 @@ class MyMouseAdapter extends MouseAdapter
         repaint();
     }
 }
+
 // Inner class to handle window close events. 
 class MyWindowAdapter extends WindowAdapter 
 {
@@ -961,7 +973,7 @@ public class AnonymousInnerClassDemo extends Frame
             {
                 System.exit(0);
             }
-            });
+        });
     }
     
     public void paint (Graphics g) 

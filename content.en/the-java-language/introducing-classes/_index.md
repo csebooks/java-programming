@@ -19,9 +19,7 @@ Perhaps the most important thing to understand about a class is that it defines 
 
  When you define a class, you declare its exact form and nature. You do this by specifying the data that it contains and the code that operates on that data. While very simple classes may contain only code or only data, most real-world classes contain both. As you will see, a class’ code defines the interface to its data.
 
-A class is declared by use of the **class** keyword. The classes that have been  
-
-used up to this point are actually very limited examples of its complete form. Classes can (and usually do) get much more complex. A simplified general form of a **class** definition is shown here:
+A class is declared by use of the **class** keyword. The classes that have been used up to this point are actually very limited examples of its complete form. Classes can (and usually do) get much more complex. A simplified general form of a **class** definition is shown here:
 
 ```
 class classname 
@@ -157,7 +155,7 @@ The first line declares **mybox** as a reference to an object of type **Box**. A
 
  As just explained, the **new** operator dynamically allocates memory for an object. In the context of an assignment, it has this general form:
 ```
-_class-var_ = new classname ();
+class-var = new classname ();
 ```
 Here, _class-var_ is a variable of the class type being created. The classname is the name of the class that is being instantiated. The class name followed by parentheses specifies the constructor for the class. A constructor defines what occurs when an object of a class is created. Constructors are an important part of all classes and have many significant attributes. Most real-world classes explicitly define their own constructors within their class definition. However, if no explicit constructor is specified, then Java will automatically supply a default constructor. This is the case with **Box**. For now, we will use the default constructor. Soon, you will see how to define your own constructors.
 
@@ -200,7 +198,10 @@ When you assign one object reference variable to another object reference variab
 
 This is the general form of a method:
 ```
-type name(parameter-list) { // body of method }
+type name(parameter-list) 
+{ 
+	// body of method 
+}
 ```
 Here, type specifies the type of data returned by the method. This can be any valid type, including class types that you create. If the method does not return a value, its return type must be **void**. The name of the method is specified by name. This can be any legal identifier other than those already used by other items within the current scope. The _parameter-list_ is a sequence of type and identifier pairs separated by commas. Parameters are essentially variables that receive the value of the arguments passed to the method when it is called. If the method has no parameters, then the parameter list will be empty.
 
@@ -212,7 +213,7 @@ Here, value is the value returned. In the next few sections, you will see how to
 
 ### Adding a Method to the Box Class
 
- Although it is perfectly fine to create a class that contains only data, it rarely happens. Most of the time, you will use methods to access the instance variables defined by the class. In fact, methods define the interface to most classes. This allows the class implementor to hide the specific layout of internal data structures behind cleaner method abstractions. In addition to defining methods that provide access to data, you can also define methods that are used internally by the class itself.
+Although it is perfectly fine to create a class that contains only data, it rarely happens. Most of the time, you will use methods to access the instance variables defined by the class. In fact, methods define the interface to most classes. This allows the class implementor to hide the specific layout of internal data structures behind cleaner method abstractions. In addition to defining methods that provide access to data, you can also define methods that are used internally by the class itself.
 
 Let’s begin by adding a method to the **Box** class. It may have occurred to you while looking at the preceding programs that the computation of a box’s volume was something that was best handled by the **Box** class rather than the **BoxDemo** class. After all, since the volume of a box is dependent upon the size of the box, it makes sense to have the **Box** class compute it. To do this, you must add a method to **Box**, as shown here:
 
@@ -292,15 +293,15 @@ class Box
 	// compute and return volume
 	double volume () 
 	{ 
-		return * width * height depth;
+		return width * height * depth;
 	}
 }
 class BoxDemo4 
 { 
-	Box mybox1 = new Box(); 
-	Box mybox2 = new Box();
 	public static void main(String args[]) 
 	{
+		Box mybox1 = new Box(); 
+		Box mybox2 = new Box();
 		double vol;
 		
 		// assign values to myboxl's instance variables 
@@ -318,7 +319,7 @@ class BoxDemo4
 		System.out.println("Volume is " vol);
 		
 		// get volume of second box 
-		vol = mybox2. volume (); 
+		vol = mybox2.volume(); 
 		System.out.println("Volume is " + vol);
 	}
 }
@@ -396,11 +397,13 @@ class Box
 	double width;
 	double height;
 	double depth;
+
 	// compute and return volume
  	double volume () 
 	{
 	    return width * height * depth;
 	}
+	
 	// sets dimensions of box
 	void setDim (double w, double h, double d) 
 	{ 
@@ -424,6 +427,7 @@ class BoxDemo5
 		// get volume of first
  		box vol = mybox1.volume(); 
 		System.out.println("Volume is " + vol);
+	
 		// get volume of second 
 		box vol = mybox2. volume(); 
 		System.out.println("Volume is " + vol);
@@ -458,10 +462,11 @@ class Box
 	Box() 
 	{
 		System.out.println("Constructing Box");
-		width= 10;
+		width = 10;
 		height = 10;
 		depth = 10;
 	}
+	
 	// compute and return volume
  	double volume () 
 	{
@@ -519,6 +524,7 @@ class Box
 	double width;
 	double height;
 	double depth;
+	
 	// This is the constructor for Box. 
 	Box(double w, double h, double d) 
 	{
@@ -618,6 +624,7 @@ class Stack
 {
 	int stck[] = new int[10];
 	int tos;
+	
 	// Initialize top-of-stack
 	Stack() 
 	{
@@ -656,8 +663,9 @@ class TestStack
 {
 	public static void main(String args[]) 
 	{ 
-		Stack mystack1= new Stack();
-		Stack mystack2= new Stack();
+		Stack mystack1 = new Stack();
+		Stack mystack2 = new Stack();
+		
 		// push some numbers onto the stack 
 		for(int i=0; i<10; i++)
 			mystack1.push(i);

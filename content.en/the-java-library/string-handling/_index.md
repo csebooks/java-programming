@@ -192,7 +192,7 @@ In this case, **age** is an **int** rather than another **String**, but the outp
 
 Be careful when you mix other types of operations with string concatenation expressions, however. You might get surprising results. Consider the following:
 ```j
-String s = "four:"" + (2 + 2);
+String s = "four:" + (2 + 2);
 System.out.println(s)
 ```
 This fragment displays
@@ -457,7 +457,7 @@ class SortString
                     arr[i] = t;
                 }
             }
-            System.out.println(arr [j]);
+            System.out.println(arr[j]);
         }
     }
 }
@@ -551,8 +551,8 @@ class indexOfDemo
         System.out.println("lastIndexOf (t) = " + s.lastIndexOf('t'));
         System.out.println("indexOf (the) = " +s.indexOf("the"));
         System.out.println("lastIndexOf (the) = " +s.lastIndexOf("the"));
-        System.out.println("indexOf (t, 10) = " + =s.indexOf('t', 10));
-        System.out.println("lastIndexOf (t, 60)=" + =s.lastIndexOf('t', 60));
+        System.out.println("indexOf (t, 10) = " + s.indexOf('t', 10));
+        System.out.println("lastIndexOf (t, 60)=" + s.lastIndexOf('t', 60));
         System.out.println("indexOf (the, 10) = " + s.indexOf("the", 10));
         System.out.println("lastIndexOf (the, 60) = + " + s.lastIndexOf("the", 60));
     }
@@ -608,7 +608,7 @@ class StringReplace
             {
                 result = org.substring(0, i);
                 result = result + sub;
-                result = result org.substring (i + search.length());
+                result = result + org.substring (i + search.length());
                 org = result; 
             }
         } while (i-1);
@@ -676,6 +676,7 @@ This puts the string "Hello World" into **s**. The **trim()** method is quite us
 ```
 // Using trim() to process commands. 
 import java.io.*;
+
 class UseTrim 
 {
     public static void main(String args[]) throws IOException
@@ -886,7 +887,7 @@ class setCharAtDemo
         sb.setCharAt(1, 'i');
         sb.setLength (2);
         System.out.println("buffer after = " + sb);
-        System.out.println("charAt (1) after + sb.charAt (1));
+        System.out.println("charAt (1) after "+ sb.charAt (1));
     }
 }
 ```
@@ -968,6 +969,7 @@ The output of this example is shown here:
 I like Java!
 ```
 ### reverse()
+
 You can reverse the characters within a **StringBuffer** object using **reverse()**, shown here:
 ```
 StringBuffer reverse()
@@ -1014,10 +1016,10 @@ class deleteDemo
         StringBuffer sb = new StringBuffer("This is a test.");
         
         sb.delete(4, 7);
-        System.out.println("After delete: + sb);
+        System.out.println("After delete: "+ sb);
         
         sb.deleteCharAt(0);
-        System.out.println("After deleteCharAt: + sb);
+        System.out.println("After deleteCharAt: "+ sb);
     }
 }
 ```
