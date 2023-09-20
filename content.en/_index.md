@@ -1,7 +1,8 @@
 ---
-title: 'Science'
+title: 'Java Programming'
 categories:
-    - biology
-    - botany
+    - cse
+    - languages
+    - java
 weight: 1
 --- 
