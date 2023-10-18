@@ -8,7 +8,6 @@ jobs:
   call-workflow-passing-data:
     uses: techatpark/gurukulam/.github/workflows/material-deploy.yml@develop
     secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
       HOST: ${{ secrets.HOST }}
       USERNAME: ${{ secrets.USERNAME }}
       PASSWORD: ${{ secrets.PASSWORD }}
