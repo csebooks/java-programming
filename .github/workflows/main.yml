@@ -1,4 +1,4 @@
-name: Call a reusable workflow
+name: Publish
 
 on:
   push:
@@ -6,12 +6,7 @@ on:
 
 jobs:
   call-workflow-passing-data:
-    permissions:
-      contents: read
-      pull-requests: write
     uses: techatpark/gurukulam/.github/workflows/material-deploy.yml@develop
-    with:
-      config-path: .github/labeler.yml
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
       HOST: ${{ secrets.HOST }}
