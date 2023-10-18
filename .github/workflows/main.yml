@@ -13,4 +13,8 @@ jobs:
     with:
       config-path: .github/labeler.yml
     secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        TARGET_DIR: ${{ secrets.TARGET_DIR }}
+        QUESTIONS_DIR: ${{ secrets.QUESTIONS_DIR }}
