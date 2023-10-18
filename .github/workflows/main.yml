@@ -7,13 +7,3 @@ on:
 jobs:
   call-workflow:
     uses: techatpark/gurukulam/.github/workflows/material-deploy.yml@main
-
-  call-workflow-passing-data:
-    permissions:
-      contents: read
-      pull-requests: write
-    uses: techatpark/gurukulam/.github/workflows/material-deploy.yml@main
-    with:
-      config-path: .github/labeler.yml
-    secrets:
-      token: ${{ secrets.USERNAME }}
