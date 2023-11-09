@@ -1,6 +1,8 @@
 ---
-title: 'The Java Library'
-weight: 2
+title: 'Standard Library'
+weight: 3
+categories:
+    - std-library
 ---
 
 
