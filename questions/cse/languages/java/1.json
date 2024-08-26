@@ -1,14 +1,14 @@
 {
-  "question" : "What is the range of values that can be stored by int datatype in C?",
+  "question" : "What is the paratent class for java objects",
   "explanation" : "",
   "choices" : [ {
-    "value" : "-(2^31) to (2^31) - 1",
+    "value" : "java.lang.Object",
     "answer" : true
   }, {
-    "value" : "-256 to 255"
+    "value" : "java.lang.Class"
   }, {
-    "value" : "-(2^63) to (2^63) - 1"
+    "value" : "java.lang.String"
   }, {
-    "value" : "0 to (2^31) - 1"
+    "value" : "None of the above"
   } ]
 }

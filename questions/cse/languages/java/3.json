@@ -1,0 +1,15 @@
+{
+  "question" : "Which of the folloing are immutable ?",
+  "explanation" : "",
+  "choices" : [ {
+    "value" : "java.util.List"
+  }, {
+    "value" : "java.lang.Number",
+    "answer" : true
+  }, {
+    "value" : "java.lang.String",
+    "answer" : true
+  }, {
+    "value" : "java.util.Collection"
+  } ]
+}
