@@ -11,36 +11,37 @@ This section shows how to install the JDK manually using `.zip` (for Windows) or
 
 ### Windows Setup (Using .zip)
 
-1. **Download the JDK**
+1.**Download the JDK**
 
    - Visit [https://jdk.java.net](https://jdk.java.net) or your preferred vendor.
    - Download the `.zip` archive suitable for Windows.
 
-2. **Extract the JDK**
 
+2.**Extract the JDK**
+   
    - Extract the archive to a location such as:
 
-     ```
-     C:\Java\jdk-<version>
-     ```
+   ```
+   C:\Java\jdk-<version>
+   ```
 
-3. **Set Environment Variables**
+3.**Set Environment Variables**
 
    - Open PowerShell and set the following:
 
-     ```powershell
-     setx JAVA_HOME "C:\Java\jdk-<version>"
-     setx PATH "%PATH%;%JAVA_HOME%\bin"
-     ```
+   ```powershell
+   setx JAVA_HOME "C:\Java\jdk-<version>"
+   setx PATH "%PATH%;%JAVA_HOME%\bin"
+   ```
 
-4. **Verify Installation**
+4.**Verify Installation**
 
    - Open a new Command Prompt window and run:
 
-     ```cmd
-     java -version
-     javac -version
-     ```
+   ```cmd
+   java -version
+   javac -version
+   ```
 
    - You should see the installed version displayed.
 
@@ -48,34 +49,34 @@ This section shows how to install the JDK manually using `.zip` (for Windows) or
 
 ### Linux Setup (Using .tar.gz)
 
-1. **Download the JDK**
+1.**Download the JDK**
 
    - Visit [https://jdk.java.net](https://jdk.java.net)
    - Download the `.tar.gz` archive for Linux.
 
-2. **Extract the JDK**
+2.**Extract the JDK**
 
    ```bash
    tar -xvzf jdk-21_linux-x64_bin.tar.gz
    sudo mv jdk-21 /opt/java/
    ```
 
-3. **Set Environment Variables**
+3.**Set Environment Variables**
 
    * Edit `~/.bashrc` (or `~/.zshrc` if using Zsh):
 
-     ```bash
-     export JAVA_HOME=/opt/java/jdk-21
-     export PATH=$JAVA_HOME/bin:$PATH
-     ```
+   ```bash
+   export JAVA_HOME=/opt/java/jdk-21
+   export PATH=$JAVA_HOME/bin:$PATH
+   ```
 
    * Apply the changes:
 
-     ```bash
-     source ~/.bashrc
-     ```
+   ```bash
+   source ~/.bashrc
+   ```
 
-4. **Verify Installation**
+4.**Verify Installation**
 
    ```bash
    java -version
