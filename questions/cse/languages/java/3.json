@@ -2,14 +2,14 @@
   "question" : "Which of the folloing are immutable ?",
   "explanation" : "",
   "choices" : [ {
-    "value" : "java.util.List"
+    "cValue" : "java.util.List"
   }, {
-    "value" : "java.lang.Number",
-    "answer" : true
+    "cValue" : "java.lang.Number",
+    "isAnswer" : true
   }, {
-    "value" : "java.lang.String",
-    "answer" : true
+    "cValue" : "java.lang.String",
+    "isAnswer" : true
   }, {
-    "value" : "java.util.Collection"
+    "cValue" : "java.util.Collection"
   } ]
 }

@@ -3,27 +3,27 @@
   "explanation": "",
   "choices": [
     {
-      "value": "Collection Streams API"
+      "cValue": "Collection Streams API"
     },
     {
-      "value": "Buffered Reader"
+      "cValue": "Buffered Reader"
     },
     {
-      "value": "Container"
+      "cValue": "Container"
     }
   ],
   "matches": [
     {
-      "value": "Builder"
+      "cValue": "Builder"
     },
     {
-      "value": "Decorator"
+      "cValue": "Decorator"
     },
     {
-      "value": "Composite"
+      "cValue": "Composite"
     },
     {
-      "value": "Visitor"
+      "cValue": "Visitor"
     }
   ]
 }

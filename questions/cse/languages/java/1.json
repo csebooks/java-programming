@@ -2,13 +2,13 @@
   "question" : "What is the paratent class for java objects",
   "explanation" : "",
   "choices" : [ {
-    "value" : "java.lang.Object",
-    "answer" : true
+    "cValue" : "java.lang.Object",
+    "isAnswer" : true
   }, {
-    "value" : "java.lang.Class"
+    "cValue" : "java.lang.Class"
   }, {
-    "value" : "java.lang.String"
+    "cValue" : "java.lang.String"
   }, {
-    "value" : "None of the above"
+    "cValue" : "None of the above"
   } ]
 }
