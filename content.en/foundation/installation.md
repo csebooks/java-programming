@@ -1,6 +1,6 @@
 ---
 title: 'Installation'
-weight: 3
+weight: 4
 ---
 
 Java is not bundled with your OS by default—you need to install the **JDK** to start writing and running Java programs.

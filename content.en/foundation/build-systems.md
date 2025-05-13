@@ -1,6 +1,6 @@
 ---
 title: 'Build Systems'
-weight: 4
+weight: 5
 ---
 
 After writing your first `HelloWorld.java`, you’ve seen how Java works at a basic level. But real-world Java projects are more than a single file. They involve organizing code, reusing libraries, and automating builds.
