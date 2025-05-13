@@ -30,9 +30,22 @@ src/
             ├── Main.java
             └── utils/
                 └── GreetHelper.java
+pom.xml
 ```
 
-Inside `Main.java`:
+Inside `GreetHelper.java`:
+
+```java
+package com.example.app.utils;
+
+public class GreetHelper {
+    public static void sayHello() {
+        System.out.println("Hello from GreetHelper!");
+    }
+}
+```
+
+And in `Main.java`:
 
 ```java
 package com.example.app;
@@ -42,18 +55,6 @@ import com.example.app.utils.GreetHelper;
 public class Main {
     public static void main(String[] args) {
         GreetHelper.sayHello();
-    }
-}
-```
-
-And in `GreetHelper.java`:
-
-```java
-package com.example.app.utils;
-
-public class GreetHelper {
-    public static void sayHello() {
-        System.out.println("Hello from GreetHelper!");
     }
 }
 ```
@@ -193,6 +194,8 @@ mvn -v
 You should see output with the Maven version, Java version, and JAVA\_HOME path.
 
 ---
+
+Now Lets add below in `pom.xml`:
 
 ### ✅ You're Ready
 
