@@ -62,7 +62,12 @@ public class Main {
 To compile this, you'd use:
 
 ```bash
-javac -d out src/com/example/app/**/*.java
+javac -d out src/com/example/app/Main.java src/com/example/app/utils/GreetHelper.java
+```
+
+To Run this,
+```bash
+java -cp out com.example.app.Main
 ```
 
 ---

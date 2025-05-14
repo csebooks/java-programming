@@ -9,7 +9,7 @@ Here’s how you can set it up manually using `.zip` (Windows) or `.tar.gz` (Lin
 
 ---
 
-### 🪟 **Windows Setup (Using .zip)**
+### **Windows Setup (Using .zip)**
 
 1. **Download the JDK**
 
@@ -19,27 +19,23 @@ Here’s how you can set it up manually using `.zip` (Windows) or `.tar.gz` (Lin
 2. **Extract the JDK**
 
    * Extract it to a location like:
-     `C:\Java\jdk-21`
+     `C:\Java\jdk-<Version>`
 
 3. **Set Environment Variables**
+   * Open Windows Powershell.
+   * Set the value of the environment variable to your JDK (or JRE) installation path as follows:
 
-   * Open **System Properties** → **Environment Variables**
+   ```powershell
+   setx JAVA_HOME "C:\Java\jdk-<Version>"
+   ```
 
-   * Under **System Variables**, add:
-
-     ```
-     JAVA_HOME = C:\Java\jdk-21
-     ```
-
-   * Add `JAVA_HOME\bin` to the `Path`:
-
-     ```
-     Path = ...;C:\Java\jdk-21\bin
-     ```
+   ```powershell
+   setx PATH "%PATH%;%JAVA_HOME%\bin"
+   ```
 
 4. **Verify Installation**
 
-   Open Command Prompt and run:
+   Open New Command Prompt and run:
 
    ```cmd
    java -version
@@ -123,24 +119,12 @@ HelloWorld.java
 
 ---
 
-### 🛠️ 2. Compile the Program
-
-Open your terminal or command prompt, navigate to the folder where `HelloWorld.java` is saved, and run:
-
-```bash
-javac HelloWorld.java
-```
-
-This creates a file named `HelloWorld.class` — this is the **bytecode** version of your program.
-
----
-
-### 🚀 3. Run the Program
+### 🚀 2. Run the Program
 
 Now run the compiled bytecode using the JVM:
 
 ```bash
-java HelloWorld
+java HelloWorld.java
 ```
 
 You should see:
@@ -150,15 +134,3 @@ Hello, Java!
 ```
 
 🎉 **That’s it!** You've just written, compiled, and run your first Java program!
-
----
-
-### 🔁 Recap: What Happened?
-
-```plaintext
-HelloWorld.java  --[javac]-->  HelloWorld.class  --[java]-->  "Hello, Java!"
-```
-
-This simple flow—**write → compile → run**—is at the heart of every Java application.
-
-
