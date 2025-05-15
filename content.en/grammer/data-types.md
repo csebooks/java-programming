@@ -7,7 +7,7 @@ weight: 4
 
 ---
 
-### 🔹 Primitive Types
+### Primitive Types
 
 Primitive types are the most basic building blocks of data in Java. They’re **efficient**, **fixed in size**, and not objects.
 
@@ -58,7 +58,7 @@ You’ll usually start with `int`, `double`, and `boolean` for most cases.
 
 ---
 
-### 🔹 Object-Based Types
+### Object-Based Types
 
 Java is an object-oriented language, so it also supports types that are full-fledged **objects**. These types provide **additional behavior** and **methods**.
 
@@ -86,7 +86,7 @@ Handling dates and times properly is important and deserves its own space—we�
 
 ---
 
-### 🔹 Auto Conversion and Wrappers
+### Auto Conversion and Wrappers
 
 Java automatically converts between primitive types and their object counterparts when needed. This is known as **autoboxing** and **unboxing**.
 
@@ -105,8 +105,7 @@ Each primitive has a corresponding wrapper class:
 
 ---
 
-### 🧠 Summary
+### Summary
 
 Java gives you the right type for every kind of data—whether it's raw performance with primitives or richer behavior with object-based types. Mastering data types early on will make your code more reliable, readable, and efficient.
 
-Let me know if you'd like to proceed with **Operators**, **Keywords**, or jump to **Object-Oriented Programming** next.

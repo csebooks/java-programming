@@ -13,7 +13,7 @@ Java offers three main categories of control statements:
 
 ---
 
-### ✅ Decision-Making Statements
+### Decision-Making Statements
 
 #### 1. `if` and `else`
 
@@ -62,7 +62,7 @@ String result = switch (day) {
 
 ---
 
-### 🔁 Looping Statements
+### Looping Statements
 
 #### 1. `for` loop
 
@@ -100,7 +100,7 @@ do {
 
 ---
 
-### ↩️ Branching Statements
+### Branching Statements
 
 #### 1. `break`
 
@@ -136,8 +136,7 @@ public int sum(int a, int b) {
 
 ---
 
-### 🧠 Summary
+### Summary
 
 Control statements are the **logic muscles** of your program. They let your code think, decide, and repeat—all the essentials of real-world programming. With these tools, your programs can interact with input, respond to conditions, and run smartly.
 
-Let me know if you'd like a visual flowchart for control statements or want to proceed to the next topic (e.g., Operators or Data Types).

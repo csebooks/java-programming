@@ -100,7 +100,7 @@ class Box {
 
 // Usage:
 Box.Dimensions d = new Box.Dimensions();
-System.out.println(d.width);  // 10
+System.out.println(d.width);  //output: 10
 ```
 
 ---

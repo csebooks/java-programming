@@ -3,10 +3,6 @@ title: 'Exceptions'
 weight: 10
 ---
 
-Great! Here’s a simple and clear explanation of **Exception Handling** in Java, following your style.
-
----
-
 Exception handling helps your program **deal with unexpected problems** (errors) without crashing abruptly.
 
 It separates normal code from error-handling code, making programs more robust and easier to maintain.
@@ -88,4 +84,3 @@ void readFile() throws IOException {
 
 Exception handling lets your programs be more **stable, user-friendly, and maintainable**.
 
-Ready to move on to the next topic?

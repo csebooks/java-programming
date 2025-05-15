@@ -3,17 +3,13 @@ title: 'Record'
 weight: 11
 ---
 
-Perfect. Here's a clear and simple introduction to **records** in Java, continuing your established tone and structure — minimal theory, practical focus.
-
----
-
 Records are a **compact way to create data-carrying classes** — like a class with only fields and a constructor, no extra code.
 
 They are useful when you just want to store and pass data without writing boilerplate code.
 
 ---
 
-### 🧾 Traditional Way (Before Records)
+### Traditional Way (Before Records)
 
 ```java
 class Point {
@@ -40,7 +36,7 @@ This is a lot of repetitive code — even for simple data holders.
 
 ---
 
-### ✅ With Records (Java 14+)
+### With Records (Java 14+)
 
 ```java
 record Point(int x, int y) {}
@@ -65,20 +61,20 @@ System.out.println(p);      // Point[x=3, y=4]
 
 ---
 
-### 🔒 Immutable by Design
+### Immutable by Design
 
 Records are **immutable** — you can’t change values after creation:
 
 ```java
 Point p = new Point(1, 2);
-// p.x = 5;  // ❌ Not allowed
+// p.x = 5;  //  Not allowed
 ```
 
 This makes them ideal for value objects, like coordinates, configuration data, responses, etc.
 
 ---
 
-### ✍️ Can Have Methods Too
+### Can Have Methods Too
 
 ```java
 record Point(int x, int y) {
@@ -90,7 +86,7 @@ record Point(int x, int y) {
 
 ---
 
-### 🚫 What You *Can't* Do with Records
+### What You *Can't* Do with Records
 
 * Can’t extend another class
 * All fields are final
@@ -99,5 +95,3 @@ record Point(int x, int y) {
 ---
 
 Records keep your code **clean, short, and safe** — especially in modern Java where immutability and readability are valued.
-
-Ready for the next topic? We can wrap up grammar or jump into the next major chapter.

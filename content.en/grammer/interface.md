@@ -3,15 +3,11 @@ title: 'Interface'
 weight: 7
 ---
 
-Here’s a clean, practical walkthrough of **interfaces** in Java — focused on real usage, with key concepts like default methods, functional interfaces, and marker interfaces. It fits smoothly with the tone of your previous grammar sections.
-
----
-
 Interfaces define a **contract** — a set of methods that a class promises to implement. They help build flexible and loosely coupled systems.
 
 ---
 
-### ✍️ Declaring an Interface
+### Declaring an Interface
 
 ```java
 interface Animal {
@@ -31,7 +27,7 @@ class Dog implements Animal {
 
 ---
 
-### ✅ Default Methods
+### Default Methods
 
 Java allows interfaces to have **default implementations**.
 
@@ -55,7 +51,7 @@ Default methods allow interfaces to **evolve** over time without breaking old co
 
 ---
 
-### 🎯 Functional Interfaces
+### Functional Interfaces
 
 A functional interface has **exactly one abstract method** and is used in lambda expressions or method references.
 
@@ -77,7 +73,7 @@ You can omit `@FunctionalInterface`, but it's helpful to signal intent and catch
 
 ---
 
-### 🏷 Marker Interfaces
+### Marker Interfaces
 
 Marker interfaces **have no methods at all**. They are used to "mark" a class with a special property, often recognized by frameworks or runtime checks.
 

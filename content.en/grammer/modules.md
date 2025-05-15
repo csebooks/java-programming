@@ -4,7 +4,7 @@ weight: 12
 ---
 
 
-🔹 **Java Modules (JPMS)**
+  **Java Modules (JPMS)**
 
 Modules let you define **clear boundaries** in large applications by specifying which packages are available to others and which dependencies you need. You declare them in a `module-info.java` file at the root of your module.
 

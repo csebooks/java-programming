@@ -3,10 +3,6 @@ title: 'Generics'
 weight: 8
 ---
 
-Here’s a clear, practical explanation of **Generics** in Java, fitting your style — simple, focused on why and how to use them.
-
----
-
 Generics allow you to write **classes and methods that work with different types safely**, without losing type information or needing casts.
 
 They add **type parameters** so you can reuse the same code for many data types while keeping type safety.
@@ -99,4 +95,3 @@ Use wildcards when you want flexibility:
 
 Generics improve code **reusability, readability, and safety** — and are essential in modern Java libraries.
 
-Want me to continue with **Exception Handling** next?
