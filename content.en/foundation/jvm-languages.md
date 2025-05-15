@@ -15,7 +15,7 @@ public class HelloWorld {
         System.out.println("Hello, World!");
     }
 }
-````
+```
 
 **Kotlin**: Developed by JetBrains, Kotlin is a statically typed language that combines object-oriented and functional programming paradigms. It is fully supported by Google for Android development and is known for its concise syntax and interoperability with Java.
 
