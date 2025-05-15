@@ -100,6 +100,3 @@ lines.forEach(System.out::println);
 With these three layers—**character streams**, **byte streams**, and **NIO with `Path` and `Files`**—Java enables clean, powerful, and cross-platform file I/O operations.
 
 ```
-
-Let me know if you'd like to continue with **Concurrency**, **Networking**, or another Java standard library area next.
-```

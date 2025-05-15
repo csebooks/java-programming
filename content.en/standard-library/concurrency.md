@@ -132,5 +132,3 @@ Java’s concurrency utilities allow us to build highly scalable and responsive 
 
 ```
 
-Let me know if you'd like to go next with **Networking**, **Security**, or **Virtual Threads** (Project Loom).
-```
