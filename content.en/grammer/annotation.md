@@ -98,7 +98,7 @@ Used only during source analysis — ignored by the compiler and runtime. Useful
 
 ---
 
-### 🛠 Custom Annotations
+### Custom Annotations
 
 You can create your own annotations like this:
 

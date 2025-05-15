@@ -16,7 +16,7 @@ By the end of this chapter, you’ll be able to:
 
 ---
 
-### 📁 Structuring Java Programs
+### Structuring Java Programs
 
 As your program grows, you’ll have multiple `.java` files. To avoid naming conflicts and keep things clean, Java uses **packages**.
 
@@ -72,7 +72,7 @@ java -cp out com.example.app.Main
 
 ---
 
-### 🧩 Java Modules (JPMS)
+### Java Modules (JPMS)
 
 Modules are a step above packages. Introduced in Java 9, they help structure large applications with clear boundaries and strong encapsulation.
 
@@ -88,7 +88,7 @@ This makes only `com.example.app.utils` available to other modules—everything 
 
 ---
 
-### 📦 Packaging Your Application into a JAR
+### Packaging Your Application into a JAR
 
 To distribute or run your app easily, you can package it as a **JAR** (Java ARchive).
 
@@ -113,7 +113,7 @@ java -jar app.jar
 
 ---
 
-### 🧰 Maven Build Tool for Real Projects
+### Maven Build Tool for Real Projects
 
 Maintaining complex classpaths and manually compiling files is painful. That’s where **build tools** come in.
 
@@ -121,32 +121,34 @@ Absolutely! Here's a simple and complete guide to help your readers **set up Mav
 
 ---
 
-## 🧱 Maven Setup Instructions
+## Maven Setup Instructions
 
 To build and manage Java projects efficiently, Maven is a must-have. Here's how to set it up on your system.
 
 ---
 
-### 🪟 Windows Setup
+### Windows Setup
 
 #### 1. **Download Maven**
 
 Go to the official Apache Maven site:
-👉 [https://maven.apache.org/download.cgi](https://maven.apache.org/download.cgi)
+[https://maven.apache.org/download.cgi](https://maven.apache.org/download.cgi)
 
 * Download the **binary zip archive** (e.g., `apache-maven-<version>-bin.zip`)
 * Extract it to a folder, e.g., `C:\Programs\apache-maven-<version>`
 
 #### 2. **Set Environment Variables**
 
-* Right-click on **This PC → Properties → Advanced system settings**
-* Click **Environment Variables**
+   * Open Windows Powershell.
+   * Set the installation path as follows:
 
-Add the following:
+   ```powershell
+   setx MAVEN_HOME "C:\Programs\apache-maven-<version>"
+   ```
 
-* **MAVEN\_HOME** → `C:\Programs\apache-maven-<version>`
-* Edit **Path** and add:
-  `%MAVEN_HOME%\bin`
+   ```powershell
+   setx PATH "%PATH%;%MAVEN_HOME%\bin"
+   ```
 
 #### 3. **Verify Installation**
 
@@ -160,7 +162,7 @@ You should see Maven version info.
 
 ---
 
-### 🐧 Linux Setup
+### Linux Setup
 
 #### 1. **Download Maven**
 
@@ -202,7 +204,7 @@ You should see output with the Maven version, Java version, and JAVA\_HOME path.
 
 Now Lets add below in `pom.xml`:
 
-### ✅ You're Ready
+### You're Ready
 
 ```xml
 <!-- pom.xml -->
@@ -222,5 +224,5 @@ mvn package
 
 JAR gets built inside `target/`.
 
-This is how real-world Java development happens—and you’re ready to build like a pro.
+This is how real-world Java development happenss.
 

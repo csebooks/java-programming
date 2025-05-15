@@ -33,7 +33,7 @@ Think of the JDK as your workshop—it doesn't just let you write code, it helps
 
 ---
 
-### 🧠 What is JVM?
+### What is JVM?
 
 > The **Java Virtual Machine (JVM)** is where the magic happens.Many people think JVM is just about portability—"Write once, run anywhere." That’s true, but that’s only part of the story. The JVM is a **managed runtime**. That means it does much more:
 
@@ -76,7 +76,7 @@ In simple terms, the JVM is like the brain behind the scenes. It doesn’t care 
 
 ---
 
-### 🌀 Compile Once, Run Smart
+### Compile Once, Run Smart
 
 Unlike many other languages, Java uses both **compilation and interpretation**:
 

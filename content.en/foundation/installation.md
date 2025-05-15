@@ -46,7 +46,7 @@ Here’s how you can set it up manually using `.zip` (Windows) or `.tar.gz` (Lin
 
 ---
 
-### 🐧 **Linux Setup (Using .tar.gz)**
+### **Linux Setup (Using .tar.gz)**
 
 1. **Download the JDK**
 
@@ -85,19 +85,19 @@ Here’s how you can set it up manually using `.zip` (Windows) or `.tar.gz` (Lin
 ---
 
 Now your JDK setup is ready—on both Windows and Linux!
-You're all set to compile and run Java programs like a pro. ☕
+You're all set to compile and run Java programs like a pro. 
 
 Perfect! Let’s keep the momentum going with a simple and beginner-friendly section on writing and running your **first Java program**.
 
 ---
 
-### ✍️ Your First Java Program
+### Your First Java Program
 
 Now that the JDK is set up, let’s write, compile, and run a simple Java program. This will help confirm everything works and show how the development flow fits together.
 
 ---
 
-### 📄 1. Create a Java File
+### 1. Create a Java File
 
 Open a text editor (like Notepad, VS Code, or nano) and write the following:
 
@@ -115,11 +115,11 @@ Save the file as:
 HelloWorld.java
 ```
 
-✅ **Note:** The filename *must* match the class name (`HelloWorld`).
+**Note:** The filename *must* match the class name (`HelloWorld`).
 
 ---
 
-### 🚀 2. Run the Program
+### 2. Run the Program
 
 Now run the compiled bytecode using the JVM:
 
@@ -133,4 +133,4 @@ You should see:
 Hello, Java!
 ```
 
-🎉 **That’s it!** You've just written, compiled, and run your first Java program!
+**That’s it!** You've just written, compiled, and run your first Java program!
