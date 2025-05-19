@@ -865,4 +865,3 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - `rmiregistry` Must be running before RMI clients or servers can interact.
 - Default port is 1099, but it can be customized.
 
-
