@@ -1,5 +1,7 @@
-
-### Maven Build Tool for Real Projects
+---
+title: 'Maven'
+weight: 1
+---
 
 Maintaining complex classpaths and manually compiling files is painful. That’s where **build tools** come in.
 

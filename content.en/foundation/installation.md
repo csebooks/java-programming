@@ -3,55 +3,55 @@ title: 'Installation'
 weight: 4
 ---
 
-Java is not bundled with your OS by default—you need to install the **JDK** to start writing and running Java programs.
+Java is not bundled with your OS by default. To write and run Java programs, you must install the **JDK** (Java Development Kit).
 
-Here’s how you can set it up manually using `.zip` (Windows) or `.tar.gz` (Linux) files.
+This section shows how to install the JDK manually using `.zip` (for Windows) or `.tar.gz` (for Linux), and how to verify the installation.
 
 ---
 
-### **Windows Setup (Using .zip)**
+### Windows Setup (Using .zip)
 
 1. **Download the JDK**
 
-   * Go to [https://jdk.java.net](https://jdk.java.net) or your preferred JDK vendor.
-   * Download the **.zip** version for Windows.
+   - Visit [https://jdk.java.net](https://jdk.java.net) or your preferred vendor.
+   - Download the `.zip` archive suitable for Windows.
 
 2. **Extract the JDK**
 
-   * Extract it to a location like:
-     `C:\Java\jdk-<Version>`
+   - Extract the archive to a location such as:
+
+     ```
+     C:\Java\jdk-<version>
+     ```
 
 3. **Set Environment Variables**
-   * Open Windows Powershell.
-   * Set the value of the environment variable to your JDK (or JRE) installation path as follows:
 
-   ```powershell
-   setx JAVA_HOME "C:\Java\jdk-<Version>"
-   ```
+   - Open PowerShell and set the following:
 
-   ```powershell
-   setx PATH "%PATH%;%JAVA_HOME%\bin"
-   ```
+     ```powershell
+     setx JAVA_HOME "C:\Java\jdk-<version>"
+     setx PATH "%PATH%;%JAVA_HOME%\bin"
+     ```
 
 4. **Verify Installation**
 
-   Open New Command Prompt and run:
+   - Open a new Command Prompt window and run:
 
-   ```cmd
-   java -version
-   javac -version
-   ```
+     ```cmd
+     java -version
+     javac -version
+     ```
 
-   You should see the installed version printed.
+   - You should see the installed version displayed.
 
 ---
 
-### **Linux Setup (Using .tar.gz)**
+### Linux Setup (Using .tar.gz)
 
 1. **Download the JDK**
 
-   * Visit [https://jdk.java.net](https://jdk.java.net)
-   * Download the **.tar.gz** version for Linux.
+   - Visit [https://jdk.java.net](https://jdk.java.net)
+   - Download the `.tar.gz` archive for Linux.
 
 2. **Extract the JDK**
 
@@ -62,18 +62,18 @@ Here’s how you can set it up manually using `.zip` (Windows) or `.tar.gz` (Lin
 
 3. **Set Environment Variables**
 
-   Edit `~/.bashrc` (or `~/.zshrc` if you're using zsh):
+   * Edit `~/.bashrc` (or `~/.zshrc` if using Zsh):
 
-   ```bash
-   export JAVA_HOME=/opt/java/jdk-21
-   export PATH=$JAVA_HOME/bin:$PATH
-   ```
+     ```bash
+     export JAVA_HOME=/opt/java/jdk-21
+     export PATH=$JAVA_HOME/bin:$PATH
+     ```
 
-   Then apply the changes:
+   * Apply the changes:
 
-   ```bash
-   source ~/.bashrc
-   ```
+     ```bash
+     source ~/.bashrc
+     ```
 
 4. **Verify Installation**
 
@@ -82,24 +82,17 @@ Here’s how you can set it up manually using `.zip` (Windows) or `.tar.gz` (Lin
    javac -version
    ```
 
----
 
-Now your JDK setup is ready—on both Windows and Linux!
-You're all set to compile and run Java programs like a pro. 
+Now your JDK is installed and configured. You’re ready to write, compile, and run Java programs.
 
-Perfect! Let’s keep the momentum going with a simple and beginner-friendly section on writing and running your **first Java program**.
-
----
 
 ### Your First Java Program
 
-Now that the JDK is set up, let’s write, compile, and run a simple Java program. This will help confirm everything works and show how the development flow fits together.
+Let’s create and run a simple Java program to verify the setup and understand the basic development workflow.
 
----
+#### Step 1: Create the Java File
 
-### 1. Create a Java File
-
-Open a text editor (like Notepad, VS Code, or nano) and write the following:
+Open any text editor and write the following code:
 
 ```java
 public class HelloWorld {
@@ -115,22 +108,66 @@ Save the file as:
 HelloWorld.java
 ```
 
-**Note:** The filename *must* match the class name (`HelloWorld`).
+Note: The file name must match the class name (`HelloWorld`).
 
 ---
 
-### 2. Run the Program
+### Step 2: Run the Program
 
-Now run the compiled bytecode using the JVM:
+You can directly run the `.java` file using the Java interpreter:
 
 ```bash
 java HelloWorld.java
 ```
 
-You should see:
+This should print:
 
 ```
 Hello, Java!
 ```
 
-**That’s it!** You've just written, compiled, and run your first Java program!
+---
+
+### Closer Look at Compilation
+
+Let’s look at what happens when you compile the Java source file.
+
+```bash
+javac HelloWorld.java
+ls
+```
+
+This produces a file called `HelloWorld.class`, which contains bytecode.
+
+You can inspect this bytecode using:
+
+```bash
+javap HelloWorld
+```
+
+---
+
+### Creating a Custom Runtime (JRE)
+
+The full JDK is around 300 MB. But your program might only need the core Java module `java.base`.
+
+You can use `jlink` to create a lightweight runtime:
+
+```bash
+jlink --add-modules java.base --output my_jre
+```
+
+Check the size of `my_jre` — it should be significantly smaller.
+
+You can now run your program using the custom JRE:
+
+```bash
+./my_jre/bin/java HelloWorld
+```
+
+This demonstrates how Java’s modularity allows you to create minimal runtimes tailored to your application.
+
+```
+
+Let me know if you'd like this broken into two Markdown files — one for **installation**, another for **your first program** — or we can continue with the next topic.
+```

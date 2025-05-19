@@ -8,8 +8,6 @@ references:
 
 To build and run Java programs, two key pieces come into play: the **JDK** and the **JVM**.
 
-### 🛠️ What is JDK?
-
 > The **Java Development Kit (JDK)** is the toolbox for Java developers.It gives you everything you need to **write**, **compile**, and **build** Java applications.
 
 Inside the JDK, you'll find:
@@ -30,8 +28,6 @@ Inside the JDK, you'll find:
 
 
 Think of the JDK as your workshop—it doesn't just let you write code, it helps you turn that code into something that actually works.
-
----
 
 ### What is JVM?
 
