@@ -2,9 +2,12 @@
 title: 'Stream API'
 weight: 6
 references:
+    videos:
+        - youtube:v_5SKpfkI2U
     links:
         - https://dev.java/learn/api/streams/
         - https://www.danvega.dev/blog/stream-gatherers
+
 ---
 
 > The Collections Framework is about storing and organizing your data in the memory of your JVM. You can see the Stream API as a companion framework to the Collections Framework, to process this data in a very efficient way. Indeed, you can open a stream on a collection to process the data it contains.Stream API provides a functional approach to processing collections of objects.

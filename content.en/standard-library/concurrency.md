@@ -1,6 +1,6 @@
 ---
 title: 'Concurrency'
-weight: 6
+weight: 7
 ---
 
 > Concurrency in Java allows multiple threads to execute independently, making better use of system resources and enabling faster, responsive applications. Java provides built-in support for multithreading, synchronization, and concurrent data structures.

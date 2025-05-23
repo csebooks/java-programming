@@ -5,13 +5,7 @@ categories:
     - grammer
 ---
 
-Here's your revised **Grammar chapter overview** in clean Markdown format, incorporating your analogy and suggested explanation:
-
----
-
-### Grammar Overview
-
-Any language has a **grammar**—a set of rules that helps us form meaningful sentences. Java is no different. By understanding its grammar, we can read and write programs with clarity and confidence.
+> Any language has a **grammar**—a set of rules that helps us form meaningful sentences. Java is no different. By understanding its grammar, we can read and write programs with clarity and confidence.
 
 Let’s look at a simple example in English:
 
