@@ -1,6 +1,9 @@
 ---
 title: 'Collection Framework'
 weight: 5
+references:
+    links:
+        - https://dev.java/learn/api/collections-framework/
 ---
 
 > Java’s Collection Framework is a powerful suite of interfaces and classes that help you store, access, and manage groups of data efficiently. Instead of building your own data structures, Java provides well-tested implementations for Lists, Sets, Maps, Queues, and more — allowing you to focus on logic, not plumbing.
@@ -9,9 +12,9 @@ It supports a variety of needs — ordering, uniqueness, sorting, concurrency, a
 
 ---
 
-### Interface Hierarchy (with Sequenced Collections)
+### Interface Hierarchy
 
-```text
+```goat
                     Iterable<T>
                         |
         +---------------+----------------+
@@ -33,9 +36,9 @@ SortedMap<K, V>
 NavigableMap<K, V>
     |
 SequencedMap<K, V>  (Java 21+)
-````
+```
 
-🔹 `SequencedCollection` and `SequencedMap` bring consistent ordering semantics across collection types — especially useful for `Set` and `Map` variations that maintain insertion order.
+This foundation lets you choose the right structure based on your needs — whether it’s performance, thread-safety, or ordering.
 
 ---
 
@@ -69,10 +72,3 @@ SequencedMap<K, V>  (Java 21+)
 * **EnumMap** – Efficient map for enum keys.
 * **ConcurrentHashMap** – Thread-safe alternative to HashMap.
 * **WeakHashMap**, **IdentityHashMap** – Specialized behavior with reference-based keys.
-
----
-
-This foundation lets you choose the right structure based on your needs — whether it’s performance, thread-safety, or ordering.
-
-```
-

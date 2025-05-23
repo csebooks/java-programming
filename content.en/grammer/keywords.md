@@ -3,13 +3,12 @@ title: 'Keywords'
 weight: 1
 ---
 
-Java has a fixed set of **reserved words** called **keywords**. These words have special meaning in the language and **cannot be used as variable, method, or class names**.
+> Java has a fixed set of **reserved words** called **keywords**. These words have special meaning in the language and **cannot be used as variable, method, or class names**.
 
 Think of them as the "grammar rules" Java uses to understand what you're trying to do.
 
 ---
 
-### Examples by Category
 
 #### Control Flow
 
@@ -26,7 +25,7 @@ These keywords control how code runs:
 Used to define structure of programs:
 
 * `class`, `interface`, `enum`, `record` – define types
-* `extends`, `implements` – inheritance
+* `extends`, `implements` , `sealed` – inheritance
 * `this`, `super` – refer to current/parent object
 
 #### Access Control
