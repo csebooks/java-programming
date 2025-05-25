@@ -1,9 +1,11 @@
-I'll help convert and align the Java tools content into a proper Markdown format suitable for a student study guide. I'll ensure the content is well-structured, consistent, and easy to read, while maintaining all the provided information. I'll organize each tool with clear headings, descriptions, usage examples, and notes, and wrap the entire content in an `<xaiArtifact>` tag as per the guidelines.
+---
+title: 'Tools'
+weight: 6
+---
 
+# Java Tools
 
-# Java Tools Study Guide
-
-This guide covers essential Java Development Kit (JDK) tools, providing an overview, purpose, usage examples, and notes for each tool. These tools are critical for developing, debugging, and managing Java applications, making them valuable for students and developers alike.
+Java Development Kit (JDK) tools, providing an overview, purpose, usage examples, and notes for each tool. These tools are critical for developing, debugging, and managing Java applications, making them valuable for students and developers alike.
 
 ## 1. jdeprscan – Deprecated API Scanner
 **Hunt Deprecated Dinosaurs**
