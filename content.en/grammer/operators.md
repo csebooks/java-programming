@@ -40,7 +40,7 @@ System.out.println(x <= y);  // true
 
 ---
 
-### 🔗 Logical Operators
+### Logical Operators
 
 Used to combine multiple boolean expressions.
 

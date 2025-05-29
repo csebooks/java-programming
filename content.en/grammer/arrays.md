@@ -67,7 +67,7 @@ boolean[] flags;
 
 ---
 
-## 🧩 Multidimensional Arrays
+## Multidimensional Arrays
 
 Arrays inside arrays (like a table):
 
@@ -82,7 +82,7 @@ System.out.println(names[0][0] + names[1][0]);  // Output: Mr. Smith
 
 ---
 
-## ✂️ Copying Arrays
+## Copying Arrays
 
 ### Manual way:
 
@@ -109,7 +109,7 @@ int[] target = java.util.Arrays.copyOf(source, source.length);
 
 ---
 
-## 🛠️ Helpful Methods in `java.util.Arrays`
+## Helpful Methods in `java.util.Arrays`
 
 ```java
 import java.util.Arrays;

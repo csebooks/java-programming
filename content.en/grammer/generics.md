@@ -187,7 +187,7 @@ public class Test<T> {
 public class Test<T> {
     private static T obj; // Invalid
 }
-}
+
 ```
 
 ### Cannot Use Casts or instanceof with Parameterized Types
