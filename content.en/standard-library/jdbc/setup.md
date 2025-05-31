@@ -180,15 +180,13 @@ class UserDaoTest {
         JdbcDataSource ds = new JdbcDataSource();
         ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
         ds.setUser("sa");
-        ds.setPassword("");
 
         try (Connection conn = ds.getConnection();
              Statement stmt = conn.createStatement()) {
             stmt.execute("""
                 CREATE TABLE `user` (
                     id INT AUTO_INCREMENT PRIMARY KEY,
-                    useremail VARCHAR(255) UNIQUE NOT NULL,
-                    password VARCHAR(255),
+                    useremail VARCHAR(255) NOT NULL,
                     role VARCHAR(50)
                 )
             """);
