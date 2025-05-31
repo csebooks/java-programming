@@ -55,6 +55,7 @@ package com.techatpark.dao;
 import com.techatpark.model.User;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,25 +68,27 @@ public class UserDao {
     }
     
     public User save(final User user) throws SQLException {
-        return null;
+        throw new UnsupportedOperationException("Save is yet to be implemented");
     }
-    
+
     public List<User> findAll() throws SQLException {
-        return List.of();
+        throw new UnsupportedOperationException("findAll is yet to be implemented");
     }
-    
+
     public Optional<User> findById(final int id) throws SQLException {
-        return Optional.empty();
+        throw new UnsupportedOperationException("findById is yet to be implemented");
     }
-    
+
     public void deleteById(final int id) throws SQLException {
+        throw new UnsupportedOperationException("deleteById is yet to be implemented");
     }
-    
+
     public void deleteAll() throws SQLException {
+        throw new UnsupportedOperationException("deleteAll is yet to be implemented");
     }
-    
+
     public long count() throws SQLException {
-        return 0;
+        throw new UnsupportedOperationException("count is yet to be implemented");
     }
 }
 ```

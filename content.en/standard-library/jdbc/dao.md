@@ -44,7 +44,7 @@ public User save(final User user) throws SQLException {
             }
         }
     } else { // Existing User
-        throw new UnsupportedOperationException("Update Yet to me implemented");
+        throw new UnsupportedOperationException("Update is yet to be implemented");
     }
 
     return createdUser;
@@ -122,8 +122,8 @@ public User save(final User user) throws SQLException {
 ```java
 @Test
 void testcount() throws SQLException {
-    userDao.save(new User(null, "one@mail.com", "1", "USER"));
-    userDao.save(new User(null, "two@mail.com", "2", "ADMIN"));
+    userDao.save(new User(null, "one@mail.com", "USER"));
+    userDao.save(new User(null, "two@mail.com", "ADMIN"));
 
     assertEquals(2, userDao.count());
 }
@@ -132,7 +132,6 @@ void testcount() throws SQLException {
 ### Implementation
 
 ```java
-@Override
 public long count() throws SQLException {
     String sql = "SELECT COUNT(*) FROM user";
     try (Connection conn = dataSource.getConnection();
@@ -163,7 +162,6 @@ void testDeleteUserById() throws SQLException {
 ### Implementation
 
 ```java
-@Override
 public void deleteAll() throws SQLException {
     String sql = "DELETE FROM user";
     try (Connection conn = dataSource.getConnection();
@@ -179,7 +177,7 @@ public void deleteAll() throws SQLException {
 ```java
 @Test
 void testDeleteUserById() throws SQLException {
-    var user = userDao.save(new User(null, "delete@mail.com", "x", "USER"));
+    var user = userDao.save(new User(null, "delete@mail.com", "USER"));
 
     userDao.deleteById(user.id());
 
@@ -190,7 +188,6 @@ void testDeleteUserById() throws SQLException {
 ### Implementation
 
 ```java
-@Override
 public void deleteById(final int id) throws SQLException {
     String sql = "DELETE FROM user WHERE id = ?";
     try (Connection conn = dataSource.getConnection();
@@ -198,42 +195,6 @@ public void deleteById(final int id) throws SQLException {
         stmt.setInt(1, id);
         stmt.executeUpdate();
     } 
-}
-```
-
-## Retrieve All Users
-
-```java
-@Test
-void testFindAllUsers() throws SQLException {
-    userDao.save(new User(null, "a@mail.com", "USER"));
-    userDao.save(new User(null, "b@mail.com", "ADMIN"));
-
-    var users = userDao.findAll();
-
-    assertEquals(2, users.size());
-}
-```
-
-### Implementation
-
-```java
-@Override
-public List<User> findAll() throws SQLException {
-    String sql = "SELECT id, useremail, role FROM user";
-    List<User> users = new ArrayList<>();
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()) {
-        while (rs.next()) {
-            users.add(new User(
-                    rs.getInt("id"),
-                    rs.getString("useremail"),
-                    rs.getString("role")
-            ));
-        }
-    } 
-    return users;
 }
 ```
 
@@ -254,7 +215,6 @@ void testFindUserById() throws SQLException {
 ### Implementation
 
 ```java
-@Override
 public Optional<User> findById(final int id) throws SQLException {
     String sql = "SELECT id, useremail, role FROM user WHERE id = ?";
     try (Connection conn = dataSource.getConnection();
@@ -273,3 +233,40 @@ public Optional<User> findById(final int id) throws SQLException {
     return Optional.empty();
 }
 ```
+
+## Retrieve All Users
+
+```java
+@Test
+void testFindAllUsers() throws SQLException {
+    userDao.save(new User(null, "a@mail.com", "USER"));
+    userDao.save(new User(null, "b@mail.com", "ADMIN"));
+
+    var users = userDao.findAll();
+
+    assertEquals(2, users.size());
+}
+```
+
+### Implementation
+
+```java
+public List<User> findAll() throws SQLException {
+    String sql = "SELECT id, useremail, role FROM user";
+    List<User> users = new ArrayList<>();
+    try (Connection conn = dataSource.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+        while (rs.next()) {
+            users.add(new User(
+                    rs.getInt("id"),
+                    rs.getString("useremail"),
+                    rs.getString("role")
+            ));
+        }
+    } 
+    return users;
+}
+```
+
+
