@@ -18,8 +18,14 @@ Lets add jdbc driver ( in this case lets use `h2` ) to `pom.xml`
         <groupId>com.h2database</groupId>
         <artifactId>h2</artifactId>
         <version>${h2.version}</version>
-        <scope>test</scope>
     </dependency>
+```
+
+add modules to `module-info`
+
+```java
+    requires java.sql;
+    requires java.naming;
 ```
 
 We are planning store user information in our database which is stored at 
@@ -34,120 +40,301 @@ CREATE TABLE `user` (
 );
 ```
 
-we need a java record to store this in the jvm. Create ``
+we need a java record to store this in the jvm. Create `src/main/java/com/techatpark/model/User.java`
 
 ```java
-public record User(
-    int id,
-    String useremail,
-    String password,
-    String role
-) {}
+package com.techatpark.model;
+
+/**
+ * User record to store users.
+ * @param id
+ * @param useremail
+ * @param password
+ * @param role
+ */
+public record User(int id,
+               String useremail,
+               String password,
+               String role) {
+}
 ```
 
-we need a java dao (Data Access Object) to store this in the jvm. Create ``
+we need a java dao (Data Access Object) to store this in the jvm. Create `src/main/java/com/techatpark/dao/UserDao.java`
 
 ```java
+package com.techatpark.dao;
+
+import com.techatpark.model.User;
+
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Data Access Object for users table.
+ */
 public interface UserDao {
-
-    // Save a user (create or update)
+    /**
+     * Save Users.
+     * Update if exists.
+     * @param user
+     * @return createdUser
+     */
     User save(User user);
 
-    // Find all users
+    /**
+     * Find all users.
+     * @return users
+     */
     List<User> findAll();
 
-    // Find a user by ID
+    /**
+     * Find a user by ID.
+     * @param id
+     * @return user
+     */
     Optional<User> findById(int id);
 
-    // Delete a user by ID
+    /**
+     * Delete user with given id.
+     * @param id
+     */
     void deleteById(int id);
 
-    // Find a user by email
+    /**
+     * Find User by Email.
+     * @param useremail
+     * @return user
+     */
     Optional<User> findByUseremail(String useremail);
 
-    // Check existence by email
+    /**
+     * Check existence by email.
+     * @param useremail
+     * @return isAvailable
+     */
     boolean existsByUseremail(String useremail);
 
-    // Count all users
+    /**
+     * Count No of Users.
+     * @return userCount
+     */
     long count();
 }
+
 ```
 
-We will use below testcase to test the dao
+we need a java dao implemenatation. Create `src/main/java/com/techatpark/dao/impl/UserDaoImpl.java`
 
 ```java
-import org.junit.jupiter.api.*;
-import java.sql.*;
-import java.util.*;
+package com.techatpark.dao.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.techatpark.dao.UserDao;
+import com.techatpark.model.User;
 
-public class UserDaoTest {
+import javax.sql.DataSource;
+import java.util.List;
+import java.util.Optional;
 
-    private static Connection connection;
-    private static UserDaoImpl userDao;
+/**
+ * User Dao JDBC Implementation.
+ */
+public class UserDaoImpl implements UserDao {
 
-    @BeforeAll
-    static void setup() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
-        Statement stmt = connection.createStatement();
-        stmt.execute("""
-            CREATE TABLE user (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                useremail VARCHAR(255) UNIQUE NOT NULL,
-                password VARCHAR(255),
-                role VARCHAR(50)
-            )
-        """);
-        userDao = new UserDaoImpl(connection);
+    /**
+     * Data source for RDBMS.
+     */
+    private final DataSource dataSource;
+
+    /**
+     * Created UserDao Impl with Datasource.
+     * @param theDataSource
+     */
+    public UserDaoImpl(final DataSource theDataSource) {
+        this.dataSource = theDataSource;
     }
 
-    @Test
-    void testSaveAndFindById() {
-        User saved = userDao.save(new User(0, "test@example.com", "secret", "user"));
-        assertNotNull(saved);
-        assertTrue(saved.id() > 0);
-
-        Optional<User> found = userDao.findById(saved.id());
-        assertTrue(found.isPresent());
-        assertEquals("test@example.com", found.get().useremail());
+    /**
+     * Save Users.
+     * Update if exists.
+     *
+     * @param user
+     * @return createdUser
+     */
+    @Override
+    public User save(final User user) {
+        return null;
     }
 
-    @Test
-    void testFindAllAndCount() {
-        userDao.save(new User(0, "a@example.com", "pass", "user"));
-        userDao.save(new User(0, "b@example.com", "pass", "admin"));
-
-        List<User> all = userDao.findAll();
-        assertTrue(all.size() >= 2);
-
-        long count = userDao.count();
-        assertEquals(all.size(), count);
+    /**
+     * Find all users.
+     *
+     * @return users
+     */
+    @Override
+    public List<User> findAll() {
+        return List.of();
     }
 
-    @Test
-    void testExistsByUseremail() {
-        userDao.save(new User(0, "exists@example.com", "pass", "user"));
-        assertTrue(userDao.existsByUseremail("exists@example.com"));
-        assertFalse(userDao.existsByUseremail("notfound@example.com"));
+    /**
+     * Find a user by ID.
+     *
+     * @param id
+     * @return user
+     */
+    @Override
+    public Optional<User> findById(final int id) {
+        return Optional.empty();
     }
 
-    @Test
-    void testDeleteById() {
-        User u = userDao.save(new User(0, "delete@example.com", "pass", "user"));
-        userDao.deleteById(u.id());
+    /**
+     * Delete user with given id.
+     *
+     * @param id
+     */
+    @Override
+    public void deleteById(final int id) {
 
-        Optional<User> deleted = userDao.findById(u.id());
-        assertTrue(deleted.isEmpty());
     }
 
-    @AfterAll
-    static void cleanup() throws SQLException {
-        connection.createStatement().execute("DROP TABLE user");
-        connection.close();
+    /**
+     * Find User by Email.
+     *
+     * @param useremail
+     * @return user
+     */
+    @Override
+    public Optional<User> findByUseremail(final String useremail) {
+        return Optional.empty();
+    }
+
+    /**
+     * Check existence by email.
+     *
+     * @param useremail
+     * @return isAvailable
+     */
+    @Override
+    public boolean existsByUseremail(final String useremail) {
+        return false;
+    }
+
+    /**
+     * Count No of Users.
+     *
+     * @return userCount
+     */
+    @Override
+    public long count() {
+        return 0;
     }
 }
+
+```
+
+We will use below testcase to test the dao `src/test/java/com/techatpark/dao/UserDaoTest.java`
+
+```java
+package com.techatpark.dao.impl;
+
+import com.techatpark.dao.UserDao;
+import com.techatpark.model.User;
+
+import javax.sql.DataSource;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * User Dao JDBC Implementation.
+ */
+public class UserDaoImpl implements UserDao {
+
+    /**
+     * Data source for RDBMS.
+     */
+    private final DataSource dataSource;
+
+    /**
+     * Created UserDao Impl with Datasource.
+     * @param theDataSource
+     */
+    public UserDaoImpl(final DataSource theDataSource) {
+        this.dataSource = theDataSource;
+    }
+
+    /**
+     * Save Users.
+     * Update if exists.
+     *
+     * @param user
+     * @return createdUser
+     */
+    @Override
+    public User save(final User user) {
+        return null;
+    }
+
+    /**
+     * Find all users.
+     *
+     * @return users
+     */
+    @Override
+    public List<User> findAll() {
+        return List.of();
+    }
+
+    /**
+     * Find a user by ID.
+     *
+     * @param id
+     * @return user
+     */
+    @Override
+    public Optional<User> findById(final int id) {
+        return Optional.empty();
+    }
+
+    /**
+     * Delete user with given id.
+     *
+     * @param id
+     */
+    @Override
+    public void deleteById(final int id) {
+
+    }
+
+    /**
+     * Find User by Email.
+     *
+     * @param useremail
+     * @return user
+     */
+    @Override
+    public Optional<User> findByUseremail(final String useremail) {
+        return Optional.empty();
+    }
+
+    /**
+     * Check existence by email.
+     *
+     * @param useremail
+     * @return isAvailable
+     */
+    @Override
+    public boolean existsByUseremail(final String useremail) {
+        return false;
+    }
+
+    /**
+     * Count No of Users.
+     *
+     * @return userCount
+     */
+    @Override
+    public long count() {
+        return 0;
+    }
+}
+
 ```
