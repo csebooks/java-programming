@@ -234,107 +234,44 @@ public class UserDaoImpl implements UserDao {
 We will use below testcase to test the dao `src/test/java/com/techatpark/dao/UserDaoTest.java`
 
 ```java
-package com.techatpark.dao.impl;
+package com.techatpark.dao;
 
-import com.techatpark.dao.UserDao;
-import com.techatpark.model.User;
+import com.techatpark.dao.impl.UserDaoImpl;
+import org.h2.jdbcx.JdbcDataSource;
+import org.junit.jupiter.api.Test;
 
-import javax.sql.DataSource;
-import java.util.List;
-import java.util.Optional;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-/**
- * User Dao JDBC Implementation.
- */
-public class UserDaoImpl implements UserDao {
+class UserDaoTest {
 
-    /**
-     * Data source for RDBMS.
-     */
-    private final DataSource dataSource;
+    private final UserDao userDao;
 
-    /**
-     * Created UserDao Impl with Datasource.
-     * @param theDataSource
-     */
-    public UserDaoImpl(final DataSource theDataSource) {
-        this.dataSource = theDataSource;
+    UserDaoTest() throws SQLException {
+        JdbcDataSource ds = new JdbcDataSource();
+        ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
+        ds.setUser("sa");
+        ds.setPassword("");
+
+        try (Connection conn = ds.getConnection();
+             Statement stmt = conn.createStatement()) {
+            stmt.execute("""
+                CREATE TABLE `user` (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    useremail VARCHAR(255) UNIQUE NOT NULL,
+                    password VARCHAR(255),
+                    role VARCHAR(50)
+                )
+            """);
+        }
+
+        userDao = new UserDaoImpl(ds);
     }
 
-    /**
-     * Save Users.
-     * Update if exists.
-     *
-     * @param user
-     * @return createdUser
-     */
-    @Override
-    public User save(final User user) {
-        return null;
-    }
-
-    /**
-     * Find all users.
-     *
-     * @return users
-     */
-    @Override
-    public List<User> findAll() {
-        return List.of();
-    }
-
-    /**
-     * Find a user by ID.
-     *
-     * @param id
-     * @return user
-     */
-    @Override
-    public Optional<User> findById(final int id) {
-        return Optional.empty();
-    }
-
-    /**
-     * Delete user with given id.
-     *
-     * @param id
-     */
-    @Override
-    public void deleteById(final int id) {
-
-    }
-
-    /**
-     * Find User by Email.
-     *
-     * @param useremail
-     * @return user
-     */
-    @Override
-    public Optional<User> findByUseremail(final String useremail) {
-        return Optional.empty();
-    }
-
-    /**
-     * Check existence by email.
-     *
-     * @param useremail
-     * @return isAvailable
-     */
-    @Override
-    public boolean existsByUseremail(final String useremail) {
-        return false;
-    }
-
-    /**
-     * Count No of Users.
-     *
-     * @return userCount
-     */
-    @Override
-    public long count() {
-        return 0;
+    @Test
+    void save() {
+        System.out.printf("Hello Test");
     }
 }
-
 ```
