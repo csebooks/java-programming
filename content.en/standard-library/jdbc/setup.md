@@ -3,12 +3,6 @@ title: 'Setup'
 weight: 1
 --- 
 
-Here’s a simplified and cleaner version of your setup instructions. I’ve kept all the original content but made the language and formatting easier to follow:
-
----
-
-## 🧪 Getting Started with JDBC – Step by Step
-
 ### 1. Clone the Starter Java Project
 
 ```shell
@@ -19,7 +13,7 @@ cd java-ref
 
 ---
 
-### 2. Add JDBC Driver (H2) to `pom.xml`
+### JDBC Driver (H2) to `pom.xml`
 
 We'll use the H2 database for this example. Add the following dependency to your `pom.xml`:
 
@@ -31,9 +25,8 @@ We'll use the H2 database for this example. Add the following dependency to your
 </dependency>
 ```
 
----
 
-### 3. Add Required Modules
+### Required Modules
 
 Update your `module-info.java` with:
 
@@ -44,7 +37,7 @@ requires java.naming;
 
 ---
 
-### 4. Create the `user` Table
+### Create the `user` Table
 
 We’ll store user data using this SQL table:
 
@@ -60,7 +53,7 @@ CREATE TABLE `user` (
 
 ---
 
-### 5. Create the `User` Java Record
+### Create the `User` Java Record
 
 Create the file: `src/main/java/com/techatpark/model/User.java`
 
@@ -79,7 +72,7 @@ public record User(Integer id,
 
 ---
 
-### 6. Create the `UserDao` Interface
+### Create the `UserDao` Interface
 
 Create the file: `src/main/java/com/techatpark/dao/UserDao.java`
 
@@ -99,15 +92,14 @@ public interface UserDao {
     List<User> findAll();
     Optional<User> findById(int id);
     void deleteById(int id);
-    Optional<User> findByUseremail(String useremail);
-    boolean existsByUseremail(String useremail);
+    void deleteAll();
     long count();
 }
 ```
 
 ---
 
-### 7. Implement the `UserDaoImpl` Class
+### Implement the `UserDaoImpl` Class
 
 Create the file: `src/main/java/com/techatpark/dao/impl/UserDaoImpl.java`
 
@@ -152,13 +144,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findByUseremail(final String useremail) {
-        return Optional.empty();
-    }
-
-    @Override
-    public boolean existsByUseremail(final String useremail) {
-        return false;
+    public void deleteAll() {
     }
 
     @Override
@@ -169,7 +155,7 @@ public class UserDaoImpl implements UserDao {
 ```
 
 
-### 8. Write a Basic Test for DAO
+### Write a Basic Test for DAO
 
 Create the file: `src/test/java/com/techatpark/dao/UserDaoTest.java`
 
@@ -177,7 +163,6 @@ Create the file: `src/test/java/com/techatpark/dao/UserDaoTest.java`
 package com.techatpark.dao;
 
 import com.techatpark.dao.impl.UserDaoImpl;
-import com.techatpark.model.User;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -189,8 +174,7 @@ import java.sql.Statement;
 class UserDaoTest {
 
     private final UserDao userDao;
-    private User sampleUser;
-
+    
     UserDaoTest() throws SQLException {
         JdbcDataSource ds = new JdbcDataSource();
         ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
@@ -214,7 +198,7 @@ class UserDaoTest {
 
     @BeforeEach
     void init() {
-        sampleUser = new User(null, "Madasamy", "Password", "Employee");
+        userDao.deleteAll();
     }
 
     @Test
@@ -223,6 +207,5 @@ class UserDaoTest {
     }
 }
 ```
-
 
 Next up: **Let’s implement the actual DAO logic**.

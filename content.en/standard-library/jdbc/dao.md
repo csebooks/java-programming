@@ -5,70 +5,129 @@ weight: 2
 
 In this chapter, we’ll **write a test case first**, then **implement the corresponding DAO method using JDBC**. This TDD-style flow will help reinforce *intentional design* and *clear validation*.
 
----
+## ✅ `save(User user)` — Save ( CREATE )
 
-## ✅ `save(User user)` — Save or Update a User
-
-### 🔍 Test Case: Insert New User
+### 🔍 Insert New User
 
 ```java
 @Test
-void shouldInsertNewUser() {
-    var user = new User(null, "alice@mail.com", "secret", "USER");
-    var saved = userDao.save(user);
+void save() {
+    // 1. Construct a new User
+    User user = new User(null, "Madasamy", "Password", "Employee");
 
-    assertNotNull(saved.id());
-    assertEquals("alice@mail.com", saved.useremail());
-}
-```
+    // 2. Create the user in the DB
+    User createdUser = userDao.save(user);
 
-### 🔍 Test Case: Update Existing User
-
-```java
-@Test
-void shouldUpdateExistingUser() {
-    var user = userDao.save(new User(null, "bob@mail.com", "1234", "USER"));
-    var updated = new User(user.id(), "bob@mail.com", "newpass", "ADMIN");
-
-    var saved = userDao.save(updated);
-
-    assertEquals("newpass", saved.password());
-    assertEquals("ADMIN", saved.role());
+    // 3. Verify that User is has auto generated id.
+    Assertions.assertNotNull(createdUser.id(), "User Creation Failed");
 }
 ```
 
 ### ✅ Implementation
 
 ```java
-@Override
-public User save(final User user) {
-    String sql = user.id() == null ?
-            "INSERT INTO user (useremail, password, role) VALUES (?, ?, ?)" :
-            "UPDATE user SET useremail = ?, password = ?, role = ? WHERE id = ?";
+public User save(final User user) throws SQLException {
+
+    User createdUser = null;
+        
+    String insertSql = "INSERT INTO `user` (useremail, password, role) VALUES (?, ?, ?)";
+
     try (Connection conn = dataSource.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            PreparedStatement stmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
 
         stmt.setString(1, user.useremail());
         stmt.setString(2, user.password());
         stmt.setString(3, user.role());
 
-        if (user.id() != null) {
-            stmt.setInt(4, user.id());
-            stmt.executeUpdate();
-            return user;
-        } else {
-            stmt.executeUpdate();
-            try (ResultSet rs = stmt.getGeneratedKeys()) {
-                if (rs.next()) {
-                    return new User(rs.getInt(1), user.useremail(), user.password(), user.role());
-                }
+        // Talk to the Database and Execute the SQL.
+        stmt.executeUpdate();
+
+        // Obtain User Id
+        try (ResultSet rs = stmt.getGeneratedKeys()) {
+            if (rs.next()) {
+                createdUser = new User(rs.getInt(1), user.useremail(), user.password(), user.role());
             }
         }
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
     }
-    return null;
+
+    return createdUser;
 }
+```
+
+### 🔍 Update the User
+
+```java
+    @Test
+    void save() throws SQLException {
+        // 1. Construct a new User
+        User user = new User(null, "Madasamy@Email.com", "Password", "Employee");
+
+        // 2. Create the user in the DB
+        User createdUser = userDao.save(user);
+
+        // 3. Verify that User is has auto generated id.
+        Assertions.assertNotNull(createdUser.id(), "User Creation Failed");
+
+        // 4. Change Email Value
+        User userToUpdate = new User(createdUser.id(), "Mithra@Email.com", createdUser.password(), createdUser.role());
+
+        // 5. Update the user in the DB
+        User updatedUser = userDao.save(user);
+
+        // 6. Verify that User has updated Email
+        Assertions.assertEquals("Mithra@Email.com",updatedUser.useremail(), "User Update Failed");
+
+    }
+```
+
+### ✅ Implementation
+
+```java
+public User save(final User user) throws SQLException {
+
+        User createdUser = null;
+
+        // New User
+        if (user.id() == null) {
+            String insertSql = "INSERT INTO `user` (useremail, password, role) VALUES (?, ?, ?)";
+
+            try (Connection conn = dataSource.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+
+                stmt.setString(1, user.useremail());
+                stmt.setString(2, user.password());
+                stmt.setString(3, user.role());
+
+                // Talk to the Database and Execute the SQL.
+                stmt.executeUpdate();
+
+                // Obtain User Id
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        createdUser = new User(rs.getInt(1), user.useremail(), user.password(), user.role());
+                    }
+                }
+            }
+        } else { // Existing User
+            String updateSql = "UPDATE `user` SET useremail = ?, password = ?, role = ? WHERE id = ?";
+
+            try (Connection conn = dataSource.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(updateSql)) {
+
+                stmt.setString(1, user.useremail());
+                stmt.setString(2, user.password());
+                stmt.setString(3, user.role());
+
+                stmt.setInt(4, user.id());
+
+                stmt.executeUpdate();
+
+                createdUser = new User(user.id(), user.useremail(), user.password(), user.role());
+            }
+        }
+
+        return createdUser;
+    }
 ```
 
 ---
