@@ -13,7 +13,7 @@ In this chapter, we’ll **write a test case first**, then **implement the corre
 @Test
 void save() {
     // 1. Construct a new User
-    User user = new User(null, "Madasamy", "Password", "Employee");
+    User user = new User(null, "Madasamy", "Employee");
 
     // 2. Create the user in the DB
     User createdUser = userDao.save(user);
@@ -30,13 +30,12 @@ public User save(final User user) throws SQLException {
 
     User createdUser = null;
         
-    String insertSql = "INSERT INTO `user` (useremail, password, role) VALUES (?, ?, ?)";
+    String insertSql = "INSERT INTO `user` (useremail, role) VALUES (?, ?)";
 
     try (Connection conn = dataSource.getConnection();
             PreparedStatement stmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
 
         stmt.setString(1, user.useremail());
-        stmt.setString(2, user.password());
         stmt.setString(3, user.role());
 
         // Talk to the Database and Execute the SQL.
@@ -60,7 +59,7 @@ public User save(final User user) throws SQLException {
     @Test
     void save() throws SQLException {
         // 1. Construct a new User
-        User user = new User(null, "Madasamy@Email.com", "Password", "Employee");
+        User user = new User(null, "Madasamy@Email.com", "Employee");
 
         // 2. Create the user in the DB
         User createdUser = userDao.save(user);
@@ -69,7 +68,7 @@ public User save(final User user) throws SQLException {
         Assertions.assertNotNull(createdUser.id(), "User Creation Failed");
 
         // 4. Change Email Value
-        User userToUpdate = new User(createdUser.id(), "Mithra@Email.com", createdUser.password(), createdUser.role());
+        User userToUpdate = new User(createdUser.id(), "Mithra@Email.com", createdUser.role());
 
         // 5. Update the user in the DB
         User updatedUser = userDao.save(userToUpdate);
@@ -89,13 +88,12 @@ public User save(final User user) throws SQLException {
 
         // New User
         if (user.id() == null) {
-            String insertSql = "INSERT INTO `user` (useremail, password, role) VALUES (?, ?, ?)";
+            String insertSql = "INSERT INTO `user` (useremail, role) VALUES (?, ?)";
 
             try (Connection conn = dataSource.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
 
                 stmt.setString(1, user.useremail());
-                stmt.setString(2, user.password());
                 stmt.setString(3, user.role());
 
                 // Talk to the Database and Execute the SQL.
@@ -104,25 +102,24 @@ public User save(final User user) throws SQLException {
                 // Obtain User Id
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        createdUser = new User(rs.getInt(1), user.useremail(), user.password(), user.role());
+                        createdUser = new User(rs.getInt(1), user.useremail(), user.role());
                     }
                 }
             }
         } else { // Existing User
-            String updateSql = "UPDATE `user` SET useremail = ?, password = ?, role = ? WHERE id = ?";
+            String updateSql = "UPDATE `user` SET useremail = ?, role = ? WHERE id = ?";
 
             try (Connection conn = dataSource.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(updateSql)) {
 
                 stmt.setString(1, user.useremail());
-                stmt.setString(2, user.password());
-                stmt.setString(3, user.role());
+                stmt.setString(2, user.role());
 
-                stmt.setInt(4, user.id());
+                stmt.setInt(3, user.id());
 
                 stmt.executeUpdate();
 
-                createdUser = new User(user.id(), user.useremail(), user.password(), user.role());
+                createdUser = new User(user.id(), user.useremail(), user.role());
             }
         }
 
@@ -139,8 +136,8 @@ public User save(final User user) throws SQLException {
 ```java
 @Test
 void shouldFindAllUsers() {
-    userDao.save(new User(null, "a@mail.com", "a", "USER"));
-    userDao.save(new User(null, "b@mail.com", "b", "ADMIN"));
+    userDao.save(new User(null, "a@mail.com", "USER"));
+    userDao.save(new User(null, "b@mail.com", "ADMIN"));
 
     var users = userDao.findAll();
 

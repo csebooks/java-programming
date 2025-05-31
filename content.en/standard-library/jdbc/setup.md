@@ -45,7 +45,6 @@ We’ll store user data using this SQL table:
 CREATE TABLE `user` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `useremail` VARCHAR(255) NOT NULL,
-    `password` VARCHAR(255) NOT NULL,
     `role` VARCHAR(50),
     PRIMARY KEY (`id`)
 );
@@ -59,14 +58,15 @@ Create the file: `src/main/java/com/techatpark/model/User.java`
 
 ```java
 package com.techatpark.model;
-
 /**
  * User record to store users.
+ * @param id
+ * @param useremail
+ * @param role
  */
 public record User(Integer id,
-                   String useremail,
-                   String password,
-                   String role) {
+               String useremail,
+               String role) {
 }
 ```
 
