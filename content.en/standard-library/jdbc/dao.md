@@ -5,9 +5,9 @@ weight: 2
 
 In this chapter, we’ll **write a test case first**, then **implement the corresponding DAO method using JDBC**. This TDD-style flow will help reinforce *intentional design* and *clear validation*.
 
-## ✅ `save(User user)` — Save ( CREATE )
+## Create User
 
-### 🔍 Insert New User
+### Insert New User
 
 ```java
 @Test
@@ -23,7 +23,7 @@ void save() {
 }
 ```
 
-### ✅ Implementation
+### Implementation
 
 ```java
 public User save(final User user) throws SQLException {
@@ -54,7 +54,7 @@ public User save(final User user) throws SQLException {
 }
 ```
 
-### 🔍 Update the User
+## 🔍 Update User
 
 ```java
     @Test
@@ -80,7 +80,7 @@ public User save(final User user) throws SQLException {
     }
 ```
 
-### ✅ Implementation
+### Implementation
 
 ```java
 public User save(final User user) throws SQLException {
@@ -132,9 +132,9 @@ public User save(final User user) throws SQLException {
 
 ---
 
-## 🔍 `findAll()` — Retrieve All Users
+## Retrieve All Users
 
-### 🧪 Test Case
+### Test Case
 
 ```java
 @Test
@@ -175,9 +175,9 @@ public List<User> findAll() {
 
 ---
 
-## 🔍 `findById(int id)`
+## Retrive an User
 
-### 🧪 Test Case
+### Test Case
 
 ```java
 @Test
@@ -191,7 +191,7 @@ void shouldFindUserById() {
 }
 ```
 
-### ✅ Implementation
+### Implementation
 
 ```java
 @Override
@@ -219,9 +219,9 @@ public Optional<User> findById(final int id) {
 
 ---
 
-## 🔍 `deleteById(int id)`
+## Delete an User
 
-### 🧪 Test Case
+### Test Case
 
 ```java
 @Test
@@ -250,89 +250,9 @@ public void deleteById(final int id) {
 }
 ```
 
----
+## No of Users
 
-## 🔍 `findByUseremail(String email)`
-
-### 🧪 Test Case
-
-```java
-@Test
-void shouldFindByUseremail() {
-    userDao.save(new User(null, "find@mail.com", "123", "USER"));
-
-    var result = userDao.findByUseremail("find@mail.com");
-
-    assertTrue(result.isPresent());
-    assertEquals("find@mail.com", result.get().useremail());
-}
-```
-
-### ✅ Implementation
-
-```java
-@Override
-public Optional<User> findByUseremail(final String email) {
-    String sql = "SELECT id, useremail, password, role FROM user WHERE useremail = ?";
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setString(1, email);
-        try (ResultSet rs = stmt.executeQuery()) {
-            if (rs.next()) {
-                return Optional.of(new User(
-                        rs.getInt("id"),
-                        rs.getString("useremail"),
-                        rs.getString("password"),
-                        rs.getString("role")
-                ));
-            }
-        }
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
-    }
-    return Optional.empty();
-}
-```
-
----
-
-## 🔍 `existsByUseremail(String email)`
-
-### 🧪 Test Case
-
-```java
-@Test
-void shouldCheckIfUserExistsByUseremail() {
-    userDao.save(new User(null, "check@mail.com", "x", "USER"));
-
-    assertTrue(userDao.existsByUseremail("check@mail.com"));
-    assertFalse(userDao.existsByUseremail("ghost@mail.com"));
-}
-```
-
-### ✅ Implementation
-
-```java
-@Override
-public boolean existsByUseremail(final String email) {
-    String sql = "SELECT 1 FROM user WHERE useremail = ?";
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setString(1, email);
-        try (ResultSet rs = stmt.executeQuery()) {
-            return rs.next();
-        }
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
-    }
-}
-```
-
----
-
-## 🔍 `count()`
-
-### 🧪 Test Case
+### Test Case
 
 ```java
 @Test
@@ -344,7 +264,7 @@ void shouldReturnUserCount() {
 }
 ```
 
-### ✅ Implementation
+### Implementation
 
 ```java
 @Override
@@ -363,26 +283,3 @@ public long count() {
 }
 ```
 
----
-
-## 🎯 Summary
-
-| Feature         | ✅ Status       |
-| --------------- | -------------- |
-| Insert          | ✔️ Test + Impl |
-| Update          | ✔️ Test + Impl |
-| Find All        | ✔️ Test + Impl |
-| Find by ID      | ✔️ Test + Impl |
-| Delete by ID    | ✔️ Test + Impl |
-| Find by Email   | ✔️ Test + Impl |
-| Exists by Email | ✔️ Test + Impl |
-| Count All       | ✔️ Test + Impl |
-
-You’ve now walked through every method in a real-world JDBC `UserDao` using **test-first development**. This practice not only guarantees correctness but also encourages thoughtful design.
-
----
-
-Would you like the next chapter to focus on:
-
-* **JDBC error handling patterns**, or
-* **Transaction and batch insert examples**?
