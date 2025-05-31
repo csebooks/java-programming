@@ -132,7 +132,7 @@ void shouldFindAllUsers() {
 ```java
 @Override
 public List<User> findAll() {
-    String sql = "SELECT id, useremail, password, role FROM user";
+    String sql = "SELECT id, useremail, role FROM user";
     List<User> users = new ArrayList<>();
     try (Connection conn = dataSource.getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql);
@@ -141,7 +141,6 @@ public List<User> findAll() {
             users.add(new User(
                     rs.getInt("id"),
                     rs.getString("useremail"),
-                    rs.getString("password"),
                     rs.getString("role")
             ));
         }
@@ -157,7 +156,7 @@ public List<User> findAll() {
 ```java
 @Test
 void shouldFindUserById() {
-    var saved = userDao.save(new User(null, "chris@mail.com", "123", "USER"));
+    var saved = userDao.save(new User(null, "chris@mail.com", "USER"));
 
     var result = userDao.findById(saved.id());
 
@@ -171,7 +170,7 @@ void shouldFindUserById() {
 ```java
 @Override
 public Optional<User> findById(final int id) {
-    String sql = "SELECT id, useremail, password, role FROM user WHERE id = ?";
+    String sql = "SELECT id, useremail, role FROM user WHERE id = ?";
     try (Connection conn = dataSource.getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql)) {
         stmt.setInt(1, id);
@@ -180,7 +179,6 @@ public Optional<User> findById(final int id) {
                 return Optional.of(new User(
                         rs.getInt("id"),
                         rs.getString("useremail"),
-                        rs.getString("password"),
                         rs.getString("role")
                 ));
             }
@@ -197,7 +195,7 @@ public Optional<User> findById(final int id) {
 ```java
 @Test
 void shouldDeleteUserById() {
-    var user = userDao.save(new User(null, "delete@mail.com", "x", "USER"));
+    var user = userDao.save(new User(null, "delete@mail.com", "USER"));
 
     userDao.deleteById(user.id());
 
@@ -226,8 +224,8 @@ public void deleteById(final int id) {
 ```java
 @Test
 void shouldReturnUserCount() {
-    userDao.save(new User(null, "one@mail.com", "1", "USER"));
-    userDao.save(new User(null, "two@mail.com", "2", "ADMIN"));
+    userDao.save(new User(null, "one@mail.com", "USER"));
+    userDao.save(new User(null, "two@mail.com", "ADMIN"));
 
     assertEquals(2, userDao.count());
 }
