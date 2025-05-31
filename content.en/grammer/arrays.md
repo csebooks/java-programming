@@ -123,7 +123,7 @@ System.out.println(Arrays.toString(marks)); // Print nicely
 
 ---
 
-## ✅ Summary
+## Summary
 
 * Arrays hold multiple values of the same type.
 * Indexing starts from 0.
