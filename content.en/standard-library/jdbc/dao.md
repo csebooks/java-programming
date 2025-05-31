@@ -72,7 +72,7 @@ public User save(final User user) throws SQLException {
         User userToUpdate = new User(createdUser.id(), "Mithra@Email.com", createdUser.password(), createdUser.role());
 
         // 5. Update the user in the DB
-        User updatedUser = userDao.save(user);
+        User updatedUser = userDao.save(userToUpdate);
 
         // 6. Verify that User has updated Email
         Assertions.assertEquals("Mithra@Email.com",updatedUser.useremail(), "User Update Failed");
