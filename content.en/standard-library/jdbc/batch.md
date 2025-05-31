@@ -14,7 +14,7 @@ weight: 4
 
 ---
 
-## ✅ Use Case: Insert Multiple Users Faster
+## Use Case: Insert Multiple Users Faster
 
 We’ll add a new method: `saveAllBatch(List<User> users)`
 
@@ -64,7 +64,7 @@ Notice: Unlike the transaction version, this does **not rollback** already-inser
 
 ---
 
-## ✅ Method: `saveAllBatch(List<User>)`
+## Method: `saveAllBatch(List<User>)`
 
 ```java
 @Override
@@ -107,8 +107,8 @@ public List<User> saveAllBatch(final List<User> users) {
 
 | Feature   | Batch Only               | Batch + Transaction    |
 | --------- | ------------------------ | ---------------------- |
-| Speed     | ✅ Fast                   | ⚠️ Slightly slower     |
-| Atomicity | ❌ No rollback            | ✅ Rollback supported   |
+| Speed     | Fast                   | ⚠️ Slightly slower     |
+| Atomicity | ❌ No rollback            | Rollback supported   |
 | Use case  | Bulk insert, logs, audit | Critical multi-row ops |
 
 ---
@@ -121,7 +121,7 @@ public List<User> saveAllBatch(final List<User> users) {
 
 ---
 
-## ✅ Summary
+## Summary
 
 * Batching is a performance boost for **bulk inserts**
 * Combine it with transactions when you need **both speed and safety**

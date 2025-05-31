@@ -7,7 +7,7 @@ weight: 3
 
 ---
 
-## ✅ Scenario: Atomic Insert of Multiple Users
+## Scenario: Atomic Insert of Multiple Users
 
 Let’s say we want to insert two users — **both must be saved, or neither**. This is a perfect case for transaction handling.
 
@@ -53,7 +53,7 @@ void shouldRollbackWhenAnyUserFails() {
 
 ---
 
-## ✅ Method: `saveAllAtomic(List<User>)`
+## Method: `saveAllAtomic(List<User>)`
 
 ```java
 @Override
@@ -110,7 +110,7 @@ Without `conn.setAutoCommit(false)`, every insert is committed **immediately**. 
 
 ---
 
-## ✅ Summary
+## Summary
 
 * Transactions ensure **atomic operations**
 * Use them when:

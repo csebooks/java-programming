@@ -3,7 +3,7 @@ title: 'Setup'
 weight: 1
 --- 
 
-### 1. Clone the Starter Java Project
+Lets Create a project for jdbc practice
 
 ```shell
 git clone https://github.com/techatpark/java-ref.git
@@ -11,9 +11,7 @@ cd java-ref
 ./mvnw clean package
 ```
 
----
-
-### JDBC Driver (H2) to `pom.xml`
+### JDBC Driver (H2)
 
 We'll use the H2 database for this example. Add the following dependency to your `pom.xml`:
 
@@ -25,8 +23,7 @@ We'll use the H2 database for this example. Add the following dependency to your
 </dependency>
 ```
 
-
-### Required Modules
+### Modules
 
 Update your `module-info.java` with:
 
@@ -35,44 +32,20 @@ requires java.sql;
 requires java.naming;
 ```
 
----
-
-### Create the `user` Table
-
-We’ll store user data using this SQL table:
-
-```sql
-CREATE TABLE `user` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `useremail` VARCHAR(255) NOT NULL,
-    `role` VARCHAR(50),
-    PRIMARY KEY (`id`)
-);
-```
-
----
-
-### Create the `User` Java Record
+### `User` Record
 
 Create the file: `src/main/java/com/techatpark/model/User.java`
 
 ```java
 package com.techatpark.model;
-/**
- * User record to store users.
- * @param id
- * @param useremail
- * @param role
- */
+
 public record User(Integer id,
                String useremail,
                String role) {
 }
 ```
 
----
-
-### Create the `UserDao` Interface
+### Data Access Object
 
 Create the file: `src/main/java/com/techatpark/dao/UserDao.java`
 
@@ -81,92 +54,51 @@ package com.techatpark.dao;
 
 import com.techatpark.model.User;
 
-import java.util.List;
-import java.util.Optional;
-import java.sql.SQLException;
-
-/**
- * Data Access Object for users table.
- */
-public interface UserDao {
-    User save(User user) throws SQLException;
-    List<User> findAll() throws SQLException;
-    Optional<User> findById(int id) throws SQLException;
-    void deleteById(int id) throws SQLException;
-    void deleteAll() throws SQLException;
-    long count() throws SQLException;
-}
-```
-
----
-
-### Implement the `UserDaoImpl` Class
-
-Create the file: `src/main/java/com/techatpark/dao/impl/UserDaoImpl.java`
-
-```java
-package com.techatpark.dao.impl;
-
-import com.techatpark.dao.UserDao;
-import com.techatpark.model.User;
-
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * JDBC Implementation of UserDao.
- */
-public class UserDaoImpl implements UserDao {
+public class UserDao {
 
     private final DataSource dataSource;
 
-    public UserDaoImpl(final DataSource theDataSource) {
+    public UserDao(final DataSource theDataSource) {
         this.dataSource = theDataSource;
     }
-
-    @Override
+    
     public User save(final User user) {
         return null;
     }
-
-    @Override
+    
     public List<User> findAll() {
         return List.of();
     }
-
-    @Override
+    
     public Optional<User> findById(final int id) {
         return Optional.empty();
     }
-
-    @Override
+    
     public void deleteById(final int id) {
     }
-
-    @Override
+    
     public void deleteAll() {
     }
-
-    @Override
+    
     public long count() {
         return 0;
     }
 }
 ```
 
-
-### Write a Basic Test for DAO
+### Data Access Object Test
 
 Create the file: `src/test/java/com/techatpark/dao/UserDaoTest.java`
 
 ```java
 package com.techatpark.dao;
 
-import com.techatpark.dao.impl.UserDaoImpl;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -175,36 +107,29 @@ import java.sql.Statement;
 class UserDaoTest {
 
     private final UserDao userDao;
-    
+
     UserDaoTest() throws SQLException {
         JdbcDataSource ds = new JdbcDataSource();
         ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
         ds.setUser("sa");
-        ds.setPassword("");
 
         try (Connection conn = ds.getConnection();
              Statement stmt = conn.createStatement()) {
             stmt.execute("""
                 CREATE TABLE `user` (
                     id INT AUTO_INCREMENT PRIMARY KEY,
-                    useremail VARCHAR(255) UNIQUE NOT NULL,
-                    password VARCHAR(255),
+                    useremail VARCHAR(255) NOT NULL,
                     role VARCHAR(50)
                 )
             """);
         }
 
-        userDao = new UserDaoImpl(ds);
+        userDao = new UserDao(ds);
     }
 
     @BeforeEach
     void init() {
         userDao.deleteAll();
-    }
-
-    @Test
-    void save() {
-        System.out.printf("Hello Test");
     }
 }
 ```

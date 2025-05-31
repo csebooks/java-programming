@@ -53,7 +53,7 @@ public User save(final User user) throws SQLException {
 }
 ```
 
-## 🔍 Update User
+## Update User
 
 ```java
     @Test
@@ -127,11 +127,7 @@ public User save(final User user) throws SQLException {
     }
 ```
 
----
-
 ## Retrieve All Users
-
-### Test Case
 
 ```java
 @Test
@@ -145,7 +141,7 @@ void shouldFindAllUsers() {
 }
 ```
 
-### ✅ Implementation
+### Implementation
 
 ```java
 @Override
@@ -170,11 +166,7 @@ public List<User> findAll() {
 }
 ```
 
----
-
 ## Retrive an User
-
-### Test Case
 
 ```java
 @Test
@@ -214,11 +206,7 @@ public Optional<User> findById(final int id) {
 }
 ```
 
----
-
 ## Delete an User
-
-### Test Case
 
 ```java
 @Test
@@ -231,7 +219,7 @@ void shouldDeleteUserById() {
 }
 ```
 
-### ✅ Implementation
+### Implementation
 
 ```java
 @Override
@@ -248,8 +236,6 @@ public void deleteById(final int id) {
 ```
 
 ## No of Users
-
-### Test Case
 
 ```java
 @Test

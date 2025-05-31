@@ -88,7 +88,7 @@ System.out.println(names);
 
 The above code works, but it's verbose and doesn't signal that we only ever intend to have **exactly two** values.
 
-### ✅ A Better Way
+### A Better Way
 
 ```java
 List<String> names = List.of("Sathish", "Saravana");
@@ -200,11 +200,11 @@ List<String> copied = List.copyOf(names);
 
 | Benefit           | What It Means                           |
 | ----------------- | --------------------------------------- |
-| ✅ Fewer Lines     | Clean, readable, expressive code        |
-| ✅ Immutable       | Safer – no accidental modifications     |
-| ✅ Less Memory     | JVM doesn't need to over-allocate       |
-| ✅ Better Defaults | Shared instances (emptyList, singleton) |
-| ✅ Fast Creation   | No dynamic resizing, hashing, or boxing |
+| Fewer Lines     | Clean, readable, expressive code        |
+| Immutable       | Safer – no accidental modifications     |
+| Less Memory     | JVM doesn't need to over-allocate       |
+| Better Defaults | Shared instances (emptyList, singleton) |
+| Fast Creation   | No dynamic resizing, hashing, or boxing |
 
 ---
 
