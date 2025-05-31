@@ -11,15 +11,12 @@ In this chapter, we’ll **write a test case first**, then **implement the corre
 
 ```java
 @Test
-void save() {
-    // 1. Construct a new User
-    User user = new User(null, "Madasamy", "Employee");
+void save() throws SQLException {
+    // 1. Create an User
+    User user = userDao.save(new User(null, "madasamy@email.com","Employee"));
 
-    // 2. Create the user in the DB
-    User createdUser = userDao.save(user);
-
-    // 3. Verify that User is has auto generated id.
-    Assertions.assertNotNull(createdUser.id(), "User Creation Failed");
+    // 2. User should have a generated id
+    Assertions.assertNotNull(user.id(), "User Creation Failed");
 }
 ```
 
@@ -27,24 +24,20 @@ void save() {
 
 ```java
 public User save(final User user) throws SQLException {
-
     User createdUser = null;
+
+    String insertSQL = "INSERT INTO `user`(useremail, role) VALUES (?,?)";
+
+    try(Connection connection = dataSource.getConnection();
+        PreparedStatement ps = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
+        ps.setString(1, user.useremail());
+        ps.setString(2, user.role());
+
+        ps.executeUpdate();
         
-    String insertSql = "INSERT INTO `user` (useremail, role) VALUES (?, ?)";
-
-    try (Connection conn = dataSource.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
-
-        stmt.setString(1, user.useremail());
-        stmt.setString(3, user.role());
-
-        // Talk to the Database and Execute the SQL.
-        stmt.executeUpdate();
-
-        // Obtain User Id
-        try (ResultSet rs = stmt.getGeneratedKeys()) {
+        try (ResultSet rs = ps.getGeneratedKeys()) {
             if (rs.next()) {
-                createdUser = new User(rs.getInt(1), user.useremail(), user.password(), user.role());
+                createdUser = new User(rs.getInt(1), user.useremail(), user.role());
             }
         }
     }
@@ -56,75 +49,68 @@ public User save(final User user) throws SQLException {
 ## Update User
 
 ```java
-    @Test
-    void save() throws SQLException {
-        // 1. Construct a new User
-        User user = new User(null, "Madasamy@Email.com", "Employee");
+@Test
+void save() throws SQLException {
+    // 1. Create an User
+    User user = userDao.save(new User(null, "madasamy@email.com","Employee"));
 
-        // 2. Create the user in the DB
-        User createdUser = userDao.save(user);
+    // 2. User should have a generated id
+    Assertions.assertNotNull(user.id(), "User Creation Failed");
 
-        // 3. Verify that User is has auto generated id.
-        Assertions.assertNotNull(createdUser.id(), "User Creation Failed");
+    // 3. Update the user email in the DB
+    User updatedUser = userDao.save(new User(user.id(), "Mithra@Email.com", user.role()));
 
-        // 4. Change Email Value
-        User userToUpdate = new User(createdUser.id(), "Mithra@Email.com", createdUser.role());
+    // 4. Verify that User is the same
+    Assertions.assertEquals(updatedUser.id(),user.id(), "User Update Failed");
 
-        // 5. Update the user in the DB
-        User updatedUser = userDao.save(userToUpdate);
-
-        // 6. Verify that User has updated Email
-        Assertions.assertEquals("Mithra@Email.com",updatedUser.useremail(), "User Update Failed");
-
-    }
+    // 5. Verify that User has updated Email
+    Assertions.assertEquals("Mithra@Email.com",updatedUser.useremail(), "User Update Failed");
+}
 ```
 
 ### Implementation
 
 ```java
 public User save(final User user) throws SQLException {
+    User createdUser = null;
 
-        User createdUser = null;
+    // New Uset
+    if(user.id() == null) {
+        String insertSQL = "INSERT INTO `user`(useremail, role) VALUES (?,?)";
 
-        // New User
-        if (user.id() == null) {
-            String insertSql = "INSERT INTO `user` (useremail, role) VALUES (?, ?)";
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement ps = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, user.useremail());
+            ps.setString(2, user.role());
 
-            try (Connection conn = dataSource.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.executeUpdate();
 
-                stmt.setString(1, user.useremail());
-                stmt.setString(3, user.role());
-
-                // Talk to the Database and Execute the SQL.
-                stmt.executeUpdate();
-
-                // Obtain User Id
-                try (ResultSet rs = stmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        createdUser = new User(rs.getInt(1), user.useremail(), user.role());
-                    }
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    createdUser = new User(rs.getInt(1), user.useremail(), user.role());
                 }
             }
-        } else { // Existing User
-            String updateSql = "UPDATE `user` SET useremail = ?, role = ? WHERE id = ?";
-
-            try (Connection conn = dataSource.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(updateSql)) {
-
-                stmt.setString(1, user.useremail());
-                stmt.setString(2, user.role());
-
-                stmt.setInt(3, user.id());
-
-                stmt.executeUpdate();
-
-                createdUser = new User(user.id(), user.useremail(), user.role());
-            }
         }
+    } else { // Existing User
+        String updateSql = "UPDATE `user` SET useremail = ?, role = ? WHERE id = ?";
 
-        return createdUser;
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(updateSql)) {
+
+            stmt.setString(1, user.useremail());
+            stmt.setString(2, user.role());
+
+            stmt.setInt(3, user.id());
+
+            stmt.executeUpdate();
+
+            createdUser = new User(user.id(), user.useremail(), user.role());
+        }
     }
+
+
+    return createdUser;
+}
 ```
 
 ## Retrieve All Users

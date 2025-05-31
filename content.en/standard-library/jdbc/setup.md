@@ -66,25 +66,25 @@ public class UserDao {
         this.dataSource = theDataSource;
     }
     
-    public User save(final User user) {
+    public User save(final User user) throws SQLException {
         return null;
     }
     
-    public List<User> findAll() {
+    public List<User> findAll() throws SQLException {
         return List.of();
     }
     
-    public Optional<User> findById(final int id) {
+    public Optional<User> findById(final int id) throws SQLException {
         return Optional.empty();
     }
     
-    public void deleteById(final int id) {
+    public void deleteById(final int id) throws SQLException {
     }
     
-    public void deleteAll() {
+    public void deleteAll() throws SQLException {
     }
     
-    public long count() {
+    public long count() throws SQLException {
         return 0;
     }
 }
@@ -128,7 +128,7 @@ class UserDaoTest {
     }
 
     @BeforeEach
-    void init() {
+    void init() throws SQLException {
         userDao.deleteAll();
     }
 }
