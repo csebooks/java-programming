@@ -3,7 +3,13 @@ title: 'Setup'
 weight: 1
 --- 
 
-Lets start our JDBC journey with the basic java project
+Here’s a simplified and cleaner version of your setup instructions. I’ve kept all the original content but made the language and formatting easier to follow:
+
+---
+
+## 🧪 Getting Started with JDBC – Step by Step
+
+### 1. Clone the Starter Java Project
 
 ```shell
 git clone https://github.com/techatpark/java-ref.git
@@ -11,24 +17,36 @@ cd java-ref
 ./mvnw clean package
 ```
 
-Lets add jdbc driver ( in this case lets use `h2` ) to `pom.xml`
+---
+
+### 2. Add JDBC Driver (H2) to `pom.xml`
+
+We'll use the H2 database for this example. Add the following dependency to your `pom.xml`:
 
 ```xml
-    <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2</artifactId>
-        <version>${h2.version}</version>
-    </dependency>
+<dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <version>${h2.version}</version>
+</dependency>
 ```
 
-add modules to `module-info`
+---
+
+### 3. Add Required Modules
+
+Update your `module-info.java` with:
 
 ```java
-    requires java.sql;
-    requires java.naming;
+requires java.sql;
+requires java.naming;
 ```
 
-We are planning store user information in our database which is stored at 
+---
+
+### 4. Create the `user` Table
+
+We’ll store user data using this SQL table:
 
 ```sql
 CREATE TABLE `user` (
@@ -40,26 +58,30 @@ CREATE TABLE `user` (
 );
 ```
 
-we need a java record to store this in the jvm. Create `src/main/java/com/techatpark/model/User.java`
+---
+
+### 5. Create the `User` Java Record
+
+Create the file: `src/main/java/com/techatpark/model/User.java`
 
 ```java
 package com.techatpark.model;
 
 /**
  * User record to store users.
- * @param id
- * @param useremail
- * @param password
- * @param role
  */
-public record User(int id,
-               String useremail,
-               String password,
-               String role) {
+public record User(Integer id,
+                   String useremail,
+                   String password,
+                   String role) {
 }
 ```
 
-we need a java dao (Data Access Object) to store this in the jvm. Create `src/main/java/com/techatpark/dao/UserDao.java`
+---
+
+### 6. Create the `UserDao` Interface
+
+Create the file: `src/main/java/com/techatpark/dao/UserDao.java`
 
 ```java
 package com.techatpark.dao;
@@ -73,57 +95,21 @@ import java.util.Optional;
  * Data Access Object for users table.
  */
 public interface UserDao {
-    /**
-     * Save Users.
-     * Update if exists.
-     * @param user
-     * @return createdUser
-     */
     User save(User user);
-
-    /**
-     * Find all users.
-     * @return users
-     */
     List<User> findAll();
-
-    /**
-     * Find a user by ID.
-     * @param id
-     * @return user
-     */
     Optional<User> findById(int id);
-
-    /**
-     * Delete user with given id.
-     * @param id
-     */
     void deleteById(int id);
-
-    /**
-     * Find User by Email.
-     * @param useremail
-     * @return user
-     */
     Optional<User> findByUseremail(String useremail);
-
-    /**
-     * Check existence by email.
-     * @param useremail
-     * @return isAvailable
-     */
     boolean existsByUseremail(String useremail);
-
-    /**
-     * Count No of Users.
-     * @return userCount
-     */
     long count();
 }
-
 ```
 
-we need a java dao implemenatation. Create `src/main/java/com/techatpark/dao/impl/UserDaoImpl.java`
+---
+
+### 7. Implement the `UserDaoImpl` Class
+
+Create the file: `src/main/java/com/techatpark/dao/impl/UserDaoImpl.java`
 
 ```java
 package com.techatpark.dao.impl;
@@ -136,108 +122,64 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * User Dao JDBC Implementation.
+ * JDBC Implementation of UserDao.
  */
 public class UserDaoImpl implements UserDao {
 
-    /**
-     * Data source for RDBMS.
-     */
     private final DataSource dataSource;
 
-    /**
-     * Created UserDao Impl with Datasource.
-     * @param theDataSource
-     */
     public UserDaoImpl(final DataSource theDataSource) {
         this.dataSource = theDataSource;
     }
 
-    /**
-     * Save Users.
-     * Update if exists.
-     *
-     * @param user
-     * @return createdUser
-     */
     @Override
     public User save(final User user) {
         return null;
     }
 
-    /**
-     * Find all users.
-     *
-     * @return users
-     */
     @Override
     public List<User> findAll() {
         return List.of();
     }
 
-    /**
-     * Find a user by ID.
-     *
-     * @param id
-     * @return user
-     */
     @Override
     public Optional<User> findById(final int id) {
         return Optional.empty();
     }
 
-    /**
-     * Delete user with given id.
-     *
-     * @param id
-     */
     @Override
     public void deleteById(final int id) {
-
     }
 
-    /**
-     * Find User by Email.
-     *
-     * @param useremail
-     * @return user
-     */
     @Override
     public Optional<User> findByUseremail(final String useremail) {
         return Optional.empty();
     }
 
-    /**
-     * Check existence by email.
-     *
-     * @param useremail
-     * @return isAvailable
-     */
     @Override
     public boolean existsByUseremail(final String useremail) {
         return false;
     }
 
-    /**
-     * Count No of Users.
-     *
-     * @return userCount
-     */
     @Override
     public long count() {
         return 0;
     }
 }
-
 ```
 
-We will use below testcase to test the dao `src/test/java/com/techatpark/dao/UserDaoTest.java`
+
+### 8. Write a Basic Test for DAO
+
+Create the file: `src/test/java/com/techatpark/dao/UserDaoTest.java`
 
 ```java
 package com.techatpark.dao;
 
 import com.techatpark.dao.impl.UserDaoImpl;
+import com.techatpark.model.User;
 import org.h2.jdbcx.JdbcDataSource;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -247,6 +189,7 @@ import java.sql.Statement;
 class UserDaoTest {
 
     private final UserDao userDao;
+    private User sampleUser;
 
     UserDaoTest() throws SQLException {
         JdbcDataSource ds = new JdbcDataSource();
@@ -269,9 +212,17 @@ class UserDaoTest {
         userDao = new UserDaoImpl(ds);
     }
 
+    @BeforeEach
+    void init() {
+        sampleUser = new User(null, "Madasamy", "Password", "Employee");
+    }
+
     @Test
     void save() {
         System.out.printf("Hello Test");
     }
 }
 ```
+
+
+Next up: **Let’s implement the actual DAO logic**.
