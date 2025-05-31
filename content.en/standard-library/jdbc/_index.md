@@ -3,9 +3,7 @@ title: 'JDBC'
 weight: 11
 --- 
 
-JDBC (Java Database Connectivity) is a Java API designed to facilitate connection and execution of queries with relational databases compatible with SQL. It is an integral part of Java SE (Java Standard Edition). JDBC API relies on JDBC drivers to establish connections with databases.
-
-![JDBC Architecture](./Java_jdbc.webp "JDBC Architecture")
+> JDBC (Java Database Connectivity) is a Java API designed to facilitate connection and execution of queries with relational databases compatible with SQL. It is an integral part of Java SE (Java Standard Edition). JDBC API relies on JDBC drivers to establish connections with databases.
 
 Although JDBC serves as the fundamental interface for communicating with databases from Java, most applications do not interact with it directly. Instead, they utilize the following technologies:
 
