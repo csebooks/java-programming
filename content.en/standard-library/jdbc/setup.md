@@ -83,17 +83,18 @@ import com.techatpark.model.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.sql.SQLException;
 
 /**
  * Data Access Object for users table.
  */
 public interface UserDao {
-    User save(User user);
-    List<User> findAll();
-    Optional<User> findById(int id);
-    void deleteById(int id);
-    void deleteAll();
-    long count();
+    User save(User user) throws SQLException;
+    List<User> findAll() throws SQLException;
+    Optional<User> findById(int id) throws SQLException;
+    void deleteById(int id) throws SQLException;
+    void deleteAll() throws SQLException;
+    long count() throws SQLException;
 }
 ```
 
