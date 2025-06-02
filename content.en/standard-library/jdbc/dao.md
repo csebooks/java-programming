@@ -28,8 +28,8 @@ public User save(final User user) throws SQLException {
         if ( user.id() == null ) {
             final String insertSQL = "INSERT INTO `user`(useremail,role) VALUES (?,?)";
 
-            try(Connection connection = dataSource.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
+            try(Connection connectionection = dataSource.getConnection();
+                PreparedStatement preparedStatement = connectionection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, user.useremail());
                 preparedStatement.setString(2, user.role());
 
@@ -69,8 +69,8 @@ void testDeleteAll() throws SQLException {
 ```java
 public void deleteAll() throws SQLException {
     final String sql = "DELETE FROM `user`";
-    try(Connection connection= dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+    try(Connection connectionection= dataSource.getConnection();
+            PreparedStatement preparedStatement = connectionection.prepareStatement(sql)) {
         preparedStatement.executeUpdate();
     }
 }
@@ -93,9 +93,9 @@ void testCount() throws SQLException {
 ```java
 public long count() throws SQLException {
     String sql = "SELECT COUNT(*) FROM user";
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()) {
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedstatement = connection.prepareStatement(sql);
+         ResultSet rs = preparedstatement.executeQuery()) {
         if (rs.next()) {
             return rs.getLong(1);
         }
@@ -103,6 +103,11 @@ public long count() throws SQLException {
     return 0;
 }
 ```
+
+#### Question
+
+> We see that there are return statements inside try block. will they close the resultset ?
+
 
 ## Update User
 
@@ -130,46 +135,44 @@ void testSave() throws SQLException {
 
 ```java
 public User save(final User user) throws SQLException {
-    User createdUser = null;
+    if(user != null) {
+        if ( user.id() == null ) {
+            final String insertSQL = "INSERT INTO `user`(useremail,role) VALUES (?,?)";
 
-    // New User
-    if(user.id() == null) {
-        String insertSQL = "INSERT INTO `user`(useremail, role) VALUES (?,?)";
+            try(Connection connectionection = dataSource.getConnection();
+                PreparedStatement preparedStatement = connectionection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
+                preparedStatement.setString(1, user.useremail());
+                preparedStatement.setString(2, user.role());
 
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, user.useremail());
-            ps.setString(2, user.role());
+                preparedStatement.executeUpdate();
 
-            ps.executeUpdate();
-
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) {
-                    createdUser = new User(rs.getInt(1), user.useremail(), user.role());
+                try(ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                    if(resultSet.next()) {
+                        return new User(resultSet.getInt(1),
+                                user.useremail(), user.role());
+                    }
                 }
             }
-        }
-    } else {
-        String updateSql = "UPDATE `user` SET useremail = ?, role = ? WHERE id = ?";
+        } else {
+            String updateSql = "UPDATE `user` SET useremail = ?, role = ? WHERE id = ?";
 
-        try (Connection conn = dataSource.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(updateSql)) {
+            try (Connection connection = dataSource.getConnection();
+                    PreparedStatement preparedstatement = connection.prepareStatement(updateSql)) {
 
-            stmt.setString(1, user.useremail());
-            stmt.setString(2, user.role());
+                preparedstatement.setString(1, user.useremail());
+                preparedstatement.setString(2, user.role());
 
-            stmt.setInt(3, user.id());
+                preparedstatement.setInt(3, user.id());
 
-            stmt.executeUpdate();
+                preparedstatement.executeUpdate();
 
-            return new User(user.id(), user.useremail(), user.role());
+                return new User(user.id(), user.useremail(), user.role());
+            }
         }
     }
-
-    return createdUser;
+    return null;
 }
 ```
-
 
 ## Delete an User
 
@@ -189,10 +192,10 @@ void testDeleteUserById() throws SQLException {
 ```java
 public void deleteById(final int id) throws SQLException {
     String sql = "DELETE FROM user WHERE id = ?";
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setInt(1, id);
-        stmt.executeUpdate();
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedstatement = connection.prepareStatement(sql)) {
+        preparedstatement.setInt(1, id);
+        preparedstatement.executeUpdate();
     } 
 }
 ```
@@ -216,10 +219,10 @@ void testFindUserById() throws SQLException {
 ```java
 public Optional<User> findById(final int id) throws SQLException {
     String sql = "SELECT id, useremail, role FROM user WHERE id = ?";
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setInt(1, id);
-        try (ResultSet rs = stmt.executeQuery()) {
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedstatement = connection.prepareStatement(sql)) {
+        preparedstatement.setInt(1, id);
+        try (ResultSet rs = preparedstatement.executeQuery()) {
             if (rs.next()) {
                 return Optional.of(new User(
                         rs.getInt("id"),
@@ -253,9 +256,9 @@ void testFindAll() throws SQLException {
 public List<User> findAll() throws SQLException {
     String sql = "SELECT id, useremail, role FROM user";
     List<User> users = new ArrayList<>();
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()) {
+    try (Connection connection = dataSource.getConnection();
+         PreparedStatement preparedstatement = connection.prepareStatement(sql);
+         ResultSet rs = preparedstatement.executeQuery()) {
         while (rs.next()) {
             users.add(new User(
                     rs.getInt("id"),
