@@ -1,6 +1,6 @@
 ---
 title: 'Transactions'
-weight: 3
+weight: 4
 --- 
 
 > In production systems, **atomicity** is critical. What if you want to insert multiple users and one of them violates a constraint? Without a transaction, you'd end up with **partial data** — a serious integrity issue. Transactions solve this by allowing you to **commit** or **rollback** changes as a group.

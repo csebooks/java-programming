@@ -11,9 +11,9 @@ cd java-ref
 ./mvnw clean package
 ```
 
-### JDBC Driver (H2)
+### JDBC Driver
 
-We'll use the H2 database for this example. Add the following dependency to your `pom.xml`:
+We'll use the `H2 database` for this example. Add the following dependency to your `pom.xml`:
 
 ```xml
 <dependency>
@@ -130,8 +130,8 @@ class UserDaoTest {
         userDao = new UserDao(ds);
     }
 
-    @BeforeEach
-    void init() throws SQLException {
+    @AfterEach
+    void cleanUp() throws SQLException {
         userDao.deleteAll();
     }
 }

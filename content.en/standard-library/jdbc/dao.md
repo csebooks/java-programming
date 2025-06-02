@@ -11,7 +11,7 @@ In this chapter, we’ll **write a test case first**, then **implement the corre
 
 ```java
 @Test
-void testsave() throws SQLException {
+void testSave() throws SQLException {
     // 1. Create an User
     User user = userDao.save(new User(null, "madasamy@email.com","Employee"));
 
@@ -24,30 +24,83 @@ void testsave() throws SQLException {
 
 ```java
 public User save(final User user) throws SQLException {
-    User createdUser = null;
+    if(user != null) {
+        if ( user.id() == null ) {
+            final String insertSQL = "INSERT INTO `user`(useremail,role) VALUES (?,?)";
 
-    // New User
-    if(user.id() == null) {
-        String insertSQL = "INSERT INTO `user`(useremail, role) VALUES (?,?)";
+            try(Connection connection = dataSource.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
+                preparedStatement.setString(1, user.useremail());
+                preparedStatement.setString(2, user.role());
 
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement ps = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, user.useremail());
-            ps.setString(2, user.role());
+                preparedStatement.executeUpdate();
 
-            ps.executeUpdate();
-
-            try (ResultSet rs = ps.getGeneratedKeys()) {
-                if (rs.next()) {
-                    createdUser = new User(rs.getInt(1), user.useremail(), user.role());
+                try(ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                    if(resultSet.next()) {
+                        return new User(resultSet.getInt(1),
+                                user.useremail(), user.role());
+                    }
                 }
             }
+        } else {
+            throw new UnsupportedOperationException("Update is yet to be implemented");
         }
-    } else { // Existing User
-        throw new UnsupportedOperationException("Update is yet to be implemented");
     }
+    return null;
+}
+```
 
-    return createdUser;
+## Delete All User
+
+```java
+@Test
+void testDeleteAll() throws SQLException {
+    userDao.save(new User(null, "delete@mail.com", "USER"));
+    userDao.save(new User(null, "delete2@mail.com", "USER"));
+
+    userDao.deleteAll();
+
+    assertEquals(userDao.count(), 0);
+}
+```
+
+### Implementation
+
+```java
+public void deleteAll() throws SQLException {
+    final String sql = "DELETE FROM `user`";
+    try(Connection connection= dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        preparedStatement.executeUpdate();
+    }
+}
+```
+
+## No of Users
+
+```java
+@Test
+void testCount() throws SQLException {
+    userDao.save(new User(null, "one@mail.com", "USER"));
+    userDao.save(new User(null, "two@mail.com", "ADMIN"));
+
+    assertEquals(2, userDao.count());
+}
+```
+
+### Implementation
+
+```java
+public long count() throws SQLException {
+    String sql = "SELECT COUNT(*) FROM user";
+    try (Connection conn = dataSource.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+        if (rs.next()) {
+            return rs.getLong(1);
+        }
+    } 
+    return 0;
 }
 ```
 
@@ -55,7 +108,7 @@ public User save(final User user) throws SQLException {
 
 ```java
 @Test
-void testsave() throws SQLException {
+void testSave() throws SQLException {
     // 1. Create an User
     User user = userDao.save(new User(null, "madasamy@email.com","Employee"));
 
@@ -96,7 +149,7 @@ public User save(final User user) throws SQLException {
                 }
             }
         }
-    } else { // Existing User
+    } else {
         String updateSql = "UPDATE `user` SET useremail = ?, role = ? WHERE id = ?";
 
         try (Connection conn = dataSource.getConnection();
@@ -109,7 +162,7 @@ public User save(final User user) throws SQLException {
 
             stmt.executeUpdate();
 
-            createdUser = new User(user.id(), user.useremail(), user.role());
+            return new User(user.id(), user.useremail(), user.role());
         }
     }
 
@@ -117,60 +170,6 @@ public User save(final User user) throws SQLException {
 }
 ```
 
-## No of Users
-
-```java
-@Test
-void testcount() throws SQLException {
-    userDao.save(new User(null, "one@mail.com", "USER"));
-    userDao.save(new User(null, "two@mail.com", "ADMIN"));
-
-    assertEquals(2, userDao.count());
-}
-```
-
-### Implementation
-
-```java
-public long count() throws SQLException {
-    String sql = "SELECT COUNT(*) FROM user";
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()) {
-        if (rs.next()) {
-            return rs.getLong(1);
-        }
-    } 
-    return 0;
-}
-```
-
-## Delete All User
-
-```java
-@Test
-void testDeleteUserById() throws SQLException {
-    var user1 = userDao.save(new User(null, "delete@mail.com", "USER"));
-    var user2 = userDao.save(new User(null, "delete2@mail.com", "USER"));
-
-    userDao.deleteAll();
-
-    assertEquals(userDao.count(), 0);
-}
-```
-
-### Implementation
-
-```java
-public void deleteAll() throws SQLException {
-    String sql = "DELETE FROM user";
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-        stmt.executeUpdate();
-    } 
-}
-```
 
 ## Delete an User
 
@@ -238,7 +237,7 @@ public Optional<User> findById(final int id) throws SQLException {
 
 ```java
 @Test
-void testFindAllUsers() throws SQLException {
+void testFindAll() throws SQLException {
     userDao.save(new User(null, "a@mail.com", "USER"));
     userDao.save(new User(null, "b@mail.com", "ADMIN"));
 

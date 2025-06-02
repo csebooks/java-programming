@@ -1,6 +1,6 @@
 ---
 title: 'Batch Operations'
-weight: 4
+weight: 3
 --- 
 
 > Batching allows you to **group multiple SQL statements** and send them to the database in **one round trip**, rather than sending each individually.
