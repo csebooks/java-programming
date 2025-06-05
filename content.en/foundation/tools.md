@@ -3,14 +3,12 @@ title: 'Tools'
 weight: 6
 ---
 
-# Java Tools
+> Java Development Kit (JDK) tools, providing an overview, purpose, usage examples, and notes for each tool. These tools are critical for developing, debugging, and managing Java applications, making them valuable for students and developers alike.
 
-Java Development Kit (JDK) tools, providing an overview, purpose, usage examples, and notes for each tool. These tools are critical for developing, debugging, and managing Java applications, making them valuable for students and developers alike.
-
-## 1. jdeprscan – Deprecated API Scanner
+## Deprecated API Scanner
 **Hunt Deprecated Dinosaurs**
 
-### Purpose
+
 `jdeprscan` analyzes Java code to detect usage of deprecated APIs in JAR or class files, helping developers identify and update outdated code.
 
 ### Usage
@@ -37,10 +35,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Helps maintain code compatibility by identifying APIs marked for removal.
 - Useful for upgrading projects to newer Java versions.
 
-## 2. jshell – Java REPL
+## Java REPL
 **Test Ideas. Live and Fast**
 
-### Purpose
+
 `jshell` is an interactive Read-Eval-Print Loop (REPL) for executing Java code snippets, ideal for testing and learning.
 
 ### Usage
@@ -83,10 +81,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Demonstrates Java behaviors like floating-point precision, `finally` block overrides, `Integer` caching, and char-integer comparisons.
 - Ideal for quick prototyping and learning Java syntax.
 
-## 3. jps – JVM Process Status Tool
+## JVM Process Status Tool
 **JVMs Around You – Listed Live**
 
-### Purpose
+
 `jps` lists running Java Virtual Machines (JVMs) on a machine, providing process IDs (PIDs), arguments, and JVM flags.
 
 ### Usage
@@ -114,10 +112,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Useful for identifying and managing running Java processes.
 - Can help resolve issues like port conflicts (e.g., "Port 8080 was already in use").
 
-## 4. jwebserver – Web Server
+## Web Server
 **Start Serving in One Line**
 
-### Purpose
+
 `jwebserver` is a simple command-line tool to serve static files, ideal for quick testing and lightweight web serving.
 
 ### Usage
@@ -144,10 +142,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - No complex server setup required.
 - Useful for serving static content during development.
 
-## 5. jpackage – Java App Packager
+## Java App Packager
 **Bundle. Deliver. Run**
 
-### Purpose
+
 `jpackage` creates native installable packages (e.g., `.exe`, `.dmg`, `.rpm`, `.deb`) that include the application, dependencies, and a Java runtime.
 
 ### Usage
@@ -184,10 +182,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Can be used with `jlink` for custom runtime images.
 - Supports multiple package formats for cross-platform deployment.
 
-## 6. javac – Java Compiler
+## Java Compiler
 **Turning Code into Bytecode Magic**
 
-### Purpose
+
 `javac` compiles Java source files (`.java`) into bytecode (`.class`) for execution on the JVM.
 
 ### Usage
@@ -230,10 +228,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Essential for preparing Java code for execution.
 - Use `-Xlint` to catch potential issues like missing `serialVersionUID`.
 
-## 7. jar – Java Archive Tool
+## Java Archive Tool
 **Box It, Seal It, Ship It**
 
-### Purpose
+
 `jar` creates and manages Java Archive (JAR) files, a ZIP-based format for distributing Java applications and libraries.
 
 ### Usage
@@ -266,10 +264,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Used in build pipelines and for modular packaging with `jmod` and `jlink`.
 - JAR files are essential for distributing Java libraries and applications.
 
-## 8. java – Application Launcher
+## Application Launcher
 **Push the Button. Run the App**
 
-### Purpose
+
 `java` launches and runs Java applications from `.class` files, `.java` sources, or modules, serving as the JVM entry point.
 
 ### Usage
@@ -312,10 +310,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - JVM behavior can be customized with options like memory limits (`-Xmx`) and system properties (`-D`).
 - Supports direct source file execution since Java 11.
 
-## 9. javadoc – Documentation Generator
+## Documentation Generator
 **Code Speaks. Docs Explain**
 
-### Purpose
+
 `javadoc` generates HTML documentation from Javadoc comments in source code, essential for creating readable API documentation.
 
 ### Usage
@@ -345,7 +343,7 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 ## 10. javap – Class File Disassembler
 **Peek into the Bytecode Brain**
 
-### Purpose
+
 `javap` disassembles `.class` files to display bytecode and method signatures, useful for debugging and understanding compiled code.
 
 ### Usage
@@ -379,10 +377,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Helps verify compiled code and understand JVM internals.
 - Useful for learning how Java classes are structured at the bytecode level.
 
-## 11. jdb – Java Debugger
+## 1Java Debugger
 **Step Through Bugs. Fix with Style**
 
-### Purpose
+
 `jdb` is a command-line debugger for finding and fixing bugs in Java applications, allowing runtime inspection and modification.
 
 ### Usage
@@ -421,10 +419,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Requires compilation with debugging information (`javac -g`).
 - Allows stepping through code and inspecting variables.
 
-## 12. jdeps – Dependency Analyzer
+## 1Dependency Analyzer
 **Trace Every Import’s Footprint**
 
-### Purpose
+
 `jdeps` analyzes class and module dependencies, generating reports to understand relationships and modularize applications.
 
 ### Usage
@@ -462,10 +460,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Essential for migrating to Java 9+ modules.
 - Helps identify and resolve unnecessary dependencies.
 
-## 13. jlink – Custom Runtime Image Creator
+## 1Custom Runtime Image Creator
 **Assemble Your Java, Your Way**
 
-### Purpose
+
 `jlink` creates optimized custom runtime images by assembling modules and their dependencies, reducing size and improving performance.
 
 ### Usage
@@ -493,10 +491,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Ideal for creating small, standalone applications.
 - Reduces JVM size and attack surface in production.
 
-## 14. jmod – Java Module Tool
+## 1Java Module Tool
 **Build Java One Module at a Time**
 
-### Purpose
+
 `jmod` manages and packages JMOD files, a format for modular Java code in the Java Platform Module System (JPMS).
 
 ### Usage
@@ -532,10 +530,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Used for modularization in Java 9+.
 - Combines with `jlink` for custom runtime images.
 
-## 15. jinfo – JVM Config Inspector
+## 1JVM Config Inspector
 **JVM Settings, Exposed**
 
-### Purpose
+
 `jinfo` queries and modifies configuration information of a running Java process, providing insights into JVM properties and flags.
 
 ### Usage
@@ -569,10 +567,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Useful for debugging and performance analysis.
 - Some properties may not be modifiable at runtime.
 
-## 16. jconsole – JVM Monitoring Console
+## 1JVM Monitoring Console
 **Visualize Your Java’s Vitals**
 
-### Purpose
+
 `jconsole` provides a graphical interface for monitoring JVM memory, threads, CPU usage, and JMX beans in real-time.
 
 ### Usage
@@ -589,10 +587,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Allows dynamic management of heap dumps and garbage collection.
 - Ideal for real-time performance tracking.
 
-## 17. jcmd – JVM Diagnostic Command Tool
+## 1JVM Diagnostic Command Tool
 **Talk Directly to the JVM**
 
-### Purpose
+
 `jcmd` sends diagnostic and management commands to running JVMs, consolidating many JDK tools into one command.
 
 ### Usage
@@ -632,10 +630,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - A versatile tool for JVM introspection and diagnostics.
 - Supports heap dumps, thread dumps, and more.
 
-## 18. jfr – Flight Recorder
+## 1Flight Recorder
 **Capture Performance Mid-Flight**
 
-### Purpose
+
 `jfr` collects and analyzes performance and diagnostic data from running Java applications with low overhead.
 
 ### Usage
@@ -671,10 +669,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Records JVM events like thread activity and garbage collection.
 - Use with `-XX:StartFlightRecording:filename=recording.jfr,duration=5m` to generate recordings.
 
-## 19. jhsdb – HotSpot Debugger
+## 1HotSpot Debugger
 **Postmortem for Dead JVMs**
 
-### Purpose
+
 `jhsdb` attaches to running Java processes or analyzes core dumps to diagnose and debug JVM issues.
 
 ### Usage
@@ -690,7 +688,7 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 ## 20. jmap – Memory Map Tool
 **Explore the JVM’s Memory Landscape**
 
-### Purpose
+
 `jmap` displays memory usage, heap data, and class statistics for a Java process, aiding in memory issue diagnosis.
 
 ### Usage
@@ -718,10 +716,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Effective for detecting memory leaks and excessive heap usage.
 - Provides detailed memory statistics for troubleshooting.
 
-## 21. jstack – Stack Trace Printer
+## 2Stack Trace Printer
 **Reveal What Your Threads Are Up To**
 
-### Purpose
+
 `jstack` prints stack traces for all threads in a Java process, useful for debugging deadlocks, performance bottlenecks, and stuck threads.
 
 ### Usage
@@ -741,10 +739,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Essential for diagnosing threading issues.
 - Complements other diagnostic tools like `jcmd` and `jconsole`.
 
-## 22. jstat – JVM Statistics Monitor
+## 2JVM Statistics Monitor
 **JVM Metrics on Command**
 
-### Purpose
+
 `jstat` provides statistical data about JVM performance, such as garbage collection and memory usage.
 
 ### Usage
@@ -771,10 +769,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Complements `jcmd` and `jconsole` for comprehensive JVM analysis.
 - Effective for tracking memory leaks and garbage collection inefficiencies.
 
-## 23. keytool – Keystore Management Tool
+## 2Keystore Management Tool
 **Manage Your Cryptographic Keys**
 
-### Purpose
+
 `keytool` manages keys and certificates in keystores, used for securing Java applications with SSL/TLS, code signing, and encryption.
 
 ### Usage
@@ -801,10 +799,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Essential for securing Java applications.
 - Keystores must be securely stored to protect sensitive keys.
 
-## 24. jarsigner – JAR Signing Tool
+## 2JAR Signing Tool
 **Sign with Trust, Run with Confidence**
 
-### Purpose
+
 `jarsigner` digitally signs JAR files and verifies their authenticity, ensuring the integrity of distributed Java applications.
 
 ### Usage
@@ -824,10 +822,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - PKCS#12 keystores are recommended for compatibility.
 - Any changes to a signed JAR (e.g., manifest) invalidate the signature.
 
-## 25. serialver – Serial Version Tool
+## 2Serial Version Tool
 **Lock Your Class Versions with Style**
 
-### Purpose
+
 `serialver` computes and displays the `serialVersionUID` for a class, ensuring compatibility during serialization and deserialization.
 
 ### Usage
@@ -845,10 +843,10 @@ Java Development Kit (JDK) tools, providing an overview, purpose, usage examples
 - Prevents `InvalidClassException` during deserialization.
 - Useful during refactoring or version control to maintain serialization compatibility.
 
-## 26. rmiregistry – Remote Object Registry
+## 2Remote Object Registry
 **Register and Find Remote Objects**
 
-### Purpose
+
 `rmiregistry` creates a registry for Java RMI applications, enabling lookup and communication with remote objects.
 
 ### Usage

@@ -13,7 +13,9 @@ cd java-ref
 
 ### JDBC Driver
 
-We'll use the `H2 database` for this example. Add the following dependency to your `pom.xml`:
+We'll use in-memory and embedded database `H2 database` for simplicity. In realtime projects you will be using clinet server databases like `postgress`.
+
+Add the following dependency to your `pom.xml`:
 
 ```xml
 <dependency>

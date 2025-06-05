@@ -1,5 +1,5 @@
 ---
-title: 'Build Systems'
+title: 'Structuring Java Programs'
 weight: 5
 ---
 
@@ -7,22 +7,11 @@ After writing your first `HelloWorld.java`, you’ve seen how Java works at a ba
 
 In this chapter, you’ll learn how Java programs are structured—from simple packages to large, modular applications—and how to bundle and build them using modern tools like Maven and Gradle.
 
-By the end of this chapter, you’ll be able to:
-
-* Organize Java code using **packages**
-* Understand Java’s **module system**
-* Create and run **JAR files**
-* Use **Maven** and **Gradle** to automate builds, manage dependencies, and streamline your workflow
-
----
-
-### Structuring Java Programs
-
 As your program grows, you’ll have multiple `.java` files. To avoid naming conflicts and keep things clean, Java uses **packages**.
 
 Here’s an example of moving from a flat HelloWorld to a structured layout:
 
-```
+```goat
 src/
 └── com/
     └── example/
