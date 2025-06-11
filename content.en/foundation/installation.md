@@ -1,6 +1,13 @@
 ---
 title: 'Installation'
 weight: 4
+references:
+    videos:
+        - youtube:FXwgzaUcxOE
+        - youtube:X_gRJs1aTdY
+    links:
+        - https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/How-to-install-Java-21
+        - https://www.java.com/en/download/help/linux_x64_install.html
 ---
 
 Java is not bundled with your OS by default. To write and run Java programs, you must install the **JDK** (Java Development Kit).
