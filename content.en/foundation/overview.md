@@ -1,6 +1,14 @@
 ---
 title: 'Overview'
 weight: 1
+categories:
+    - foundation
+references:
+    videos:
+        - youtube:l9AzO1FMgM8
+        - youtube:mAtkPQO1FcA
+    links:
+        - https://dev.java/learn/
 ---
 
 > Java is an object-oriented, virtual machine-based language that helps developers build large-scale applications in a simple, secure, and efficient way.
