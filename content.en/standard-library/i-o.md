@@ -7,6 +7,16 @@ weight: 4
 
 ---
 
+### Realtime usage of java file I/O
+ 
+* Data Storage & Retrieval
+* Configuration Management
+* Backup & recovery
+* Logging
+* File upload & Download
+* Text processing
+
+
 ### Character-Based I/O (Reader / Writer)
 
 Character streams are designed to handle **text data** (Unicode characters). These classes automatically handle character encoding and decoding.
