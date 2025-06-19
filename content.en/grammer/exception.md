@@ -5,6 +5,24 @@ weight: 10
 
 > Exception handling helps your program **deal with unexpected problems** (errors) without crashing abruptly. It separates normal code from error-handling code, making programs more robust and easier to maintain.
 
+### When exception happens
+
+1. Null object reference
+2. Out of bound
+3. Type Mismatch
+4. Connectivity
+5. Unavailable file
+6. Disk space issue
+7. Invalid user input
+8. Arithmetic errors
+9. Database errors
+10. Device failures
+11. Code errors
+
+### Errors vs Exceptions
+1. Error -> Cannot recover
+2. Exception -> Recover by handling it 
+
 ### Types of Exceptions
 
 1. **Checked exceptions** must be either handled or declared (`IOException`, `SQLException`).

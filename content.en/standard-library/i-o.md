@@ -17,6 +17,7 @@ weight: 4
 * Text processing
 
 
+
 ### Character-Based I/O (Reader / Writer)
 
 Character streams are designed to handle **text data** (Unicode characters). These classes automatically handle character encoding and decoding.
