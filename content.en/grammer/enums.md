@@ -3,10 +3,7 @@ title: 'Enums'
 weight: 5
 ---
 
-
 Enums give you a **type-safe way** to represent a fixed set of constants—like days of the week, states in a workflow, or categories in your app—while letting you attach behavior or data to each constant.
-
----
 
 ```java
 enum Day {
@@ -26,9 +23,8 @@ if (today == Day.SATURDAY || today == Day.SUNDAY) {
 }
 ```
 
----
 
-### Attaching Data and Behavior
+### Attaching Attribute and Behavior
 
 Enums are full-fledged classes—you can add fields, constructors, and methods.
 
@@ -53,6 +49,8 @@ enum Planet {
 }
 ```
 
+Please note that you enum is a final class internally. so you can not override
+
 ```java
 double earthGravity = Planet.EARTH.surfaceGravity();
 System.out.println("Earth gravity: " + earthGravity);
@@ -74,7 +72,6 @@ for (Day d : Day.values()) {
 Day d = Day.valueOf("FRIDAY"); // FRIDAY
 ```
 
----
 
 ### Using Enums in `switch`
 
@@ -85,7 +82,5 @@ switch (today) {
     default -> System.out.println("Middle of the week");
 }
 ```
-
----
 
 Enums give you **type safety**, **readability**, and the power to bundle data and behavior with your constants—making your code more expressive and less error-prone.

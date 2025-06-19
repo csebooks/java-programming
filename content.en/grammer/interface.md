@@ -3,11 +3,8 @@ title: 'Interface'
 weight: 7
 ---
 
-Interfaces define a **contract** — a set of methods that a class promises to implement. They help build flexible and loosely coupled systems.
+> Interfaces define a **contract** — a set of methods that a class promises to implement. They help build flexible and loosely coupled systems.
 
----
-
-### Declaring an Interface
 
 ```java
 interface Animal {
@@ -24,8 +21,6 @@ class Dog implements Animal {
     }
 }
 ```
-
----
 
 ### Default Methods
 
@@ -49,8 +44,6 @@ class MyLogger implements Logger {
 
 Default methods allow interfaces to **evolve** over time without breaking old code.
 
----
-
 ### Functional Interfaces
 
 A functional interface has **exactly one abstract method** and is used in lambda expressions or method references.
@@ -70,8 +63,6 @@ System.out.println(add.compute(2, 3));  // 5
 ```
 
 You can omit `@FunctionalInterface`, but it's helpful to signal intent and catch mistakes early.
-
----
 
 ### Marker Interfaces
 
@@ -97,8 +88,4 @@ class Report implements Important {
 }
 ```
 
----
-
 Interfaces are a key part of Java's design. With features like **default methods** and **lambdas**, modern Java makes interfaces more powerful and flexible than ever.
-
-
