@@ -1,0 +1,15 @@
+{
+  "question" : "Whiche on of the following is terminal operation?",
+  "explanation" : "",
+  "choices" : [ {
+    "cValue" : "filter()"
+  }, {
+    "cValue" : "collect()",
+    "isAnswer" : true
+
+  }, {
+    "cValue" : "flatmap()"
+  }, {
+    "cValue" : "map()"
+  } ]
+}

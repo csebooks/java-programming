@@ -1,0 +1,14 @@
+{
+  "question" : "Whiche on of the following is method helps to convert the collection of collection to a single collection?",
+  "explanation" : "",
+  "choices" : [ {
+    "cValue" : "map()"
+  }, {
+    "cValue" : "peak()"
+    }, {
+    "cValue" : "flatmap()",
+    "isAnswer" : true
+  }, {
+    "cValue" : "collect()"
+  } ]
+}
