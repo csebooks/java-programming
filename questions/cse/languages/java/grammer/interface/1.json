@@ -1,0 +1,20 @@
+{
+  "question": "Which of the following statements about Java interfaces are true?",
+  "explanation": "Since Java 8, interfaces can have default and static methods. Java 9 introduced private methods. Also, interfaces can extend multiple interfaces.",
+  "choices": [
+    {
+      "cValue": "An interface can have private methods.",
+      "isAnswer": true
+    },
+    {
+      "cValue": "An interface can extend multiple interfaces.",
+      "isAnswer": true
+    },
+    {
+      "cValue": "A class can extend multiple interfaces."
+    },
+    {
+      "cValue": "An interface can have constructors."
+    }
+  ]
+}
