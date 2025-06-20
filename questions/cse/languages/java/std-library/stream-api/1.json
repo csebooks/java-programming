@@ -1,0 +1,15 @@
+{
+  "question" : "Whiche on of the following is intermediate operation?",
+  "explanation" : "",
+  "choices" : [ {
+    "cValue" : "collect()"
+  }, {
+    "cValue" : "filter()",
+    "isAnswer" : true
+
+  }, {
+    "cValue" : "reduce()"
+  }, {
+    "cValue" : "foreach()"
+  } ]
+}
