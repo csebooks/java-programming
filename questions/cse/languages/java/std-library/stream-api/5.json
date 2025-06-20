@@ -1,0 +1,14 @@
+{
+  "question" : "Which on of the following  method helps to get the intermediate results?",
+  "explanation" : "",
+  "choices" : [ {
+    "cValue" : "filter()"
+  }, {
+    "cValue" : "collect()"
+  }, {
+    "cValue" : "flatmap()"
+  }, {
+    "cValue" : "peak()",
+    "isAnswer" : true
+  } ]
+}
