@@ -62,6 +62,13 @@ interface Calculator {
 }
 ```
 
+## Predefined Functional interfaces in Java
+
+* Function
+* Predicate
+* Consumer
+* Supplier
+
 Usage with lambda:
 
 ```java

@@ -220,3 +220,28 @@ try {
 public void doSomething(List<String> list) {}
 public void doSomething(List<Integer> list) {} // Invalid
 ```
+
+### DisAdvantages of Generics
+
+* **Complexity**: Might be difficult to understand for beginners.
+* **Performance Overhead**: Type erasure converts generic types to objects at runtime which causes some overhead.
+* **Primitives are not supported**: No support for primitive data types like, int, flot, char etc.
+* **Limits reflextion**: Type erasure limits the usage of reflection with generics as type information is not available at runtime.
+
+
+### Java classes which uses Generic
+
+* **java.util.List**:  Generic elements (E)
+* **java.lang.Comparable**: Generic Type (T)
+* **java.util.Dictionary**: Generic Key Value Pair(K,V)
+* 
+
+### Glassory 
+
+* **T**: Type
+* **E**: Element
+* **K**: Key
+* **V**: Value
+* **N**: Number
+* **?**: Wildcard
+
