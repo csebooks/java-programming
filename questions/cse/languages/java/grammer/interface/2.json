@@ -1,0 +1,19 @@
+{
+  "question": "Which of the following statements about Java interfaces is TRUE?",
+  "explanation": "Java supports multiple interface implementation, which is not possible with classes. Interfaces cannot have constructors or instance variables.",
+  "choices": [
+    {
+      "cValue": "An interface can have instance variables and constructors."
+    },
+    {
+      "cValue": "A class can implement multiple interfaces in Java.",
+      "isAnswer": true
+    },
+    {
+      "cValue": "An interface can extend multiple classes."
+    },
+    {
+      "cValue": "An interface must have at least one abstract method."
+    }
+  ]
+}
