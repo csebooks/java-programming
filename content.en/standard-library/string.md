@@ -73,3 +73,44 @@ Strings lie at the heart of almost every Java program. You’ll learn how they�
 ---
 
 With this toolkit—knowing how strings live in memory, when to use mutable builders, how to leverage regex, and how to split or template text—you’ll handle almost any textual requirement efficiently and cleanly.
+
+### Escape Sequences
+
+In Java, special character sequences like `\n`, `\t`, etc., are called **escape sequences**.
+
+> **Escape sequences** are used in Java (and many programming languages) to represent special characters that cannot be typed directly or would be interpreted differently in a string or character literal.
+
+Each escape sequence starts with a **backslash (`\`)**, which tells the compiler to interpret the following character(s) in a special way.
+
+---
+
+### 🔹 Common Escape Sequences in Java
+
+| Escape Sequence | Name              | Meaning                                                                                       |
+| --------------- | ----------------- | --------------------------------------------------------------------------------------------- |
+| `\n`            | Newline           | Moves the cursor to the next line                                                             |
+| `\t`            | Tab               | Inserts a horizontal tab                                                                      |
+| `\b`            | Backspace         | Moves the cursor one position back                                                            |
+| `\r`            | Carriage Return   | Moves the cursor to the beginning of the line                                                 |
+| `\'`            | Single Quote      | Inserts a single quote character                                                              |
+| `\"`            | Double Quote      | Inserts a double quote character                                                              |
+| `\\`            | Backslash         | Inserts a backslash (`\`)                                                                     |
+| `\f`            | Form Feed         | Advances the printer to the next page (rarely used today)                                     |
+| `\uXXXX`        | Unicode Character | Represents a Unicode character using its hexadecimal code (e.g., `\u0B85` for Tamil letter அ) |
+
+---
+
+### 🔹 Example in Java
+
+```java
+public class EscapeDemo {
+    public static void main(String[] args) {
+        System.out.println("Line1\nLine2");      // Prints in two lines
+        System.out.println("Name:\tSathish");    // Adds tab space
+        System.out.println("She said: \"Hello\"");// Prints double quotes
+        System.out.println("Path: C:\\Users\\");  // Prints backslash
+    }
+}
+```
+
+
