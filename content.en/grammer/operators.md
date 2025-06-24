@@ -1,6 +1,8 @@
 ---
 title: 'Operators'
 weight: 3
+categories:
+    - operators
 ---
 
 Operators allow you to perform operations on values and variables. Java has a wide range of operators grouped by purpose.

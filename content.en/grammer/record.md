@@ -1,6 +1,8 @@
 ---
 title: 'Record'
 weight: 11
+categories:
+    - record
 ---
 
 Records are a **compact way to create data-carrying classes** — like a class with only fields and a constructor, no extra code.

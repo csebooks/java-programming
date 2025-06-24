@@ -1,6 +1,8 @@
 ---
 title: 'Class'
 weight: 6
+categories:
+    - class
 ---
 
 > Classes are the foundation of all Java programs—your blueprint for creating objects with data (fields) and behavior (methods).

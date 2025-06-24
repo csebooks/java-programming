@@ -1,6 +1,8 @@
 ---
 title: 'Data Types'
 weight: 4
+categories:
+    - data-types
 --- 
 
 > Everything in a Java program works with data—numbers, characters, text, true/false flags, dates, and more. To work with these effectively, Java provides a rich set of **data types**, broadly grouped into **primitive types** and **object-based types**.

@@ -1,6 +1,8 @@
 ---
 title: 'Keywords'
 weight: 1
+categories:
+    - keywords
 ---
 
 > Java has a fixed set of **reserved words** called **keywords**. These words have special meaning in the language and **cannot be used as variable, method, or class names**.

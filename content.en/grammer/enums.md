@@ -1,6 +1,8 @@
 ---
 title: 'Enums'
 weight: 5
+categories:
+    - enums
 ---
 
 Enums give you a **type-safe way** to represent a fixed set of constants—like days of the week, states in a workflow, or categories in your app—while letting you attach behavior or data to each constant.

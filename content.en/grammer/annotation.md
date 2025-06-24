@@ -1,6 +1,8 @@
 ---
 title: 'Annotation'
 weight: 9
+categories:
+    - annotation
 ---
 
 Annotations in Java provide a powerful way to add metadata to your code. They are used to convey additional information to the compiler or runtime, without changing the code logic. Annotations can be applied to classes, methods, variables, parameters, and packages.

@@ -1,6 +1,8 @@
 ---
 title: 'Interface'
 weight: 7
+categories:
+    - interface
 ---
 
 > Interfaces define a **contract** — a set of methods that a class promises to implement. They help build flexible and loosely coupled systems.

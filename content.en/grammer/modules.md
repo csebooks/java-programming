@@ -1,6 +1,8 @@
 ---
 title: 'Module'
 weight: 12
+categories:
+    - module
 ---
 
 

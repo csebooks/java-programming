@@ -1,6 +1,8 @@
 ---
 title: 'Generics'
 weight: 8
+categories:
+    - generics
 ---
 
 Generics enable types (classes and interfaces) to be parameters when defining classes, interfaces, and methods. This allows for code reusability and type safety by allowing the same code to operate on different data types.

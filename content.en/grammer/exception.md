@@ -1,6 +1,8 @@
 ---
 title: 'Exceptions'
 weight: 10
+categories:
+    - exceptions
 ---
 
 > Exception handling helps your program **deal with unexpected problems** (errors) without crashing abruptly. It separates normal code from error-handling code, making programs more robust and easier to maintain.
