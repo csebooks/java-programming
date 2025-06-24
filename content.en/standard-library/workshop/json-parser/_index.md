@@ -13,14 +13,58 @@ Parser consiste two phases
 Lets define Json at `src/main/java/org/example/parser/Json.java`
 
 ```java
+package org.example.parser;
+
+import java.io.IOException;
+import java.io.Reader;
+
+/**
+ * Parser for Json.
+ * @param <T>
+ */
 public interface Json<T> {
 
+    /**
+     * Parse Json to get valyes.
+     * @param reader
+     * @return value.
+     * @throws IOException
+     */
     static Object parse(final Reader reader) throws IOException {
         try(reader) {
-            return read(reader).getValue();
+            return read(reader) // Phase 1
+                    .getValue(); // Phase 2
         }
     }
 
-    T getValue() ;
+    /**
+     * Reads Json from Reader.
+     * @param reader
+     * @return json
+     */
+    private static Json<?> read(final Reader reader) throws IOException {
+        char firrstChar = (char) reader.read();
+        return null;
+    }
+
+    /**
+     * Gets Value from Json.
+     * @return value
+     */
+    T getValue();
 }
 ```
+
+Lets define Json Test at `src/main/java/org/example/parser/JsonTest.java`
+
+```java
+package org.example.parser;
+
+class JsonTest {
+    
+}
+```
+
+
+
+
