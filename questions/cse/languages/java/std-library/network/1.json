@@ -1,0 +1,19 @@
+{
+  "question": "Which of the following classes is used for message encryption and decryption in Java?",
+  "explanation": "",
+  "choices": [
+    {
+      "cValue": "SecurityManager"
+    },
+    {
+      "cValue": "MessageDigest"
+    },
+    {
+      "cValue": "Cipher",
+      "isAnswer": true
+    },
+    {
+      "cValue": "HashMap"
+    }
+  ]
+}

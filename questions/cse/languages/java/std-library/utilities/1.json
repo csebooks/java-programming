@@ -1,0 +1,19 @@
+{
+  "question": "Which of the following is part of the java.util package?",
+  "explanation": "",
+  "choices": [
+    {
+      "cValue": "ArrayList"
+    },
+    {
+      "cValue": "Scanner"
+    },
+    {
+      "cValue": "Collections"
+    },
+    {
+      "cValue": "All of the above",
+      "isAnswer": true
+    }
+  ]
+}

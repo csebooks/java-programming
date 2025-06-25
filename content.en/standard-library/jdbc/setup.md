@@ -52,15 +52,6 @@ public record User(Integer id,
 Create the file: `src/main/java/com/techatpark/dao/UserDao.java`
 
 ```java
-package com.techatpark.dao;
-
-import com.techatpark.model.User;
-
-import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
-
 public class UserDao {
 
     private final DataSource dataSource;
@@ -68,28 +59,41 @@ public class UserDao {
     public UserDao(final DataSource theDataSource) {
         this.dataSource = theDataSource;
     }
-    
+
     public User save(final User user) throws SQLException {
-        throw new UnsupportedOperationException("Save is yet to be implemented");
+        // New User
+        if(user.id() == null) {
+            final String insertSql = "INSERT INTO `user` (useremail, role) VALUES (?, ?)";
+            throw new UnsupportedOperationException("Insert is yet to be implemented");
+        } else { // Existing user0
+            final String updateSql = "UPDATE `user` SET useremail = ?, role = ? WHERE id = ?";
+            throw new UnsupportedOperationException("Update is yet to be implemented");
+        }
+
     }
 
     public List<User> findAll() throws SQLException {
+        final String selectSql = "SELECT * FROM `user`";
         throw new UnsupportedOperationException("findAll is yet to be implemented");
     }
 
     public Optional<User> findById(final int id) throws SQLException {
+        final String selectSql = "SELECT * FROM `user` where id = ?";
         throw new UnsupportedOperationException("findById is yet to be implemented");
     }
 
     public void deleteById(final int id) throws SQLException {
+        final String deleteSql = "DELETE FROM `user` WHERE id = ?";
         throw new UnsupportedOperationException("deleteById is yet to be implemented");
     }
 
     public void deleteAll() throws SQLException {
+        final String deleteSql = "DELETE FROM `user`";
         throw new UnsupportedOperationException("deleteAll is yet to be implemented");
     }
 
     public long count() throws SQLException {
+        final String countSql = "SELECT COUNT(*) FROM `user`";
         throw new UnsupportedOperationException("count is yet to be implemented");
     }
 }
@@ -100,10 +104,8 @@ public class UserDao {
 Create the file: `src/test/java/com/techatpark/dao/UserDaoTest.java`
 
 ```java
-package com.techatpark.dao;
-
 import org.h2.jdbcx.JdbcDataSource;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 
 import java.sql.Connection;
 import java.sql.SQLException;

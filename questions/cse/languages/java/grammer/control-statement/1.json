@@ -1,0 +1,20 @@
+{
+  "question": "Which of the following is a valid control statement in Java?",
+  "explanation": "",
+  "choices": [
+    {
+      "cValue": "repeat"
+      
+    },
+    {
+      "cValue": "until"
+    },
+    {
+      "cValue": "switch",
+      "isAnswer": true
+    },
+    {
+      "cValue": "choose"
+    }
+  ]
+}
