@@ -1,13 +1,14 @@
 ---
-title: 'Types'
+title: "Types"
 weight: 1
 ---
 
 Json supoports below data types.
 
-String
-Boolean
 Null
+Boolean
+String
+Number
 Object
 Array
 
