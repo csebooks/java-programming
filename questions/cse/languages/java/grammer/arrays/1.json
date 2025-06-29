@@ -1,21 +1,21 @@
 {
   "question": "Which of the following statements about Java arrays is true?",
 
-  "explanation": "",
+ 
   "choices": [
     {
-      "cValue": "Arrays in Java can store elements of different data types"
+      "label": "Arrays in Java can store elements of different data types"
       
     },
     {
-      "cValue": " The size of a Java array can be changed after it is created"
+      "label": " The size of a Java array can be changed after it is created"
     },
     {
-      "cValue": "Java arrays are indexed starting from 1"
+      "label": "Java arrays are indexed starting from 1"
     },
     {
-      "cValue": "The length of an array is fixed once declared",
-      "isAnswer": true
+      "label": "The length of an array is fixed once declared",
+      "answer": true
     }
   ]
 }

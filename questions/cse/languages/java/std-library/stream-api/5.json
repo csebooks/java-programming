@@ -2,13 +2,13 @@
   "question" : "Which on of the following  method helps to get the intermediate results?",
   "explanation" : "",
   "choices" : [ {
-    "cValue" : "filter()"
+    "label" : "filter()"
   }, {
-    "cValue" : "collect()"
+    "label" : "collect()"
   }, {
-    "cValue" : "flatmap()"
+    "label" : "flatmap()"
   }, {
-    "cValue" : "peak()",
-    "isAnswer" : true
+    "label" : "peak()",
+    "answer" : true
   } ]
 }

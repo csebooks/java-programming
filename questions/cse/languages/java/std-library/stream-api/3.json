@@ -2,13 +2,13 @@
   "question" : "Whiche on of the following is method helps to convert the collection of collection to a single collection?",
   "explanation" : "",
   "choices" : [ {
-    "cValue" : "map()"
+    "label" : "map()"
   }, {
-    "cValue" : "peak()"
+    "label" : "peak()"
     }, {
-    "cValue" : "flatmap()",
-    "isAnswer" : true
+    "label" : "flatmap()",
+    "answer" : true
   }, {
-    "cValue" : "collect()"
+    "label" : "collect()"
   } ]
 }

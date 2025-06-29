@@ -2,14 +2,14 @@
   "question" : "Whiche on of the following is intermediate operation?",
   "explanation" : "",
   "choices" : [ {
-    "cValue" : "collect()"
+    "label" : "collect()"
   }, {
-    "cValue" : "filter()",
-    "isAnswer" : true
+    "label" : "filter()",
+    "answer" : true
 
   }, {
-    "cValue" : "reduce()"
+    "label" : "reduce()"
   }, {
-    "cValue" : "foreach()"
+    "label" : "foreach()"
   } ]
 }

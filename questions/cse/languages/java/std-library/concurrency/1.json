@@ -1,19 +1,19 @@
 {
   "question": "Which of the following classes is used for creating threads in Java?",
-  "explanation": "",
+ 
   "choices": [
     {
-      "cValue": "ThreadExecutor"
+      "label": "ThreadExecutor"
     },
     {
-      "cValue": "RunnableTask"
+      "label": "RunnableTask"
     },
     {
-      "cValue": "Thread",
-      "isAnswer": true
+      "label": "Thread",
+      "answer": true
     },
     {
-      "cValue": "ProcessManager"
+      "label": "ProcessManager"
     }
   ]
 }

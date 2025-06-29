@@ -1,19 +1,19 @@
 {
   "question": "Which of the following is part of the Java Collection Framework?",
-  "explanation": "",
+ 
   "choices": [
     {
-      "cValue": "ArrayList"
+      "label": "ArrayList"
     },
     {
-      "cValue": "HashMap"
+      "label": "HashMap"
     },
     {
-      "cValue": "HashSet"
+      "label": "HashSet"
     },
     {
-      "cValue": "All of the above",
-      "isAnswer": true
+      "label": "All of the above",
+      "answer": true
     }
   ]
 }

@@ -3,18 +3,18 @@
   "explanation": "Since Java 8, interfaces can have default and static methods. Java 9 introduced private methods. Also, interfaces can extend multiple interfaces.",
   "choices": [
     {
-      "cValue": "An interface can have private methods.",
-      "isAnswer": true
+      "label": "An interface can have private methods.",
+      "answer": true
     },
     {
-      "cValue": "An interface can extend multiple interfaces.",
-      "isAnswer": true
+      "label": "An interface can extend multiple interfaces.",
+      "answer": true
     },
     {
-      "cValue": "A class can extend multiple interfaces."
+      "label": "A class can extend multiple interfaces."
     },
     {
-      "cValue": "An interface can have constructors."
+      "label": "An interface can have constructors."
     }
   ]
 }

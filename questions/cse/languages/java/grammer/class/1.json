@@ -1,19 +1,19 @@
 {
   "question": "Which of the following statements about Java classes is true?",
-  "explanation": "",
+ 
   "choices": [
     {
-      "cValue": "A Java class can have multiple constructors",
-      "isAnswer": true
+      "label": "A Java class can have multiple constructors",
+      "answer": true
     },
     {
-      "cValue": "A class in Java cannot contain methods"
+      "label": "A class in Java cannot contain methods"
     },
     {
-      "cValue": "A class must always be declared as public"
+      "label": "A class must always be declared as public"
     },
     {
-      "cValue": "You cannot create objects from a class"
+      "label": "You cannot create objects from a class"
     }
   ]
 }

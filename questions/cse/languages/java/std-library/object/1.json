@@ -1,22 +1,22 @@
 {
   "question": "Which of the following is true about objects in Java?",
-  "explanation": "",
+ 
   "choices": [
     {
-      "cValue": "Objects are created using the import keyword"
+      "label": "Objects are created using the import keyword"
       
     },
     {
-      "cValue": "An object is an instance of a class",
-      "isAnswer": true
+      "label": "An object is an instance of a class",
+      "answer": true
     },
     {
-      "cValue": "You cannot access methods through an object"
+      "label": "You cannot access methods through an object"
       
 
     },
     {
-      "cValue": "Objects in Java do not use memory"
+      "label": "Objects in Java do not use memory"
     }
   ]
 }

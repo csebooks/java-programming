@@ -1,19 +1,19 @@
 {
   "question": "Which of the following classes is commonly used to read text from a file in Java?",
-  "explanation": "",
+ 
   "choices": [
     {
-      "cValue": "PrintWriter"
+      "label": "PrintWriter"
     },
     {
-      "cValue": "Scanner",
-      "isAnswer": true
+      "label": "Scanner",
+      "answer": true
     },
     {
-      "cValue": "InputManager"
+      "label": "InputManager"
     },
     {
-      "cValue": "TextReader"
+      "label": "TextReader"
     }
   ]
 }

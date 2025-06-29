@@ -1,21 +1,21 @@
 {
   "question": "Which of the following keywords is used for exception handling in Java?",
-  "explanation": "",
+ 
   "choices": [
     {
-      "cValue": "catchthis"
+      "label": "catchthis"
       
     },
     {
-      "cValue": "error"
+      "label": "error"
     },
     {
-      "cValue": "throw",
-      "isAnswer": true
+      "label": "throw",
+      "answer": true
 
     },
     {
-      "cValue": "finalmethod"
+      "label": "finalmethod"
     }
   ]
 }

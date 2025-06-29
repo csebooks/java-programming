@@ -2,10 +2,10 @@
   "question" : "Is it possible to create streams for array of primitive data types?",
   "explanation" : "",
   "choices" : [ {
-    "cValue" : "No"
+    "label" : "No"
   }, {
-    "cValue" : "yes",
-    "isAnswer" : true
+    "label" : "yes",
+    "answer" : true
 
   } ]
 }

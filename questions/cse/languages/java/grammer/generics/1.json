@@ -1,21 +1,21 @@
 {
   "question": "Which of the following is a correct use of Java Generics?",
-  "explanation": "",
+ 
   "choices": [
     {
-      "cValue": "List<int> list = new ArrayList<>();"
+      "label": "List<int> list = new ArrayList<>();"
       
     },
     {
-      "cValue": "List<Object> list = new List<>();"
+      "label": "List<Object> list = new List<>();"
     },
     {
-      "cValue": "List<String> list = new ArrayList<>();",
-      "isAnswer": true
+      "label": "List<String> list = new ArrayList<>();",
+      "answer": true
 
     },
     {
-      "cValue": "List list = new ArrayList<String>();"
+      "label": "List list = new ArrayList<String>();"
     }
   ]
 }

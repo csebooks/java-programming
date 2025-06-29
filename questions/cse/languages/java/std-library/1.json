@@ -1,29 +1,29 @@
 {
     "question": "Match the following",
-    "explanation": "",
+   
     "choices": [
       {
-        "cValue": "Collection Streams API"
+        "label": "Collection Streams API"
       },
       {
-        "cValue": "Buffered Reader"
+        "label": "Buffered Reader"
       },
       {
-        "cValue": "Container"
+        "label": "Container"
       }
     ],
     "matches": [
       {
-        "cValue": "Builder"
+        "label": "Builder"
       },
       {
-        "cValue": "Decorator"
+        "label": "Decorator"
       },
       {
-        "cValue": "Composite"
+        "label": "Composite"
       },
       {
-        "cValue": "Visitor"
+        "label": "Visitor"
       }
     ]
   }

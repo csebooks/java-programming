@@ -2,14 +2,14 @@
   "question" : "Whiche on of the following is terminal operation?",
   "explanation" : "",
   "choices" : [ {
-    "cValue" : "filter()"
+    "label" : "filter()"
   }, {
-    "cValue" : "collect()",
-    "isAnswer" : true
+    "label" : "collect()",
+    "answer" : true
 
   }, {
-    "cValue" : "flatmap()"
+    "label" : "flatmap()"
   }, {
-    "cValue" : "map()"
+    "label" : "map()"
   } ]
 }
