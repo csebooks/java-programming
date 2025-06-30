@@ -96,6 +96,10 @@ public class UserDao {
         final String countSql = "SELECT COUNT(*) FROM `user`";
         throw new UnsupportedOperationException("count is yet to be implemented");
     }
+
+    public void createAll(List<User> users) throws SQLException {
+        throw new UnsupportedOperationException("createAll is yet to be implemented");
+    }
 }
 ```
 

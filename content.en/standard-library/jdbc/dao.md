@@ -271,4 +271,33 @@ public List<User> findAll() throws SQLException {
 }
 ```
 
+### Insert Multiple Users
 
+```java
+@Test
+void testCreateAll() throws SQLException {
+    List<User> users = new ArrayList<>();
+
+    for (int i = 0; i < 50; i++) {
+        users.add(new User(null, "madasamy"+i+"@email.com","Employee"));
+    }
+    
+    long time = System.currentTimeMillis();
+    userDao.createAll(users);
+    System.out.println("Created in " + (System.currentTimeMillis() - time) + " milliseconds");
+
+    Assertions.assertEquals(50, userDao.count(), "Multiple User Creation Failed");
+}
+```
+
+### Implementation
+
+```java
+    public void createAll(List<User> users) throws SQLException {
+        for (User user:users) {
+            this.save(user);
+        }
+    }
+```
+
+But do you thibk it is good from performance perspextive ?! Remember every time you get new user uin java it tavels from one server  to another. why dont we pack them and send in single trip ?
