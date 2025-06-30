@@ -27,15 +27,26 @@ public void createAll(List<User> newUsers) throws SQLException {
 * Reduces **network latency**
 * Improves **write performance**
 
----
+```java
+@Test
+void testCreateAll() throws SQLException {
+    List<User> users = new ArrayList<>();
 
-## Insert Multiple Users As Bulk
+    for (int i = 0; i < 50; i++) {
+        users.add(new User(null, "madasamy"+i+"@email.com","Employee"));
+    }
+    // Insering Invalid Record
+    users.set(4, new User(null, null,"Employee"));
 
+    long time = System.currentTimeMillis();
+    try {
+            userDao.createAll(users);
+            Assertions.assertEquals(50, userDao.count(), "Multiple User Creation Failed");
+    } catch (SQLException e) {
+        Assertions.assertEquals(0, userDao.count(), "Multiple User Creation corrupted the DB");
+    }
+    System.out.println("Created in " + (System.currentTimeMillis() - time) + " milliseconds");
+}
+```
 
-
-## 🧠 Best Practices
-
-* Use **`executeBatch()`** with `PreparedStatement` to avoid SQL injection
-* Use batching with **transactions** when you need **safety**
-* Handle exceptions carefully — partial inserts can be tricky
 
