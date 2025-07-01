@@ -5,40 +5,39 @@ weight: 2
 
 In this chapter, we’ll **write a test case first**, then **implement the corresponding DAO method using JDBC**. This TDD-style flow will help reinforce *intentional design* and *clear validation*.
 
-## Create User
+## Create Student
 
-### Insert New User
+### Insert New Student
 
 ```java
 @Test
 void testSave() throws SQLException {
-    // 1. Create an User
-    User user = userDao.save(new User(null, "madasamy@email.com","Employee"));
+    // 1. Create an Student
+    Student student = studentDao.save(new Student(null, "madasamy"));
 
-    // 2. User should have a generated id
-    Assertions.assertNotNull(user.id(), "User Creation Failed");
+    // 2. Student should have a generated id
+    Assertions.assertNotNull(student.id(), "Student Creation Failed");
 }
 ```
 
 ### Implementation
 
 ```java
-public User save(final User user) throws SQLException {
-    if(user != null) {
-        if ( user.id() == null ) {
-            final String insertSQL = "INSERT INTO `user`(useremail,role) VALUES (?,?)";
+public Student save(final Student student) throws SQLException {
+    if(student != null) {
+        if ( student.id() == null ) {
+            final String insertSQL = "INSERT INTO student(name) VALUES (?,?)";
 
             try(Connection connectionection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connectionection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
-                preparedStatement.setString(1, user.useremail());
-                preparedStatement.setString(2, user.role());
+                preparedStatement.setString(1, student.name());
 
                 preparedStatement.executeUpdate();
 
                 try(ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                     if(resultSet.next()) {
-                        return new User(resultSet.getInt(1),
-                                user.useremail(), user.role());
+                        return new Student(resultSet.getInt(1),
+                                student.name());
                     }
                 }
             }
@@ -50,17 +49,17 @@ public User save(final User user) throws SQLException {
 }
 ```
 
-## Delete All User
+## Delete All Student
 
 ```java
 @Test
 void testDeleteAll() throws SQLException {
-    userDao.save(new User(null, "delete@mail.com", "USER"));
-    userDao.save(new User(null, "delete2@mail.com", "USER"));
+    studentDao.save(new Student(null, "sathashini"));
+    studentDao.save(new Student(null, "sobhan"));
 
-    userDao.deleteAll();
+    studentDao.deleteAll();
 
-    assertEquals(userDao.count(), 0);
+    assertEquals(studentDao.count(), 0);
 }
 ```
 
@@ -68,7 +67,7 @@ void testDeleteAll() throws SQLException {
 
 ```java
 public void deleteAll() throws SQLException {
-    final String sql = "DELETE FROM `user`";
+    final String sql = "DELETE FROM student";
     try(Connection connectionection= dataSource.getConnection();
             PreparedStatement preparedStatement = connectionection.prepareStatement(sql)) {
         preparedStatement.executeUpdate();
@@ -76,15 +75,15 @@ public void deleteAll() throws SQLException {
 }
 ```
 
-## No of Users
+## No of Students
 
 ```java
 @Test
 void testCount() throws SQLException {
-    userDao.save(new User(null, "one@mail.com", "USER"));
-    userDao.save(new User(null, "two@mail.com", "ADMIN"));
+    studentDao.save(new Student(null, "guruprasath"));
+    studentDao.save(new Student(null, "keerthanasri"));
 
-    assertEquals(2, userDao.count());
+    assertEquals(2, studentDao.count());
 }
 ```
 
@@ -92,7 +91,7 @@ void testCount() throws SQLException {
 
 ```java
 public long count() throws SQLException {
-    String sql = "SELECT COUNT(*) FROM user";
+    String sql = "SELECT COUNT(*) FROM student";
     try (Connection connection = dataSource.getConnection();
          PreparedStatement preparedstatement = connection.prepareStatement(sql);
          ResultSet rs = preparedstatement.executeQuery()) {
@@ -104,69 +103,69 @@ public long count() throws SQLException {
 }
 ```
 
+
 #### Question
 
 > We see that there are return statements inside try block. will they close the resultset ?
 
 
-## Update User
+## Update Student
 
 ```java
 @Test
 void testSave() throws SQLException {
-    // 1. Create an User
-    User user = userDao.save(new User(null, "madasamy@email.com","Employee"));
+    // 1. Create an Student
+    Student student = studentDao.save(new Student(null, "madasamy"));
 
-    // 2. User should have a generated id
-    Assertions.assertNotNull(user.id(), "User Creation Failed");
+    // 2. Student should have a generated id
+    Assertions.assertNotNull(student.id(), "Student Creation Failed");
 
-    // 3. Update the user email in the DB
-    User updatedUser = userDao.save(new User(user.id(), "Mithra@Email.com", user.role()));
+    // 3. Update the student email in the DB
+    Student updatedStudent = studentDao.save(new Student(student.id(), "Mithra"));
 
-    // 4. Verify that User is the same
-    Assertions.assertEquals(updatedUser.id(),user.id(), "User Update Failed");
+    // 4. Verify that Student is the same
+    Assertions.assertEquals(updatedStudent.id(),student.id(), "Student Update Failed");
 
-    // 5. Verify that User has updated Email
-    Assertions.assertEquals("Mithra@Email.com",updatedUser.useremail(), "User Update Failed");
+    // 5. Verify that Student has updated Email
+    Assertions.assertEquals("Mithra",updatedStudent.name(), "Student Update Failed");
 }
 ```
 
 ### Implementation
 
 ```java
-public User save(final User user) throws SQLException {
-    if(user != null) {
-        if ( user.id() == null ) {
-            final String insertSQL = "INSERT INTO `user`(useremail,role) VALUES (?,?)";
+public Student save(final Student student) throws SQLException {
+    if(student != null) {
+        if ( student.id() == null ) {
+            final String insertSQL = "INSERT INTO student(name) VALUES (?)";
 
             try(Connection connectionection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connectionection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
-                preparedStatement.setString(1, user.useremail());
-                preparedStatement.setString(2, user.role());
+                preparedStatement.setString(1, student.name());
+                
 
                 preparedStatement.executeUpdate();
 
                 try(ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                     if(resultSet.next()) {
-                        return new User(resultSet.getInt(1),
-                                user.useremail(), user.role());
+                        return new Student(resultSet.getInt(1),
+                                student.name());
                     }
                 }
             }
         } else {
-            String updateSql = "UPDATE `user` SET useremail = ?, role = ? WHERE id = ?";
+            String updateSql = "UPDATE student SET name = ? WHERE id = ?";
 
             try (Connection connection = dataSource.getConnection();
                     PreparedStatement preparedstatement = connection.prepareStatement(updateSql)) {
 
-                preparedstatement.setString(1, user.useremail());
-                preparedstatement.setString(2, user.role());
-
-                preparedstatement.setInt(3, user.id());
+                preparedstatement.setString(1, student.name());
+               
+                preparedstatement.setInt(2, student.id());
 
                 preparedstatement.executeUpdate();
 
-                return new User(user.id(), user.useremail(), user.role());
+                return new Student(student.id(), student.name());
             }
         }
     }
@@ -174,16 +173,16 @@ public User save(final User user) throws SQLException {
 }
 ```
 
-## Delete an User
+## Delete an Student
 
 ```java
 @Test
-void testDeleteUserById() throws SQLException {
-    var user = userDao.save(new User(null, "delete@mail.com", "USER"));
+void testDeleteStudentById() throws SQLException {
+    var student = studentDao.save(new Student(null, "keerthanasri"));
 
-    userDao.deleteById(user.id());
+    studentDao.deleteById(student.id());
 
-    assertTrue(userDao.findById(user.id()).isEmpty());
+    assertTrue(studentDao.findById(student.id()).isEmpty());
 }
 ```
 
@@ -191,7 +190,7 @@ void testDeleteUserById() throws SQLException {
 
 ```java
 public void deleteById(final int id) throws SQLException {
-    String sql = "DELETE FROM user WHERE id = ?";
+    String sql = "DELETE FROM student WHERE id = ?";
     try (Connection connection = dataSource.getConnection();
          PreparedStatement preparedstatement = connection.prepareStatement(sql)) {
         preparedstatement.setInt(1, id);
@@ -200,34 +199,34 @@ public void deleteById(final int id) throws SQLException {
 }
 ```
 
-## Retrive an User
+## Retrive an Student
 
 ```java
 @Test
-void testFindUserById() throws SQLException {
-    var saved = userDao.save(new User(null, "chris@mail.com", "USER"));
+void testFindStudentById() throws SQLException {
+    var saved = studentDao.save(new Student(null, "chris"));
 
-    var result = userDao.findById(saved.id());
+    var result = studentDao.findById(saved.id());
 
     assertTrue(result.isPresent());
-    assertEquals("chris@mail.com", result.get().useremail());
+    assertEquals("chris", result.get().name());
 }
 ```
 
 ### Implementation
 
 ```java
-public Optional<User> findById(final int id) throws SQLException {
-    String sql = "SELECT id, useremail, role FROM user WHERE id = ?";
+public Optional<Student> findById(final int id) throws SQLException {
+    String sql = "SELECT id, name  FROM student WHERE id = ?";
     try (Connection connection = dataSource.getConnection();
          PreparedStatement preparedstatement = connection.prepareStatement(sql)) {
         preparedstatement.setInt(1, id);
         try (ResultSet rs = preparedstatement.executeQuery()) {
             if (rs.next()) {
-                return Optional.of(new User(
+                return Optional.of(new Student(
                         rs.getInt("id"),
-                        rs.getString("useremail"),
-                        rs.getString("role")
+                        rs.getString("name")
+                        
                 ));
             }
         }
@@ -236,68 +235,68 @@ public Optional<User> findById(final int id) throws SQLException {
 }
 ```
 
-## Retrieve All Users
+## Retrieve All Students
 
 ```java
 @Test
 void testFindAll() throws SQLException {
-    userDao.save(new User(null, "a@mail.com", "USER"));
-    userDao.save(new User(null, "b@mail.com", "ADMIN"));
+    studentDao.save(new Student(null, "sathashini"));
+    studentDao.save(new Student(null, "keerthanasri"));
 
-    var users = userDao.findAll();
+    var students = studentDao.findAll();
 
-    assertEquals(2, users.size());
+    assertEquals(2, students.size());
 }
 ```
 
 ### Implementation
 
 ```java
-public List<User> findAll() throws SQLException {
-    String sql = "SELECT id, useremail, role FROM user";
-    List<User> users = new ArrayList<>();
+public List<Student> findAll() throws SQLException {
+    String sql = "SELECT id, name FROM student";
+    List<Student> students = new ArrayList<>();
     try (Connection connection = dataSource.getConnection();
          PreparedStatement preparedstatement = connection.prepareStatement(sql);
          ResultSet rs = preparedstatement.executeQuery()) {
         while (rs.next()) {
-            users.add(new User(
+            students.add(new Student(
                     rs.getInt("id"),
-                    rs.getString("useremail"),
-                    rs.getString("role")
+                    rs.getString("name")
+                    
             ));
         }
     } 
-    return users;
+    return students;
 }
 ```
 
-### Insert Multiple Users
+### Insert Multiple Students
 
 ```java
 @Test
 void testCreateAll() throws SQLException {
-    List<User> users = new ArrayList<>();
+    List<Student> students = new ArrayList<>();
 
     for (int i = 0; i < 50; i++) {
-        users.add(new User(null, "madasamy"+i+"@email.com","Employee"));
+        students.add(new Student(null, "madasamy"));
     }
     
     long time = System.currentTimeMillis();
-    userDao.createAll(users);
+    studentDao.createAll(students);
     System.out.println("Created in " + (System.currentTimeMillis() - time) + " milliseconds");
 
-    Assertions.assertEquals(50, userDao.count(), "Multiple User Creation Failed");
+    Assertions.assertEquals(50, studentDao.count(), "Multiple Student Creation Failed");
 }
 ```
 
 ### Implementation
 
 ```java
-    public void createAll(List<User> users) throws SQLException {
-        for (User user:users) {
-            this.save(user);
+    public void createAll(List<Student> students) throws SQLException {
+        for (Student student:students) {
+            this.save(student);
         }
     }
 ```
 
-But do you think it is good from performance perspective ?! Remember every time you get new user in java it travels from one server to another. why dont we pack them and send in single trip ?
+But do you think it is good from performance perspective ?! Remember every time you get new student in java it travels from one server to another. why dont we pack them and send in single trip ?

@@ -34,70 +34,69 @@ requires java.sql;
 requires java.naming;
 ```
 
-### `User` Record
+### `Student` Record
 
-Create the file: `src/main/java/com/techatpark/model/User.java`
+Create the file: `src/main/java/com/techatpark/model/Student.java`
 
 ```java
 package com.techatpark.model;
 
-public record User(Integer id,
-               String useremail,
-               String role) {
+public record Student(Integer id,
+               String name ) {
 }
 ```
 
 ### Data Access Object
 
-Create the file: `src/main/java/com/techatpark/dao/UserDao.java`
+Create the file: `src/main/java/com/techatpark/dao/StudentDao.java`
 
 ```java
-public class UserDao {
+public class StudentDao {
 
     private final DataSource dataSource;
 
-    public UserDao(final DataSource theDataSource) {
+    public StudentDao(final DataSource theDataSource) {
         this.dataSource = theDataSource;
     }
 
-    public User save(final User user) throws SQLException {
-        // New User
-        if(user.id() == null) {
-            final String insertSql = "INSERT INTO `user` (useremail, role) VALUES (?, ?)";
+    public Student save(final Student student) throws SQLException {
+        // New Student
+        if(student.id() == null) {
+            final String insertSql = "INSERT INTO student (name) VALUES (?)";
             throw new UnsupportedOperationException("Insert is yet to be implemented");
-        } else { // Existing user0
-            final String updateSql = "UPDATE `user` SET useremail = ?, role = ? WHERE id = ?";
+        } else { // Existing student
+            final String updateSql = "UPDATE student SET name = ? WHERE id = ?";
             throw new UnsupportedOperationException("Update is yet to be implemented");
         }
 
     }
 
-    public List<User> findAll() throws SQLException {
-        final String selectSql = "SELECT * FROM `user`";
+    public List<Student> findAll() throws SQLException {
+        final String selectSql = "SELECT * FROM student";
         throw new UnsupportedOperationException("findAll is yet to be implemented");
     }
 
-    public Optional<User> findById(final int id) throws SQLException {
-        final String selectSql = "SELECT * FROM `user` where id = ?";
+    public Optional<Student> findById(final int id) throws SQLException {
+        final String selectSql = "SELECT * FROM student where id = ?";
         throw new UnsupportedOperationException("findById is yet to be implemented");
     }
 
     public void deleteById(final int id) throws SQLException {
-        final String deleteSql = "DELETE FROM `user` WHERE id = ?";
+        final String deleteSql = "DELETE FROM student WHERE id = ?";
         throw new UnsupportedOperationException("deleteById is yet to be implemented");
     }
 
     public void deleteAll() throws SQLException {
-        final String deleteSql = "DELETE FROM `user`";
+        final String deleteSql = "DELETE FROM student";
         throw new UnsupportedOperationException("deleteAll is yet to be implemented");
     }
 
     public long count() throws SQLException {
-        final String countSql = "SELECT COUNT(*) FROM `user`";
+        final String countSql = "SELECT COUNT(*) FROM student";
         throw new UnsupportedOperationException("count is yet to be implemented");
     }
 
-    public void createAll(List<User> users) throws SQLException {
+    public void createAll(List<Student> students) throws SQLException {
         throw new UnsupportedOperationException("createAll is yet to be implemented");
     }
 }
@@ -105,7 +104,7 @@ public class UserDao {
 
 ### Data Access Object Test
 
-Create the file: `src/test/java/com/techatpark/dao/UserDaoTest.java`
+Create the file: `src/test/java/com/techatpark/dao/StudentDaoTest.java`
 
 ```java
 import org.h2.jdbcx.JdbcDataSource;
@@ -115,32 +114,31 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-class UserDaoTest {
+class StudentDaoTest {
 
-    private final UserDao userDao;
+    private final StudentDao studentDao;
 
-    UserDaoTest() throws SQLException {
+    StudentDaoTest() throws SQLException {
         JdbcDataSource ds = new JdbcDataSource();
         ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
-        ds.setUser("sa");
+        ds.setStudent("sa");
 
         try (Connection conn = ds.getConnection();
              Statement stmt = conn.createStatement()) {
             stmt.execute("""
-                CREATE TABLE `user` (
+                CREATE TABLE student (
                     id INT AUTO_INCREMENT PRIMARY KEY,
-                    useremail VARCHAR(255) NOT NULL,
-                    role VARCHAR(50)
+                    name VARCHAR(255) NOT NULL
                 )
             """);
         }
 
-        userDao = new UserDao(ds);
+        studentDao = new StudentDao(ds);
     }
 
     @AfterEach
     void cleanUp() throws SQLException {
-        userDao.deleteAll();
+        studentDao.deleteAll();
     }
 }
 ```

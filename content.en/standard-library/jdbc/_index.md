@@ -50,4 +50,3 @@ When you interact from Java to Relational Databases it consists of below steps.
 
 Simple. Isnt it. In the next chapters lets see these concepts with examples
 
-

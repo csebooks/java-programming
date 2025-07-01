@@ -13,14 +13,14 @@ weight: 3
 * Improves **write performance**
 
 ```java
-public void createAll(List<User> newUsers) throws SQLException {
-    final String insertSQL = "INSERT INTO `user`(useremail,role) VALUES (?,?)";
+public void createAll(List<Student> newStudents) throws SQLException {
+    final String insertSQL = "INSERT INTO student(name) VALUES (?)";
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-            for (User user:newUsers) {
-                preparedStatement.setString(1, user.useremail());
-                preparedStatement.setString(2, user.role());
+            for (Student student:newStudents) {
+                preparedStatement.setString(1, student.name());
+                
                 preparedStatement.addBatch();
             }
 
@@ -32,20 +32,20 @@ public void createAll(List<User> newUsers) throws SQLException {
 ```java
 @Test
 void testCreateAll() throws SQLException {
-    List<User> users = new ArrayList<>();
+    List<Student> students = new ArrayList<>();
 
     for (int i = 0; i < 50; i++) {
-        users.add(new User(null, "madasamy"+i+"@email.com","Employee"));
+        students.add(new Student(null, "madasamy"));
     }
     // Insering Invalid Record
-    users.set(4, new User(null, null,"Employee"));
+    students.set(4, new Student(null, null));
 
     long time = System.currentTimeMillis();
     try {
-            userDao.createAll(users);
-            Assertions.assertEquals(50, userDao.count(), "Multiple User Creation Failed");
+            studentDao.createAll(students);
+            Assertions.assertEquals(50, studentDao.count(), "Multiple Student Creation Failed");
     } catch (SQLException e) {
-        Assertions.assertEquals(0, userDao.count(), "Multiple User Creation corrupted the DB");
+        Assertions.assertEquals(0, studentDao.count(), "Multiple Student Creation corrupted the DB");
     }
     System.out.println("Created in " + (System.currentTimeMillis() - time) + " milliseconds");
 }

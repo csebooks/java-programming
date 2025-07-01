@@ -9,7 +9,7 @@
        {
         // Run whenever any file is saved
         "match": "slides\\content.en\\.*",
-        "cmd": "xcopy .\\slides\\content.en\\ ..\\\\gurukulam\\site\\content.en\\courses\\\\books\\csebooks\\java-programming\\  /D /I /E /F /Y /H /R"
+        "cmd": "xcopy .\\slides\\content.en\\ ..\\gurukulam\\site\\content.en\\courses\\books\\csebooks\\java-programming\\  /D /I /E /F /Y /H /R"
       }
     ]
   }

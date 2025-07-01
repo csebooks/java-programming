@@ -3,13 +3,13 @@ title: 'Transactions'
 weight: 4
 --- 
 
-> In production systems, **atomicity** is critical. What if you want to insert multiple users and one of them violates a constraint? Without a transaction, you'd end up with **partial data** — a serious integrity issue. Transactions solve this by allowing you to **commit** or **rollback** changes as a group.
+> In production systems, **atomicity** is critical. What if you want to insert multiple students and one of them violates a constraint? Without a transaction, you'd end up with **partial data** — a serious integrity issue. Transactions solve this by allowing you to **commit** or **rollback** changes as a group.
 
 ---
 
-## Scenario: Atomic Insert of Multiple Users
+## Scenario: Atomic Insert of Multiple Students
 
-Let’s say we want to insert two users — **both must be saved, or neither**. This is a perfect case for transaction handling.
+Let’s say we want to insert two students — **both must be saved, or neither**. This is a perfect case for transaction handling.
 
 ---
 
@@ -17,13 +17,13 @@ Let’s say we want to insert two users — **both must be saved, or neither**. 
 
 ```java
 @Test
-void shouldSaveAllUsersInOneTransaction() {
-    var users = List.of(
-        new User(null, "t1@mail.com", "p1", "USER"),
-        new User(null, "t2@mail.com", "p2", "ADMIN")
+void shouldSaveAllStudentsInOneTransaction() {
+    var students = List.of(
+        new Student(null, "keerthanasri", "p1"),
+        new Student(null, "sathashini", "p2")
     );
 
-    var saved = userDao.saveAllAtomic(users);
+    var saved = studentDao.saveAllAtomic(students);
 
     assertEquals(2, saved.size());
 }
@@ -35,56 +35,56 @@ void shouldSaveAllUsersInOneTransaction() {
 
 ```java
 @Test
-void shouldRollbackWhenAnyUserFails() {
-    // Precondition: Create a user with this email so we get a conflict
-    userDao.save(new User(null, "existing@mail.com", "x", "USER"));
+void shouldRollbackWhenAnyStudentFails() {
+    // Precondition: Create a student with this email so we get a conflict
+    studentDao.save(new Student(null, "sathashini", "x"));
 
-    var users = List.of(
-        new User(null, "valid@mail.com", "v", "USER"),
-        new User(null, "existing@mail.com", "e", "ADMIN") // duplicate
+    var students = List.of(
+        new Student(null, "guruprasath", "v"),
+        new Student(null, "maadasamy", "e") // duplicate
     );
 
-    assertThrows(RuntimeException.class, () -> userDao.saveAllAtomic(users));
+    assertThrows(RuntimeException.class, () -> studentDao.saveAllAtomic(students));
 
     // Verify: nothing inserted
-    assertEquals(1, userDao.count());
+    assertEquals(1, studentDao.count());
 }
 ```
 
 ---
 
-## Method: `saveAllAtomic(List<User>)`
+## Method: `saveAllAtomic(List<Student>)`
 
 ```java
 @Override
-public List<User> saveAllAtomic(final List<User> users) {
-    String sql = "INSERT INTO user (useremail, password, role) VALUES (?, ?, ?)";
+public List<Student> saveAllAtomic(final List<Student> students) {
+    String sql = "INSERT INTO student (name, password) VALUES (?, ?)";
     try (Connection conn = dataSource.getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
         conn.setAutoCommit(false); // Begin transaction
 
-        for (User user : users) {
-            stmt.setString(1, user.useremail());
-            stmt.setString(2, user.password());
-            stmt.setString(3, user.role());
+        for (Student student : students) {
+            stmt.setString(1, student.name());
+            stmt.setString(2, student.password());
+            
             stmt.addBatch();
         }
 
         stmt.executeBatch(); // May throw exception on constraint violation
 
-        List<User> savedUsers = new ArrayList<>();
+        List<Student> savedStudents = new ArrayList<>();
         try (ResultSet rs = stmt.getGeneratedKeys()) {
             int index = 0;
             while (rs.next()) {
                 int id = rs.getInt(1);
-                User original = users.get(index++);
-                savedUsers.add(new User(id, original.useremail(), original.password(), original.role()));
+                Student original = students.get(index++);
+                savedStudents.add(new Student(id, original.name(), original.password()));
             }
         }
 
         conn.commit(); // Commit transaction
-        return savedUsers;
+        return savedStudents;
 
     } catch (SQLException e) {
         try {
