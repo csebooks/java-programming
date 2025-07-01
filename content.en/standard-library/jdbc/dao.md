@@ -300,4 +300,4 @@ void testCreateAll() throws SQLException {
     }
 ```
 
-But do you thibk it is good from performance perspextive ?! Remember every time you get new user uin java it tavels from one server  to another. why dont we pack them and send in single trip ?
+But do you think it is good from performance perspective ?! Remember every time you get new user in java it travels from one server to another. why dont we pack them and send in single trip ?

@@ -1,0 +1,11 @@
+{
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        // Run whenever any file is saved
+        "match": ".*",
+        "cmd": "xcopy .\\content.en\\ ..\\\\gurukulam\\site\\content.en\\books\\csebooks\\java-programming\\  /D /I /E /F /Y /H /R"
+      }
+    ]
+  }
+}

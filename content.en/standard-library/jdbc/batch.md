@@ -5,6 +5,13 @@ weight: 3
 
 > Batching allows you to **group multiple SQL statements** and send them to the database in **one round trip**, rather than sending each individually.
 
+
+
+## ⚡ Why Use Batching?
+
+* Reduces **network latency**
+* Improves **write performance**
+
 ```java
 public void createAll(List<User> newUsers) throws SQLException {
     final String insertSQL = "INSERT INTO `user`(useremail,role) VALUES (?,?)";
@@ -21,11 +28,6 @@ public void createAll(List<User> newUsers) throws SQLException {
     }
 }
 ```
-
-## ⚡ Why Use Batching?
-
-* Reduces **network latency**
-* Improves **write performance**
 
 ```java
 @Test
