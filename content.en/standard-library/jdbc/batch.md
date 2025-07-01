@@ -29,6 +29,8 @@ public void createAll(List<Student> newStudents) throws SQLException {
 }
 ```
 
+All good ?!. What about we get an invalid student in between
+
 ```java
 @Test
 void testCreateAll() throws SQLException {
@@ -50,5 +52,7 @@ void testCreateAll() throws SQLException {
     System.out.println("Created in " + (System.currentTimeMillis() - time) + " milliseconds");
 }
 ```
+
+Ideally you will expect eigther add all or nothing. How to do that. Lets see next
 
 
