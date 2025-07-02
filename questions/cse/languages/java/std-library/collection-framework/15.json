@@ -1,0 +1,10 @@
+{
+  "question": "What are the key benefits of using convenience methods like List.of, Set.of, Map.of?",
+  "explanation": "They produce shorter, safer, more efficient code using immutable and optimized collections.",
+  "choices": [
+    { "label": "They produce mutable collections" },
+    { "label": "They always use more memory" },
+    { "label": "They result in shorter, safer, more efficient code", "answer": true },
+    { "label": "They are deprecated in newer versions" }
+  ]
+}

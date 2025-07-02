@@ -1,0 +1,10 @@
+{
+  "question": "Which of the following classes is best suited for writing formatted text?",
+  "explanation": "PrintWriter provides convenient methods like println() for writing formatted text.",
+  "choices": [
+    { "label": "BufferedWriter" },
+    { "label": "PrintWriter", "answer": true },
+    { "label": "FileWriter" },
+    { "label": "OutputStream" }
+  ]
+}

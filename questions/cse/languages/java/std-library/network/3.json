@@ -1,0 +1,10 @@
+{
+  "question": "Which protocol does DatagramSocket use for communication?",
+  "explanation": "DatagramSocket is used for connectionless communication over the UDP protocol.",
+  "choices": [
+    { "label": "TCP" },
+    { "label": "HTTP" },
+    { "label": "UDP", "answer": true },
+    { "label": "FTP" }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "question": "Which method would be most appropriate to return a single, immutable element collection?",
+  "explanation": "Collections.singleton(...) returns an immutable set with one element.",
+  "choices": [
+    { "label": "Collections.singleton(...)", "answer": true },
+    { "label": "Set.of(...)" },
+    { "label": "List.of(...)" },
+    { "label": "new HashSet<>()" }
+  ]
+}

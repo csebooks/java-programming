@@ -1,20 +1,10 @@
 {
-  "question": "Which of the following classes is commonly used to read text from a file in Java?",
-  "explanation":"",
- 
+  "question": "What is the primary use of FileReader and FileWriter in Java?",
+  "explanation": "FileReader and FileWriter are designed to handle character-based data.",
   "choices": [
-    {
-      "label": "PrintWriter"
-    },
-    {
-      "label": "Scanner",
-      "answer": true
-    },
-    {
-      "label": "InputManager"
-    },
-    {
-      "label": "TextReader"
-    }
+    { "label": "Reading and writing binary data" },
+    { "label": "Reading and writing object streams" },
+    { "label": "Reading and writing text files", "answer": true },
+    { "label": "Managing network input/output" }
   ]
 }

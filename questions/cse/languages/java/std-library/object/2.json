@@ -1,0 +1,10 @@
+{
+  "question": "Which two methods must be overridden together to ensure correct behavior in hash-based collections like HashSet?",
+  "explanation": "Overriding equals() without hashCode() can break the contract for hash-based collections.",
+  "choices": [
+    { "label": "toString() and clone()" },
+    { "label": "equals() and hashCode()", "answer": true },
+    { "label": "finalize() and getClass()" },
+    { "label": "wait() and notify()" }
+  ]
+}

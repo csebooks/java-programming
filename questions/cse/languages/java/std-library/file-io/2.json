@@ -1,0 +1,10 @@
+{
+  "question": "Which class provides methods like readAllLines() and write() for file handling?",
+  "explanation": "Files class in java.nio.file provides high-level utilities for file operations.",
+  "choices": [
+    { "label": "File" },
+    { "label": "FileReader" },
+    { "label": "BufferedWriter" },
+    { "label": "Files", "answer": true }
+  ]
+}

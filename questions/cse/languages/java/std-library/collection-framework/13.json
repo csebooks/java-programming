@@ -1,0 +1,10 @@
+{
+  "question": "What is the behavior of Arrays.asList(...)?",
+  "explanation": "Returns a list backed by the original array. You can't add or remove elements.",
+  "choices": [
+    { "label": "Creates a mutable resizable list" },
+    { "label": "Creates a list with copy of array" },
+    { "label": "Creates a fixed-size list backed by array", "answer": true },
+    { "label": "Creates an immutable list" }
+  ]
+}

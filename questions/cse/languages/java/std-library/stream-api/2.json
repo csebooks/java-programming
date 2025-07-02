@@ -1,15 +1,10 @@
 {
-  "question" : "Whiche on of the following is terminal operation?",
-  "explanation" : "",
-  "choices" : [ {
-    "label" : "filter()"
-  }, {
-    "label" : "collect()",
-    "answer" : true
-
-  }, {
-    "label" : "flatmap()"
-  }, {
-    "label" : "map()"
-  } ]
+  "question": "Which of the following is a terminal operation in Java Streams?",
+  "explanation": "Terminal operations produce a result or side-effect and terminate the stream pipeline.",
+  "choices": [
+    { "label": "filter()" },
+    { "label": "map()" },
+    { "label": "collect()", "answer": true },
+    { "label": "sorted()" }
+  ]
 }

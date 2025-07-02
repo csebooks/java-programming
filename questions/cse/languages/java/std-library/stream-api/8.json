@@ -1,0 +1,10 @@
+{
+  "question": "In a sliding window gatherer, what is the main characteristic?",
+  "explanation": "Sliding windows move through the stream one element at a time and overlap.",
+  "choices": [
+    { "label": "It splits the stream into fixed-size non-overlapping windows" },
+    { "label": "It returns only the last element" },
+    { "label": "It produces overlapping subsets", "answer": true },
+    { "label": "It sorts the stream before processing" }
+  ]
+}

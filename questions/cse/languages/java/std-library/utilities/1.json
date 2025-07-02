@@ -1,20 +1,10 @@
 {
-  "question": "Which of the following is part of the java.util package?",
-  "explanation":"",
- 
+  "question": "Which Java class provides a container for a value that might be absent, avoiding explicit null checks?",
+  "explanation": "Optional helps you avoid NullPointerExceptions by modeling the presence or absence of a value explicitly.",
   "choices": [
-    {
-      "label": "ArrayList"
-    },
-    {
-      "label": "Scanner"
-    },
-    {
-      "label": "Collections"
-    },
-    {
-      "label": "All of the above",
-      "answer": true
-    }
+    { "label": "Objects" },
+    { "label": "Optional", "answer": true },
+    { "label": "Locale" },
+    { "label": "Scanner" }
   ]
 }

@@ -1,14 +1,10 @@
 {
-  "question" : "Which on of the following  method helps to get the intermediate results?",
-  "explanation" : "",
-  "choices" : [ {
-    "label" : "filter()"
-  }, {
-    "label" : "collect()"
-  }, {
-    "label" : "flatmap()"
-  }, {
-    "label" : "peak()",
-    "answer" : true
-  } ]
+  "question": "Which component of a Stream Gatherer initializes the state?",
+  "explanation": "The initializer creates the initial state object used in the gather process.",
+  "choices": [
+    { "label": "Integrator" },
+    { "label": "Combiner" },
+    { "label": "Finisher" },
+    { "label": "Initializer", "answer": true }
+  ]
 }

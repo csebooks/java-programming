@@ -1,20 +1,10 @@
 {
-  "question": "Which of the following is part of the Java Collection Framework?",
-  "explanation":"",
- 
+  "question": "What is the main goal of Java's Collection Framework?",
+  "explanation": "It provides well-tested implementations of common data structures to manage groups of data efficiently.",
   "choices": [
-    {
-      "label": "ArrayList"
-    },
-    {
-      "label": "HashMap"
-    },
-    {
-      "label": "HashSet"
-    },
-    {
-      "label": "All of the above",
-      "answer": true
-    }
+    { "label": "To replace object-oriented programming" },
+    { "label": "To build web applications" },
+    { "label": "To store, access, and manage groups of data efficiently", "answer": true },
+    { "label": "To compile Java code faster" }
   ]
 }

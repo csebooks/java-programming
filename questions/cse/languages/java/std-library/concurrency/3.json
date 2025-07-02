@@ -1,0 +1,10 @@
+{
+  "question": "What does Future.get() do in Java concurrency?",
+  "explanation": "Future.get() blocks and retrieves the result of a Callable task.",
+  "choices": [
+    { "label": "Cancels the thread" },
+    { "label": "Returns immediately with null" },
+    { "label": "Retrieves the result of an asynchronous task", "answer": true },
+    { "label": "Starts a new thread" }
+  ]
+}

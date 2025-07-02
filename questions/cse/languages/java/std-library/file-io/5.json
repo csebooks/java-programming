@@ -1,0 +1,10 @@
+{
+  "question": "Which package contains Path and Files classes?",
+  "explanation": "Path and Files belong to the java.nio.file package, introduced in Java NIO.",
+  "choices": [
+    { "label": "java.io" },
+    { "label": "java.nio" },
+    { "label": "java.nio.file", "answer": true },
+    { "label": "java.util.stream" }
+  ]
+}

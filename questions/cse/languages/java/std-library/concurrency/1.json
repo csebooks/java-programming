@@ -1,20 +1,10 @@
 {
-  "question": "Which of the following classes is used for creating threads in Java?",
-  "explanation":"",
- 
+  "question": "Which Java package provides ExecutorService, Future, and Lock interfaces?",
+  "explanation": "These are provided under java.util.concurrent package for advanced concurrency control.",
   "choices": [
-    {
-      "label": "ThreadExecutor"
-    },
-    {
-      "label": "RunnableTask"
-    },
-    {
-      "label": "Thread",
-      "answer": true
-    },
-    {
-      "label": "ProcessManager"
-    }
+    { "label": "java.io" },
+    { "label": "java.lang" },
+    { "label": "java.util.concurrent", "answer": true },
+    { "label": "java.util.stream" }
   ]
 }

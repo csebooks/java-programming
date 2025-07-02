@@ -1,0 +1,10 @@
+{
+  "question": "Which implementation preserves insertion order in a Set?",
+  "explanation": "LinkedHashSet maintains insertion order while being a set (no duplicates).",
+  "choices": [
+    { "label": "HashSet" },
+    { "label": "TreeSet" },
+    { "label": "LinkedHashSet", "answer": true },
+    { "label": "EnumSet" }
+  ]
+}

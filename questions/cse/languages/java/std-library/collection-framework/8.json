@@ -1,0 +1,10 @@
+{
+  "question": "What does Collections.emptyList() return?",
+  "explanation": "It returns a shared immutable empty list instance.",
+  "choices": [
+    { "label": "A new resizable list" },
+    { "label": "An immutable shared empty list", "answer": true },
+    { "label": "A list with null" },
+    { "label": "A fixed-size list with one element" }
+  ]
+}

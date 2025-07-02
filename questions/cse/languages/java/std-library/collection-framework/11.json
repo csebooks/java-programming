@@ -1,0 +1,10 @@
+{
+  "question": "What does List.copyOf(...) do?",
+  "explanation": "It creates an immutable copy of the given list.",
+  "choices": [
+    { "label": "Creates a synchronized list" },
+    { "label": "Creates a deep copy" },
+    { "label": "Returns a mutable list copy" },
+    { "label": "Returns an immutable list copy", "answer": true }
+  ]
+}

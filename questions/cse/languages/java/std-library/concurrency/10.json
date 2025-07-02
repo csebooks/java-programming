@@ -1,0 +1,10 @@
+{
+  "question": "Why is using thread pools better than manually creating threads?",
+  "explanation": "Thread pools reuse existing threads and avoid the overhead of frequent thread creation and destruction.",
+  "choices": [
+    { "label": "Threads in pools run faster" },
+    { "label": "Thread pools guarantee parallelism" },
+    { "label": "They improve performance by reusing threads", "answer": true },
+    { "label": "They avoid memory leaks" }
+  ]
+}
