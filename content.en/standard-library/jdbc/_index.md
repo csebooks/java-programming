@@ -1,7 +1,8 @@
 ---
 title: 'JDBC'
 weight: 11
-
+categories:
+    - jdbc
 --- 
 
 > JDBC (Java Database Connectivity) is a Java API designed to facilitate connection and execution of queries with relational databases compatible with SQL. It is an integral part of Java SE (Java Standard Edition). JDBC API relies on JDBC drivers to establish connections with databases.
