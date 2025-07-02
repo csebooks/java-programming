@@ -1,0 +1,10 @@
+{
+  "question": "What does the method Arrays.equals(array1, array2) do?",
+  "explanation": "It returns true if both arrays contain the same elements in the same order.",
+  "choices": [
+    { "label": "Compares references" },
+    { "label": "Checks if arrays are sorted" },
+    { "label": "Checks content equality", "answer": true },
+    { "label": "Merges arrays" }
+  ]
+}

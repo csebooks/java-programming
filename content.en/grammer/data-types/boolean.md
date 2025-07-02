@@ -10,9 +10,10 @@ Here is the complete **`boolean.md`** file for the `datatype -> boolean` path in
 ````markdown
 
 
-> In Java, the `boolean` data type represents only two values: `true` or `false`. It's the foundation for all **decision-making**, **conditions**, and **logical operations** in Java.
+> In Java, the `boolean` data type represents only two values: `true` or `false`. 
+It's the foundation for all **decision-making**, **conditions**, and **logical operations** in Java.
 
----
+
 
 ### What Is `boolean`?
 

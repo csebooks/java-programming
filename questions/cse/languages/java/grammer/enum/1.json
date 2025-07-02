@@ -1,20 +1,10 @@
 {
-  "question": "What is the issue in the below code \n enum Day {\nMONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;protected isWekkend(Day day){return day == SATURDAY}\n}",
-  "explanation":"",
- 
+  "question": "What is the output of `Day.SUNDAY.ordinal()` assuming `Day` is an enum with 7 values starting from MONDAY?",
+  "explanation": "`ordinal()` returns the position of the constant (0-based). SUNDAY is the 7th constant → index 6.",
   "choices": [
-    {
-      "label": "Access Modifier",
-      "answer": true
-    },
-    {
-      "label": "Compilation Error"
-    },
-    {
-      "label": "Runtime Error"
-    },
-    {
-      "label": "None of the above"
-    }
+    { "label": "5" },
+    { "label": "6", "answer": true },
+    { "label": "7" },
+    { "label": "0" }
   ]
 }

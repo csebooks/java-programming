@@ -1,21 +1,10 @@
 {
-  "question": "Which of the following is a valid control statement in Java?",
-  "explanation":"",
- 
+  "question": "Which loop guarantees at least one execution, even if the condition is false?",
+  "explanation": "The `do-while` loop executes the code block once before checking the condition.",
   "choices": [
-    {
-      "label": "repeat"
-      
-    },
-    {
-      "label": "until"
-    },
-    {
-      "label": "switch",
-      "answer": true
-    },
-    {
-      "label": "choose"
-    }
+    { "label": "for" },
+    { "label": "while" },
+    { "label": "do-while", "answer": true },
+    { "label": "foreach" }
   ]
 }

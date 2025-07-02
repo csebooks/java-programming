@@ -1,0 +1,10 @@
+{
+  "question": "How can you copy one array into another using Java’s built-in methods?",
+  "explanation": "`System.arraycopy()` or `Arrays.copyOf()` are valid options.",
+  "choices": [
+    { "label": "System.copy()" },
+    { "label": "System.arraycopy()", "answer": true },
+    { "label": "array.clone()" },
+    { "label": "Arrays.move()" }
+  ]
+}

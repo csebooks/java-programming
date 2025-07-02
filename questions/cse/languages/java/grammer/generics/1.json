@@ -1,22 +1,10 @@
 {
-  "question": "Which of the following is a correct use of Java Generics?",
-  "explanation":"",
- 
+  "question": "Which of the following provides type safety and removes the need for explicit casting?",
+  "explanation": "Generics allow compile-time type checks and eliminate the need for casting.",
   "choices": [
-    {
-      "label": "List<int> list = new ArrayList<>();"
-      
-    },
-    {
-      "label": "List<Object> list = new List<>();"
-    },
-    {
-      "label": "List<String> list = new ArrayList<>();",
-      "answer": true
-
-    },
-    {
-      "label": "List list = new ArrayList<String>();"
-    }
+    { "label": "Polymorphism" },
+    { "label": "Inheritance" },
+    { "label": "Generics", "answer": true },
+    { "label": "Interfaces" }
   ]
 }

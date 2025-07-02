@@ -1,0 +1,10 @@
+{
+  "question": "Which annotation is used to suppress specific compiler warnings?",
+  "explanation": "`@SuppressWarnings(\"unchecked\")` is used to ignore compiler warnings like unchecked type operations.",
+  "choices": [
+    { "label": "@SafeVarargs" },
+    { "label": "@Override" },
+    { "label": "@SuppressWarnings", "answer": true },
+    { "label": "@FunctionalInterface" }
+  ]
+}

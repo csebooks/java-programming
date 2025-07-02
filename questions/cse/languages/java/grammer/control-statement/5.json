@@ -1,0 +1,10 @@
+{
+  "question": "What will be the output of this code?\n\nfor (int i = 1; i <= 5; i++) {\n    if (i == 3) continue;\n    System.out.print(i);\n}",
+  "explanation": "`continue` skips printing when i is 3. So it prints 1, 2, 4, 5.",
+  "choices": [
+    { "label": "12345" },
+    { "label": "1245", "answer": true },
+    { "label": "1345" },
+    { "label": "1234" }
+  ]
+}

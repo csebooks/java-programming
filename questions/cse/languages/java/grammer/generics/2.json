@@ -1,0 +1,10 @@
+{
+  "question": "What does the following method declaration mean?\n\npublic <T extends Number> void process(T number)",
+  "explanation": "The method `process` accepts any argument that is a subtype of Number (e.g., Integer, Double).",
+  "choices": [
+    { "label": "T must be exactly Number" },
+    { "label": "T can be any object" },
+    { "label": "T must extend Number or be a subclass", "answer": true },
+    { "label": "T must be primitive" }
+  ]
+}

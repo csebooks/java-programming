@@ -1,0 +1,10 @@
+{
+  "question": "Which operator is used for logical OR in Java?",
+  "explanation": "`||` returns true if at least one condition is true.",
+  "choices": [
+    { "label": "||", "answer": true },
+    { "label": "&" },
+    { "label": "!" },
+    { "label": "&&" }
+  ]
+}

@@ -1,20 +1,10 @@
 {
-  "question": "Which of the following interfaces is used to execute SQL queries in JDBC?",
-  "explanation":"",
- 
+  "question": "Which interface is used to execute SQL queries in JDBC?",
+  "explanation": "Statement and PreparedStatement are used to execute SQL queries.",
   "choices": [
-    {
-      "label": "ResultSet"
-    },
-    {
-      "label": "Connection"
-    },
-    {
-      "label": "Statement",
-      "answer": true
-    },
-    {
-      "label": "Driver"
-    }
+    { "label": "Connection" },
+    { "label": "Statement", "answer": true },
+    { "label": "ResultSet" },
+    { "label": "DriverManager" }
   ]
 }

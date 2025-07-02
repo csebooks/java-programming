@@ -1,0 +1,10 @@
+{
+  "question": "What is the purpose of the 'break' statement inside a loop?",
+  "explanation": "`break` is used to exit the loop immediately when a certain condition is met.",
+  "choices": [
+    { "label": "Skips to next iteration" },
+    { "label": "Repeats the loop" },
+    { "label": "Exits the loop", "answer": true },
+    { "label": "Exits the program" }
+  ]
+}

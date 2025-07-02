@@ -1,0 +1,10 @@
+{
+  "question": "What is the main purpose of the `finally` block in exception handling?",
+  "explanation": "The `finally` block always executes (unless the JVM exits). It's used for resource cleanup.",
+  "choices": [
+    { "label": "To skip exceptions" },
+    { "label": "To catch any exception not handled in catch" },
+    { "label": "To run cleanup code regardless of what happens", "answer": true },
+    { "label": "To rethrow the same exception" }
+  ]
+}

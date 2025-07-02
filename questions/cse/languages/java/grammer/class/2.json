@@ -1,0 +1,10 @@
+{
+  "question": "What keyword is used in Java to allow one class to inherit from another?",
+  "explanation": "`extends` is used for class inheritance in Java.",
+  "choices": [
+    { "label": "implements" },
+    { "label": "inherits" },
+    { "label": "extends", "answer": true },
+    { "label": "super" }
+  ]
+}

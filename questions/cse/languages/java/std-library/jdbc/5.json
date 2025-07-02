@@ -1,0 +1,10 @@
+{
+  "question": "What happens if an exception is thrown before a `ResultSet` is closed?",
+  "explanation": "If try-with-resources is used, the ResultSet is closed automatically.",
+  "choices": [
+    { "label": "It remains open until garbage collected" },
+    { "label": "It causes a memory leak" },
+    { "label": "It is closed automatically if try-with-resources is used", "answer": true },
+    { "label": "It will automatically rollback the transaction" }
+  ]
+}

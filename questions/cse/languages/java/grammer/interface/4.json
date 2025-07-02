@@ -1,0 +1,10 @@
+{
+  "question": "Which of these is a valid predefined functional interface in Java?",
+  "explanation": "Java provides predefined functional interfaces like `Function`, `Predicate`, `Consumer`, and `Supplier`.",
+  "choices": [
+    { "label": "Iterator" },
+    { "label": "Function", "answer": true },
+    { "label": "Scanner" },
+    { "label": "Mapper" }
+  ]
+}

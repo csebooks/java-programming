@@ -1,0 +1,10 @@
+{
+  "question": "Which of the following methods is *not* automatically generated when you define a Java record?",
+  "explanation": "Records generate constructor, accessors, `toString()`, `equals()`, and `hashCode()`, but not setters.",
+  "choices": [
+    { "label": "toString()" },
+    { "label": "equals()" },
+    { "label": "hashCode()" },
+    { "label": "setters", "answer": true }
+  ]
+}

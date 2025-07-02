@@ -1,0 +1,10 @@
+{
+  "question": "What is the output of the following?\n\nint[] arr = {1, 2, 3};\nSystem.out.println(arr[3]);",
+  "explanation": "`arr[3]` is out of bounds since valid indices are 0–2.",
+  "choices": [
+    { "label": "3" },
+    { "label": "0" },
+    { "label": "Compilation error" },
+    { "label": "ArrayIndexOutOfBoundsException", "answer": true }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "question": "Which of the following keywords are branching statements in Java?",
+  "explanation": "`break`, `continue`, and `return` are used to alter the normal flow inside loops and methods.",
+  "choices": [
+    { "label": "break", "answer": true },
+    { "label": "for" },
+    { "label": "continue", "answer": true },
+    { "label": "return", "answer": true }
+  ]
+}

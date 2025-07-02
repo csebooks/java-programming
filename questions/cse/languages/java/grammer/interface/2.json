@@ -1,19 +1,10 @@
 {
-  "question": "Which of the following statements about Java interfaces is TRUE?",
-  "explanation": "Java supports multiple interface implementation, which is not possible with classes. Interfaces cannot have constructors or instance variables.",
+  "question": "What is the purpose of a default method in a Java interface?",
+  "explanation": "Default methods allow interfaces to have method bodies so that new functionality can be added without breaking existing implementations.",
   "choices": [
-    {
-      "label": "An interface can have instance variables and constructors."
-    },
-    {
-      "label": "A class can implement multiple interfaces in Java.",
-      "answer": true
-    },
-    {
-      "label": "An interface can extend multiple classes."
-    },
-    {
-      "label": "An interface must have at least one abstract method."
-    }
+    { "label": "To prevent overriding" },
+    { "label": "To make an interface abstract" },
+    { "label": "To provide a default implementation", "answer": true },
+    { "label": "To restrict inheritance" }
   ]
 }

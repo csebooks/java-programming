@@ -1,20 +1,10 @@
 {
-  "question": "Which of the following statements about Java classes is true?",
-  "explanation":"",
- 
+  "question": "What will be the output of this code?\n\nPerson p = new Person();\np.name = \"Arun\";\np.sayHello();",
+  "explanation": "The method `sayHello()` prints: Hello, I'm Arun",
   "choices": [
-    {
-      "label": "A Java class can have multiple constructors",
-      "answer": true
-    },
-    {
-      "label": "A class in Java cannot contain methods"
-    },
-    {
-      "label": "A class must always be declared as public"
-    },
-    {
-      "label": "You cannot create objects from a class"
-    }
+    { "label": "Hello, I'm p" },
+    { "label": "Arun says hello" },
+    { "label": "Hello, I'm Arun", "answer": true },
+    { "label": "Compilation error" }
   ]
 }

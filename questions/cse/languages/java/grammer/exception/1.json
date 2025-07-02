@@ -1,22 +1,10 @@
 {
-  "question": "Which of the following keywords is used for exception handling in Java?",
-  "explanation":"",
- 
+  "question": "Which of the following is a checked exception in Java?",
+  "explanation": "Checked exceptions must be either caught or declared. `IOException` is a classic example.",
   "choices": [
-    {
-      "label": "catchthis"
-      
-    },
-    {
-      "label": "error"
-    },
-    {
-      "label": "throw",
-      "answer": true
-
-    },
-    {
-      "label": "finalmethod"
-    }
+    { "label": "NullPointerException" },
+    { "label": "ArithmeticException" },
+    { "label": "IOException", "answer": true },
+    { "label": "ArrayIndexOutOfBoundsException" }
   ]
 }

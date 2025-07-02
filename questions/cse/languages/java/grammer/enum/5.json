@@ -1,0 +1,10 @@
+{
+  "question": "What is the correct way to use an enum in a switch statement?",
+  "explanation": "You can use enum constants directly in a switch, matching against cases.",
+  "choices": [
+    { "label": "switch (today) { case Day.MONDAY: ... }" },
+    { "label": "switch (today) { case MONDAY: ... }", "answer": true },
+    { "label": "if (today == switchCase(MONDAY)) ..." },
+    { "label": "switch (Day) { case today: ... }" }
+  ]
+}

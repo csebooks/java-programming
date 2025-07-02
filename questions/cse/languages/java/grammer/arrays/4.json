@@ -1,0 +1,10 @@
+{
+  "question": "What is the output of this code?\n\nString[][] names = {\n  {\"Mr. \", \"Ms. \"},\n  {\"Smith\", \"Jones\"}\n};\nSystem.out.println(names[0][1] + names[1][1]);",
+  "explanation": "`names[0][1]` = \"Ms. \", `names[1][1]` = \"Jones\" → Result: Ms. Jones",
+  "choices": [
+    { "label": "Mr. Smith" },
+    { "label": "Ms. Jones", "answer": true },
+    { "label": "Mr. Jones" },
+    { "label": "Smith Ms." }
+  ]
+}

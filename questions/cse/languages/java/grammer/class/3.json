@@ -1,0 +1,10 @@
+{
+  "question": "Which of the following statements about abstract classes is TRUE?",
+  "explanation": "Abstract classes cannot be instantiated directly and may contain abstract methods.",
+  "choices": [
+    { "label": "They must have only abstract methods" },
+    { "label": "They can be instantiated" },
+    { "label": "They can have constructors" },
+    { "label": "They cannot be instantiated and can have both abstract and regular methods", "answer": true }
+  ]
+}

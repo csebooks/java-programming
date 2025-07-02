@@ -1,0 +1,10 @@
+{
+  "question": "Which class in JDBC is used to retrieve data from a query?",
+  "explanation": "ResultSet contains the results of SQL SELECT queries.",
+  "choices": [
+    { "label": "Statement" },
+    { "label": "PreparedStatement" },
+    { "label": "ResultSet", "answer": true },
+    { "label": "Connection" }
+  ]
+}

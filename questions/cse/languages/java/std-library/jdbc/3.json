@@ -1,0 +1,10 @@
+{
+  "question": "Which method is used to start a transaction manually?",
+  "explanation": "Calling setAutoCommit(false) disables auto-commit mode and starts a transaction.",
+  "choices": [
+    { "label": "beginTransaction()" },
+    { "label": "commit()" },
+    { "label": "setTransaction(true)" },
+    { "label": "setAutoCommit(false)", "answer": true }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "question": "How do you create an object of a non-static inner class?",
+  "explanation": "Non-static inner classes require an instance of the outer class.",
+  "choices": [
+    { "label": "Inner obj = new Inner();" },
+    { "label": "Outer.Inner obj = new Outer.Inner();" },
+    { "label": "Outer o = new Outer(); Outer.Inner i = o.new Inner();", "answer": true },
+    { "label": "Inner i = Outer.new Inner();" }
+  ]
+}

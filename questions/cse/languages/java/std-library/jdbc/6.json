@@ -1,0 +1,10 @@
+{
+  "question": "Which JDBC interface provides a way to create statements?",
+  "explanation": "The Connection interface is used to create statements.",
+  "choices": [
+    { "label": "DriverManager" },
+    { "label": "Statement" },
+    { "label": "Connection", "answer": true },
+    { "label": "ResultSet" }
+  ]
+}

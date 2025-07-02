@@ -1,0 +1,10 @@
+{
+  "question": "Which of the following is NOT allowed with Java generics?",
+  "explanation": "Generic types are not available at runtime due to type erasure, so `instanceof` with generic types is not allowed.",
+  "choices": [
+    { "label": "Using wildcard types" },
+    { "label": "Using bounded types" },
+    { "label": "Using instanceof with parameterized types", "answer": true },
+    { "label": "Using generic methods" }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "question": "Which statement about sealed classes is TRUE?",
+  "explanation": "Sealed classes restrict which classes can inherit them. Subclasses must be final, sealed, or non-sealed.",
+  "choices": [
+    { "label": "Sealed classes cannot have any subclasses" },
+    { "label": "Sealed classes improve type safety by controlling inheritance", "answer": true },
+    { "label": "Any class can extend a sealed class" },
+    { "label": "Sealed classes are available from Java 11" }
+  ]
+}

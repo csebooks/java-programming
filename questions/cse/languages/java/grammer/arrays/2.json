@@ -1,0 +1,11 @@
+
+{
+  "question": "Which of the following correctly declares and initializes an array in one step?",
+  "explanation": "The array is initialized with values using curly braces.",
+  "choices": [
+    { "label": "int marks = new int[5];" },
+    { "label": "int[] marks;" },
+    { "label": "int[] marks = {90, 80, 70};", "answer": true },
+    { "label": "int marks[] = new {1,2,3};" }
+  ]
+}

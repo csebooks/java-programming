@@ -1,0 +1,10 @@
+{
+  "question": "Which of these is NOT a valid assignment operator?",
+  "explanation": "`=>` is not used in Java for assignments.",
+  "choices": [
+    { "label": "+=" },
+    { "label": "-=" },
+    { "label": "*=" },
+    { "label": "=>", "answer": true }
+  ]
+}
