@@ -1,6 +1,6 @@
 ---
 title: 'Workshop'
-weight: 3
+weight: 12
 categories:
     - std-library
 ---
