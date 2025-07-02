@@ -1,0 +1,10 @@
+{
+  "question": "Which JDK tool provides a disassembled view of a compiled `.class` file to inspect bytecode and method signatures?",
+  "explanation": "`javap` is used for inspecting compiled classes, showing information like method signatures and bytecode layout.",
+  "choices": [
+    { "label": "javac", "answer": false },
+    { "label": "jshell", "answer": false },
+    { "label": "javap", "answer": true },
+    { "label": "jconsole", "answer": false }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "question": "Which of the following JVM languages is a modern Lisp dialect that supports functional programming and concurrency?",
+  "explanation": "Clojure is a modern dialect of Lisp that runs on the JVM. It supports functional programming and concurrency features.",
+  "choices": [
+    { "label": "Clojure", "answer": true },
+    { "label": "Jython", "answer": false },
+    { "label": "Groovy", "answer": false },
+    { "label": "Scala", "answer": false }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "question": "If you want to remotely debug a JVM process or inspect a core dump post-crash, which JDK tool should you use?",
+  "explanation": "`jhsdb` is a postmortem debugger used for analyzing core dumps and diagnosing JVM internals when the JVM crashes.",
+  "choices": [
+    { "label": "jdb", "answer": false },
+    { "label": "jhsdb", "answer": true },
+    { "label": "jconsole", "answer": false },
+    { "label": "jcmd", "answer": false }
+  ]
+}

@@ -1,6 +1,8 @@
 ---
 title: 'The System'
 weight: 2
+categories:
+    - system
 references:
     links:
         - https://medium.com/@PavelTrifonov/why-jvm-is-great-4b3d8b224eae

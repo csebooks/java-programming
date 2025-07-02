@@ -1,6 +1,8 @@
 ---
 title: 'JVM Languages'
 weight: 3
+categories:
+    - jvm-languages
 ---
 
 

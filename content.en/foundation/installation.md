@@ -1,6 +1,8 @@
 ---
 title: 'Installation'
 weight: 4
+categories:
+   - installation
 references:
     videos:
         - youtube:FXwgzaUcxOE

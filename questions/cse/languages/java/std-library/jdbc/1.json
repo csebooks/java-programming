@@ -1,5 +1,6 @@
 {
   "question": "Which of the following interfaces is used to execute SQL queries in JDBC?",
+  "explanation":"",
  
   "choices": [
     {

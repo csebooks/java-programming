@@ -1,0 +1,10 @@
+{
+  "question": "Which tool allows you to interactively test Java code snippets and observe behaviors like floating-point precision or object equality?",
+  "explanation": "jshell is a REPL (Read-Eval-Print Loop) that helps experiment with Java code snippets in real time, useful for testing and learning.",
+  "choices": [
+    { "label": "javac", "answer": false },
+    { "label": "jconsole", "answer": false },
+    { "label": "jshell", "answer": true },
+    { "label": "jdb", "answer": false }
+  ]
+}

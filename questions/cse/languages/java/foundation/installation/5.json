@@ -1,0 +1,22 @@
+{
+  "question": "What is the purpose of using 'jlink' after setting up your Java development environment?",
+  "explanation": "jlink helps you create minimal runtime images that include only the necessary modules for your application.",
+  "choices": [
+    {
+      "label": "To link Java code with native libraries",
+      "answer": false
+    },
+    {
+      "label": "To create a lightweight runtime image with only required Java modules",
+      "answer": true
+    },
+    {
+      "label": "To package class files into a JAR file",
+      "answer": false
+    },
+    {
+      "label": "To synchronize the JDK with external repositories",
+      "answer": false
+    }
+  ]
+}
