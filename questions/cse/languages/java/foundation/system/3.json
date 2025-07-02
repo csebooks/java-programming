@@ -1,0 +1,10 @@
+{
+  "question": "Which of the following tasks is NOT performed by the Java Virtual Machine (JVM)?",
+  "explanation": "The JVM executes bytecode, optimizes with JIT, manages memory, and handles security—but does not compile Java source code.",
+  "choices": [
+    { "label": "Runs Java bytecode", "answer": false },
+    { "label": "Compiles Java source code to bytecode", "answer": true },
+    { "label": "Manages memory through garbage collection", "answer": false },
+    { "label": "Secures and stabilizes applications", "answer": false }
+  ]
+}
