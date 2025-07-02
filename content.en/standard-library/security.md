@@ -1,6 +1,8 @@
 ---
 title: 'Security'
 weight: 9
+categories:
+    - security
 ---
 
 > Java offers a comprehensive and pluggable security framework as part of the standard JDK. It covers key areas such as authentication, authorization, cryptography, secure communication, and bytecode-level sandboxing.

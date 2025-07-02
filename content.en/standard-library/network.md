@@ -1,6 +1,8 @@
 ---
 title: 'Networking'
 weight: 8
+categories:
+    - network
 ---
 
 ### Definition

@@ -1,6 +1,8 @@
 ---
 title: 'Utilities'
 weight: 10
+categories:
+    - utilities
 --- 
 
 Java’s standard library ships with a rich set of **utility classes**—batteries included—so you don’t have to reinvent common functions. In this chapter, we’ll explore the most useful helpers that make your code cleaner, safer, and more expressive.
