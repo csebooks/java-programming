@@ -8,13 +8,7 @@ categories:
 Here is the complete **`boolean.md`** file for the `datatype -> boolean` path in your structure:
 
 ````markdown
----
-title: 'Boolean Type in Java'
-weight: 3
-categories:
-  - data-types
-  - boolean
----
+
 
 > In Java, the `boolean` data type represents only two values: `true` or `false`. It's the foundation for all **decision-making**, **conditions**, and **logical operations** in Java.
 
