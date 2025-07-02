@@ -1,0 +1,10 @@
+{
+  "question": "Which class is commonly used for applying regex patterns to strings in Java?",
+  "explanation": "java.util.regex.Pattern is used to compile regex and create a Matcher for matching operations.",
+  "choices": [
+    { "label": "StringBuilder" },
+    { "label": "StringTokenizer" },
+    { "label": "Pattern", "answer": true },
+    { "label": "StringBuffer" }
+  ]
+}

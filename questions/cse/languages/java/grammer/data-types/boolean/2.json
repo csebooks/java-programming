@@ -1,0 +1,10 @@
+{
+  "question": "Which of the following is the correct way to negate a boolean variable in Java?",
+  "explanation": "The logical NOT operator (!) inverts the value of a boolean expression.",
+  "choices": [
+    { "label": "not x" },
+    { "label": "-x" },
+    { "label": "!x", "answer": true },
+    { "label": "~x" }
+  ]
+}

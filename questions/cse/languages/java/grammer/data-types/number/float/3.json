@@ -1,0 +1,10 @@
+{
+  "question": "Why should you avoid using float or double for monetary values?",
+  "explanation": "float and double can introduce rounding errors due to limited binary precision, which can be problematic for currency.",
+  "choices": [
+    { "label": "They consume too much memory" },
+    { "label": "They are not supported in Java" },
+    { "label": "They are slower" },
+    { "label": "They can introduce rounding errors", "answer": true }
+  ]
+}

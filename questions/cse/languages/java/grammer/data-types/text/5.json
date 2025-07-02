@@ -1,0 +1,10 @@
+{
+  "question": "What does the escape sequence \\t represent in Java?",
+  "explanation": "\\t inserts a horizontal tab character.",
+  "choices": [
+    { "label": "Newline" },
+    { "label": "Tab", "answer": true },
+    { "label": "Backslash" },
+    { "label": "Double quote" }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "question": "What is the approximate precision of the double data type in Java?",
+  "explanation": "double can store up to approximately 15 decimal digits accurately.",
+  "choices": [
+    { "label": "7 digits" },
+    { "label": "15 digits", "answer": true },
+    { "label": "32 digits" },
+    { "label": "Unlimited digits" }
+  ]
+}

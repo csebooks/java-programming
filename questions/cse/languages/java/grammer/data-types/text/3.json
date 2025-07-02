@@ -1,0 +1,10 @@
+{
+  "question": "Which encoding is used internally for Strings in Java 8?",
+  "explanation": "Java 8 uses UTF-16 encoding for storing characters in a char array.",
+  "choices": [
+    { "label": "UTF-8" },
+    { "label": "ASCII" },
+    { "label": "UTF-16", "answer": true },
+    { "label": "ISO-8859-1" }
+  ]
+}

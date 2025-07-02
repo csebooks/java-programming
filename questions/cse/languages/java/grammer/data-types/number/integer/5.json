@@ -1,0 +1,10 @@
+{
+  "question": "Which of the following integer types is most commonly used for general-purpose arithmetic in Java?",
+  "explanation": "int is the default and most efficient integer type for typical operations.",
+  "choices": [
+    { "label": "byte" },
+    { "label": "short" },
+    { "label": "int", "answer": true },
+    { "label": "long" }
+  ]
+}

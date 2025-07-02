@@ -1,0 +1,10 @@
+{
+  "question": "How many bytes does a char in Java occupy in memory?",
+  "explanation": "Java uses UTF-16 encoding internally, so a char occupies 2 bytes.",
+  "choices": [
+    { "label": "1 byte" },
+    { "label": "2 bytes", "answer": true },
+    { "label": "4 bytes" },
+    { "label": "Varies based on content" }
+  ]
+}
