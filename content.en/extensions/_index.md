@@ -1,6 +1,7 @@
 ---
 title: 'Extensions'
 weight: 4
+
 ---
 
 Java’s standard library is powerful, but in real-world projects, developers often rely on additional tools and libraries to simplify development, testing, data handling, and integration with other systems.

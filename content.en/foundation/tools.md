@@ -1,6 +1,8 @@
 ---
 title: 'Tools'
 weight: 6
+categories:
+  - tools
 ---
 
 > Java Development Kit (JDK) tools, providing an overview, purpose, usage examples, and notes for each tool. These tools are critical for developing, debugging, and managing Java applications, making them valuable for students and developers alike.

@@ -1,8 +1,8 @@
 ---
 title: 'Overview'
 weight: 1
-categories:
-    - foundation
+
+ 
 ---
 
 > Java is an object-oriented, virtual machine-based language that helps developers build large-scale applications in a simple, secure, and efficient way.

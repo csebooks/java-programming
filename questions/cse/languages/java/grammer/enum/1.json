@@ -1,5 +1,6 @@
 {
   "question": "What is the issue in the below code \n enum Day {\nMONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;protected isWekkend(Day day){return day == SATURDAY}\n}",
+  "explanation":"",
  
   "choices": [
     {

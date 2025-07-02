@@ -1,0 +1,10 @@
+{
+  "question": "What is the primary purpose of the `jdeps` tool in modular Java development?",
+  "explanation": "`jdeps` analyzes class dependencies and assists in modularizing Java applications, helping to generate `module-info.java` and reduce unused modules.",
+  "choices": [
+    { "label": "To find deprecated APIs", "answer": false },
+    { "label": "To compile modular code", "answer": false },
+    { "label": "To analyze and visualize class/module dependencies", "answer": true },
+    { "label": "To run modular applications", "answer": false }
+  ]
+}

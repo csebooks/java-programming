@@ -1,0 +1,10 @@
+{
+  "question": "Which tool allows you to monitor live metrics like memory usage, thread activity, and CPU utilization of a running JVM?",
+  "explanation": "`jconsole` is a graphical monitoring tool that connects to running JVMs and displays performance and memory statistics in real time.",
+  "choices": [
+    { "label": "jstat", "answer": false },
+    { "label": "jconsole", "answer": true },
+    { "label": "jcmd", "answer": false },
+    { "label": "jinfo", "answer": false }
+  ]
+}
