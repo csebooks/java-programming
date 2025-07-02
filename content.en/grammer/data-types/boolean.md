@@ -2,7 +2,7 @@
 title: 'Boolean'
 weight: 1
 categories:
-    - numbers
+    - boolean
 --- 
 
 Here is the complete **`boolean.md`** file for the `datatype -> boolean` path in your structure:
@@ -81,7 +81,7 @@ boolean canRelax = isWeekend || isHoliday;
 
 ---
 
-### 💡 Best Practices
+###  Best Practices
 
 * Use **meaningful names** for boolean variables: `isActive`, `hasPermission`, `canFly`.
 * Avoid comparisons like `if (isReady == true)`; prefer `if (isReady)`.
@@ -95,7 +95,7 @@ public boolean isValidEmail(String email) {
 
 ---
 
-### 🧪 Boolean Wrapper Class: `Boolean`
+###  Boolean Wrapper Class: `Boolean`
 
 Java provides a wrapper class for the primitive `boolean`:
 
@@ -108,7 +108,7 @@ Useful for collections and objects that require non-primitive types.
 
 ---
 
-### 📌 Summary
+###  Summary
 
 | Feature           | Details                  |
 | ----------------- | ------------------------ |
@@ -121,7 +121,7 @@ Useful for collections and objects that require non-primitive types.
 
 ---
 
-### ✅ Example
+### Example
 
 ```java
 public class BooleanExample {
