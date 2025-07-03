@@ -1,10 +1,12 @@
 {
-  "question": "Which Java package provides cryptographic operations like encryption and decryption?",
-  "explanation": "javax.crypto is the standard API for cryptographic functions such as AES encryption.",
+  "question": "Which two are guidelines for preventing denial of service attacks?",
+  "explanation": "To prevent denial of service (DoS) attacks, it’s important to manage resources carefully and ensure calculations (like limits and counters) don’t suffer from numeric overflows, which can be exploited. Releasing resources ensures the system doesn't run out of them under attack conditions.",
   "choices": [
-    { "label": "java.security" },
-    { "label": "javax.crypto", "answer": true },
-    { "label": "java.net.ssl" },
-    { "label": "javax.security.auth" }
+    { "label": "Release resources in all cases.", "answer": true },
+    { "label": "Resource limit checks should not suffer from numeric overflow.", "answer": true },
+    { "label": "Purge sensitive information from exceptions." },
+    { "label": "Validate file formats before processing untrusted files." },
+    { "label": "Make public static fields final." },
+    { "label": "Use mutable classes whenever possible." }
   ]
 }

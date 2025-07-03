@@ -1,6 +1,6 @@
 ---
 title: 'Stream API'
-weight: 6
+weight: 3
 references:
     videos:
         - youtube:v_5SKpfkI2U

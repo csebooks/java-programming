@@ -1,10 +1,10 @@
 {
-  "question": "What keyword is used in Java to allow one class to inherit from another?",
-  "explanation": "`extends` is used for class inheritance in Java.",
+  "question": "What is the output of the following code?\n\npublic class Client {\n static void doCalc(byte... a) {\n   System.out.print(\"byte...\");\n }\n static void doCalc(long a, long b) {\n   System.out.print(\"long, long\");\n }\n static void doCalc(Byte s1, Byte s2) {\n   System.out.print(\"Byte, Byte\");\n }\n public static void main (String[] args) {\n   byte b = 5;\n   doCalc(b, b);\n }\n}",
+  "explanation": "The method `doCalc(b, b)` is invoked with two primitive `byte` arguments. Java chooses the most specific applicable method. `doCalc(Byte, Byte)` requires boxing, and `doCalc(byte...)` is varargs, but `doCalc(long, long)` is the best match via primitive widening. Therefore, it prints \"long, long\".",
   "choices": [
-    { "label": "implements" },
-    { "label": "inherits" },
-    { "label": "extends", "answer": true },
-    { "label": "super" }
+    { "label": "byte…" },
+    { "label": "long, long", "answer": true },
+    { "label": "Byte, Byte" },
+    { "label": "compilation error" }
   ]
 }
