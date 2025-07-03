@@ -1,0 +1,10 @@
+{
+  "question": "Which method is used to apply a gatherer to a Stream?",
+  "explanation": "The gather() method is used to apply a gatherer for custom stream operations.",
+  "choices": [
+    { "label": "map()" },
+    { "label": "collect()" },
+    { "label": "forEach()" },
+    { "label": "gather()", "answer": true }
+  ]
+}

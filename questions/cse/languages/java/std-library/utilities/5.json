@@ -1,0 +1,10 @@
+{
+  "question": "What does the Base64 utility in Java do?",
+  "explanation": "Base64 provides methods to encode and decode binary data to and from base64-encoded strings.",
+  "choices": [
+    { "label": "Parses command-line arguments" },
+    { "label": "Encodes and decodes data as Base64", "answer": true },
+    { "label": "Manages date and time zones" },
+    { "label": "Monitors memory usage" }
+  ]
+}

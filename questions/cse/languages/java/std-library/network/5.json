@@ -1,0 +1,10 @@
+{
+  "question": "Which Java class represents the address of a host in networking operations?",
+  "explanation": "InetAddress is used to represent an IP address, often used with DatagramPacket and other networking classes.",
+  "choices": [
+    { "label": "SocketAddress" },
+    { "label": "IPAddress" },
+    { "label": "InetAddress", "answer": true },
+    { "label": "URL" }
+  ]
+}

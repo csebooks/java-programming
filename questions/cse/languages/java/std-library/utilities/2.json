@@ -1,0 +1,10 @@
+{
+  "question": "Which utility class in Java allows you to format values like numbers, strings, and dates using format specifiers?",
+  "explanation": "Formatter is used for creating formatted strings similar to printf in C.",
+  "choices": [
+    { "label": "Scanner" },
+    { "label": "Formatter", "answer": true },
+    { "label": "Base64" },
+    { "label": "TimerTask" }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "question": "What does BufferedReader provide over FileReader?",
+  "explanation": "BufferedReader adds buffering capability to increase efficiency when reading characters or lines.",
+  "choices": [
+    { "label": "Binary support" },
+    { "label": "Formatted output" },
+    { "label": "Efficient character reading", "answer": true },
+    { "label": "Path-based access" }
+  ]
+}

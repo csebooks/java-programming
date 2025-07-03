@@ -1,0 +1,10 @@
+{
+  "question": "What is the default value of a boolean variable in Java?",
+  "explanation": "Boolean variables are initialized to false by default if not explicitly set.",
+  "choices": [
+    { "label": "true" },
+    { "label": "false", "answer": true },
+    { "label": "null" },
+    { "label": "0" }
+  ]
+}

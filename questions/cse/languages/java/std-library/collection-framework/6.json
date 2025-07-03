@@ -1,0 +1,10 @@
+{
+  "question": "Which Map implementation maintains the order of insertion?",
+  "explanation": "LinkedHashMap keeps track of the order in which keys were inserted.",
+  "choices": [
+    { "label": "HashMap" },
+    { "label": "LinkedHashMap", "answer": true },
+    { "label": "TreeMap" },
+    { "label": "EnumMap" }
+  ]
+}

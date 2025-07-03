@@ -1,0 +1,10 @@
+{
+  "question": "What is required for a class to use the clone() method?",
+  "explanation": "The class must implement Cloneable and override the clone() method to avoid CloneNotSupportedException.",
+  "choices": [
+    { "label": "Override equals() method" },
+    { "label": "Use synchronized blocks" },
+    { "label": "Implement Cloneable and override clone()", "answer": true },
+    { "label": "Override toString() method" }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "question": "What is the recommended way to check if a boolean variable 'isReady' is true?",
+  "explanation": "Boolean conditions should be used directly without comparing to true or false.",
+  "choices": [
+    { "label": "if (isReady == true)" },
+    { "label": "if (isReady.equals(true))" },
+    { "label": "if (isReady)", "answer": true },
+    { "label": "if (true == isReady)" }
+  ]
+}

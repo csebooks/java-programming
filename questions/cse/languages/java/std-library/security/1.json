@@ -1,22 +1,10 @@
 {
-  "question": "Which of the following is a correct use of Java Generics?",
-  "explanation":"",
- 
+  "question": "Which Java package provides cryptographic operations like encryption and decryption?",
+  "explanation": "javax.crypto is the standard API for cryptographic functions such as AES encryption.",
   "choices": [
-    {
-      "label": "List<int> list = new ArrayList<>();"
-      
-    },
-    {
-      "label": "List<Object> list = new List<>();"
-    },
-    {
-      "label": "List<String> list = new ArrayList<>();",
-      "answer": true
-
-    },
-    {
-      "label": "List list = new ArrayList<String>();"
-    }
+    { "label": "java.security" },
+    { "label": "javax.crypto", "answer": true },
+    { "label": "java.net.ssl" },
+    { "label": "javax.security.auth" }
   ]
 }

@@ -1,0 +1,10 @@
+{
+  "question": "What does ExecutorService.shutdown() do?",
+  "explanation": "It initiates an orderly shutdown, rejecting new tasks but executing submitted ones.",
+  "choices": [
+    { "label": "Immediately kills all threads" },
+    { "label": "Submits new tasks" },
+    { "label": "Prevents new tasks and completes existing ones", "answer": true },
+    { "label": "Blocks until all tasks complete" }
+  ]
+}

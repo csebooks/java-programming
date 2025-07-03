@@ -1,14 +1,10 @@
 {
-  "question" : "Whiche on of the following is method helps to convert the collection of collection to a single collection?",
-  "explanation" : "",
-  "choices" : [ {
-    "label" : "map()"
-  }, {
-    "label" : "peak()"
-    }, {
-    "label" : "flatmap()",
-    "answer" : true
-  }, {
-    "label" : "collect()"
-  } ]
+  "question": "Why is it discouraged to store a Stream in a field or local variable?",
+  "explanation": "Streams should be created and consumed on the spot. Reusing them can lead to errors because streams can only be consumed once.",
+  "choices": [
+    { "label": "Because streams consume too much memory" },
+    { "label": "Because streams require synchronized access" },
+    { "label": "Because streams are not serializable" },
+    { "label": "Because streams can only be consumed once", "answer": true }
+  ]
 }

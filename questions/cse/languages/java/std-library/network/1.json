@@ -1,20 +1,10 @@
 {
-  "question": "Which of the following classes is used for message encryption and decryption in Java?",
-  "explanation":"",
- 
+  "question": "Which Java class is used to create a TCP server that listens on a specific port?",
+  "explanation": "ServerSocket is used for creating server-side sockets that listen for incoming TCP connections.",
   "choices": [
-    {
-      "label": "SecurityManager"
-    },
-    {
-      "label": "MessageDigest"
-    },
-    {
-      "label": "Cipher",
-      "answer": true
-    },
-    {
-      "label": "HashMap"
-    }
+    { "label": "Socket" },
+    { "label": "ServerSocket", "answer": true },
+    { "label": "DatagramSocket" },
+    { "label": "HttpClient" }
   ]
 }

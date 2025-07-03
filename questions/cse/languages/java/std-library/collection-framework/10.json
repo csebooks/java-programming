@@ -1,0 +1,10 @@
+{
+  "question": "Which collection is suitable for enum constants only?",
+  "explanation": "EnumSet and EnumMap are designed for use with enum keys or values.",
+  "choices": [
+    { "label": "TreeSet" },
+    { "label": "EnumSet", "answer": true },
+    { "label": "ArrayList" },
+    { "label": "PriorityQueue" }
+  ]
+}

@@ -1,23 +1,10 @@
 {
-  "question": "Which of the following is true about objects in Java?",
-  "explanation":"",
- 
+  "question": "What is the purpose of overriding the toString() method in Java?",
+  "explanation": "The default toString() returns a less readable class name and hashcode; overriding it provides meaningful output.",
   "choices": [
-    {
-      "label": "Objects are created using the import keyword"
-      
-    },
-    {
-      "label": "An object is an instance of a class",
-      "answer": true
-    },
-    {
-      "label": "You cannot access methods through an object"
-      
-
-    },
-    {
-      "label": "Objects in Java do not use memory"
-    }
+    { "label": "To perform mathematical operations" },
+    { "label": "To compare two objects" },
+    { "label": "To provide a readable string representation of the object", "answer": true },
+    { "label": "To free object memory" }
   ]
 }

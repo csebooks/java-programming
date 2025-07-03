@@ -135,10 +135,3 @@ Booleans are small but **powerful** tools that control the **logic** of your ent
 
 ```
 
-
-Used for true/false values.
-Example:
-
-```java
-boolean isActive = true;
-```

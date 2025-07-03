@@ -1,0 +1,10 @@
+{
+  "question": "What method is used to check whether a file exists?",
+  "explanation": "Files.exists(Path) checks whether the file at the specified path exists.",
+  "choices": [
+    { "label": "Path.isPresent()" },
+    { "label": "Files.check()" },
+    { "label": "Files.exists(Path)", "answer": true },
+    { "label": "FileReader.isAvailable()" }
+  ]
+}

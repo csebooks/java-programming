@@ -1,0 +1,10 @@
+{
+  "question": "What is the relationship between Thread and Runnable?",
+  "explanation": "Thread implements Runnable and wraps a Runnable object to run as a thread.",
+  "choices": [
+    { "label": "Runnable extends Thread" },
+    { "label": "Thread is a subclass of Executor" },
+    { "label": "Thread implements Runnable", "answer": true },
+    { "label": "Runnable manages thread pooling" }
+  ]
+}
