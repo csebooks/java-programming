@@ -1,10 +1,10 @@
 {
-  "question": "Which implementation preserves insertion order in a Set?",
-  "explanation": "LinkedHashSet maintains insertion order while being a set (no duplicates).",
+  "question": "Given the code fragment:\n10. var lst = List.of(1, 2, 3, 4);\n11. lst.replaceAll(x -> x + 100);\n12. System.out.println(\"-Completed-\");\n\nWhich action enables to print -Completed-?",
+  "explanation": "`List.of(...)` creates an immutable list, so calling `replaceAll()` throws `UnsupportedOperationException`. To make the list modifiable, you should replace line 10 with `var lst = Arrays.asList(1, 2, 3, 4);`. This allows `replaceAll()` to work and the program to reach and print \"-Completed-\".",
   "choices": [
-    { "label": "HashSet" },
-    { "label": "TreeSet" },
-    { "label": "LinkedHashSet", "answer": true },
-    { "label": "EnumSet" }
+    { "label": "Replacing line 10, with List<Integer> lst = List.of(1,2,3,4);" },
+    { "label": "Replacing line 11, with lst.replaceAll(x = x + 100);" },
+    { "label": "Replacing line 10, with var lst = Arrays.asList(1, 2, 3, 4);", "answer": true },
+    { "label": "Replacing line 11, with lst.forEach(x -> x + 100);" }
   ]
 }

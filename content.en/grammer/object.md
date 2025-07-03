@@ -1,6 +1,8 @@
 ---
 title: 'Object'
-weight: 1
+weight: 14
+categories:
+    - object
 ---
 
 Almost every class in Java is a direct or indirect subclass of `java.lang.Object`. Understanding this root class—and the methods it provides—is key to mastering how Java objects behave and interact.
