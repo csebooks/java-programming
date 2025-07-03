@@ -1,10 +1,10 @@
 {
-  "question": "Which tool allows you to interactively test Java code snippets and observe behaviors like floating-point precision or object equality?",
-  "explanation": "jshell is a REPL (Read-Eval-Print Loop) that helps experiment with Java code snippets in real time, useful for testing and learning.",
+  "question": "Given these named modular JARs and their module-info.java files:\n\norder.jar:\nmodule order {\n  requires product;\n  exports com.oracle.order;\n}\n\nproduct.jar:\nmodule product {\n  exports com.oracle.product;\n}\n\nWhich is the only possible result of executing the command:\n\njdeps -s order.jar product.jar?",
+  "explanation": "The `jdeps -s` command shows the summary of dependencies for modular JARs. The `order` module requires the `product` module and both depend on the base module (`java.base`). So the tool reports:\norder -> java.base\norder -> product\nproduct -> java.base",
   "choices": [
-    { "label": "javac", "answer": false },
-    { "label": "jconsole", "answer": false },
-    { "label": "jshell", "answer": true },
-    { "label": "jdb", "answer": false }
+    { "label": "order -> java.\nbaseorder -> product\nproduct -> java.base", "answer": true },
+    { "label": "order -> product" },
+    { "label": "product -> order" },
+    { "label": "java.base -> product\njava.base -> order\nproduct -> order" }
   ]
 }
