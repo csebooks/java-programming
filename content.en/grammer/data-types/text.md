@@ -4,6 +4,7 @@ weight: 2
 categories:
     - text
 --- 
+
 #### `char`
 
 Used to represent a single character.
@@ -21,7 +22,6 @@ In Java, the number of **bytes** a `char`, `String`, or any text content (like a
 * A `char` in Java is always **2 bytes** (16 bits).
 * Java uses **UTF-16** internally for `char` and `String`.
 
----
 
 ### **Estimating Chat Message Size in Bytes**
 
@@ -77,18 +77,8 @@ Note: UTF-16 adds a **2-byte BOM (Byte Order Mark)** in many cases, hence 50 ins
 | UTF-8 encoding  | UTF-8    | 1–4 bytes     | ASCII chars take 1 byte, others more |
 | UTF-16 encoding | UTF-16   | 2–4 bytes     | Includes BOM if written to file      |
 
-Other primitive types include:
 
-* `byte` – very small integers (-128 to 127)
-* `short` – small integers
-* `long` – very large integers
-* `float` – less precise decimals
-
-You’ll usually start with `int`, `double`, and `boolean` for most cases.
-
----
-
-
+#### String
 
 Strings lie at the heart of almost every Java program. You’ll learn how they’re represented under the hood, how to build and manipulate them efficiently, and the rich set of tools Java provides for searching, splitting, and templating text.
 
@@ -129,22 +119,6 @@ Strings lie at the heart of almost every Java program. You’ll learn how they�
   ```
 * **Use cases:** Validation (emails, phone numbers), search/replace (`Matcher.replaceAll`), complex parsing.
 
----
-
-### StringTokenizer
-
-* **Legacy class** for splitting strings into tokens.
-
-  ```java
-  StringTokenizer st = new StringTokenizer("a,b,c", ",");
-  while (st.hasMoreTokens()) {
-      System.out.println(st.nextToken());
-  }
-  ```
-* **Note:** Largely superseded by `String.split(regex)` or `Scanner`, but still found in older codebases.
-
----
-
 ### String Templating (`String.format`)
 
 * **Why:** Inject variables into a template without manual concatenation.
@@ -157,8 +131,6 @@ Strings lie at the heart of almost every Java program. You’ll learn how they�
   ```
 * **Advanced:** Use `java.text.MessageFormat` for locale-aware templating and named parameters.
 
----
-
 With this toolkit—knowing how strings live in memory, when to use mutable builders, how to leverage regex, and how to split or template text—you’ll handle almost any textual requirement efficiently and cleanly.
 
 ### Escape Sequences
@@ -169,9 +141,6 @@ In Java, special character sequences like `\n`, `\t`, etc., are called **escape 
 
 Each escape sequence starts with a **backslash (`\`)**, which tells the compiler to interpret the following character(s) in a special way.
 
----
-
-### 🔹 Common Escape Sequences in Java
 
 | Escape Sequence | Name              | Meaning                                                                                       |
 | --------------- | ----------------- | --------------------------------------------------------------------------------------------- |
@@ -185,9 +154,6 @@ Each escape sequence starts with a **backslash (`\`)**, which tells the compiler
 | `\f`            | Form Feed         | Advances the printer to the next page (rarely used today)                                     |
 | `\uXXXX`        | Unicode Character | Represents a Unicode character using its hexadecimal code (e.g., `\u0B85` for Tamil letter அ) |
 
----
-
-### 🔹 Example in Java
 
 ```java
 public class EscapeDemo {

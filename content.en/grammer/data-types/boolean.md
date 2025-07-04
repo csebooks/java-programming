@@ -5,17 +5,9 @@ categories:
     - boolean
 --- 
 
-Here is the complete **`boolean.md`** file for the `datatype -> boolean` path in your structure:
+> Booleans are small but **powerful** tools that control the **logic** of your entire program. In Java, the `boolean` data type represents only two values: `true` or `false`. 
 
-````markdown
-
-
-> In Java, the `boolean` data type represents only two values: `true` or `false`. 
 It's the foundation for all **decision-making**, **conditions**, and **logical operations** in Java.
-
-
-
-### What Is `boolean`?
 
 - The `boolean` type has only **two possible values**: `true` or `false`.
 - It is **1 bit** conceptually, but usually occupies **1 byte** in memory.
@@ -26,11 +18,9 @@ boolean isOnline = true;
 boolean isEmpty = false;
 ````
 
----
-
 ###  Common Boolean Use Cases
 
-#### 1. **Conditional Statements**
+#### Conditional Statements
 
 ```java
 boolean isAdult = age >= 18;
@@ -42,7 +32,7 @@ if (isAdult) {
 }
 ```
 
-#### 2. **Loop Control**
+#### Loop Control
 
 ```java
 boolean keepRunning = true;
@@ -53,7 +43,7 @@ while (keepRunning) {
 }
 ```
 
-#### 3. **Logical Expressions**
+#### Logical Expressions
 
 ```java
 boolean isWeekend = true;
@@ -61,8 +51,6 @@ boolean isHoliday = false;
 
 boolean canRelax = isWeekend || isHoliday;
 ```
-
----
 
 ### Boolean Operators in Java
 
@@ -74,7 +62,6 @@ boolean canRelax = isWeekend || isHoliday;
 | `==`     | Equality check | `x == true`     | `true` if x is true |        |   |         |        |
 | `!=`     | Not equal      | `x != false`    | `true` if x is true |        |   |         |        |
 
----
 
 ###  Best Practices
 
@@ -88,8 +75,6 @@ public boolean isValidEmail(String email) {
 }
 ```
 
----
-
 ###  Boolean Wrapper Class: `Boolean`
 
 Java provides a wrapper class for the primitive `boolean`:
@@ -100,21 +85,6 @@ boolean value = flag.booleanValue();
 ```
 
 Useful for collections and objects that require non-primitive types.
-
----
-
-###  Summary
-
-| Feature           | Details                  |
-| ----------------- | ------------------------ |
-| Type              | `boolean`                |
-| Values            | `true`, `false`          |
-| Size              | 1 byte (internally)      |
-| Default value     | `false`                  |
-| Wrapper class     | `Boolean`                |
-| Typical use cases | Conditions, flags, logic |
-
----
 
 ### Example
 
@@ -129,9 +99,5 @@ public class BooleanExample {
         }
     }
 }
-```
-
-Booleans are small but **powerful** tools that control the **logic** of your entire program.
-
 ```
 
