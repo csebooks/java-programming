@@ -1,0 +1,10 @@
+{
+  "question": "Which queue implementation is suitable for producer-consumer scenarios?",
+  "explanation": "LinkedBlockingQueue supports thread-safe operations and blocking behavior for producers/consumers.",
+  "choices": [
+    { "label": "ArrayDeque" },
+    { "label": "PriorityQueue" },
+    { "label": "LinkedBlockingQueue", "answer": true },
+    { "label": "HashSet" }
+  ]
+}

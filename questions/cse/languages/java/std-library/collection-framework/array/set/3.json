@@ -1,0 +1,10 @@
+{
+  "question": "Which class provides a thread-safe version of ArrayList?",
+  "explanation": "CopyOnWriteArrayList is a thread-safe version that allows safe concurrent reads.",
+  "choices": [
+    { "label": "ArrayList" },
+    { "label": "LinkedList" },
+    { "label": "CopyOnWriteArrayList", "answer": true },
+    { "label": "Vector" }
+  ]
+}

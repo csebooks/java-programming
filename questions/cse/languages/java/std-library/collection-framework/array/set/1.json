@@ -1,0 +1,10 @@
+{
+  "question": "What is the main goal of Java's Collection Framework?",
+  "explanation": "It provides well-tested implementations of common data structures to manage groups of data efficiently.",
+  "choices": [
+    { "label": "To replace object-oriented programming" },
+    { "label": "To build web applications" },
+    { "label": "To store, access, and manage groups of data efficiently", "answer": true },
+    { "label": "To compile Java code faster" }
+  ]
+}

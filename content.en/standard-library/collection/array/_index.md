@@ -1,6 +1,6 @@
 ---
 title: 'Array'
-weight: 5
+weight: 1
 categories:
-    - collections
+    - array 
 ---

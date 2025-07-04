@@ -2,9 +2,9 @@
 title: 'Float'
 weight: 2
 categories:
-    - float-point
+    - float
 ---
-Here's the complete **`float.md`** markdown file content, covering `float`, `double`, and `BigDecimal` in Java:
+
 
 ````markdown
 
