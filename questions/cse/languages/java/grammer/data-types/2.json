@@ -1,14 +1,19 @@
 {
-  "question" : "What is ramge stored by int ?",
-  "explanation" : "",
-  "choices" : [ {
-    "label" : "-(2^31) to (2^31) - 1",
-    "answer" : true
-  }, {
-    "label" : "-256 to 255"
-  }, {
-    "label" : "-(2^63) to (2^63) - 1"
-  }, {
-    "label" : "0 to (2^31) - 1"
-  } ]
+  "question": "What is ramge stored by int ?",
+  "explanation": "In Java, the `int` data type is a 32-bit signed two's complement integer. This means it can store values from -(2^31) to (2^31) - 1, which is from -2,147,483,648 to 2,147,483,647.",
+  "choices": [
+    {
+      "label": "-(2^31) to (2^31) - 1",
+      "answer": true
+    },
+    {
+      "label": "-256 to 255"
+    },
+    {
+      "label": "-(2^63) to (2^63) - 1"
+    },
+    {
+      "label": "0 to (2^31) - 1"
+    }
+  ]
 }
