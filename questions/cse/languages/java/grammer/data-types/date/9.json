@@ -1,0 +1,10 @@
+{
+  "question": "What is the role of the java.time.Period class?",
+  "explanation": "Period is used for representing calendar-based durations like years, months, and days.",
+  "choices": [
+    { "label": "It stores time-only values" },
+    { "label": "It stores exact UTC timestamps" },
+    { "label": "It represents calendar-based durations", "answer": true },
+    { "label": "It measures performance time" }
+  ]
+}

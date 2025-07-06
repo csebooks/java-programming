@@ -1,0 +1,10 @@
+{
+  "question": "Which java.time class should be used to store a date like a birthday without time or timezone?",
+  "explanation": "LocalDate represents a date without time or timezone, making it ideal for birthdays or anniversaries.",
+  "choices": [
+    { "label": "LocalTime" },
+    { "label": "LocalDate", "answer": true },
+    { "label": "ZonedDateTime" },
+    { "label": "Instant" }
+  ]
+}

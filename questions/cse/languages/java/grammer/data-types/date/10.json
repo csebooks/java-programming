@@ -1,0 +1,10 @@
+{
+  "question": "How does the java.time API improve interoperability with legacy classes?",
+  "explanation": "It provides built-in converters to and from legacy classes like Date, Calendar, and Timestamp.",
+  "choices": [
+    { "label": "By avoiding legacy compatibility" },
+    { "label": "By using deprecated methods" },
+    { "label": "By offering built-in conversion methods", "answer": true },
+    { "label": "By not supporting parsing" }
+  ]
+}

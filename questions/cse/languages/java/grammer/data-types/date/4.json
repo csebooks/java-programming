@@ -1,0 +1,10 @@
+{
+  "question": "Which class should you use to represent a point in time on the global timeline (UTC)?",
+  "explanation": "Instant represents a timestamp in UTC on the global timeline, suitable for logging and time measurement.",
+  "choices": [
+    { "label": "LocalDate" },
+    { "label": "ZonedDateTime" },
+    { "label": "Instant", "answer": true },
+    { "label": "Date" }
+  ]
+}
