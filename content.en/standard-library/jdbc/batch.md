@@ -7,7 +7,7 @@ weight: 3
 
 
 
-## ⚡ Why Use Batching?
+##  Why Use Batching?
 
 * Reduces **network latency**
 * Improves **write performance**
