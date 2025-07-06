@@ -1,0 +1,10 @@
+{
+  "question": "What is the role of the 'synchronized' keyword in Java?",
+  "explanation": "'synchronized' is used to control access to a block of code or method by multiple threads to avoid race conditions.",
+  "choices": [
+    { "label": "Handles memory cleanup" },
+    { "label": "Makes methods faster" },
+    { "label": "Used in multithreading for locking", "answer": true },
+    { "label": "Used to throw exceptions" }
+  ]
+}
