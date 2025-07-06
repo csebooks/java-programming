@@ -2,7 +2,7 @@
 title: 'Java Collection Framework'
 weight: 1
 categories:
-  - collections
+  - collection-framework
 references:
   links:
     - https://dev.java/learn/api/collections-framework/

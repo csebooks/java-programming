@@ -1,0 +1,10 @@
+{
+  "question": "Which keyword is used to define a method or variable that belongs to the class rather than instances of the class?",
+  "explanation": "The 'static' keyword indicates that a method or variable is associated with the class itself.",
+  "choices": [
+    { "label": "final" },
+    { "label": "static", "answer": true },
+    { "label": "abstract" },
+    { "label": "native" }
+  ]
+}
