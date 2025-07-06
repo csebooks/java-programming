@@ -26,7 +26,7 @@ void testSave() throws SQLException {
 public Student save(final Student student) throws SQLException {
     if(student != null) {
         if ( student.id() == null ) {
-            final String insertSQL = "INSERT INTO student(name) VALUES (?,?)";
+            final String insertSQL = "INSERT INTO student(name) VALUES (?)";
 
             try(Connection connectionection = dataSource.getConnection();
                 PreparedStatement preparedStatement = connectionection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
