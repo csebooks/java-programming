@@ -2,7 +2,6 @@
 title: 'Float'
 weight: 2
 categories:
-    - number
     - float
 ---
 
