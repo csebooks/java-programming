@@ -6,7 +6,6 @@
     { "label": "Resource limit checks should not suffer from numeric overflow.", "answer": true },
     { "label": "Purge sensitive information from exceptions." },
     { "label": "Validate file formats before processing untrusted files." },
-    { "label": "Make public static fields final." },
-    { "label": "Use mutable classes whenever possible." }
+    { "label": "Make public static fields final." }
   ]
 }
