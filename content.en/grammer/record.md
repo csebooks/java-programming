@@ -5,13 +5,11 @@ categories:
     - record
 ---
 
-Records are a **compact way to create data-carrying classes** — like a class with only fields and a constructor, no extra code.
+> Records are a **compact way to create data-carrying classes** — like a class with only fields and a constructor, no extra code.Records keep your code **clean, short, and safe** — especially in modern Java where immutability and readability are valued.
 
 They are useful when you just want to store and pass data without writing boilerplate code.
 
----
-
-### Traditional Way (Before Records)
+### Traditional Way
 
 ```java
 class Point {
@@ -36,9 +34,7 @@ class Point {
 
 This is a lot of repetitive code — even for simple data holders.
 
----
-
-### With Records (Java 14+)
+### With Records
 
 ```java
 record Point(int x, int y) {}
@@ -94,6 +90,64 @@ record Point(int x, int y) {
 * All fields are final
 * Mainly meant for plain data — not behavior-heavy classes
 
----
+### 🧩 Compact Constructors
 
-Records keep your code **clean, short, and safe** — especially in modern Java where immutability and readability are valued.
+> A **compact constructor** in a Java `record` is a special kind of constructor that allows you to add validation or custom logic **without having to reassign fields manually**. It avoids the boilerplate code of repeating parameter declarations and assignments.
+
+### Why Use Compact Constructors?
+
+When you want to:
+
+* **Validate** field values
+* **Normalize** inputs
+* **Throw exceptions** if fields are invalid
+
+And you want to **avoid** this repetition:
+
+```java
+public record User(String name, int age) {
+    public User(String name, int age) {
+        if (age < 0) throw new IllegalArgumentException("Age must be positive");
+        this.name = name; // redundant
+        this.age = age;   // redundant
+    }
+}
+```
+
+### Compact Constructor Syntax
+
+```java
+public record User(String name, int age) {
+    public User {
+        if (age < 0) throw new IllegalArgumentException("Age must be positive");
+    }
+}
+```
+
+* You **don’t declare parameters**
+* You **don’t assign fields**
+* Java assigns fields automatically from the record header
+
+### Rules
+
+* Parameter names in the compact constructor **must match** the record components
+* Fields are **implicitly assigned** (`this.name = name`, etc.)
+* You can’t assign fields yourself inside a compact constructor
+
+```java
+public record Email(String address) {
+    public Email {
+        if (!address.contains("@")) {
+            throw new IllegalArgumentException("Invalid email address");
+        }
+    }
+}
+```
+
+
+### 💡 When *Not* to Use Compact Constructors
+
+* When you need to compute or modify field values (e.g., assign `this.name = name.toUpperCase()`)
+* In that case, use a **canonical constructor** (with parameters and assignments)
+
+
