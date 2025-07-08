@@ -221,7 +221,7 @@ categories:
   ```java
   class Player implements Serializable {
     public void celebrate() {
-      System.out.println("Siuuuuuuuuu!!!! 🕺⚽🔥");
+      System.out.println("Siuuuuuuuuu!!!! ");
     }
   }
   ```
@@ -280,7 +280,7 @@ categories:
   ```
   **Output**:
   ```
-  Siuuuuuuuuu!!!! 🕺⚽🔥
+  Siuuuuuuuuu!!!! 
   ```
 - **Run with a module**:
   ```bash
@@ -292,7 +292,7 @@ categories:
   ```
   **Output**:
   ```
-  Siuuuuuuuuu!!!! 🕺⚽🔥
+  Siuuuuuuuuu!!!!
   ```
 - **Run with dependencies (Java 21+)**:
   ```bash

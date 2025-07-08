@@ -1,0 +1,10 @@
+{
+  "question": "What is the key difference between ZonedDateTime and OffsetDateTime?",
+  "explanation": "ZonedDateTime includes full timezone rules (e.g., Europe/Paris), while OffsetDateTime includes only a fixed UTC offset (e.g., +05:30).",
+  "choices": [
+    { "label": "ZonedDateTime has less precision" },
+    { "label": "OffsetDateTime includes full timezone rules" },
+    { "label": "ZonedDateTime includes full timezone information", "answer": true },
+    { "label": "OffsetDateTime is used only for birthdays" }
+  ]
+}

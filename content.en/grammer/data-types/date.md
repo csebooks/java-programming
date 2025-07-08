@@ -1,6 +1,8 @@
 ---
 title: 'Date'
 weight: 4
+categories:
+    - date
 ---
 
 > Dates and times in Java have evolved significantly over the years. Here’s how the main types stack up, why the newer `java.time` API was needed, and when to use each.

@@ -13,7 +13,7 @@ Let’s say we want to insert two students — **both must be saved, or neither*
 
 ---
 
-## 🧪 Test Case 1: Successful Transaction
+##  Test Case 1: Successful Transaction
 
 ```java
 @Test
@@ -31,7 +31,7 @@ void shouldSaveAllStudentsInOneTransaction() {
 
 ---
 
-## 🧪 Test Case 2: Rollback on Constraint Violation
+## Test Case 2: Rollback on Constraint Violation
 
 ```java
 @Test
@@ -97,7 +97,7 @@ public List<Student> saveAllAtomic(final List<Student> students) {
 
 ---
 
-## 🔍 Why This Matters
+##  Why This Matters
 
 Without `conn.setAutoCommit(false)`, every insert is committed **immediately**. If one insert fails, the others stay in the DB — violating the "all-or-nothing" guarantee.
 

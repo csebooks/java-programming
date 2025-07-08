@@ -1,0 +1,94 @@
+---
+title: "File I/O"
+weight: 2
+---
+
+<div class="slides">
+  <section>
+    <h2>Java File I/O</h2>
+    <p>Understanding modern input/output in Java</p>
+  </section>
+
+  <section>
+    <h2>Binary Streams</h2>
+    <pre><code class="language-java">
+  InputStream in = new FileInputStream("data.bin");
+  OutputStream out = new FileOutputStream("copy.bin");
+  
+  in.transferTo(out);
+    </code></pre>
+    <p>Use for raw byte data (e.g., images, audio, files)</p>
+  </section>
+
+  <section>
+    <h2>Character Streams</h2>
+    <pre><code class="language-java">
+  Reader reader = new FileReader("text.txt");
+  Writer writer = new FileWriter("copy.txt");
+  
+  int c;
+  while ((c = reader.read()) != -1) {
+      writer.write(c);
+  }
+    </code></pre>
+    <p>Use for reading/writing text with proper encoding</p>
+  </section>
+
+  <section>
+    <h2>File Tree (Recursive File Access)</h2>
+    <pre><code class="language-java">
+  Path start = Paths.get("src");
+  Files.walk(start)
+       .filter(Files::isRegularFile)
+       .forEach(System.out::println);
+    </code></pre>
+    <pre>
+    src
+   ├── App.java
+   ├── utils
+   │    └── Helper.java
+   └── resources
+        └── config.yml
+    </pre>
+    <p>Efficiently traverse directories</p>
+  </section>
+
+  <section>
+    <h2>Watch Service (Directory Monitoring)</h2>
+    <pre><code class="language-java">
+  WatchService watcher = FileSystems.getDefault().newWatchService();
+  path.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+  
+  WatchKey key = watcher.take();
+  for (WatchEvent<?> event : key.pollEvents()) {
+      System.out.println("Event: " + event.kind());
+  }
+    </code></pre>
+    <p>Listen to file system changes in real time</p>
+  </section>
+
+  <section>
+    <h2>Realtime I/O (Modern Java APIs)</h2>
+    <ul>
+      <li>  UTF-8 by default (Java 18+)</li>
+      <li>  <code>Files.readString()</code>, <code>writeString()</code></li>
+      <li>  <code>HttpClient</code> for reading web content</li>
+      <li>  <code>ImageIO.read(URL)</code></li>
+      <li>  ZIP as FileSystem</li>
+    </ul>
+    <pre><code class="language-java">
+  String content = Files.readString(Path.of("notes.txt"));
+  Files.writeString(Path.of("copy.txt"), content);
+    </code></pre>
+  </section>
+
+  <section>
+    <h2>Conclusion</h2>
+    <ul>
+      <li>Prefer NIO APIs over legacy IO</li>
+      <li>Use high-level methods: readString, walk, HttpClient</li>
+      <li>WatchService for real-time file changes</li>
+      <li>Stay away from <code>File</code> and <code>BufferedReader</code></li>
+    </ul>
+  </section>
+</div>

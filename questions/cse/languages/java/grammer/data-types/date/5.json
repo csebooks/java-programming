@@ -1,0 +1,10 @@
+{
+  "question": "Which of the following is true about java.time.LocalTime?",
+  "explanation": "LocalTime represents a time-of-day without date or timezone context.",
+  "choices": [
+    { "label": "It includes date and time" },
+    { "label": "It includes timezone" },
+    { "label": "It represents time only", "answer": true },
+    { "label": "It is deprecated" }
+  ]
+}
