@@ -1,0 +1,10 @@
+{
+  "question": "Which of the following best explains why 'switch' is preferred over multiple 'if-else' statements in performance-critical code?",
+  "explanation": "Modern compilers may optimize `switch` statements into jump tables or lookup tables, improving execution speed when compared to sequential `if-else` chains.",
+  "choices": [
+    { "label": "Switch uses more memory" },
+    { "label": "If-else is faster for all conditions" },
+    { "label": "Switch is easier to debug" },
+    { "label": "Switch allows faster execution due to compiler optimizations", "answer": true }
+  ]
+}
