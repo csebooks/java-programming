@@ -15,7 +15,7 @@ categories:
 - `BufferedReader` / `BufferedWriter` – Buffer characters for efficient reading/writing.
 - `PrintWriter` – Convenient methods to write formatted text (like `println`).
 
-##### Sample Usage:
+
 
 ```java
 try (BufferedReader reader = new BufferedReader(new FileReader("data.txt"))) {

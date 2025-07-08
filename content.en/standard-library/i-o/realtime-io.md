@@ -6,7 +6,7 @@ weight: 5
 
 While you may have a strong foundation in Java I/O, real-world applications often demand high-level APIs that simplify code and improve readability. In this chapter, we explore modern Java APIs that help you **do more with less code**, especially improvements introduced since **Java 8**.
 
-## 📘 What You’ll Learn
+##  What You’ll Learn
 
 - Reading and writing text files
 - Reading text, images, JSON from the web
@@ -17,7 +17,7 @@ While you may have a strong foundation in Java I/O, real-world applications ofte
 This chapter focuses on practical, modern I/O features using `java.nio.file.Files`, `java.net.http.HttpClient`, and related classes.
 
 
-## ✅ Modern Enhancements
+##  Modern Enhancements
 
 - **Java 18+**: UTF-8 is the default charset (JEP 400)
 - `Files` API: Expanded significantly since Java 7 with new methods in Java 8, 11, and 12
@@ -26,7 +26,7 @@ This chapter focuses on practical, modern I/O features using `java.nio.file.File
 
 
 
-## 📄 Reading Text Files
+##  Reading Text Files
 
 ```java
 Path path = Path.of("/usr/share/dict/words");
@@ -47,13 +47,13 @@ try (Stream<String> lines = Files.lines(path)) {
 }
 ```
 
-### 🔍 Tokenizing with Scanner
+###  Tokenizing with Scanner
 
 ```java
 Stream<String> tokens = new Scanner(path).useDelimiter("\\PL+").tokens();
 ```
 
-## ✍️ Writing Text Files
+##  Writing Text Files
 
 ```java
 Files.writeString(path, content);
@@ -77,7 +77,7 @@ try (BufferedWriter writer = Files.newBufferedWriter(path)) {
 }
 ```
 
-## 🌐 Reading from the Web
+##  Reading from the Web
 
 ```java
 InputStream in = new URI("https://example.com").toURL().openStream();
@@ -86,7 +86,7 @@ String result = new String(in.readAllBytes());
 
 
 
-## 🖼️ Reading Images or JSON
+##  Reading Images or JSON
 
 Using Jackson (JSON):
 
@@ -100,7 +100,7 @@ Reading image:
 BufferedImage img = ImageIO.read(new URI(imageUrl).toURL());
 ```
 
-## 📂 Traversing Directories
+##  Traversing Directories
 
 List files:
 
@@ -121,7 +121,7 @@ try (Stream<Path> entries = Files.walk(path)) {
 
 Use `Files.find()` for attribute-based filtering.
 
-## 📦 Working with ZIP Files
+##  Working with ZIP Files
 
 Mount ZIP file as a virtual file system:
 
@@ -135,7 +135,7 @@ try (FileSystem zipFs = FileSystems.newFileSystem(pathToZip)) {
 
 
 
-## 🧪 Creating Temporary Files & Directories
+##  Creating Temporary Files & Directories
 
 ```java
 Path tempFile = Files.createTempFile("prefix", ".tmp");
@@ -146,7 +146,7 @@ These are deleted automatically on reboot or can be managed manually.
 
 
 
-## 🔚 Conclusion
+##  Conclusion
 
 Modern Java I/O is simpler, more powerful, and safer:
 

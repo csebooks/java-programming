@@ -16,7 +16,7 @@ categories:
 * `BufferedInputStream` / `BufferedOutputStream` – Buffer for performance.
 * `DataInputStream` / `DataOutputStream` – Read/write primitive types in binary.
 
-##### Sample Usage:
+
 
 ```java
 try (FileInputStream in = new FileInputStream("image.jpg");
