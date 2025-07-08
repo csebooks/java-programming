@@ -9,7 +9,7 @@ It allows recursive access to directories and files, enabling actions like searc
 
 ---
 
-### 🔧 **Common Use Cases:**
+###  **Common Use Cases:**
 
 * Recursively listing files and directories
 * Searching for files by pattern or type
@@ -19,7 +19,7 @@ It allows recursive access to directories and files, enabling actions like searc
 
 ---
 
-### 🧪 **Sample Usage: Walk and Print File Tree**
+### **Sample Usage: Walk and Print File Tree**
 
 ```java
 import java.io.IOException;
@@ -51,7 +51,7 @@ public class FileTreeExample {
 
 ---
 
-### 📘 **Key Classes and Interfaces:**
+###  **Key Classes and Interfaces:**
 
 | Component              | Purpose                                      |
 | ---------------------- | -------------------------------------------- |

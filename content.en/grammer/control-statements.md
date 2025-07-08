@@ -2,7 +2,7 @@
 title: 'Control Statements'
 weight: 2
 categories:
-    - control-statement
+    - control-statements
 --- 
 
 > Control statements are the part of Java that lets your program **make decisions** and **repeat tasks**. They help control **how and when** certain pieces of code run.

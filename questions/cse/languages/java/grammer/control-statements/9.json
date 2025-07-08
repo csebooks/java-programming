@@ -1,0 +1,10 @@
+{
+  "question": "How can infinite loops caused by improper condition checks in `while` or `do-while` loops be mitigated?",
+  "explanation": "Inserting proper termination conditions and optionally using `break` safeguards against accidental infinite loops.",
+  "choices": [
+    { "label": "By removing the loop" },
+    { "label": "Using `continue` instead of `break`" },
+    { "label": "Adding logging statements" },
+    { "label": "Ensuring condition changes inside the loop or using `break` strategically", "answer": true }
+  ]
+}

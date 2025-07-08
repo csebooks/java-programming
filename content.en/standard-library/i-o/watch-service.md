@@ -16,7 +16,7 @@ weight: 4
 
 ---
 
-### 🧪 **Sample Usage: Watch for File Events**
+###  **Sample Usage: Watch for File Events**
 
 ```java
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class WatchServiceExample {
 
 ---
 
-### 📘 **Key Concepts:**
+###  **Key Concepts:**
 
 | Component                 | Purpose                                     |
 | ------------------------- | ------------------------------------------- |
@@ -67,7 +67,7 @@ public class WatchServiceExample {
 
 ---
 
-### ⚠️ **Limitations:**
+###  **Limitations:**
 
 * Works **only on directories**, not individual files
 * Might miss rapid successive events (implementation-dependent)
