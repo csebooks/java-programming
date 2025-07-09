@@ -13,7 +13,7 @@ Lets create the test case at `src/main/java/org/example/parser/JsonTest.java`
     }
 ```
 
-Lers create Json Type for null at `src/main/java/com/techatpark/jsonparser/type/JsonBoolean.java`
+Lers create Json Type for null at `src/main/java/com/example/jsonparser/type/JsonBoolean.java`
 
 ```java
 public class JsonBoolean implements Json<Boolean> {
