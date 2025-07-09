@@ -122,9 +122,10 @@ Create the file: `src/test/java/com/example/dao/StudentDaoTest.java`
 class StudentDaoTest {
 
     private final StudentDao studentDao;
+    private final JdbcDataSource ds;
 
     StudentDaoTest() throws SQLException {
-        JdbcDataSource ds = new JdbcDataSource();
+        ds = new JdbcDataSource();
         ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
         ds.setUser("sa");
 
