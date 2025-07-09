@@ -51,6 +51,16 @@ public record Student(Integer id,
 Create the file: `src/main/java/com/techatpark/dao/StudentDao.java`
 
 ```java
+
+package com.techatpark.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+import javax.sql.DataSource;
+
+import com.techatpark.model.Student;
+
 public class StudentDao {
 
     private final DataSource dataSource;
@@ -121,7 +131,7 @@ class StudentDaoTest {
     StudentDaoTest() throws SQLException {
         JdbcDataSource ds = new JdbcDataSource();
         ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
-        ds.setStudent("sa");
+        ds.setUser("sa");
 
         try (Connection conn = ds.getConnection();
              Statement stmt = conn.createStatement()) {
