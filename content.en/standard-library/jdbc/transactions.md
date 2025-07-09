@@ -64,13 +64,12 @@ public void deleteAll() throws SQLException {
 ```java
 @Test
 void testMarksheetInsertionFailsAndRollsBack() throws SQLException {
-    StudentDao studentDao = new StudentDao(dataSource);
 
     Student student = new Student(null, "Parthiban");
     List<Mark> marks = List.of(
-        new Mark("DS", 100),
-        new Mark("DBA", null), // This will violate NOT NULL constraint
-        new Mark("OS", 75)
+            new Mark("DS", 100),
+            new Mark(null, 10), // This will violate NOT NULL constraint
+            new Mark("OS", 75)
     );
 
     MarkSheet marksheet = new MarkSheet(student, marks);
@@ -79,8 +78,8 @@ void testMarksheetInsertionFailsAndRollsBack() throws SQLException {
     assertFalse(result); // Should fail and rollback
 
     // Ensure student record is not present (i.e., rollback worked)
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM student WHERE name = ?")) {
+    try (Connection conn = ds.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM student WHERE name = ?")) {
         stmt.setString(1, "Parthiban");
 
         try (ResultSet rs = stmt.executeQuery()) {
