@@ -37,11 +37,27 @@ void testSuccessfulMarksheetInsertion() {
     MarkSheet marksheet = new MarkSheet(student, marks);
     boolean result = studentDao.create(marksheet);
 
-    assertTrue(result); // ✅ Everything should be inserted
+    assertTrue(result); // Everything should be inserted
 }
 ```
 
----
+Remember we now have dtudent ids referred by mark table. so before we delete students we need to delete their marks first
+
+```java
+public void deleteAll() throws SQLException {
+    final String deleteMarksSql = "DELETE FROM mark";
+    try(Connection connectionection= dataSource.getConnection();
+        PreparedStatement preparedStatement = connectionection.prepareStatement(deleteMarksSql)) {
+        preparedStatement.executeUpdate();
+    }
+
+    final String deleteSql = "DELETE FROM student";
+    try(Connection connectionection= dataSource.getConnection();
+        PreparedStatement preparedStatement = connectionection.prepareStatement(deleteSql)) {
+        preparedStatement.executeUpdate();
+    }
+}
+```
 
 ## Failing Test Case (Rollback Demo)
 
@@ -53,14 +69,14 @@ void testMarksheetInsertionFailsAndRollsBack() throws SQLException {
     Student student = new Student(null, "Parthiban");
     List<Mark> marks = List.of(
         new Mark("DS", 100),
-        new Mark("DBA", null), // 🚨 This will violate NOT NULL constraint
+        new Mark("DBA", null), // This will violate NOT NULL constraint
         new Mark("OS", 75)
     );
 
     MarkSheet marksheet = new MarkSheet(student, marks);
     boolean result = studentDao.create(marksheet);
 
-    assertFalse(result); // ❌ Should fail and rollback
+    assertFalse(result); // Should fail and rollback
 
     // Ensure student record is not present (i.e., rollback worked)
     try (Connection conn = dataSource.getConnection();
@@ -77,7 +93,7 @@ void testMarksheetInsertionFailsAndRollsBack() throws SQLException {
 ```
 
 
-## 🧠 StudentDao Implementation With Transaction Support
+## Implementation
 
 ```java
 public boolean create(MarkSheet marksheet) {
