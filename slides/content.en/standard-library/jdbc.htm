@@ -7,4 +7,157 @@ weight: 1
   <section data-auto-animate="" data-transition="zoom">
     <h2 class="r-fit-text">Say Hello in JDBC 4.0</h2>
   </section>
+
+  <section>
+    <h2>Agenda</h2>
+    <ul>
+      <li>Basic JDBC Flow</li>
+      <li>Connection</li>
+      <li>Statement</li>
+      <li>ResultSet</li>
+      <li>SELECT Query</li>
+      <li>INSERT / UPDATE / DELETE</li>
+      <li>Batch Operations</li>
+      <li>Transactions</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>JDBC Overview</h2>
+    <ul>
+      <li>Java Database Connectivity (JDBC)</li>
+      <li>Connects Java apps to relational databases</li>
+      <li>Execute SQL, retrieve results</li>
+      <li>Uses JDBC drivers</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>JDBC Flow</h2>
+    <pre><code>Application → JDBC API → JDBC Driver → Database</code></pre>
+    <ol>
+      <li>Load Driver</li>
+      <li>Get Connection</li>
+      <li>Create Statement</li>
+      <li>Execute SQL</li>
+      <li>Process ResultSet</li>
+      <li>Close resources</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Connection</h2>
+    <pre><code>Connection conn = DriverManager.getConnection(
+"jdbc:mysql://localhost:3306/school", "user", "pass");</code></pre>
+    <ul>
+      <li>Session with DB</li>
+      <li>Must be closed</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Statement</h2>
+    <pre><code>Statement stmt = conn.createStatement();</code></pre>
+    <ul>
+      <li>For static SQL</li>
+      <li>Use PreparedStatement instead</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>ResultSet</h2>
+    <pre><code>ResultSet rs = stmt.executeQuery("SELECT * FROM student");
+while (rs.next()) {
+String name = rs.getString("name");
+int marks = rs.getInt("marks");
+}</code></pre>
+  </section>
+
+  <section>
+    <h2>SELECT Example</h2>
+    <pre><code>String sql = "SELECT name, marks FROM student";
+ResultSet rs = stmt.executeQuery(sql);
+while (rs.next()) {
+System.out.println(rs.getString("name") + " - " + rs.getInt("marks"));
+}</code></pre>
+  </section>
+
+  <section>
+    <h2>INSERT / UPDATE / DELETE</h2>
+    <pre><code>String sql = "UPDATE student SET marks = 90 WHERE name = 'Madasamy'";
+int count = stmt.executeUpdate(sql);
+System.out.println(count + " row(s) affected");</code></pre>
+  </section>
+
+  <section>
+    <h2>PreparedStatement</h2>
+    <pre><code>String sql = "INSERT INTO student(name, marks) VALUES (?, ?)";
+PreparedStatement ps = conn.prepareStatement(sql);
+ps.setString(1, "Parthiban");
+ps.setInt(2, 95);
+ps.executeUpdate();</code></pre>
+    <ul>
+      <li>Prevents SQL injection</li>
+      <li>Improves performance</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Batch Operations</h2>
+    <pre><code>PreparedStatement ps = conn.prepareStatement(...);
+for (Mark m : marks) {
+ps.setInt(1, studentId);
+ps.setString(2, m.subject());
+ps.setInt(3, m.score());
+ps.addBatch();
+}
+ps.executeBatch();</code></pre>
+  </section>
+
+  <section>
+    <h2>Transactions</h2>
+    <pre><code>conn.setAutoCommit(false);
+try {
+insertStudent();
+insertMarks();
+conn.commit();
+} catch (SQLException e) {
+conn.rollback();
+}</code></pre>
+    <ul>
+      <li>Ensures all-or-nothing</li>
+      <li>Must manually commit or rollback</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Best Practices</h2>
+    <ul>
+      <li>Close all JDBC resources</li>
+      <li>Use try-with-resources</li>
+      <li>Prefer PreparedStatement</li>
+      <li>Handle transactions explicitly</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Real-Life Analogy</h2>
+    <p>Bank Transfer: Debit one account, Credit another</p>
+    <p>Both must succeed or fail together. That's a transaction.</p>
+  </section>
+
+  <section>
+    <h1>That's a Wrap!</h1>
+    <p>Explore:</p>
+    <ul>
+      <li>Connection pooling (e.g. HikariCP)</li>
+      <li>ORM tools (JPA, Hibernate)</li>
+      <li>Advanced transaction isolation</li>
+    </ul>
+  </section>
+
+  <section>
+    <h1>Questions?</h1>
+    <p>Ask anything about JDBC!</p>
+  </section>
 </div>
