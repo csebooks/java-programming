@@ -1,16 +1,14 @@
 ---
 choices:
   - "byte…"
-  - "long, long"
   - "Byte, Byte"
   - "compilation error"
 answer:
   - "long, long"
-
 explanation: "The method `doCalc(b, b)` is invoked with two primitive `byte` arguments. Java chooses the most specific applicable method. `doCalc(Byte, Byte)` requires boxing, and `doCalc(byte...)` is varargs, but `doCalc(long, long)` is the best match via primitive widening. Therefore, it prints \"long, long\"."
 ---
 
-## What is the output of the following code?
+What is the output of the following code?
 
 ```java
 public class Client {

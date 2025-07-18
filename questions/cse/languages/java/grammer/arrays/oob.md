@@ -3,14 +3,12 @@ choices:
   - "3"
   - "0"
   - "Compilation error"
-  - "ArrayIndexOutOfBoundsException"
 answer:
   - "ArrayIndexOutOfBoundsException"
-
 explanation: "`arr[3]` is out of bounds since valid indices are 0–2."
 ---
 
-## What is the output of the following?
+What is the output of the following?
 
 ```java
 int[] arr = {1, 2, 3};
