@@ -132,3 +132,4 @@ void testCreateAll() throws SQLException {
 Ideally you will expect eigther add all or nothing. How to do that. Lets see next
 
 
+
