@@ -94,6 +94,58 @@ try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 }
 ```
 
+In JDBC, whether you use `**CallableStatement**` or `**PreparedStatement**` depends on whether you're calling a **stored procedure** or a **stored function**, and how the database supports it.
+
+
+### ✅ **When to Use `CallableStatement`**
+
+Use `CallableStatement` when:
+
+* You're calling a **stored procedure**
+* The procedure has **OUT** or **INOUT** parameters
+* You want to use JDBC’s `{call ...}` syntax
+
+**Example:**
+
+```java
+CallableStatement stmt = conn.prepareCall("{call my_procedure(?, ?, ?)}");
+stmt.setString(1, "val");
+stmt.registerOutParameter(2, Types.INTEGER);
+stmt.execute();
+```
+
+---
+
+### ✅ **When to Use `PreparedStatement`**
+
+Use `PreparedStatement` when:
+
+* You're calling a **stored function** that **returns a value**
+* You treat the function like a **SQL expression** (`SELECT my_function(?, ?)`)
+
+**Example:**
+
+```java
+PreparedStatement stmt = conn.prepareStatement("SELECT my_function(?, ?)");
+```
+
+---
+
+### 🤔 Why Not Use `CallableStatement` for Functions?
+
+Technically, JDBC **does allow** calling functions using `CallableStatement`, but:
+
+* The syntax is awkward and inconsistent across DBs.
+* PostgreSQL doesn’t support `{? = call function(...)}` natively in JDBC unless the driver or tooling wraps it.
+* Using `SELECT function(...)` is much more **idiomatic and portable** in PostgreSQL.
+
+
+| Use Case                        | JDBC API            | Notes                              |
+| ------------------------------- | ------------------- | ---------------------------------- |
+| Stored Procedure                | `CallableStatement` | Supports IN, OUT, INOUT            |
+| Stored Function (returns value) | `PreparedStatement` | Simpler and cleaner for PostgreSQL |
+
+
 ## Best Practices
 
 * Always close JDBC resources (prefer try-with-resources).
@@ -101,8 +153,6 @@ try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
 * Avoid business logic inside stored procedures unless performance requires it.
 * Use clear naming for procedures and parameters.
 * Manage exception handling in both SQL and Java sides.
-
-
 
 
 
