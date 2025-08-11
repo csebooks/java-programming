@@ -6,7 +6,7 @@ weight: 1
 Lets Create a project for jdbc practice
 
 ```shell
-git clone https://github.com/techatpark/java-ref.git
+git clone https://github.com/example/java-ref.git
 cd java-ref
 ./mvnw clean package
 ```
@@ -34,21 +34,29 @@ requires java.sql;
 requires java.naming;
 ```
 
-### `Student` Record
+### Records
 
-Create the file: `src/main/java/com/techatpark/model/Student.java`
+Create the file: `src/main/java/com/example/model/Student.java`
 
 ```java
-package com.techatpark.model;
+public record Student(Integer id, String name) {}
+```
 
-public record Student(Integer id,
-               String name ) {
-}
+Create the file: `src/main/java/com/example/model/Mark.java`
+
+```java
+public record Mark(String subject, Integer score) {}
+```
+
+Create the file: `src/main/java/com/example/model/MarkSheet.java`
+
+```java
+public record MarkSheet(Student student, List<Mark> marks) {}
 ```
 
 ### Data Access Object
 
-Create the file: `src/main/java/com/techatpark/dao/StudentDao.java`
+Create the file: `src/main/java/com/example/dao/StudentDao.java`
 
 ```java
 
@@ -109,27 +117,25 @@ public class StudentDao {
     public void createAll(List<Student> students) throws SQLException {
         throw new UnsupportedOperationException("createAll is yet to be implemented");
     }
+
+    public boolean create(MarkSheet marksheet) {
+        throw new UnsupportedOperationException("create Marksheet is yet to be implemented");
+    }
 }
 ```
 
 ### Data Access Object Test
 
-Create the file: `src/test/java/com/techatpark/dao/StudentDaoTest.java`
+Create the file: `src/test/java/com/example/dao/StudentDaoTest.java`
 
 ```java
-import org.h2.jdbcx.JdbcDataSource;
-import org.junit.jupiter.api.AfterEach;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 class StudentDaoTest {
 
     private final StudentDao studentDao;
+    private final JdbcDataSource ds;
 
     StudentDaoTest() throws SQLException {
-        JdbcDataSource ds = new JdbcDataSource();
+        ds = new JdbcDataSource();
         ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
         ds.setUser("sa");
 
@@ -137,9 +143,16 @@ class StudentDaoTest {
              Statement stmt = conn.createStatement()) {
             stmt.execute("""
                 CREATE TABLE student (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    name VARCHAR(255) NOT NULL
-                )
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL
+                );
+                CREATE TABLE mark (
+                    student_id INT,
+                    subject VARCHAR(255) NOT NULL,
+                    mark INT NOT NULL,
+                    PRIMARY KEY (student_id, subject),
+                    FOREIGN KEY (student_id) REFERENCES student(id)
+                );
             """);
         }
 

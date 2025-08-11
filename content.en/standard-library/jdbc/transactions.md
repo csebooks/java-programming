@@ -3,120 +3,170 @@ title: 'Transactions'
 weight: 4
 --- 
 
-> In production systems, **atomicity** is critical. What if you want to insert multiple students and one of them violates a constraint? Without a transaction, you'd end up with **partial data** — a serious integrity issue. Transactions solve this by allowing you to **commit** or **rollback** changes as a group.
+> In production systems, **atomicity** is critical. Imagine you’re inserting multiple records — what if one fails? Should the others remain? The answer is a resounding **no**. You want **all-or-nothing** behavior. That’s where **transactions** come into play.
 
----
+Let’s say we want to create a **Marksheet** for a student named *Madasamy*, who scored:
 
-## Scenario: Atomic Insert of Multiple Students
+| Subject | Marks |
+| ------- | ----- |
+| DS      | 100   |
+| DBA     | 98    |
+| OS      | 75    |
 
-Let’s say we want to insert two students — **both must be saved, or neither**. This is a perfect case for transaction handling.
+This involves two tables:
 
----
+* `student`: stores the student's name
+* `mark`: stores the subject-wise marks with a foreign key to the student
 
-##  Test Case 1: Successful Transaction
+Without a transaction, if one insert fails (say, due to a null or constraint violation), you could end up with **orphan student records** — corrupting the database state.
 
-```java
-@Test
-void shouldSaveAllStudentsInOneTransaction() {
-    var students = List.of(
-        new Student(null, "keerthanasri", "p1"),
-        new Student(null, "sathashini", "p2")
-    );
-
-    var saved = studentDao.saveAllAtomic(students);
-
-    assertEquals(2, saved.size());
-}
-```
-
----
-
-## Test Case 2: Rollback on Constraint Violation
+## Success Test Case
 
 ```java
 @Test
-void shouldRollbackWhenAnyStudentFails() {
-    // Precondition: Create a student with this email so we get a conflict
-    studentDao.save(new Student(null, "sathashini", "x"));
+void testSuccessfulMarksheetInsertion() {
+    StudentDao studentDao = new StudentDao(dataSource);
 
-    var students = List.of(
-        new Student(null, "guruprasath", "v"),
-        new Student(null, "maadasamy", "e") // duplicate
+    Student student = new Student(null, "Madasamy");
+    List<Mark> marks = List.of(
+        new Mark("DS", 100),
+        new Mark("DBA", 98),
+        new Mark("OS", 75)
     );
 
-    assertThrows(RuntimeException.class, () -> studentDao.saveAllAtomic(students));
+    MarkSheet marksheet = new MarkSheet(student, marks);
+    boolean result = studentDao.create(marksheet);
 
-    // Verify: nothing inserted
-    assertEquals(1, studentDao.count());
+    assertTrue(result); // Everything should be inserted
 }
 ```
 
----
-
-## Method: `saveAllAtomic(List<Student>)`
+Remember we now have dtudent ids referred by mark table. so before we delete students we need to delete their marks first
 
 ```java
-@Override
-public List<Student> saveAllAtomic(final List<Student> students) {
-    String sql = "INSERT INTO student (name, password) VALUES (?, ?)";
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+public void deleteAll() throws SQLException {
+    final String deleteMarksSql = "DELETE FROM mark";
+    try(Connection connectionection= dataSource.getConnection();
+        PreparedStatement preparedStatement = connectionection.prepareStatement(deleteMarksSql)) {
+        preparedStatement.executeUpdate();
+    }
 
-        conn.setAutoCommit(false); // Begin transaction
-
-        for (Student student : students) {
-            stmt.setString(1, student.name());
-            stmt.setString(2, student.password());
-            
-            stmt.addBatch();
-        }
-
-        stmt.executeBatch(); // May throw exception on constraint violation
-
-        List<Student> savedStudents = new ArrayList<>();
-        try (ResultSet rs = stmt.getGeneratedKeys()) {
-            int index = 0;
-            while (rs.next()) {
-                int id = rs.getInt(1);
-                Student original = students.get(index++);
-                savedStudents.add(new Student(id, original.name(), original.password()));
-            }
-        }
-
-        conn.commit(); // Commit transaction
-        return savedStudents;
-
-    } catch (SQLException e) {
-        try {
-            dataSource.getConnection().rollback(); // Rollback on error
-        } catch (SQLException ignore) {}
-        throw new RuntimeException("Transaction failed", e);
+    final String deleteSql = "DELETE FROM student";
+    try(Connection connectionection= dataSource.getConnection();
+        PreparedStatement preparedStatement = connectionection.prepareStatement(deleteSql)) {
+        preparedStatement.executeUpdate();
     }
 }
 ```
 
----
+## Failing Test Case (Rollback Demo)
 
-##  Why This Matters
+```java
+@Test
+void testMarksheetInsertionFailsAndRollsBack() throws SQLException {
 
-Without `conn.setAutoCommit(false)`, every insert is committed **immediately**. If one insert fails, the others stay in the DB — violating the "all-or-nothing" guarantee.
+    Student student = new Student(null, "Parthiban");
+    List<Mark> marks = List.of(
+            new Mark("DS", 100),
+            new Mark(null, 10), // This will violate NOT NULL constraint
+            new Mark("OS", 75)
+    );
 
-| Step                   | What It Does                  |
-| ---------------------- | ----------------------------- |
-| `setAutoCommit(false)` | Starts a manual transaction   |
-| `executeBatch()`       | Executes all inserts together |
-| `commit()`             | Finalizes all changes         |
-| `rollback()`           | Undoes everything on error    |
+    MarkSheet marksheet = new MarkSheet(student, marks);
+    boolean result = studentDao.create(marksheet);
 
----
+    assertFalse(result); // Should fail and rollback
 
-## Summary
+    // Ensure student record is not present (i.e., rollback worked)
+    try (Connection conn = ds.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM student WHERE name = ?")) {
+        stmt.setString(1, "Parthiban");
 
-* Transactions ensure **atomic operations**
-* Use them when:
+        try (ResultSet rs = stmt.executeQuery()) {
+            rs.next();
+            int count = rs.getInt(1);
+            assertEquals(0, count); // ✅ Ensure rollback worked
+        }
+    }
+}
+```
 
-  * Multiple rows are involved
-  * Data consistency is critical
-  * Any failure should **abort all changes**
 
+## Implementation
+
+```java
+public boolean create(MarkSheet marksheet) {
+    try (Connection conn = dataSource.getConnection()) {
+        conn.setAutoCommit(false); // Start transaction
+
+        // Insert student
+        String insertStudent = "INSERT INTO student(name) VALUES (?)";
+        try (PreparedStatement stmt = conn.prepareStatement(insertStudent, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, marksheet.student().name());
+            stmt.executeUpdate();
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    int studentId = rs.getInt(1);
+
+                    // Insert marks
+                    String insertMark = "INSERT INTO mark(student_id, subject, mark) VALUES (?, ?, ?)";
+                    try (PreparedStatement markStmt = conn.prepareStatement(insertMark)) {
+                        for (Mark mark : marksheet.marks()) {
+                            markStmt.setInt(1, studentId);
+                            markStmt.setString(2, mark.subject());
+                            markStmt.setInt(3, mark.score());
+                            markStmt.addBatch();
+                        }
+                        markStmt.executeBatch();
+                    }
+
+                    conn.commit(); // All good!
+                    return true;
+                } else {
+                    conn.rollback();
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            conn.rollback(); // Something went wrong, rollback everything
+            e.printStackTrace();
+            return false;
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
+```
+
+## How It Works
+
+1. **`conn.setAutoCommit(false)`** – disables auto-commit, so we have manual control.
+2. **Insert student** and **get generated ID**.
+3. **Insert all subject marks** using a batch operation.
+4. If **all inserts succeed**, call `conn.commit()` to persist changes.
+5. If **any insert fails**, call `conn.rollback()` to undo everything.
+
+
+## Why Transactions Matter
+
+* Prevents **partial inserts** or **orphaned data**
+* Ensures **data consistency** during failures
+* Allows **batch operations** to be treated as a single logical unit
+
+
+## Best Practices
+
+| Principle      | JDBC Tip                                 |
+| -------------- | ---------------------------------------- |
+| Atomicity      | Use `conn.setAutoCommit(false)`          |
+| Error Handling | Catch exceptions, then `conn.rollback()` |
+| Final Success  | Call `conn.commit()` only if all succeed |
+| Avoiding Leaks | Use try-with-resources for all JDBC APIs |
+
+
+JDBC transactions are **not optional** when dealing with multi-step operations. Whether you’re inserting a `MarkSheet`, processing an e-commerce order, or handling user registration — you need to ensure either **everything happens**, or **nothing does**.
 

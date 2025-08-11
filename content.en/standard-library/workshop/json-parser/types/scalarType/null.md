@@ -12,7 +12,7 @@ Lets create the test case at `src/main/java/org/example/parser/JsonTest.java`
     }
 ```
 
-Lers create Json Type for null at `src/main/java/com/techatpark/jsonparser/type/JsonNull.java`
+Lers create Json Type for null at `src/main/java/com/example/jsonparser/type/JsonNull.java`
 
 ```java
 package org.example.parser.type;
