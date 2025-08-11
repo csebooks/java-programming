@@ -59,6 +59,16 @@ public record MarkSheet(Student student, List<Mark> marks) {}
 Create the file: `src/main/java/com/example/dao/StudentDao.java`
 
 ```java
+
+package com.techatpark.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+import javax.sql.DataSource;
+
+import com.techatpark.model.Student;
+
 public class StudentDao {
 
     private final DataSource dataSource;
