@@ -35,7 +35,6 @@ jobs:
     steps:
       - name: Install Hugo CLI
         run: |
-          git submodule add -f https://github.com/alex-shpak/hugo-book themes/hugo-book
           wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
           && sudo dpkg -i ${{ runner.temp }}/hugo.deb
       - name: Install Dart Sass
@@ -54,6 +53,7 @@ jobs:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production
         run: |
+          git submodule add -f https://github.com/alex-shpak/hugo-book themes/hugo-book
           hugo \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
