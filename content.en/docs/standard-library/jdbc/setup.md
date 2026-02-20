@@ -146,10 +146,10 @@ import java.sql.Statement;
 class StudentDaoTest {
 
     private final StudentDao studentDao;
-    private final JdbcDataSource ds;
 
     StudentDaoTest() throws SQLException {
-        ds = new JdbcDataSource();
+
+        JdbcDataSource ds = new JdbcDataSource();
         ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
         ds.setUser("sa");
 
@@ -174,9 +174,10 @@ class StudentDaoTest {
     }
 
     @AfterEach
-    void cleanUp() throws SQLException {
+    void cleanup() throws SQLException {
         studentDao.deleteAll();
     }
+
 }
 ```
 
