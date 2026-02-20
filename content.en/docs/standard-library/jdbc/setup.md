@@ -54,6 +54,7 @@ Create the file: `src/main/java/com/example/model/MarkSheet.java`
 
 ```java
 package com.example.model;
+import java.util.List;
 public record MarkSheet(Student student, List<Mark> marks) {}
 ```
 
@@ -69,7 +70,10 @@ import java.util.List;
 import java.util.Optional;
 import javax.sql.DataSource;
 
-import com.techatpark.model.Student;
+
+import com.example.model.MarkSheet;
+import com.example.model.Student;
+
 
 public class StudentDao {
 
@@ -88,7 +92,6 @@ public class StudentDao {
             final String updateSql = "UPDATE student SET name = ? WHERE id = ?";
             throw new UnsupportedOperationException("Update is yet to be implemented");
         }
-
     }
 
     public List<Student> findAll() throws SQLException {
@@ -132,6 +135,13 @@ Create the file: `src/test/java/com/example/dao/StudentDaoTest.java`
 
 ```java
 package com.example.dao;
+
+import org.h2.jdbcx.JdbcDataSource;
+import org.junit.jupiter.api.AfterEach;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 class StudentDaoTest {
 
