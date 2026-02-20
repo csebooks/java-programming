@@ -39,18 +39,21 @@ requires java.naming;
 Create the file: `src/main/java/com/example/model/Student.java`
 
 ```java
+package com.example.model;
 public record Student(Integer id, String name) {}
 ```
 
 Create the file: `src/main/java/com/example/model/Mark.java`
 
 ```java
+package com.example.model;
 public record Mark(String subject, Integer score) {}
 ```
 
 Create the file: `src/main/java/com/example/model/MarkSheet.java`
 
 ```java
+package com.example.model;
 public record MarkSheet(Student student, List<Mark> marks) {}
 ```
 
@@ -59,8 +62,7 @@ public record MarkSheet(Student student, List<Mark> marks) {}
 Create the file: `src/main/java/com/example/dao/StudentDao.java`
 
 ```java
-
-package com.techatpark.dao;
+package com.example.dao;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -129,6 +131,8 @@ public class StudentDao {
 Create the file: `src/test/java/com/example/dao/StudentDaoTest.java`
 
 ```java
+package com.example.dao;
+
 class StudentDaoTest {
 
     private final StudentDao studentDao;
