@@ -58,6 +58,7 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
           export QUESTIONS_FOLDER="$PWD/questions" && export PUBLIC_FOLDER="$PWD/public" && npm i --prefix themes/hugo-book/
+          ls public
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
