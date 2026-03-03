@@ -31,16 +31,6 @@ contentDir = 'content.en'
 languageName = 'English'
 weight = 1
 
-[languages.zh]
-contentDir = 'content.zh'
-languageName = 'Chinese'
-weight = 2
-
-[languages.he]
-contentDir = 'content.he'
-languageDirection = 'rtl'
-languageName = 'Hebrew'
-weight = 3
 
 [menu]
 [[menu.home]]
