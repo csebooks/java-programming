@@ -39,18 +39,22 @@ requires java.naming;
 Create the file: `src/main/java/com/example/model/Student.java`
 
 ```java
+package com.example.model;
 public record Student(Integer id, String name) {}
 ```
 
 Create the file: `src/main/java/com/example/model/Mark.java`
 
 ```java
+package com.example.model;
 public record Mark(String subject, Integer score) {}
 ```
 
 Create the file: `src/main/java/com/example/model/MarkSheet.java`
 
 ```java
+package com.example.model;
+import java.util.List;
 public record MarkSheet(Student student, List<Mark> marks) {}
 ```
 
@@ -59,15 +63,17 @@ public record MarkSheet(Student student, List<Mark> marks) {}
 Create the file: `src/main/java/com/example/dao/StudentDao.java`
 
 ```java
-
-package com.techatpark.dao;
+package com.example.dao;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import javax.sql.DataSource;
 
-import com.techatpark.model.Student;
+
+import com.example.model.MarkSheet;
+import com.example.model.Student;
+
 
 public class StudentDao {
 
@@ -86,7 +92,6 @@ public class StudentDao {
             final String updateSql = "UPDATE student SET name = ? WHERE id = ?";
             throw new UnsupportedOperationException("Update is yet to be implemented");
         }
-
     }
 
     public List<Student> findAll() throws SQLException {
@@ -129,13 +134,22 @@ public class StudentDao {
 Create the file: `src/test/java/com/example/dao/StudentDaoTest.java`
 
 ```java
+package com.example.dao;
+
+import org.h2.jdbcx.JdbcDataSource;
+import org.junit.jupiter.api.AfterEach;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 class StudentDaoTest {
 
     private final StudentDao studentDao;
-    private final JdbcDataSource ds;
 
     StudentDaoTest() throws SQLException {
-        ds = new JdbcDataSource();
+
+        JdbcDataSource ds = new JdbcDataSource();
         ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
         ds.setUser("sa");
 
@@ -160,9 +174,10 @@ class StudentDaoTest {
     }
 
     @AfterEach
-    void cleanUp() throws SQLException {
+    void cleanup() throws SQLException {
         studentDao.deleteAll();
     }
+
 }
 ```
 

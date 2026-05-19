@@ -1,8 +1,5 @@
 ---
-title: 'Java Programming'
-categories:
-    - cse
-    - languages
-    - java
+title: "Java"
 weight: 1
---- 
+---
+
