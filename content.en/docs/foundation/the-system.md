@@ -4,6 +4,8 @@ weight: 2
 categories:
     - system
 references:
+    videos:
+        - youtube: BeMi8K0AFAc
     links:
         - https://medium.com/@PavelTrifonov/why-jvm-is-great-4b3d8b224eae
 ---
