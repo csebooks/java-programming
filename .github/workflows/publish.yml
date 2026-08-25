@@ -12,6 +12,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
+      packages: read
       pages: write      # Required if deploying to GitHub Pages
     uses: gurukulams/design-system/.github/workflows/material-deploy.yml@main
     secrets: inherit # If the sub-workflow needs access to secrets
